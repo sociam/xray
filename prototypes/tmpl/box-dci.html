@@ -10,14 +10,6 @@
 		<input type="range" ng-model="threshold" min="0" max="100">
 	</div>
 	<h2 ng-if="error" class="error"> Error: {{ error }} </h2>
-	<div ng-if="!error" class="all">
-		<div ng-repeat="c in categories" class="trackers {{c.class}}" ng-if="size(c.companies)" >
-			<h5 ng-bind="c.label"></h5>
-			<div class="company" ng-repeat="(company,pis) in c.companies">   
-				<company-info company="company" company-name="getName(company)" details="details" show-details="companyDetails">{{company}}</company-info>			
-				<pi-types-display types="pis"></pi-types-display>
-			</div>
-		</div>
-	</div>
+	<categories-display categories="categories" ng-if="!error"></categories-display>
 </div>
 

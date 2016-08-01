@@ -197,4 +197,25 @@ angular.module('dci', ['ui.router', 'ngAnimate', 'ngTouch', 'ngSanitize'])
 	  	});
 	  	if (this.showCompanyDetails === undefined) { this.showCompanyDetails = 'hide'; 	}
 	  }
-   });
+   }).directive('categoriesDisplay', function() { 
+		return {
+		  templateUrl: 'tmpl/categories-display.html',
+		  bindings: { categories:'=' },
+		  replace:true,
+		  link:function($s, $el) {
+		  	$s.el = $el[0];
+		  	$s.masonry = $($s.el).masonry({
+		  		itemSelector: '.category',
+				initLayout: false
+		  	});
+		  	console.log('link!', $s.el, $s.masonry);		  			  	
+		  },
+		  controller:function($scope, $state) {
+		  	$scope.$watch('categories', () => {
+		  		console.log("scope el ", $scope.el);
+		  		// if ($scope.categories) { $s.packery.packery();}
+		  	});
+		  	_ss = $scope;
+		  }
+	   };
+    });

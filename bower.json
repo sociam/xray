@@ -31,6 +31,7 @@
     "bluebird": "~2.9.34",
     "moment": "",
     "fastclick": "^1.0.6",
-    "packery": "^2.1.1"
+    "packery": "^2.1.1",
+    "masonry": "^4.1.0"
   }
 }
