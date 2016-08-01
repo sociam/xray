@@ -2,7 +2,11 @@
   "name": "dci",
   "version": "1.0.0",
   "homepage": "https://github.com/sociam/xray",
-  "authors": [ "Max Van Kleek <max@hip.cat>", "Reuben Binns <reuben.binns@cs.ox.ac.uk>", "Jun Zhao <jun.zhao@cs.ox.ax.uk>" ],
+  "authors": [
+    "Max Van Kleek <max@hip.cat>",
+    "Reuben Binns <reuben.binns@cs.ox.ac.uk>",
+    "Jun Zhao <jun.zhao@cs.ox.ax.uk>"
+  ],
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -26,6 +30,7 @@
     "lodash": "",
     "bluebird": "~2.9.34",
     "moment": "",
-    "fastclick": "^1.0.6"
+    "fastclick": "^1.0.6",
+    "packery": "^2.1.1"
   }
 }
