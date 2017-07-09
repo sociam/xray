@@ -33,17 +33,18 @@ class Trie {
     this.root = this.makeChild();
   }
 
-  add(path) {
+  add(pathComponents) {
     let cur = this.root;
-    for (const [idx, p] of Object.entries(path)) {
-      const partialPath = path.slice(0, idx + 1).join('.');
-      cur.subtree.push(path.join('.'));
+    const fullPath = pathComponents.join('.');
+    for (const [idx, p] of Object.entries(pathComponents)) {
+      const partialPath = pathComponents.slice(0, idx + 1).join('.');
+      cur.subtree.push(fullPath);
       if (cur.children[p] === undefined) {
         cur.children[p] = this.makeChild(partialPath);
       }
       cur = cur.children[p];
     }
-    cur.subtree.push(path.join('.'));
+    cur.subtree.push(fullPath);
   }
 
   flatten(node = this.root) {
@@ -84,18 +85,18 @@ function findPackages(ft) {
   return trees;
 }
 
-function walkDir(trie, dirname, appname, subdirname, basedir) {
-  for (const filename of fs.readdirSync(dirname)) {
-    const fullpath = path.join(dirname, filename);
-    const stat = fs.statSync(fullpath);
-    const relevantPart = fullpath.slice(basedir.length + appname.length + subdirname.length + 3);
-    const pathsplits = relevantPart.split('/');
+function walkDir(trie, dirName, appName, subDirName, baseDir) {
+  for (const filename of fs.readdirSync(dirName)) {
+    const fullPath = path.join(dirName, filename);
+    const stat = fs.statSync(fullPath);
+    const relevantPart = fullPath.slice(baseDir.length + appName.length + subDirName.length + 3);
+    const pathComponents = relevantPart.split(path.sep);
 
     //		console.log('fullpath > ', relevant_part);
 
     if (stat && stat.isDirectory()) {
-      trie.add(pathsplits);
-      walkDir(trie, fullpath, appname, subdirname, basedir);
+      trie.add(pathComponents);
+      walkDir(trie, fullPath, appName, subDirName, baseDir);
     }
   }
 }
@@ -109,15 +110,14 @@ function main() {
     appsdir
   }) => {
     console.log(`Worker ${process.pid} starting to process ${apknames.length} apps`);
-    let byApp = {};
     for (const apkname of apknames) {
       const trie = new Trie();
       const APK_EXT = '.apk';
       const isApk = apkname.includes(APK_EXT);
-      const appname = apkname.slice(0, -APK_EXT.length);
-      const apkpath = path.join(appsdir, apkname);
-      const cmd = `java -jar ${apktoolpath} d ${apkpath} -f`;
-      const unpackroot = path.join(tmpdir, appname);
+      const appName = apkname.slice(0, -APK_EXT.length);
+      const apkPath = path.join(appsdir, apkname);
+      const cmd = `java -jar ${apktoolpath} d ${apkPath} -f`;
+      const unpackRoot = path.join(tmpdir, appName);
 
       if (!isApk) {
         console.error('skipping ', apkname);
@@ -129,21 +129,23 @@ function main() {
           cwd: tmpdir
         });
         // console.log('walking ', unpackdirname);
-        for (const sdname of fs.readdirSync(unpackroot)) {
-          const fullpath = path.join(unpackroot, sdname);
-          if (sdname.includes('smali') || sdname.includes('unknown') && fs.statSync(fullpath).isDirectory()) {
-            console.error('walking ', fullpath);
-            walkDir(trie, fullpath, appname, sdname, tmpdir);
+        for (const sdName of fs.readdirSync(unpackRoot)) {
+          const fullPath = path.join(unpackRoot, sdName);
+          if (sdName.includes('smali') || sdName.includes('unknown') && fs.statSync(fullPath).isDirectory()) {
+            console.error('walking ', fullPath);
+            walkDir(trie, fullPath, appName, sdName, tmpdir);
           }
         }
-        byApp[appname] = findPackages(trie.flatten()).map((p) => p.name);
+        const packages = findPackages(trie.flatten()).map((p) => p.name);
+        // Send list of packages back to master
+        process.send({appName, packages});
       } catch (e) {
-        console.error('skipping ', appname);
+        console.error('skipping ', appName);
       }
       try {
         // delete the app
-        console.error('cleaning up ', unpackroot);
-        deleteFolderRecursive(unpackroot);
+        console.error('cleaning up ', unpackRoot);
+        deleteFolderRecursive(unpackRoot);
       } catch (e) {
         console.error('error cleaning up ', e);
       }
@@ -156,12 +158,8 @@ function main() {
 
     // console.log(' ----------------------> find packages -------> ');
     // console.log(find_packages(flattened_trie(trie_root)));
-
-    // Send analysis results back to master
-    process.send({pid: process.pid, results: byApp});
     console.log(`Worker ${process.pid} ended`);
-    return true;
-
+    process.exit(0);
   });
 }
 main();

@@ -1,0 +1,6 @@
+{
+  "apktoolpath": "~/apktool.jar",
+  "tmpdir": "/tmp/xray",
+  "appsdir": "~/apps",
+  "dbdir": "~/apps-db"
+}

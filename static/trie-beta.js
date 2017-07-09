@@ -3,6 +3,8 @@ const path = require('path');
 const cluster = require('cluster');
 const os = require('os');
 
+const level = require('level');
+
 function chunkArray(arr, chunkCount) {
   const chunks = [];
   while (arr.length) {
@@ -26,7 +28,8 @@ function main() {
   const {
     apktoolpath,
     tmpdir,
-    appsdir
+    appsdir,
+    dbdir
   } = JSON.parse(fs.readFileSync('./config.json'));
 
   // check that the tmpdir is writable
@@ -43,12 +46,27 @@ function main() {
     } catch (e) {}
   }
 
+  // open DB connection
+  const db = level(dbdir, {valueEncoding: 'json'});
+
   // fork workers
   const numCPUs = os.cpus().length;
-  const apknames = fs.readdirSync(appsdir);
-  const numWorkers = Math.min(numCPUs, apknames.length);
-  const apkgroups = chunkArray(apknames, numWorkers);
-  console.log(`Distributing ${apknames.length} apps to ${numWorkers} workers`);
+  const apkNames = fs.readdirSync(appsdir);
+  const numApks = apkNames.length;
+  const numWorkers = Math.min(numCPUs, numApks);
+  const apkgroups = chunkArray(apkNames, numWorkers);
+
+  const byApp = {};
+  const addAppInfo = ({appName, packages}) => {
+    byApp[appName] = packages;
+    db.put(appName, packages);
+    // Print final analysis results when all apps are processed
+    if (Object.keys(byApp).length === numApks) {
+      console.log(JSON.stringify(byApp, null, 4));
+    }
+  };
+
+  console.log(`Distributing ${apkNames.length} apps to ${numWorkers} workers`);
   for (let i = 0; i < numWorkers; i++) {
     const config = {
       apknames: apkgroups[i],
@@ -58,23 +76,8 @@ function main() {
     };
     const worker = cluster.fork();
     worker.send(config);
+    worker.on('message', addAppInfo);
   }
-  const byApp = {};
-  let finishedWorkers = 0;
-  const messageHandler = ({
-    pid,
-    results
-  }) => {
-    console.log(`Received results from worker ${pid}`);
-    Object.assign(byApp, results);
-    finishedWorkers++;
-    if (finishedWorkers == numWorkers) {
-      console.log(JSON.stringify(byApp, null, 4));
-      process.exit(0);
-    }
-  };
-  for (const id in cluster.workers) {
-    cluster.workers[id].on('message', messageHandler);
-  }
+
 }
 main();

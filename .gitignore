@@ -19,3 +19,4 @@ prototypes/www/lib
 static/apps
 *.DS_Store*
 *~
+._*

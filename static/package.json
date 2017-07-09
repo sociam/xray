@@ -4,6 +4,7 @@
     "bluebird": "^3.4.6",
     "csv-parse": "^1.1.1",
     "csv-stringify": "^1.0.4",
+    "level": "^1.7.0",
     "lodash": "^4.13.1"
   }
 }
