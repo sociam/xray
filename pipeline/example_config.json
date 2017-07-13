@@ -1,0 +1,24 @@
+{
+	"apkdir": "/var/xray/apk_archive",
+	"unpackdir": "/var/xray/apk_unpacked",
+	"sockpath": "/run/xray/apks",
+	"credDownload": "/etc/credentials.conf",
+	"scraper": {
+		"db": {
+			"user": "",
+			"database": "xraydb",
+			"password": "",
+			"host": "sociamnat.cs.ox.ac.uk",
+			"port": 5432
+		}
+	},
+	"analyzer": {
+		"db": {
+			"user": "",
+			"database": "xraydb",
+			"password": "",
+			"host": "sociamnat.cs.ox.ac.uk",
+			"port": 5432
+		}
+	}
+}

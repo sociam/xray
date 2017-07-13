@@ -1,0 +1,17 @@
+{
+  "name": "scrapetools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scrape.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "db": "^1.0.6",
+    "google-play-scraper": "^3.3.1",
+    "pg": "^6.4.0",
+    "python-shell": "^0.4.0"
+  }
+}
