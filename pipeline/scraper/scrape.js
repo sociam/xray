@@ -62,7 +62,8 @@ let waitForPipe = () => {
     } else {
         main();
     }
-}; waitForPipe();
+};
+waitForPipe();
 
 //TODO: move region to config or section to iterate over
 let region = 'us';
@@ -140,7 +141,7 @@ function extractAppData(appData) {
             logger.err('Inserting play app failed', err, region);
             return err;
         }).catch((err) => logger.err('Could not write to db:', err.message));
-    }).then(async (dbId) => {
+    }).then(async(dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
         let message = Buffer(dbId + '-' + appData.appId + '-' + appStore + '-' + region + '-' + appData.version);
 
