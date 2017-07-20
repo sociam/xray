@@ -9,7 +9,7 @@ var _ = require('lodash');
 var config = require('/etc/xray/config.json');
 var fs = require('fs-extra');
 var logger = require('./logger.js');
-var wordStoreLocation = config.wordStashDir + '/suggested_words.txt';
+var wordStoreLocation = config.datadir + '/suggested_words.txt';
 
 /**
  * Wipes a file at a specified location of text
@@ -62,10 +62,11 @@ function cartesianProductChars() {
 function scrapeSuggestedWords(startingWords) {
     //TODO: return array of suggested search terms
     _.forEach(startingWords, (letter) => {
-        gplay.suggest({ term: letter })
+        gplay.suggest({ term: letter, throttle: 10 })
             .then(
                 (suggestion) => {
                     _.forEach(suggestion, (word) => {
+                        logger.info('Logging Term: ' + word);
                         writeScrapedWords(word, wordStoreLocation);
                     });
                 },
