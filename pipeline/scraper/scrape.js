@@ -128,6 +128,11 @@ function extractAppData(appData) {
             //TODO: append previous and write seperately
             appData.isDownloaded = true;
             return downloadApp(appData, appSavePath).catch((err) => {
+                try {
+                    fs.rmdir(appSavePath);
+                } catch (err) {
+                    // TODO: something
+                }
                 logger.warning('Downloading failed with error:', err.message);
                 appData.isDownloaded = false;
             });
@@ -144,7 +149,7 @@ function extractAppData(appData) {
     }).then(async(dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
         let message = Buffer(dbId + '-' + appData.appId + '-' + appStore + '-' + region + '-' + appData.version);
-
+        logger.info('logging to DB');
         //client.on('error', logger.err);
         return client.send(message, 0, message.length, config.sockpath).catch((err) => logger.err('Could not connect to socket:', err.message));
     }).catch(function() {
@@ -182,9 +187,6 @@ function scrapeWord(word) {
         throttle: 0.01,
     });
 }
-
-let wordStash = config.wordStashDir;
-
 
 function reader(filepath) {
     return readline.createInterface({
@@ -252,6 +254,7 @@ function write_latest_word(word) {
 function main() {
     wipe_scraped_word();
 
+    let wordStash = config.wordStashDir;
     let wordStashFiles = fs_promise(wordStash);
 
     // TODO: Refactor this....

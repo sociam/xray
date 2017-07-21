@@ -48,15 +48,38 @@ module.exports = {
     /**
      *  Query the search_terms table to get a list of terms that are stale
      */
-    getSearchTerms: async() => {
+    get_search_terms: async() => {
         var res = await query('SELECT * FROM scraped_words WHERE current_date > last_searched + interval \'1 month\'');
+        return res.rows;
+    },
 
-        if (res.rowCount > 0) {
-            // return rows
-        } else {
-            // log no things found
+    /**
+     *  Add a search term to the table if it doesn't already exist.
+     */
+    insertSearchTerm: async(searchTerm) => {
+
+        var client = await connect();
+        logger.debug('Connected');
+
+        logger.debug('Checking if query exists');
+        var checkRes = await client.query('SELECT search_term FROM search_terms WHERE search_term = $1', [searchTerm]);
+
+        if (checkRes.rowCount == 0) {
+            try {
+                await client.query('BEGIN');
+                await client.query('INSERT INTO search_terms VALUES ($1, epoch)', [searchTerm]);
+                logger.debug(searchTerm + ' added to DB');
+                await client.query('COMMIT');
+            } catch (err) {
+                logger.err(err);
+                await client.query('ROLLBACK');
+                logger.debug('DB Rolled Back');
+            } finally {
+                client.release();
+            }
         }
     },
+
 
     insertPlayApp: async(app, region) => {
 
@@ -119,6 +142,7 @@ module.exports = {
                     app.score,
                     app.reviews,
                     app.genreId,
+
                     app.familyGenreId,
                     app.minInstalls,
                     app.maxInstalls,

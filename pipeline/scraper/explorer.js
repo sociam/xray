@@ -4,12 +4,22 @@
 
 
 var gplay = require('google-play-scraper');
-var alphabet = require('alphabet');
-var _ = require('lodash');
-var config = require('/etc/xray/config.json');
-var fs = require('fs-extra');
-var logger = require('./logger.js');
-var wordStoreLocation = config.datadir + '/suggested_words.txt';
+const alphabet = require('alphabet');
+const _ = require('lodash');
+const config = require('/etc/xray/config.json');
+const fs = require('fs-extra');
+const logger = require('./logger.js');
+const wordStoreLocation = config.datadir + '/suggested_words.txt';
+const db = require('./db.js');
+
+/**
+ * 
+ * @param {*The String that is to be insert into the search_term database} search_term 
+ */
+function insertSearchTerm(search_term) {
+    // insert search term to db
+    db.insertSearchTerm(search_term);
+}
 
 /**
  * Wipes a file at a specified location of text
@@ -67,8 +77,9 @@ function scrapeSuggestedWords(startingWords) {
             .then(
                 (suggestion) => {
                     _.forEach(suggestion, (word) => {
-                        logger.info('Logging Term: ' + word);
-                        writeScrapedWords(word, wordStoreLocation);
+                        logger.debug('Inserting to DB: ' + word);
+                        //writeScrapedWords(word, wordStoreLocation);
+                        insertSearchTerm(word);
                     });
                 },
                 (err) => logger.err(err)
