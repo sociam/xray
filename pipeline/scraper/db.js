@@ -45,6 +45,19 @@ async function insertDev(dev) {
 }
 
 module.exports = {
+    /**
+     *  Query the search_terms table to get a list of terms that are stale
+     */
+    getSearchTerms: async() => {
+        var res = await query('SELECT * FROM scraped_words WHERE current_date > last_searched + interval \'1 month\'');
+
+        if (res.rowCount > 0) {
+            // return rows
+        } else {
+            // log no things found
+        }
+    },
+
     insertPlayApp: async(app, region) => {
 
         var devId = await insertDev({
@@ -53,6 +66,7 @@ module.exports = {
             email: app.developerEmail,
             site: app.developerWebsite
         });
+
 
         var appExists = false,
             verExists = false;
@@ -83,8 +97,7 @@ module.exports = {
                 }
 
                 let res = await client.query(
-                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-                    [app.appId, 'play', region, app.version, app.isDownloaded]
+                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id', [app.appId, 'play', region, app.version, app.isDownloaded]
                 );
                 verId = res.rows[0].id;
 
