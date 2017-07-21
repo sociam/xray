@@ -49,7 +49,7 @@ module.exports = {
      *  Query the search_terms table to get a list of terms that are stale
      */
     get_search_terms: async() => {
-        var res = await query('SELECT * FROM scraped_words WHERE current_date > last_searched + interval \'1 month\'');
+        var res = await query('SELECT * FROM search_terms WHERE current_date > last_searched + interval \'1 month\'');
         return res.rows;
     },
 
