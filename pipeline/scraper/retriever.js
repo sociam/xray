@@ -3,10 +3,12 @@
 const gplay = require('google-play-scraper');
 const logger = require('./logger.js');
 const _ = require('lodash');
-const fs = require('fs');
 const db = require('./db.js');
 
-// TODO: Store App Data to the DB
+/**
+ * Inserts app data into the db using db.js
+ * @param {*The app data json that is to be inserted into the databae.} app_data 
+ */
 function insert_app_data(app_data) {
     // push the app data to the DB
     logger.debug(app_data); // for now 
@@ -26,13 +28,11 @@ function fetch_app_data(search_term, number_of_apps, per_second) {
     );
 }
 
-// TODO: Query DB for Search Terms
+/**
+ * uses db.js to fetch search terms from the database.
+ */
 function fetch_search_terms() {
     return db.get_search_terms();
-}
-
-function open_search_terms(file_location) {
-    return fs.readFileSync(file_location).toString().split('\n');
 }
 
 _.forEach(

@@ -46,6 +46,27 @@ function writeScrapedWords(word, location) {
     });
 }
 
+
+/**
+ * Used returns an array where each line is a search term.
+ * @param {*the location of the file that is to be read} file_location 
+ */
+function open_search_terms(file_location) {
+    return fs.readFileSync(file_location).toString().split('\n');
+}
+
+/**
+ * Parses a file of search terms, adding each line as a search term to the DB
+ * @param {*Location of a file to import search terms from} file_location 
+ */
+function import_file_terms(file_location) {
+    _.forEach(
+        open_search_terms(file_location),
+        (search_term) => insertSearchTerm(search_term)
+    );
+}
+
+
 /**
  * Creates a cartesion product of arrays of strings.
  * 
@@ -87,12 +108,11 @@ function scrapeSuggestedWords(startingWords) {
     });
 }
 
-// TODO this stuff needs moving to a seperate Explorerer.
+// TODO this stuff needs moving somewhere...
 var single = alphabet.lower;
 var double = cartesianProductChars(alphabet.lower, alphabet.lower);
 var triple = cartesianProductChars(alphabet.lower, alphabet.lower, alphabet.lower);
 
 var charTriples = single.concat(double).concat(triple);
 
-wipeScrapedWords(wordStoreLocation);
 scrapeSuggestedWords(charTriples);
