@@ -42,7 +42,13 @@ create table playstore_apps(
   screenshots          text[]                                                 ,
   video                  text                                                 ,
   recent_changes       text[]                                                 ,
-  crawl_date             date                                         not null
+  crawl_date             date                                         not null.
+  permissions          text[]                                                 
+);
+
+create table search_terms(
+  search_term            text                              primary key not null,
+  last_searched          DATE                                          not null
 );
 
 create table app_perms(
