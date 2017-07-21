@@ -38,7 +38,10 @@ function fetch_search_terms() {
 _.forEach(
     // open_search_terms(config.datadir + '/suggested_words.txt'),
     fetch_search_terms(),
-    (search_term) => fetch_app_data(search_term, 4, 1)
+    (search_term) => {
+        logger.info(search_term);
+        fetch_app_data(search_term, 4, 1);
+    }
 );
 
 /**
