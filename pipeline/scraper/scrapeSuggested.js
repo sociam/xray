@@ -59,6 +59,7 @@ function cartesianProductChars() {
  * 
  * @param {*The list of words used to get autocompletes} startingWords 
  */
+// TODO: Store scraped word to the Database not txt
 function scrapeSuggestedWords(startingWords) {
     //TODO: return array of suggested search terms
     _.forEach(startingWords, (letter) => {
