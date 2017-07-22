@@ -122,7 +122,7 @@ module.exports = {
                 }
 
                 let res = await client.query(
-                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id', [app.appId, 'play', region, app.version, app.isDownloaded]
+                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id', [app.appId, 'play', region, app.version, 0]
                 );
                 verId = res.rows[0].id;
 
