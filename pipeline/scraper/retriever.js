@@ -24,9 +24,6 @@ function insertAppData(app_data) {
     return db.insertPlayApp(app_data, region);
 }
 
-
-
-
 function updateSearchedTermDate(searchTerm) {
     logger.debug('setting last search date to today: ' + searchTerm);
     db.updateLastSearchedDate(searchTerm);

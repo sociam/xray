@@ -10,7 +10,9 @@ const config = require('/etc/xray/config.json');
 const fs = require('fs-extra');
 const logger = require('./logger.js');
 const wordStoreLocation = config.datadir + '/suggested_words.txt';
-const db = require('./db.js');
+var database = require('./db.js');
+var db = new database('explorer');
+
 
 /**
  * 
