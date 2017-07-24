@@ -28,6 +28,11 @@ const logger = require('./logger.js');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 
+
+function catchErr(msg, err, func) {
+    func(msg,err);
+    return Promise.resolve();
+}
 function mkdirp(dir) {
     dir.split(path.sep).reduce((parentDir, childDir) => {
         const curDir = path.join(parentDir, childDir);
@@ -62,8 +67,8 @@ let waitForPipe = () => {
     } else {
         main();
     }
-}; waitForPipe();
-
+}; //waitForPipe();
+main();
 //TODO: move region to config or section to iterate over
 let region = 'us';
 let appStore = 'play';
@@ -74,7 +79,7 @@ function resolveAPKDir(appData) {
     //log('appdir:'+ config.appdir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
     //NOTE: If app version is undefined setting to  date
     if (!appData.version || appData.version === 'Varies with device') {
-        logger.debug('Version not found defaulting too', appData.updated);
+        catchErr('Version not found defaulting too', appData.updated,logger.debug);
         let formatDate = appData.updated.replace(/\s+/g, '').replace(',', '/');
         appData.version = formatDate;
     }
@@ -104,7 +109,9 @@ function downloadApp(appData, appSavePath) {
         logger.warning('DL process %d stderr:', downloadProcess.pid, data);
     });
 
-    return apkDownloader.catch((err) => logger.err('Error downloading app:', err));
+    return apkDownloader.catch((err) => {
+        return catchErr('Error downloading app:', err,logger.err);
+    });
 }
 
 
@@ -145,7 +152,7 @@ function extractAppData(appData) {
         return db.insertPlayApp(appData, region).catch((err) => {
             logger.err('Inserting play app failed', err, region);
             return err;
-        }).catch((err) => logger.err('Could not write to db:', err.message));
+        }).catch((err) => { return catchErr('Could not write to db:', err.message, logger.err); });
     }).then(async (dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
         let message = Buffer(dbId + '-' + appData.appId + '-' + appStore + '-' + region + '-' + appData.version);
@@ -180,7 +187,7 @@ function extractAppData(appData) {
 function scrapeWord(word) {
     return gplay.search({
         term: word,
-        num: 120,
+        num: 4,
         region: region,
         price: 'free',
         fullDetail: true,
@@ -287,7 +294,7 @@ function main() {
                                 r = r.then(() => {
                                     logger.info('Attempting to download:' + app.appId);
                                     return extractAppData(app);
-                                }, (err) => logger.warning('downloading app failed:' + err));
+                                }, (err) => logger.warning('Downloading app failed:' + err));
                             });
                             //processAppData(appsData,extractAppData);
 
