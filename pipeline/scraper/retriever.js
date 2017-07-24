@@ -3,7 +3,8 @@
 const gplay = require('google-play-scraper');
 const logger = require('./logger.js');
 const _ = require('lodash');
-const db = require('./db.js');
+var database = require('./db.js');
+var db = new database('explorer');
 
 const region = 'us';
 
