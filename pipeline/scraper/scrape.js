@@ -110,7 +110,7 @@ function downloadApp(appData, appSavePath) {
     });
 
     return apkDownloader.catch((err) => {
-        return catchErr('Error downloading app:', err,logger.err);
+        return catchErr('Error downloading app:', err.message,logger.err);
     });
 }
 
@@ -148,9 +148,8 @@ function extractAppData(appData) {
         logger.info('Download process complete for ' + appData.appId);
         let db = require('./db');
 
-        return db.insertPlayApp(appData, region).catch((err) => {
-            logger.err('Inserting play app failed', err, region);
-            return err;
+        return db.insertPlayApp(appData, region).catch((err) => { 
+            return catchErr('Could not write to db:', err.message, logger.err); 
         });
     }).then(async (dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
@@ -188,7 +187,7 @@ function extractAppData(appData) {
 function scrapeWord(word) {
     return gplay.search({
         term: word,
-        num: 120,
+        num: 4,
         region: region,
         price: 'free',
         fullDetail: true,
