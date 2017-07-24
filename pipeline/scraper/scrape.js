@@ -29,10 +29,13 @@ const logger = require('./logger.js');
 let appsSaveDir = path.join(config.datadir, 'apps');
 
 
-function catchErr(msg, err, func) {
-    func(msg,err);
-    return Promise.reject();
+function processErr(msg, func) {
+    return function(err) {
+        func(msg, err);
+        return Promise.reject();
+    };
 }
+
 function mkdirp(dir) {
     dir.split(path.sep).reduce((parentDir, childDir) => {
         const curDir = path.join(parentDir, childDir);
@@ -67,7 +70,10 @@ let waitForPipe = () => {
     } else {
         main();
     }
-}; waitForPipe();
+}; 
+
+waitForPipe();
+
 
 //TODO: move region to config or section to iterate over
 let region = 'us';
@@ -79,7 +85,7 @@ function resolveAPKDir(appData) {
     //log('appdir:'+ config.appdir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
     //NOTE: If app version is undefined setting to  date
     if (!appData.version || appData.version === 'Varies with device') {
-        catchErr('Version not found defaulting too', appData.updated,logger.debug);
+        logger.debug('Version not found defaulting too', appData.updated);
         let formatDate = appData.updated.replace(/\s+/g, '').replace(',', '/');
         appData.version = formatDate;
     }
@@ -110,7 +116,7 @@ function downloadApp(appData, appSavePath) {
     });
 
     return apkDownloader.catch((err) => {
-        return catchErr('Error downloading app:', err.message,logger.err);
+        return processErr('Error downloading app:', logger.err)(err);
     });
 }
 
@@ -137,7 +143,7 @@ function extractAppData(appData) {
                 try {
                     fs.rmdir(appSavePath);
                 } catch (err) {
-                    return catchErr('Could not remove app saved path', err, logger.err);
+                    logger.debug('Could not remove app saved path', err);
                 }
                 logger.warning('Downloading failed with error:', err.message);
                 appData.isDownloaded = false;
@@ -149,7 +155,7 @@ function extractAppData(appData) {
         let db = require('./db');
 
         return db.insertPlayApp(appData, region).catch((err) => { 
-            return catchErr('Could not write to db:', err.message, logger.err); 
+            return processErr('Could not write to db:', logger.err)(err); 
         });
     }).then(async (dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
@@ -157,7 +163,7 @@ function extractAppData(appData) {
 
         //client.on('error', logger.err);
         return client.send(message, 0, message.length, config.sockpath).catch((err) => {
-            return catchErr('Could not connect to socket:', err.message, logger.err);
+            return processErr('Could not connect to socket:', logger.err)(err);
         });
     }, () => {
         return Promise.reject();
@@ -294,11 +300,11 @@ function main() {
                                 r = r.then(() => {
                                     logger.info('Attempting to download:' + app.appId);
                                     return extractAppData(app);
-                                }, (err) => logger.warning('Downloading app failed:' + err));
+                                }, (err) => logger.warning('Downloading app failed:' + err.message));
                             });
                             //processAppData(appsData,extractAppData);
 
-                        }, (err) => {return catchErr('Could not connect to socket:', err.message,err,logger);});
+                        }, (err) => {return processErr('Could not connect to socket:', logger.err)(err);});
                     });
 
                     rd.on('end', () => {
@@ -306,8 +312,8 @@ function main() {
                         p.catch((err) => logger.err('last data word failed:' + err));
                     });
                 });
-            }, (err) => {return catchErr('could no iterate through words in file:', err, logger.debug);});
-        }, (err) => {return catchErr('could no iterate through words in file:', err, logger.debug);});
+            }, (err) => {return processErr('could no iterate through words in file:', logger.debug)(err);});
+        }, (err) => {return processErr('could no iterate through words in file:', logger.debug)(err);});
     }).catch(function(err) {
         logger.err('Err with word stash' + err.message);
     });
