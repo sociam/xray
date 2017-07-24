@@ -110,6 +110,11 @@ module.exports = {
         }
     },
 
+    doesAppExist: async(app) => {
+        var res = await query('SELECT * FROM apps WHERE id = $1', [app.appId]);
+        return (res.rowCount > 0);
+    },
+
 
     insertPlayApp: async(app, region) => {
 
