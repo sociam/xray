@@ -177,7 +177,7 @@ module.exports = {
                     app.screenshots,
                     app.video,
                     app.recentChanges,
-                    new Date().toDateString()
+                    current_date
                 ]);
             await client.query('COMMIT');
         } catch (e) {
