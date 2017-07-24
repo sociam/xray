@@ -49,6 +49,7 @@ module.exports = {
     /**
      *  Query the search_terms table to get a list of terms that are stale
      */
+    //TODO: Rename to 'getStaleSearchTerms'
     get_search_terms: async() => {
         logger.debug('Fetching Search Terms');
         var res = await query('SELECT search_term FROM search_terms WHERE age(last_searched) > interval \'1 month\'');
@@ -56,16 +57,21 @@ module.exports = {
         return res.rows;
     },
 
+    /**
+     * Sets the last_searched date of a specified search term to be the current date.
+     * Used to track 'stale' search terms.
+     */
+    //TODO: Rename to 'updateLastSearchedDate'
     update_searched_term_date: async(search_term) => {
         logger.debug('Setting last searched date for ' + search_term + ' to current date');
         var client = await connect();
         logger.debug('connected');
 
-        logger.debug('checking if search term exists in db.');
+        logger.debug('checking if ' + search_term + ' exists in db.');
         var check_res = await client.query('SELECT search_term FROM search_terms WHERE search_term = $1', [search_term]);
 
         if (check_res.rowCount > 0) {
-            logger.debug('Search term exists, updating last searched date.');
+            logger.debug(search_term + ' exists, updating last searched date.');
             var update_res = await client.query('UPDATE search_terms SET last_searched = CURRENT_DATE WHERE search_term = $1', [search_term]);
         }
 
@@ -80,7 +86,7 @@ module.exports = {
         var client = await connect();
         logger.debug('Connected');
 
-        logger.debug('Checking if query exists');
+        logger.debug('Checking if ' + searchTerm + ' exists before adding to search_terms');
         var checkRes = await client.query('SELECT search_term FROM search_terms WHERE search_term = $1', [searchTerm]);
 
         if (checkRes.rowCount == 0) {
@@ -92,7 +98,7 @@ module.exports = {
             } catch (err) {
                 logger.err(err);
                 await client.query('ROLLBACK');
-                logger.debug('DB Rolled Back');
+                logger.err('DB Rolled Back');
             } finally {
                 client.release();
             }

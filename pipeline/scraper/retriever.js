@@ -13,7 +13,6 @@ const region = 'us';
  */
 function insert_app_data(app_data) {
     // push the app data to the DB
-    logger.debug(app_data[0]);
     db.insertPlayApp(app_data, region).then(
         (win) => logger.info('App Data inserted' + win),
         (err) => logger.err('Inserting play app failed: ' + err)

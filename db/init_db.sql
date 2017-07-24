@@ -42,7 +42,7 @@ create table playstore_apps(
   screenshots          text[]                                                 ,
   video                  text                                                 ,
   recent_changes       text[]                                                 ,
-  crawl_date             date                                         not null.
+  crawl_date             date                                         not null,
   permissions          text[]                                                 
 );
 
