@@ -3,6 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"path"
@@ -15,20 +17,47 @@ var unit Unit
 type App struct {
 	dbId                   int
 	id, store, region, ver string
+	path, unpackdir        string
+	perms                  []Permission
+	hosts                  []string
 }
 
-func apkPath(app App) string {
-	return path.Join(
-		cfg.AppDir, app.id, app.store, app.region,
-		app.ver, app.id+".apk")
+func NewApp(dbId int, id, store, region, ver string) *App {
+	return &App{dbId: dbId, id: id, store: store, region: region, ver: ver}
 }
 
-func outDir(app App) string {
-	return path.Join(cfg.UnpackDir, app.id, app.store, app.region, app.ver)
+func AppByPath(path string) *App {
+	return &App{path: path}
 }
 
-func unpack(app App) error {
-	cmd := exec.Command("apktool", "d", apkPath(app), "-o", outDir(app))
+func (app *App) apkPath() string {
+	if app.path != "" {
+		return app.path
+	} else {
+		return path.Join(
+			cfg.AppDir, app.id, app.store, app.region,
+			app.ver, app.id+".apk")
+	}
+}
+
+func (app *App) outDir() string {
+	if app.unpackdir == "" {
+		if app.path != "" {
+			var err error
+			app.unpackdir, err = ioutil.TempDir(cfg.UnpackDir, path.Base(app.path))
+			if err != nil {
+				// maybe do something else?
+				log.Fatal("Failed to create temp dir in ", cfg.UnpackDir)
+			}
+		} else {
+			app.unpackdir = path.Join(cfg.UnpackDir, app.id, app.store, app.region, app.ver)
+		}
+	}
+	return app.unpackdir
+}
+
+func unpack(app *App) error {
+	cmd := exec.Command("apktool", "d", app.apkPath(), "-o", app.outDir())
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error '%s' unpacking apk; output below:\n%s",
@@ -37,8 +66,8 @@ func unpack(app App) error {
 	return nil
 }
 
-func cleanup(app App) error {
-	return os.RemoveAll(outDir(app))
+func cleanup(app *App) error {
+	return os.RemoveAll(app.outDir())
 }
 
 func checkDir(dir, name string) {
