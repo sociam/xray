@@ -144,7 +144,6 @@ module.exports = {
                     app.score,
                     app.reviews,
                     app.genreId,
-
                     app.familyGenreId,
                     app.minInstalls,
                     app.maxInstalls,
