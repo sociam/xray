@@ -158,7 +158,9 @@ function extractAppData(appData) {
         let message = Buffer(dbId + '-' + appData.appId + '-' + appStore + '-' + region + '-' + appData.version);
 
         //client.on('error', logger.err);
-        return client.send(message, 0, message.length, config.sockpath).catch((err) => logger.err('Could not connect to socket:', err.message));
+        return client.send(message, 0, message.length, config.sockpath).catch((err) => {
+            return catchErr('Could not connect to socket:', err.message, logger.err);
+        });
     }, () => {
         return Promise.reject();
     });
@@ -298,7 +300,7 @@ function main() {
                             });
                             //processAppData(appsData,extractAppData);
 
-                        }, (err) => logger.err('going through word list failed:' + err));
+                        }, (err) => {return catchErr('Could not connect to socket:', err.message,err,logger);});
                     });
 
                     rd.on('end', () => {
@@ -306,8 +308,8 @@ function main() {
                         p.catch((err) => logger.err('last data word failed:' + err));
                     });
                 });
-            }, (err) => logger.err('could no iterate through words in file:' + err));
-        }, (err) => logger.err('iterating through dir word list failed::' + err));
+            }, (err) => {return catchErr('could no iterate through words in file:', err, logger.debug);});
+        }, (err) => {return catchErr('could no iterate through words in file:', err, logger.debug);});
     }).catch(function(err) {
         logger.err('Err with word stash' + err.message);
     });
