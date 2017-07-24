@@ -53,7 +53,7 @@ func runServer() {
 		} else {
 			id, err := strconv.Atoi(split[0])
 			if err != nil {
-				fmt.Printf("Given app id %s isn't a number!\n", id)
+				fmt.Printf("Given app database id %s isn't a number!\n", split[0])
 				continue
 			}
 			app := App{id, split[1], split[2], split[3], split[4]}

@@ -11,6 +11,7 @@ ExecStart=/usr/bin/node /usr/local/lib/xray/scraper/scrape.js
 User=xray
 Group=xray
 Type=simple
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

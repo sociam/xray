@@ -30,7 +30,7 @@ let appsSaveDir = path.join(config.datadir, 'apps');
 
 function mkdirp(path) {
     path.split(path.sep).reduce((parentDir, childDir) => {
-        const curDir = path.resolve(parentDir, childDir);
+        const curDir = path.join(parentDir, childDir);
         if (!fs.existsSync(curDir)) {
             fs.mkdirSync(curDir);
         }
@@ -105,7 +105,7 @@ function downloadApp(appData, appSavePath) {
         logger.warning('DL process %d stderr:', downloadProcess.pid, data);
     });
 
-    return apkDownloader;
+    return apkDownloader.catch((err) => logger.err('Error downloading app:', err));
 }
 
 
@@ -135,6 +135,7 @@ function extractAppData(appData) {
                 }
                 logger.warning('Downloading failed with error:', err.message);
                 appData.isDownloaded = false;
+                return Promise.resolve();
             });
         }
     }).then(() => {
@@ -152,8 +153,8 @@ function extractAppData(appData) {
         logger.info('logging to DB');
         //client.on('error', logger.err);
         return client.send(message, 0, message.length, config.sockpath).catch((err) => logger.err('Could not connect to socket:', err.message));
-    }).catch(function() {
-        return;
+    }, () => {
+        return Promise.reject();
     });
 }
 
@@ -180,7 +181,7 @@ function extractAppData(appData) {
 function scrapeWord(word) {
     return gplay.search({
         term: word,
-        num: 4,
+        num: 120,
         region: region,
         price: 'free',
         fullDetail: true,
@@ -273,11 +274,14 @@ function main() {
 
                     rd.on('line', (word) => {
                         p = p.then(() => {
-                            logger.info('searching on word:' + word);
+                            logger.info('searching on word:', word);
                             write_latest_word(word);
-                            return scrapeWord(word).catch((err) => logger.err('scraping app on word failed:' + err));
+                            return scrapeWord(word).catch((err) => {
+                                logger.err('scraping app on word failed:' + err);
+                                return Promise.reject();
+                            });
                         }).then(function(appsData) {
-                            logger.info('Search apps total: ' + appsData.length);
+                            logger.debug('Search apps total:', appsData.length);
                             let r = Promise.resolve();
 
                             appsData.forEach(app => {
