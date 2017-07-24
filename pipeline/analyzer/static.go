@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -123,4 +124,43 @@ func simpleAnalyze(app App) ([]string, error) {
 	}
 
 	return appTrackers, nil
+}
+
+func findPackages(app App) ([]string, error) {
+	// TODO: fix error handling
+	paths := make(map[string]Unit)
+	err := os.Chdir(path.Join(outDir(app), "smali"))
+	if err != nil {
+		return []string{}, err
+	}
+
+	err = filepath.Walk(".",
+		func(fname string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+
+			fname = fname[2:]
+
+			if path.Ext(fname) == ".smali" {
+				paths[path.Dir(fname)] = unit
+			}
+
+			return nil
+		})
+
+	pkgs := make([]string, 0, 20)
+	for path, _ := range paths {
+		//pkg := strings.Replace(path, string(os.PathSeparator), ".", -1)
+		pkg := strings.Map(func(ch rune) rune {
+			if ch == os.PathSeparator {
+				return '.'
+			} else {
+				return ch
+			}
+		}, path)
+		pkgs = append(pkgs, pkg)
+	}
+
+	return pkgs, err
 }
