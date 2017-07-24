@@ -31,7 +31,7 @@ function connect() {
 }
 
 async function insertDev(dev) {
-    try{
+    try {
         var res = await query('SELECT id FROM developers WHERE $1 = ANY(email)', [dev.email]);
         if (res.rowCount > 0) {
             logger.debug('developer with email %s exists', dev.email);
@@ -45,7 +45,7 @@ async function insertDev(dev) {
         res = await query('INSERT INTO developers(email,name,store_site,site) VALUES ($1, $2, $3, $4) RETURNING id', [
             [dev.email], dev.name, store_site, dev.site
         ]);
-    } catch (err) { logger.err(err);}
+    } catch (err) { logger.err(err); }
     return res.rows[0].id;
 }
 
@@ -112,6 +112,7 @@ module.exports = {
 
     doesAppExist: async(app) => {
         var res = await query('SELECT * FROM apps WHERE id = $1', [app.appId]);
+        logger.debug('app query res count: ' + res.rowCount);
         return (res.rowCount > 0);
     },
 

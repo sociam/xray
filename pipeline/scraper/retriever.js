@@ -42,12 +42,14 @@ async function fetchAppData(searchTerm, numberOfApps, perSecond) {
         fullDetail: true
     });
 
+    // TODO: Move this to DB.
     await Promise.all(_.map(appDatas, async(app_data) => {
         logger.debug('inserting ' + app_data.title + ' to the DB');
 
-        if(await !db.doesAppExist(app_data)) {
+        let appExists = await db.doesAppExist(app_data);
+        if (!appExists) {
             await insertAppData(app_data);
-        } else  {
+        } else {
             logger.debug('App already existing', app_data.appId);
         }
     }));
@@ -60,11 +62,11 @@ async function fetch_search_terms() {
     return await db.getStaleSearchTerms();
 }
 
-(async () => {
+(async() => {
     let dbRows = await fetch_search_terms();
     let p = Promise.resolve();
     _.forEach(dbRows, (dbRow) => {
-        p = p.then(async () => {
+        p = p.then(async() => {
             logger.info('searching for: ' + dbRow.search_term);
             await fetchAppData(dbRow.search_term, 4, 1);
             await updateSearchedTermDate(dbRow.search_term);
