@@ -31,19 +31,21 @@ function connect() {
 }
 
 async function insertDev(dev) {
-    var res = await query('SELECT id FROM developers WHERE $1 = ANY(email)', [dev.email]);
-    if (res.rowCount > 0) {
-        logger.debug('developer with email %s exists', dev.email);
-        return res.rows[0].id;
-    }
+    try{
+        var res = await query('SELECT id FROM developers WHERE $1 = ANY(email)', [dev.email]);
+        if (res.rowCount > 0) {
+            logger.debug('developer with email %s exists', dev.email);
+            return res.rows[0].id;
+        }
 
-    logger.debug('inserting developer with email %s', dev.email);
+        logger.debug('inserting developer with email %s', dev.email);
 
-    // maybe dev id needs to be URL encoded?
-    let store_site = 'https://play.google.com/store/apps/developer?id=' + dev.id;
-    res = await query('INSERT INTO developers(email,name,store_site,site) VALUES ($1, $2, $3, $4) RETURNING id', [
-        [dev.email], dev.name, store_site, dev.site
-    ]);
+        // maybe dev id needs to be URL encoded?
+        let store_site = 'https://play.google.com/store/apps/developer?id=' + dev.id;
+        res = await query('INSERT INTO developers(email,name,store_site,site) VALUES ($1, $2, $3, $4) RETURNING id', [
+            [dev.email], dev.name, store_site, dev.site
+        ]);
+    } catch (err) { logger.err(err);}
     return res.rows[0].id;
 }
 
@@ -179,8 +181,7 @@ module.exports = {
                     app.contentRating,
                     app.screenshots,
                     app.video,
-                    app.recentChanges,
-                    new Date().toDateString()
+                    app.recentChanges
                 ]);
             await client.query('COMMIT');
         } catch (e) {
