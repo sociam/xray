@@ -31,21 +31,19 @@ function connect() {
 }
 
 async function insertDev(dev) {
-    try {
-        var res = await query('SELECT id FROM developers WHERE $1 = ANY(email)', [dev.email]);
-        if (res.rowCount > 0) {
-            logger.debug('developer with email %s exists', dev.email);
-            return res.rows[0].id;
-        }
+    var res = await query('SELECT id FROM developers WHERE $1 = ANY(email)', [dev.email]);
+    if (res.rowCount > 0) {
+        logger.debug('developer with email %s exists', dev.email);
+        return res.rows[0].id;
+    }
 
-        logger.debug('inserting developer with email %s', dev.email);
+    logger.debug('inserting developer with email %s', dev.email);
 
-        // maybe dev id needs to be URL encoded?
-        let store_site = 'https://play.google.com/store/apps/developer?id=' + dev.id;
-        res = await query('INSERT INTO developers(email,name,store_site,site) VALUES ($1, $2, $3, $4) RETURNING id', [
-            [dev.email], dev.name, store_site, dev.site
-        ]);
-    } catch (err) { logger.err(err); }
+    // maybe dev id needs to be URL encoded?
+    let store_site = 'https://play.google.com/store/apps/developer?id=' + dev.id;
+    res = await query('INSERT INTO developers(email,name,store_site,site) VALUES ($1, $2, $3, $4) RETURNING id', [
+        [dev.email], dev.name, store_site, dev.site
+    ]);
     return res.rows[0].id;
 }
 
@@ -54,7 +52,6 @@ module.exports = {
     /**
      *  Query the search_terms table to get a list of terms that are stale
      */
-    //TODO: Rename to 'getStaleSearchTerms'
     getStaleSearchTerms: async() => {
         logger.debug('Fetching Search Terms');
         var res = await query('SELECT search_term FROM search_terms WHERE age(last_searched) > interval \'1 month\'');
@@ -66,7 +63,6 @@ module.exports = {
      * Sets the last_searched date of a specified search term to be the current date.
      * Used to track 'stale' search terms.
      */
-    //TODO: Rename to 'updateLastSearchedDate'
     updateLastSearchedDate: async(search_term) => {
         logger.debug('Setting last searched date for ' + search_term + ' to current date');
         var client = await connect();
