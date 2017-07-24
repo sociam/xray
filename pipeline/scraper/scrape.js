@@ -67,8 +67,8 @@ let waitForPipe = () => {
     } else {
         main();
     }
-}; //waitForPipe();
-main();
+}; waitForPipe();
+
 //TODO: move region to config or section to iterate over
 let region = 'us';
 let appStore = 'play';
@@ -187,7 +187,7 @@ function extractAppData(appData) {
 function scrapeWord(word) {
     return gplay.search({
         term: word,
-        num: 4,
+        num: 120,
         region: region,
         price: 'free',
         fullDetail: true,
