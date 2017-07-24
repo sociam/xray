@@ -12,11 +12,15 @@ const region = 'us';
  * @param {*The app data json that is to be inserted into the databae.} app_data 
  */
 function insertAppData(app_data) {
+    //Checking version data - correct version to update date
+    if (!app_data.version || app_data.version === 'Varies with device') {
+        logger.debug('Version not found defaulting too', app_data.updated);
+        let formatDate = app_data.updated.replace(/\s+/g, '').replace(',', '/');
+        app_data.version = formatDate;
+    }
+
     // push the app data to the DB
-    db.insertPlayApp(app_data, region).then(
-        (win) => logger.info('App Data inserted' + win),
-        (err) => logger.err('Inserting play app failed: ' + err)
-    );
+    return db.insertPlayApp(app_data, region);
 }
 
 function updateSearchedTermDate(searchTerm) {
@@ -25,47 +29,40 @@ function updateSearchedTermDate(searchTerm) {
 }
 
 // TODO Add Permission list to app Data JSON
-function fetchAppData(searchTerm, numberOfApps, perSecond) {
-    gplay.search({
+async function fetchAppData(searchTerm, numberOfApps, perSecond) {
+    let appDatas = await gplay.search({
         term: searchTerm,
         num: numberOfApps,
         throttle: perSecond,
         region: region,
         fullDetail: true
-    }).then(
-        (appDatas) => {
-            _.forEach(
-                appDatas,
-                (app_data) => {
-                    logger.debug('inserting ' + app_data.title + ' to the DB');
-                    insertAppData(app_data);
-                }
-            );
-        },
-        (err) => logger.err(err.message)
-    );
+    });
+
+    await Promise.all(_.map(appDatas, async(app_data) => {
+        logger.debug('inserting ' + app_data.title + ' to the DB');
+        await insertAppData(app_data);
+    }));
 }
 
 /**
  * uses db.js to fetch search terms from the database.
  */
-function fetch_search_terms() {
-    return db.getStaleSearchTerms();
+async function fetch_search_terms() {
+    return await db.getStaleSearchTerms();
 }
 
-fetch_search_terms().then(
-    (dbRows) => {
-        _.forEach(
-            dbRows,
-            (dbRow) => {
-                logger.info('searching for: ' + dbRow.search_term);
-                fetchAppData(dbRow.search_term, 4, 1);
-                updateSearchedTermDate(dbRow.search_term);
-            }
-        );
-    },
-    (err) => logger.err(err)
-);
+(async () => {
+    let dbRows = await fetch_search_terms();
+    let p = Promise.resolve();
+    _.forEach(dbRows, (dbRow) => {
+        p = p.then(async () => {
+            logger.info('searching for: ' + dbRow.search_term);
+            await fetchAppData(dbRow.search_term, 4, 1);
+            await updateSearchedTermDate(dbRow.search_term);
+        });
+    });
+    return await p;
+})();
 
 /**
  *  Example of promise to fetch permissions from Google Play Store.
