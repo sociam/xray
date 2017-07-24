@@ -28,16 +28,16 @@ const logger = require('./logger.js');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 
-function mkdirp(path) {
-    path.split(path.sep).reduce((parentDir, childDir) => {
+function mkdirp(dir) {
+    dir.split(path.sep).reduce((parentDir, childDir) => {
         const curDir = path.join(parentDir, childDir);
         if (!fs.existsSync(curDir)) {
             fs.mkdirSync(curDir);
         }
-
         return curDir;
-    }, path.isAbsolute ? path.sep : '');
+    }, path.isAbsolute(dir) ? path.sep : '');
 }
+
 
 try {
     let dirStats = fs.statSync(appsSaveDir);
