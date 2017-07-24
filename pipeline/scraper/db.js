@@ -5,7 +5,7 @@ const config = require('/etc/xray/config.json');
 const pg = require('pg');
 const logger = require('./logger.js');
 
-const db_cfg = config.scraper.db;
+var db_cfg = config.scraper.db;
 db_cfg.max = 10;
 db_cfg.idleTimeoutMillis = 30000;
 
@@ -33,8 +33,11 @@ function connect() {
 async function insertDev(dev) {
     var res = await query('SELECT id FROM developers WHERE $1 = ANY(email)', [dev.email]);
     if (res.rowCount > 0) {
+        logger.debug('developer with email %s exists', dev.email);
         return res.rows[0].id;
     }
+
+    logger.debug('inserting developer with email %s', dev.email);
 
     // maybe dev id needs to be URL encoded?
     let store_site = 'https://play.google.com/store/apps/developer?id=' + dev.id;

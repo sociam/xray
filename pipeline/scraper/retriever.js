@@ -37,6 +37,7 @@ function fetchAppData(searchTerm, numberOfApps, perSecond) {
             _.forEach(
                 appDatas,
                 (app_data) => {
+                    logger.debug('inserting ' + app_data.title + ' to the DB');
                     insertAppData(app_data);
                 }
             );
