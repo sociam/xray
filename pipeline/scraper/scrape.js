@@ -146,13 +146,12 @@ function extractAppData(appData) {
         }
     }).then(() => {
         logger.info('Download process complete for ' + appData.appId);
-
-        // TODO: DB Comms... this can be factorised.
         let db = require('./db');
+
         return db.insertPlayApp(appData, region).catch((err) => {
             logger.err('Inserting play app failed', err, region);
             return err;
-        }).catch((err) => { return catchErr('Could not write to db:', err.message, logger.err); });
+        });
     }).then(async (dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
         let message = Buffer(dbId + '-' + appData.appId + '-' + appStore + '-' + region + '-' + appData.version);
