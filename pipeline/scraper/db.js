@@ -156,7 +156,7 @@ module.exports = {
             }
 
             await client.query(
-                'INSERT INTO playstore_apps VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)', [
+                'INSERT INTO playstore_apps VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, current_date)', [
                     verId,
                     app.title,
                     app.summary,
@@ -177,7 +177,7 @@ module.exports = {
                     app.screenshots,
                     app.video,
                     app.recentChanges,
-                    current_date
+                    new Date().toDateString()
                 ]);
             await client.query('COMMIT');
         } catch (e) {
