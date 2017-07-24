@@ -69,7 +69,7 @@ module.exports = {
 
         logger.debug('checking if ' + search_term + ' exists in db.');
         var check_res = await client.query('SELECT search_term FROM search_terms WHERE search_term = $1', [search_term]);
-
+        logger.debug(check_res.rowCount + ' rows found for ' + search_term);
         if (check_res.rowCount > 0) {
             logger.debug(search_term + ' exists, updating last searched date.');
             var update_res = await client.query('UPDATE search_terms SET last_searched = CURRENT_DATE WHERE search_term = $1', [search_term]);
