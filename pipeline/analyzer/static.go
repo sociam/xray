@@ -23,9 +23,9 @@ type AndroidManifest struct {
 	Sdk23Perms []Permission `xml:"uses-permission-sdk-23"`
 }
 
-func parseManifest(app App) (*AndroidManifest, error) {
+func parseManifest(app *App) (*AndroidManifest, error) {
 	manifest := AndroidManifest{}
-	manifestFile, err := os.Open(path.Join(outDir(app), "AndroidManifest.xml"))
+	manifestFile, err := os.Open(path.Join(app.outDir(), "AndroidManifest.xml"))
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ type Company struct {
 	Description  string   `json:"description"`
 }
 
-func simpleAnalyze(app App) ([]string, error) {
+func simpleAnalyze(app *App) ([]string, error) {
 	//TODO: fix error handling
 
 	//TODO: replace with DB calls
@@ -97,7 +97,7 @@ func simpleAnalyze(app App) ([]string, error) {
 	// 	return nil
 	// }
 
-	cmd := exec.Command("grep", "-Er", "\"https?://[^ >]+\"", outDir(app))
+	cmd := exec.Command("grep", "-Er", "\"https?://[^ >]+\"", app.outDir())
 	urls, err := cmd.Output()
 	if err != nil {
 		return []string{}, err
@@ -129,7 +129,7 @@ func simpleAnalyze(app App) ([]string, error) {
 func findPackages(app App) ([]string, error) {
 	// TODO: fix error handling
 	paths := make(map[string]Unit)
-	err := os.Chdir(path.Join(outDir(app), "smali"))
+	err := os.Chdir(path.Join(app.outDir(), "smali"))
 	if err != nil {
 		return []string{}, err
 	}

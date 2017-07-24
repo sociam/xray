@@ -22,7 +22,7 @@ func openDb() (*XrayDb, error) {
 	return &XrayDb{db}, nil
 }
 
-func (db *XrayDb) addPerms(app App, pPerms []Permission) error {
+func (db *XrayDb) addPerms(app *App, pPerms []Permission) error {
 	perms := make([]string, 0, len(pPerms))
 	for _, perm := range pPerms {
 		perms = append(perms, perm.Id)
@@ -51,7 +51,7 @@ func (db *XrayDb) addPerms(app App, pPerms []Permission) error {
 	return nil
 }
 
-func (db *XrayDb) addHosts(app App, hosts []string) error {
+func (db *XrayDb) addHosts(app *App, hosts []string) error {
 	var dbHosts []string
 	err := db.QueryRow("SELECT hosts FROM app_hosts WHERE id = $1", app.dbId).
 		Scan(pq.Array(&dbHosts))

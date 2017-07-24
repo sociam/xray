@@ -56,37 +56,9 @@ func runServer() {
 				fmt.Printf("Given app database id %s isn't a number!\n", split[0])
 				continue
 			}
-			app := App{id, split[1], split[2], split[3], split[4]}
+			app := NewApp(id, split[1], split[2], split[3], split[4])
 			fmt.Printf("Got app %v\n", app)
-			fmt.Print("Unpacking... ")
-			err = unpack(app)
-			if err != nil {
-				fmt.Println()
-				fmt.Println(err.Error())
-				continue
-			}
-			fmt.Println("done.")
-
-			fmt.Println("Getting permissions...")
-			manifest, err := parseManifest(app)
-			if err != nil {
-				fmt.Println("Error parsing manifest: ", err.Error())
-			} else {
-				perms := manifest.getPerms()
-				fmt.Printf("Permissions found: %v\n\n", perms)
-				db.addPerms(app, perms)
-			}
-
-			fmt.Println("Running simple analysis... ")
-			out, err := simpleAnalyze(app)
-			if err != nil {
-				fmt.Println(err.Error())
-				continue
-			}
-			fmt.Printf("Hosts found: %v\n\n", out)
-			err = db.addHosts(app, out)
-
-			cleanup(app)
+			analyze(app)
 		}
 	}
 }

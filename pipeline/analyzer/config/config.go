@@ -53,7 +53,7 @@ func Load(cfgFile string) Config {
 	}
 	cfg.AppDir = path.Join(cfg.DataDir, "apps")
 	if cfg.UnpackDir == "" {
-		cfg.UnpackDir = "/tmp/unpacked_apks"
+		cfg.UnpackDir, err = ioutil.TempDir("", "xray-analyzer")
 	}
 	if cfg.SockPath == "" {
 		cfg.SockPath = "/var/run/apkScraper"
