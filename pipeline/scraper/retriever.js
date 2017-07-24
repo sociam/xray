@@ -20,6 +20,11 @@ function insert_app_data(app_data) {
     );
 }
 
+function update_searched_term_date(search_term) {
+    logger.debug('setting last search date to today: ' + search_term);
+    db.update_searched_term_date(search_term);
+}
+
 // TODO Add Permission list to app Data JSON
 function fetch_app_data(search_term, number_of_apps, per_second) {
     gplay.search({
@@ -32,7 +37,9 @@ function fetch_app_data(search_term, number_of_apps, per_second) {
         (app_datas) => {
             _.forEach(
                 app_datas,
-                (app_data) => insert_app_data(app_data)
+                (app_data) => {
+                    insert_app_data(app_data);
+                }
             );
         },
         (err) => logger.err(err.message)
@@ -51,7 +58,9 @@ fetch_search_terms().then(
         _.forEach(
             db_rows,
             (db_row) => {
+                logger.info('searching for: ' + db_row.search_term);
                 fetch_app_data(db_row.search_term, 4, 1);
+                update_searched_term_date(db_row.search_term);
             }
         );
     },

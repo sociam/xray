@@ -44,15 +44,32 @@ async function insertDev(dev) {
     return res.rows[0].id;
 }
 
+// TODO: change _ names to camelCase names.
 module.exports = {
     /**
      *  Query the search_terms table to get a list of terms that are stale
      */
     get_search_terms: async() => {
         logger.debug('Fetching Search Terms');
-        var res = await query('SELECT search_term FROM search_terms WHERE current_date > last_searched + interval \'1 month\'');
+        var res = await query('SELECT search_term FROM search_terms WHERE age(last_searched) > interval \'1 month\'');
         logger.debug(res.rows.length + ' terms fetched');
         return res.rows;
+    },
+
+    update_searched_term_date: async(search_term) => {
+        logger.debug('Setting last searched date for ' + search_term + ' to current date');
+        var client = await connect();
+        logger.debug('connected');
+
+        logger.debug('checking if search term exists in db.');
+        var check_res = await client.query('SELECT search_term FROM search_terms WHERE search_term = $1', [search_term]);
+
+        if (check_res.rowCount > 0) {
+            logger.debug('Search term exists, updating last searched date.');
+            var update_res = await client.query('UPDATE search_terms SET last_searched = CURRENT_DATE WHERE search_term = $1', [search_term]);
+        }
+
+        return update_res;
     },
 
     /**
