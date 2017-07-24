@@ -31,7 +31,7 @@ let appsSaveDir = path.join(config.datadir, 'apps');
 
 function catchErr(msg, err, func) {
     func(msg,err);
-    return Promise.resolve();
+    return Promise.reject();
 }
 function mkdirp(dir) {
     dir.split(path.sep).reduce((parentDir, childDir) => {
