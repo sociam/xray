@@ -12,6 +12,7 @@ const region = 'us';
  * @param {*The app data json that is to be inserted into the databae.} app_data 
  */
 function insertAppData(app_data) {
+
     //Checking version data - correct version to update date
     if (!app_data.version || app_data.version === 'Varies with device') {
         logger.debug('Version not found defaulting too', app_data.updated);
@@ -22,6 +23,9 @@ function insertAppData(app_data) {
     // push the app data to the DB
     return db.insertPlayApp(app_data, region);
 }
+
+
+
 
 function updateSearchedTermDate(searchTerm) {
     logger.debug('setting last search date to today: ' + searchTerm);
@@ -40,7 +44,12 @@ async function fetchAppData(searchTerm, numberOfApps, perSecond) {
 
     await Promise.all(_.map(appDatas, async(app_data) => {
         logger.debug('inserting ' + app_data.title + ' to the DB');
-        await insertAppData(app_data);
+
+        if(await !db.doesAppExist(app_data)) {
+            await insertAppData(app_data);
+        } else  {
+            logger.debug('App already existing', app_data.appId);
+        }
     }));
 }
 
