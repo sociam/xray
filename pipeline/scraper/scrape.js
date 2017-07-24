@@ -137,7 +137,7 @@ function extractAppData(appData) {
                 try {
                     fs.rmdir(appSavePath);
                 } catch (err) {
-                    // TODO: something
+                    return catchErr('Could not remove app saved path', err, logger.err);
                 }
                 logger.warning('Downloading failed with error:', err.message);
                 appData.isDownloaded = false;
