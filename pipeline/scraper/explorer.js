@@ -51,7 +51,7 @@ function writeScrapedWords(word, location) {
  * Used returns an array where each line is a search term.
  * @param {*the location of the file that is to be read} file_location 
  */
-function open_search_terms(file_location) {
+function openSearchTerms(file_location) {
     return fs.readFileSync(file_location).toString().split('\n');
 }
 
@@ -59,9 +59,9 @@ function open_search_terms(file_location) {
  * Parses a file of search terms, adding each line as a search term to the DB
  * @param {*Location of a file to import search terms from} file_location 
  */
-function import_file_terms(file_location) {
+function importFileTerms(file_location) {
     _.forEach(
-        open_search_terms(file_location),
+        openSearchTerms(file_location),
         (search_term) => insertSearchTerm(search_term)
     );
 }

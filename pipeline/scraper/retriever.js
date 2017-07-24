@@ -11,7 +11,7 @@ const region = 'us';
  * Inserts app data into the db using db.js
  * @param {*The app data json that is to be inserted into the databae.} app_data 
  */
-function insert_app_data(app_data) {
+function insertAppData(app_data) {
     // push the app data to the DB
     db.insertPlayApp(app_data, region).then(
         (win) => logger.info('App Data inserted' + win),
@@ -19,25 +19,25 @@ function insert_app_data(app_data) {
     );
 }
 
-function update_searched_term_date(search_term) {
-    logger.debug('setting last search date to today: ' + search_term);
-    db.update_searched_term_date(search_term);
+function updateSearchedTermDate(searchTerm) {
+    logger.debug('setting last search date to today: ' + searchTerm);
+    db.updateLastSearchedDate(searchTerm);
 }
 
 // TODO Add Permission list to app Data JSON
-function fetch_app_data(search_term, number_of_apps, per_second) {
+function fetchAppData(searchTerm, numberOfApps, perSecond) {
     gplay.search({
-        term: search_term,
-        num: number_of_apps,
-        throttle: per_second,
+        term: searchTerm,
+        num: numberOfApps,
+        throttle: perSecond,
         region: region,
         fullDetail: true
     }).then(
-        (app_datas) => {
+        (appDatas) => {
             _.forEach(
-                app_datas,
+                appDatas,
                 (app_data) => {
-                    insert_app_data(app_data);
+                    insertAppData(app_data);
                 }
             );
         },
@@ -49,17 +49,17 @@ function fetch_app_data(search_term, number_of_apps, per_second) {
  * uses db.js to fetch search terms from the database.
  */
 function fetch_search_terms() {
-    return db.get_search_terms();
+    return db.getStaleSearchTerms();
 }
 
 fetch_search_terms().then(
-    (db_rows) => {
+    (dbRows) => {
         _.forEach(
-            db_rows,
-            (db_row) => {
-                logger.info('searching for: ' + db_row.search_term);
-                fetch_app_data(db_row.search_term, 4, 1);
-                update_searched_term_date(db_row.search_term);
+            dbRows,
+            (dbRow) => {
+                logger.info('searching for: ' + dbRow.search_term);
+                fetchAppData(dbRow.search_term, 4, 1);
+                updateSearchedTermDate(dbRow.search_term);
             }
         );
     },

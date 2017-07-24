@@ -50,7 +50,7 @@ module.exports = {
      *  Query the search_terms table to get a list of terms that are stale
      */
     //TODO: Rename to 'getStaleSearchTerms'
-    get_search_terms: async() => {
+    getStaleSearchTerms: async() => {
         logger.debug('Fetching Search Terms');
         var res = await query('SELECT search_term FROM search_terms WHERE age(last_searched) > interval \'1 month\'');
         logger.debug(res.rows.length + ' terms fetched');
@@ -62,7 +62,7 @@ module.exports = {
      * Used to track 'stale' search terms.
      */
     //TODO: Rename to 'updateLastSearchedDate'
-    update_searched_term_date: async(search_term) => {
+    updateLastSearchedDate: async(search_term) => {
         logger.debug('Setting last searched date for ' + search_term + ' to current date');
         var client = await connect();
         logger.debug('connected');
