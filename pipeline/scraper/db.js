@@ -47,10 +47,12 @@ async function insertDev(dev) {
 module.exports = {
 
     queryAppsToDownload: async(batch) =>{
-        var res = await query('SELECT * FROM app_versions WHERE downloaded = True');
-        if (res.rowCount > 0) {
-            return; //None found
+        var res = await query('SELECT * FROM app_versions WHERE downloaded = False');
+        if (res.rowCount <= 0) {
+            logger.warning('No downloads found. Consider slowing down donwloader or speeding up scraper');
+            return;
         }   
+        logger.info('Found apps to download: ', res.rowCount);
         return res.rows.splice(0,batch);
     },
 
