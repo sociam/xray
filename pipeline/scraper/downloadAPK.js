@@ -4,16 +4,14 @@ Download spawner process
 
 */
 const config = require('/etc/xray/config.json');
-
 const logger = require('./logger.js');
-
 const fs = require('fs');
 const path = require('path');
+const db = require('./db');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 let region = 'us';
 let appStore = 'play';
-
 
 function mkdirp(appSavePath) {
     //bug dir branch code
@@ -56,21 +54,35 @@ function downloadApp(appData, appSavePath) {
     return apkDownloader.catch((err) => logger.err('Error downloading app:', err));
 }
 
-function retreiveLatestApps() {
-
-    
-}
 
 function main () {
+    let appsData = queryAppsToDownload(10);
 
-    downloadApp(appData, appSavePath).catch((err) => {
+    let r = Promise.resolve();
+
+    appsData.forEach(app => {
+
+
+        r = r.then(() => {
+            logger.info('Performing download on ', app.appId);
+            let appSavePath = resolveAPKDir(app);
+
+            downloadApp(app, appSavePath).then(() => {
+                //Update app in db
+                return db.updateDownloadedApp(app).catch( (err) => {
+                    logger.debug("Err when updated the downloaded app", err); 
+                }) 
+            }).catch((err) => {
                 try {
                     fs.rmdir(appSavePath);
                 } catch (err) {
-                    // TODO: something
+                    logger.debug("The directory was never orginally created...", appsSaveDir);
                 }
                 logger.warning('Downloading failed with error:', err.message);
-                appData.isDownloaded = false;
+                
                 return Promise.resolve();
-            });
+            }); 
+        r.then(() => resolve());
+        });
+    });
 }
