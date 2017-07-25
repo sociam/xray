@@ -23,13 +23,7 @@ function mkdirp(dir) {
 }
 
 function resolveAPKDir(appData) {
-    logger.info('appdir: '+ config.datadir, '\nappId '+ appData.app, '\nappStore '+ appData.store, '\nregion '+ appData.region, '\nversion '+ appData.version);
-    //log('appdir:'+ config.appdir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
-    if (!appData.version || appData.version === 'Varies with device') {
-        logger.debug('Version not found defaulting too', appData.updated);
-        let formatDate = appData.updated.replace(/\s+/g, '').replace(',', '/');
-        appData.version = formatDate;
-    }
+    logger.info('appdir: '+appsSaveDir, '\nappId '+ appData.app, '\nappStore '+ appData.store, '\nregion '+ appData.region, '\nversion '+ appData.version);
 
     let appSavePath = path.join(appsSaveDir, appData.app, appData.store, appData.region, appData.version);
     logger.info('App desired save dir ' + appSavePath);
@@ -38,7 +32,7 @@ function resolveAPKDir(appData) {
 }
 
 function downloadApp(appData, appSavePath) {
-    const args = ['-pd', appData.appId, '-f', appSavePath, '-c', config.credDownload]; /* Command line args for gplay cli */
+    const args = ['-pd', appData.app, '-f', appSavePath, '-c', config.credDownload]; /* Command line args for gplay cli */
     const spw = require('child-process-promise').spawn;
     logger.info('Passing args to downloader' + args);
     const apkDownloader = spw('gplaycli', args);
@@ -69,7 +63,7 @@ function main () {
                     logger.info('Performing download on ', app.app);
                     let appSavePath = resolveAPKDir(app);
 
-                    appSavePath.then( appSavePath => {downloadApp(app, appSavePath).then(() => {
+                    appSavePath.then( appSavePath => {downloadApp(app, appSavePath[1]).then(() => {
                         //Update app in db
                         return db.updateDownloadedApp(app).catch( (err) => {
                             logger.debug('Err when updated the downloaded app', err); 
