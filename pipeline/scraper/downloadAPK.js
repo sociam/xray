@@ -10,8 +10,7 @@ const path = require('path');
 const db = require('./db');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
-let region = 'us';
-let appStore = 'play';
+
 
 function mkdirp(dir) {
     dir.split(path.sep).reduce((parentDir, childDir) => {
@@ -24,7 +23,7 @@ function mkdirp(dir) {
 }
 
 function resolveAPKDir(appData) {
-    logger.info('appdir:'+ config.datadir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
+    logger.info('appdir: '+ config.datadir, '\nappId '+ appData.app, '\nappStore '+ appData.store, '\nregion '+ appData.region, '\nversion '+ appData.version);
     //log('appdir:'+ config.appdir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
     if (!appData.version || appData.version === 'Varies with device') {
         logger.debug('Version not found defaulting too', appData.updated);
@@ -32,7 +31,7 @@ function resolveAPKDir(appData) {
         appData.version = formatDate;
     }
 
-    let appSavePath = path.join(appsSaveDir, appData.appId, appStore, region, appData.version);
+    let appSavePath = path.join(appsSaveDir, appData.app, appData.store, appData.region, appData.version);
     logger.info('App desired save dir ' + appSavePath);
 
     return Promise.all([fs.pathExists(appSavePath), Promise.resolve(appSavePath)]);
@@ -67,10 +66,10 @@ function main () {
         apps.forEach(app => {
             r = r.then(() => {
                 return new Promise((resolve) => {
-                    logger.info('Performing download on ', app.appId);
+                    logger.info('Performing download on ', app.app);
                     let appSavePath = resolveAPKDir(app);
 
-                    downloadApp(app, appSavePath).then(() => {
+                    appSavePath.then( appSavePath => {downloadApp(app, appSavePath).then(() => {
                         //Update app in db
                         return db.updateDownloadedApp(app).catch( (err) => {
                             logger.debug('Err when updated the downloaded app', err); 
@@ -87,6 +86,7 @@ function main () {
                     }); 
                     
                     r.then(() => resolve());
+                    });
                 });
             });
         });
