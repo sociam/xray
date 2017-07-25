@@ -45,6 +45,15 @@ async function insertDev(dev) {
 }
 
 module.exports = {
+
+    queryAppsToDownload: async(batch) =>{
+        var res = await query('SELECT * FROM app_versions WHERE downloaded = True');
+        if (res.rowCount > 0) {
+            return; //None found
+        }   
+        return res.rows.splice(0,batch);
+    },
+
     insertPlayApp: async(app, region) => {
 
         var devId = await insertDev({
