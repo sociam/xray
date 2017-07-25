@@ -1,0 +1,183 @@
+import { Component, Input, OnInit, DoCheck } from '@angular/core';
+import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
+import { AppUsage } from '../usagetable/usagetable.component';
+import * as d3 from 'd3';
+import * as _ from 'lodash';
+
+interface AppImpact {
+  appid: string;
+  companyid: string;
+  impact: number;
+};
+
+@Component({
+  selector: 'app-refinebar',
+  templateUrl: './refinebar.component.html',
+  styleUrls: ['./refinebar.component.css']
+})
+export class RefinebarComponent implements OnInit, DoCheck {
+
+
+  app2hosts: App2Hosts;
+  host2companyid: String2String;
+  companyid2info: CompanyID2Info;
+  host2short: String2String;
+  host2PI: Host2PITypes;
+  @Input() usage: AppUsage[];
+
+  constructor(private loader: LoaderService) {
+  //   this.usage = [
+  //     { appid: 'bbc iplayer', mins: 50  },
+  //     { appid: 'grindr', mins: 14  },
+  //     { appid: 'peppa-paintbox', mins: 40  },
+  //     { appid: 'Mi Fit', mins: 4  }
+  //   ];
+  // 
+  }
+
+  ngDoCheck(): void {
+    console.log('changes ', this.usage);
+    this.render();
+  }
+
+  ngOnInit() {
+    (<any>window).usage = this.usage;
+    return Promise.all([
+      this.loader.getAppToHosts().then((a2h) => this.app2hosts = a2h),
+      this.loader.getHostToCompany().then((h2c) => this.host2companyid = h2c),
+      this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
+      this.loader.getHostToShort().then((h2h) => this.host2short = h2h),
+      this.loader.getHostToPITypes().then((h2pit) => this.host2PI = h2pit)
+    ]).then(() => {
+      console.log('done with loading -> ', this.app2hosts);
+      this.render();
+    });
+  }
+
+  compileImpacts(usage: AppUsage[]): AppImpact[] {
+    // folds privacy impact in simply by doing a weighted sum over hosts
+    // usage has to be in a standard unit: days, minutes
+    // first, normalise usage
+
+    // contirbutions [ { app: app, to: company, impact:val } ... ]
+    console.log(usage);
+    const total = _.reduce(usage, (tot, appusage): number => tot + appusage.mins, 0),
+      impacts = usage.map((u) => ({ ...u, impact: u.mins / (1.0 * total)}));
+    console.log('impacts ~~~ ', impacts);
+    return _.flatten(impacts.map((usg): AppImpact[] => {
+        const hosts = this.app2hosts[usg.appid];
+        if (hosts === undefined) { console.warn('No app found ', usg.appid); return []; }
+
+        return _.uniq(hosts.map((host) => {
+          const company = this.host2companyid[host];
+          if (company === undefined) { console.warn('no company for ', host); return undefined; }
+          return company;
+        }).filter((x) => x)).map((company) => ({ appid: usg.appid, companyid: company, impact: usg.impact }));
+    }));
+  }
+
+  render() {
+
+    d3.select('svg').selectAll('*').remove();
+
+    if (this.usage.length < 2 || this.usage.reduce((total, x) => total + x.mins, 0) < 10) { 
+      return;
+    }
+
+    // to prepare for stack() let's
+    let usage = this.usage,
+      impacts = this.compileImpacts(usage),
+      apps = _.uniq(impacts.map((x) => x.appid)),
+      companies = _.uniq(impacts.map((x) => x.companyid)),
+      get_impact = (cid, aid) => {
+        const t = impacts.filter((imp) => imp.companyid === cid && imp.appid === aid)[0];
+        return t !== undefined ? t.impact : 0;
+      },
+      by_company = companies.map((c) => ({company: c,
+        total: apps.reduce((total, aid) => total += get_impact(c, aid), 0),
+        ..._.fromPairs(apps.map((aid) => [aid, get_impact(c, aid)]))}));
+
+    // sort apps
+    apps.sort((a, b) => _.filter(usage, {appid: b})[0].mins - _.filter(usage, {appid: a})[0].mins);
+
+    // console.log('apps by impact ', apps, impacts);
+    by_company.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
+    
+    // re-order companies
+    companies = by_company.map((bc) => bc.company);
+
+    console.log('by company ~', by_company.map((c) => c.company), by_company);
+
+    const stack = d3.stack(),
+      out = stack.keys(apps)(by_company);
+    // console.log(out);
+
+    const svg = d3.select('svg'),
+      margin = { top: 20, right: 20, bottom: 30, left: 40 },
+      width = +svg.attr('width') - margin.left - margin.right,
+      height = +svg.attr('height') - margin.top - margin.bottom,
+      g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
+      x = d3.scaleBand()
+        .rangeRound([0, width]).paddingInner(0.05).align(0.1)
+        .domain(companies),
+      y = d3.scaleLinear()
+        .rangeRound([height, 0])
+        .domain([0, d3.max(by_company, function (d) { return d.total; })]).nice(),
+      z = d3.scaleOrdinal()
+        .range(['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#a05d56', '#d0743c', '#ff8c00'])
+        .domain(apps);    
+
+    g.append('g')
+      .selectAll('g')
+      .data(d3.stack().keys(apps)(by_company))
+      .enter().append('g')
+      .attr('fill', function (d) { return z(d.key); })
+      .selectAll('rect')
+      .data(function (d) { return d; })
+      .enter().append('rect')
+      .attr('x', function (d) { return x(d.data.company); })
+      .attr('y', function (d) { return y(d[1]); })
+      .attr('height', function (d) { return y(d[0]) - y(d[1]); })
+      .attr('width', x.bandwidth());
+
+    g.append('g')
+      .attr('class', 'axis')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(d3.axisBottom(x));
+
+    g.append('g')
+      .attr('class', 'axis')
+      .call(d3.axisLeft(y).ticks(null, 's'))
+      .append('text')
+      .attr('x', 2)
+      .attr('y', y(y.ticks().pop()) + 0.5)
+      .attr('dy', '0.32em')
+      .attr('fill', '#000')
+      .attr('font-weight', 'bold')
+      .attr('text-anchor', 'start')
+      .text('Impact');
+
+    const legend = g.append('g')
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', 10)
+      .attr('text-anchor', 'end')
+      .selectAll('g')
+      .data(apps.slice().reverse())
+      .enter().append('g')
+      .attr('transform', function (d, i) { return 'translate(0,' + i * 20 + ')'; });
+
+    legend.append('rect')
+      .attr('x', width - 19)
+      .attr('width', 19)
+      .attr('height', 19)
+      .attr('fill', z);
+
+    legend.append('text')
+      .attr('x', width - 24)
+      .attr('y', 9.5)
+      .attr('dy', '0.32em')
+      .text(function (d) { return d; });
+
+  // }
+  }
+}

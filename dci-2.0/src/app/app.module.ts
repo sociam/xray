@@ -3,14 +3,20 @@ import { NgModule } from '@angular/core';
 import { LoaderService } from './loader.service';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
+import { RefinebarComponent } from './refinebar/refinebar.component';
+import { UsagetableComponent } from './usagetable/usagetable.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RefinebarComponent,
+    UsagetableComponent
   ],
   imports: [
     HttpModule,
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [LoaderService],
   bootstrap: [AppComponent]

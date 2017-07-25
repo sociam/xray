@@ -1,0 +1,12 @@
+<div class="top">
+    <div class="rows" *ngFor="let appusage of selectedApps">
+        <div class="appname">{{ appusage.appid }} - {{ appusage.mins }} mins</div>
+        <input type="range" (ngModelChange)="appValueChanged(appusage, $event)" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
+    </div>
+    <button [hidden]="showAdder" (click)="showAdder = !showAdder">Add another app</button>
+    <div [hidden]="!showAdder">
+        <select class="apps" [(ngModel)]="appToAdd">
+          <option *ngFor="let app of apps" [value]="app">{{app}} </select>
+        <button (click)="addApp(appToAdd)">Add +</button>
+    </div>
+</div>
