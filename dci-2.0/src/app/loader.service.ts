@@ -14,10 +14,10 @@ export interface CompanyID2Info { [host: string]: CompanyInfo }
 export interface CompanyInfo {
     id: string;
     company: string;
-    domains: Array<string>;
+    domains: string[];
     founded ?: string;
     acquired ?: string;
-    type: Array<string>;
+    type: string[];
     typetag ?: string;
     jurisdiction ?: string;
     jurisdiction_code ?: string;
