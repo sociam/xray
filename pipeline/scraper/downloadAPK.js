@@ -5,7 +5,7 @@ Download spawner process
 */
 const config = require('/etc/xray/config.json');
 const logger = require('./logger.js');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const db = require('./db');
 
@@ -18,7 +18,7 @@ function mkdirp(appSavePath) {
 }
 
 function resolveAPKDir(appData) {
-    //console.log('appdir:'+ config.datadir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
+    logger.info('appdir:'+ config.datadir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
     //log('appdir:'+ config.appdir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
     if (!appData.version || appData.version === 'Varies with device') {
         logger.debug('Version not found defaulting too', appData.updated);
@@ -29,7 +29,7 @@ function resolveAPKDir(appData) {
     let appSavePath = path.join(appsSaveDir, appData.appId, appStore, region, appData.version);
     logger.info('App desired save dir ' + appSavePath);
 
-    return Promise.all([fsEx.pathExists(appSavePath), Promise.resolve(appSavePath)]);
+    return Promise.all([fs.pathExists(appSavePath), Promise.resolve(appSavePath)]);
 }
 
 function downloadApp(appData, appSavePath) {
@@ -56,7 +56,7 @@ function downloadApp(appData, appSavePath) {
 
 
 function main () {
-    let appsData = queryAppsToDownload(10);
+    let appsData = db.queryAppsToDownload(10);
 
     let r = Promise.resolve();
 
@@ -64,25 +64,29 @@ function main () {
 
 
         r = r.then(() => {
-            logger.info('Performing download on ', app.appId);
-            let appSavePath = resolveAPKDir(app);
+            return new Promise((resolve) => {
+                logger.info('Performing download on ', app.appId);
+                let appSavePath = resolveAPKDir(app);
 
-            downloadApp(app, appSavePath).then(() => {
-                //Update app in db
-                return db.updateDownloadedApp(app).catch( (err) => {
-                    logger.debug("Err when updated the downloaded app", err); 
-                }) 
-            }).catch((err) => {
-                try {
-                    fs.rmdir(appSavePath);
-                } catch (err) {
-                    logger.debug("The directory was never orginally created...", appsSaveDir);
-                }
-                logger.warning('Downloading failed with error:', err.message);
+                downloadApp(app, appSavePath).then(() => {
+                    //Update app in db
+                    return db.updateDownloadedApp(app).catch( (err) => {
+                        logger.debug('Err when updated the downloaded app', err); 
+                    });
+                }).catch((err) => {
+                    try {
+                        fs.rmdir(appSavePath);
+                    } catch (err) {
+                        logger.debug('The directory was never orginally created...', appsSaveDir);
+                    }
+                    logger.warning('Downloading failed with error:', err.message);
+                    
+                    return Promise.resolve();
+                }); 
                 
-                return Promise.resolve();
-            }); 
-        r.then(() => resolve());
+                r.then(() => resolve());
+            });
         });
     });
 }
+main();
