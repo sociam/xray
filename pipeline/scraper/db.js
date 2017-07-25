@@ -55,6 +55,16 @@ class DB {
         //WISHLIST: initialise pool for desired db option from the config here.
     }
 
+    async getAppData() {
+        logger.debug('Fetching Search Terms');
+        var res = await query('SELECT search_term FROM search_terms WHERE age(last_searched) > interval \'1 month\'');
+        logger.debug(res.rows.length + ' terms fetched');
+        return res.rows;
+    }
+
+    /**
+     *  Query the search_terms table to get a list of terms that are stale
+     */
     async getStaleSearchTerms() {
         logger.debug('Fetching Search Terms');
         var res = await query('SELECT search_term FROM search_terms WHERE age(last_searched) > interval \'1 month\'');
@@ -62,6 +72,10 @@ class DB {
         return res.rows;
     }
 
+    /**
+     * Sets the last_searched date of a specified search term to be the current date.
+     * Used to track 'stale' search terms.
+     */
     async updateLastSearchedDate(searchTerm) {
         logger.debug('Setting last searched date for ' + searchTerm + ' to current date');
         var client = await connect();
@@ -78,6 +92,9 @@ class DB {
         return update_res;
     }
 
+    /**
+     *  Add a search term to the table if it doesn't already exist.
+     */
     async insertSearchTerm(searchTerm) {
         var client = await connect();
         logger.debug('Connected');
@@ -101,12 +118,18 @@ class DB {
         }
     }
 
+    /**
+     *  Check if app already exists in the apps DB. used before attempting to log again.
+     */
     async doesAppExist(app) {
         var res = await query('SELECT * FROM apps WHERE id = $1', [app.appId]);
         logger.debug('app query res count: ' + res.rowCount);
         return (res.rowCount > 0);
     }
 
+    /**
+     *  Inserts App Data scraped from the google play store into the DB.
+     */
     async insertPlayApp(app, region) {
 
         var devId = await insertDev({
@@ -190,26 +213,6 @@ class DB {
     }
 
 }
-
-/**
- *  Query the search_terms table to get a list of terms that are stale
- */
-
-/**
- * Sets the last_searched date of a specified search term to be the current date.
- * Used to track 'stale' search terms.
- */
-/**
- *  Add a search term to the table if it doesn't already exist.
- */
-
-/**
- *  Check if app already exists in the apps DB. used before attempting to log again.
- */
-
-/**
- *  Inserts App Data scraped from the google play store into the DB.
- */
 
 module.exports = DB;
 
