@@ -46,25 +46,26 @@ async function insertDev(dev) {
 
 module.exports = {
 
-    queryAppsToDownload: async(batch) =>{
+    queryAppsToDownload: async(batch) => {
         var res = await query('SELECT * FROM app_versions WHERE downloaded = False');
         if (res.rowCount <= 0) {
             logger.warning('No downloads found. Consider slowing down donwloader or speeding up scraper');
             return;
-        }   
+        }
         logger.info('Found apps to download: ', res.rowCount);
-        return res.rows.splice(0,batch);
+        return res.rows.splice(0, batch);
     },
 
     updateDownloadedApp: async(app) => {
-        let cl= await connect();
+        let cl = await connect();
         logger.debug('Connected');
         try {
             await cl.query('UPDATE app_versions SET downloaded=True || WHERE id = $1', [
-                app.appId]);
+                app.appId
+            ]);
 
             await cl.query('COMMIT');
-        } catch  (e) {
+        } catch (e) {
             await cl.query('ROLLBACK');
             throw e;
         } finally {
@@ -110,8 +111,7 @@ module.exports = {
                 }
 
                 let res = await client.query(
-                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-                    [app.appId, 'play', region, app.version, app.isDownloaded]
+                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id', [app.appId, 'play', region, app.version, app.isDownloaded]
                 );
                 verId = res.rows[0].id;
 
