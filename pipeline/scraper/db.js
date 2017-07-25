@@ -52,7 +52,7 @@ async function insertDev(dev) {
 class DB {
     constructor(dbOption) {
         this.dbOption = dbOption;
-        // initialise pool here.
+        //WISHLIST: initialise pool for desired db option from the config here.
     }
 
     async getStaleSearchTerms() {
