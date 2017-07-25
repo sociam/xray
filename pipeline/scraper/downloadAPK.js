@@ -56,35 +56,32 @@ function downloadApp(appData, appSavePath) {
 
 
 function main () {
-    let appsData = db.queryAppsToDownload(10);
+    let appsData = db.queryAppsToDownload(10).then( apps => { 
+        let r = Promise.resolve();
+        apps.forEach(app => {
+            r = r.then(() => {
+                return new Promise((resolve) => {
+                    logger.info('Performing download on ', app.appId);
+                    let appSavePath = resolveAPKDir(app);
 
-    let r = Promise.resolve();
-
-    appsData.forEach(app => {
-
-
-        r = r.then(() => {
-            return new Promise((resolve) => {
-                logger.info('Performing download on ', app.appId);
-                let appSavePath = resolveAPKDir(app);
-
-                downloadApp(app, appSavePath).then(() => {
-                    //Update app in db
-                    return db.updateDownloadedApp(app).catch( (err) => {
-                        logger.debug('Err when updated the downloaded app', err); 
-                    });
-                }).catch((err) => {
-                    try {
-                        fs.rmdir(appSavePath);
-                    } catch (err) {
-                        logger.debug('The directory was never orginally created...', appsSaveDir);
-                    }
-                    logger.warning('Downloading failed with error:', err.message);
+                    downloadApp(app, appSavePath).then(() => {
+                        //Update app in db
+                        return db.updateDownloadedApp(app).catch( (err) => {
+                            logger.debug('Err when updated the downloaded app', err); 
+                        });
+                    }).catch((err) => {
+                        try {
+                            fs.rmdir(appSavePath);
+                        } catch (err) {
+                            logger.debug('The directory was never orginally created...', appsSaveDir);
+                        }
+                        logger.warning('Downloading failed with error:', err.message);
+                        
+                        return Promise.resolve();
+                    }); 
                     
-                    return Promise.resolve();
-                }); 
-                
-                r.then(() => resolve());
+                    r.then(() => resolve());
+                });
             });
         });
     });
