@@ -13,8 +13,14 @@ let appsSaveDir = path.join(config.datadir, 'apps');
 let region = 'us';
 let appStore = 'play';
 
-function mkdirp(appSavePath) {
-    //bug dir branch code
+function mkdirp(dir) {
+    dir.split(path.sep).reduce((parentDir, childDir) => {
+        const curDir = path.join(parentDir, childDir);
+        if (!fs.existsSync(curDir)) {
+            fs.mkdirSync(curDir);
+        }
+        return curDir;
+    }, path.isAbsolute(dir) ? path.sep : '');
 }
 
 function resolveAPKDir(appData) {
