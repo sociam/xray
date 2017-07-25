@@ -54,6 +54,22 @@ module.exports = {
         return res.rows.splice(0,batch);
     },
 
+    updateDownloadedApp: async(app) => {
+        let cl= await connect();
+        logger.debug('Connected');
+        try {
+            await cl.query('UPDATE app_versions SET downloaded=True || WHERE id = $1', [
+                app.appId]);
+
+            await cl.query('COMMIT');
+        } catch  (e) {
+            await cl.query('ROLLBACK');
+            throw e;
+        } finally {
+            cl.release();
+        }
+    },
+
     insertPlayApp: async(app, region) => {
 
         var devId = await insertDev({
