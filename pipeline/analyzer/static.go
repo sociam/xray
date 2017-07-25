@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -67,7 +68,7 @@ func simpleAnalyze(app *App) ([]string, error) {
 
 	//TODO: replace with DB calls
 	var companies map[string]Company
-	companyFile, err := os.Open("/var/xray/company_details.json")
+	companyFile, err := os.Open(path.Join(cfg.DataDir, "company_details.json"))
 	if err != nil {
 		return []string{}, err
 	}
@@ -97,7 +98,7 @@ func simpleAnalyze(app *App) ([]string, error) {
 	// 	return nil
 	// }
 
-	cmd := exec.Command("grep", "-Er", "\"https?://[^ >]+\"", app.outDir())
+	cmd := exec.Command("grep", "-Earho", "\"https?://[^ >]+\"", app.outDir())
 	urls, err := cmd.Output()
 	if err != nil {
 		return []string{}, err
@@ -108,7 +109,7 @@ func simpleAnalyze(app *App) ([]string, error) {
 	irrelevant := []string{"app", "identity", "n/a", "other", "", "library"}
 	for name, company := range companies {
 		for _, domain := range company.Domains {
-			if strings.Contains(string(domain), string(urls)) {
+			if strings.Contains(string(urls), string(domain)) {
 				toAppend := true
 				for _, cat := range irrelevant {
 					if companies[name].TypeTag == cat {
@@ -126,7 +127,7 @@ func simpleAnalyze(app *App) ([]string, error) {
 	return appTrackers, nil
 }
 
-func findPackages(app App) ([]string, error) {
+func findPackages(app *App) ([]string, error) {
 	// TODO: fix error handling
 	paths := make(map[string]Unit)
 	err := os.Chdir(path.Join(app.outDir(), "smali"))
@@ -139,8 +140,6 @@ func findPackages(app App) ([]string, error) {
 			if err != nil {
 				return err
 			}
-
-			fname = fname[2:]
 
 			if path.Ext(fname) == ".smali" {
 				paths[path.Dir(fname)] = unit

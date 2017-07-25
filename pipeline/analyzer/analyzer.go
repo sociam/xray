@@ -53,15 +53,21 @@ func analyze(app *App) error {
 	fmt.Println("Running simple analysis... ")
 	app.hosts, err = simpleAnalyze(app)
 	if err != nil {
-		return errors.New(fmt.Sprintf("Error getting hosts: %s", err.Error()))
+		fmt.Printf("Error getting hosts: %s\n", err.Error())
 	}
 	fmt.Printf("Hosts found: %v\n\n", app.hosts)
 	if *useDb {
 		err = db.addHosts(app, app.hosts)
 		if err != nil {
-			return errors.New(fmt.Sprintf("Error writing hosts to DB: %s", err.Error()))
+			fmt.Printf("Error writing hosts to DB: %s\n", err.Error())
 		}
 	}
+
+	app.packages, err = findPackages(app)
+	if err != nil {
+		fmt.Println("Error finding packages: ", err.Error())
+	}
+	fmt.Println("Packages found: ", app.packages)
 
 	cleanup(app)
 
@@ -69,6 +75,16 @@ func analyze(app *App) error {
 }
 
 func main() {
+	if err := os.MkdirAll(cfg.DataDir, 0755); err != nil {
+		panic(err)
+	}
+	if err := os.MkdirAll(cfg.AppDir, 0755); err != nil {
+		panic(err)
+	}
+	if err := os.MkdirAll(cfg.UnpackDir, 0755); err != nil {
+		panic(err)
+	}
+
 	if *daemon {
 		fmt.Println("Starting xray analyzer daemon")
 		runServer()

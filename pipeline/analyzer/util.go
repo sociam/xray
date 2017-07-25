@@ -20,6 +20,7 @@ type App struct {
 	path, unpackdir        string
 	perms                  []Permission
 	hosts                  []string
+	packages               []string
 }
 
 func NewApp(dbId int, id, store, region, ver string) *App {
@@ -47,7 +48,7 @@ func (app *App) outDir() string {
 			app.unpackdir, err = ioutil.TempDir(cfg.UnpackDir, path.Base(app.path))
 			if err != nil {
 				// maybe do something else?
-				log.Fatal("Failed to create temp dir in ", cfg.UnpackDir)
+				log.Fatal("Failed to create temp dir in ", cfg.UnpackDir, ": ", err)
 			}
 		} else {
 			app.unpackdir = path.Join(cfg.UnpackDir, app.id, app.store, app.region, app.ver)
@@ -57,7 +58,7 @@ func (app *App) outDir() string {
 }
 
 func unpack(app *App) error {
-	cmd := exec.Command("apktool", "d", app.apkPath(), "-o", app.outDir())
+	cmd := exec.Command("apktool", "d", app.apkPath(), "-o", app.outDir(), "-f")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error '%s' unpacking apk; output below:\n%s",
