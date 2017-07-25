@@ -60,9 +60,14 @@ module.exports = {
         let cl = await connect();
         logger.debug('Connected');
         try {
+<<<<<<< HEAD
             await cl.query('UPDATE app_versions SET downloaded=True || WHERE id = $1', [
                 app.appId
             ]);
+=======
+            await cl.query('UPDATE app_versions SET downloaded=True WHERE id = $1', [
+                app.appId]);
+>>>>>>> 4fb1725fd57f50a3f10b6e67adc376e1ee700d21
 
             await cl.query('COMMIT');
         } catch (e) {

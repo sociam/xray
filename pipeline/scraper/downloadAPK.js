@@ -11,30 +11,29 @@ const db = require('./db');
 const _ = require('lodash');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
-let region = 'us';
-let appStore = 'play';
 
-function mkdirp(appSavePath) {
-    //bug dir branch code
+
+function mkdirp(dir) {
+    dir.split(path.sep).reduce((parentDir, childDir) => {
+        const curDir = path.join(parentDir, childDir);
+        if (!fs.existsSync(curDir)) {
+            fs.mkdirSync(curDir);
+        }
+        return curDir;
+    }, path.isAbsolute(dir) ? path.sep : '');
 }
 
 function resolveAPKDir(appData) {
-    logger.info('appdir:' + config.datadir, '\nappId' + appData.appId, '\nappStore' + appStore, '\nregion' + region, '\nversion' + appData.version);
-    //log('appdir:'+ config.appdir, '\nappId'+ appData.appId, '\nappStore'+ appStore, '\nregion'+ region, '\nversion'+ appData.version);
-    if (!appData.version || appData.version === 'Varies with device') {
-        logger.debug('Version not found defaulting too', appData.updated);
-        let formatDate = appData.updated.replace(/\s+/g, '').replace(',', '/');
-        appData.version = formatDate;
-    }
+    logger.info('appdir: ' + appsSaveDir, '\nappId ' + appData.app, '\nappStore ' + appData.store, '\nregion ' + appData.region, '\nversion ' + appData.version);
 
-    let appSavePath = path.join(appsSaveDir, appData.appId, appStore, region, appData.version);
+    let appSavePath = path.join(appsSaveDir, appData.app, appData.store, appData.region, appData.version);
     logger.info('App desired save dir ' + appSavePath);
 
     return Promise.all([fs.pathExists(appSavePath), Promise.resolve(appSavePath)]);
 }
 
 function downloadApp(appData, appSavePath) {
-    const args = ['-pd', appData.appId, '-f', appSavePath, '-c', config.credDownload]; /* Command line args for gplay cli */
+    const args = ['-pd', appData.app, '-f', appSavePath, '-c', config.credDownload]; /* Command line args for gplay cli */
     const spw = require('child-process-promise').spawn;
     logger.info('Passing args to downloader' + args);
     const apkDownloader = spw('gplaycli', args);
@@ -54,43 +53,38 @@ function downloadApp(appData, appSavePath) {
 
     return apkDownloader.catch((err) => logger.err('Error downloading app:', err));
 }
-async function queryAppsToDownload(batchSize) {
-    return db.queryAppsToDownload(batchSize);
-}
-
-function downloadApps(batchData) {
-    _.forEach(
-        (batchData),
-        (app) => {
-            logger.info('Performing download on ', app.appId);
-            let appSavePath = resolveAPKDir(app);
-
-            downloadApp(app, appSavePath).then(
-                () => {
-                    //Update app in db
-                    return db.updateDownloadedApp(app).catch(
-                        (err) => {
-                            logger.debug('Err when updated the downloaded app', err);
-                        });
-                }).catch(
-                (err) => {
-                    try {
-                        fs.rmdir(appSavePath);
-                    } catch (err) {
-                        logger.debug('The directory was never orginally created...', appsSaveDir);
-                    }
-                    logger.warning('Downloading failed with error:', err.message);
-
-                    return Promise.resolve();
-                }
-            );
-        }
-    );
-}
 
 function main() {
-    let appsData = queryAppsToDownload(10).then(
-        (apps) => downloadApps(apps)
-    );
+    let appsData = db.queryAppsToDownload(10).then(apps => {
+        let r = Promise.resolve();
+        apps.forEach(app => {
+            r = r.then(() => {
+                return new Promise((resolve) => {
+                    logger.info('Performing download on ', app.app);
+                    let appSavePath = resolveAPKDir(app);
+
+                    appSavePath.then(appSavePath => {
+                        downloadApp(app, appSavePath[1]).then(() => {
+                            //Update app in db
+                            return db.updateDownloadedApp(app).catch((err) => {
+                                logger.debug('Err when updated the downloaded app', err);
+                            });
+                        }).catch((err) => {
+                            try {
+                                fs.rmdir(appSavePath);
+                            } catch (err) {
+                                logger.debug('The directory was never orginally created...', appsSaveDir);
+                            }
+                            logger.warning('Downloading failed with error:', err.message);
+
+                            return Promise.resolve();
+                        });
+
+                        r.then(() => resolve());
+                    });
+                });
+            });
+        });
+    });
 }
 main();
