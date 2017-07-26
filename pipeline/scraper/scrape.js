@@ -28,7 +28,6 @@ const logger = require('./logger.js');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 
-
 function processErr(msg, func) {
     return function(err) {
         func(msg, err);
@@ -70,7 +69,7 @@ let waitForPipe = () => {
     } else {
         main();
     }
-}; 
+};
 
 waitForPipe();
 
@@ -115,9 +114,7 @@ function downloadApp(appData, appSavePath) {
         logger.warning('DL process %d stderr:', downloadProcess.pid, data.toString());
     });
 
-    return apkDownloader.catch((err) => {
-        return processErr('Error downloading app:', logger.err)(err);
-    });
+    return apkDownloader.catch(processErr('Error downloading app:', logger.err));
 }
 
 
@@ -154,17 +151,13 @@ function extractAppData(appData) {
         logger.info('Download process complete for ' + appData.appId);
         let db = require('./db');
 
-        return db.insertPlayApp(appData, region).catch((err) => { 
-            return processErr('Could not write to db:', logger.err)(err); 
-        });
+        return db.insertPlayApp(appData, region).catch(processErr('Could not write to db:', logger.err));
     }).then(async (dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
         let message = Buffer(dbId + '-' + appData.appId + '-' + appStore + '-' + region + '-' + appData.version);
 
         //client.on('error', logger.err);
-        return client.send(message, 0, message.length, config.sockpath).catch((err) => {
-            return processErr('Could not connect to socket:', logger.err)(err);
-        });
+        return client.send(message, 0, message.length, config.sockpath).catch(processErr('Could not connect to socket:', logger.err));
     }, () => {
         return Promise.reject();
     });
@@ -304,7 +297,7 @@ function main() {
                             });
                             //processAppData(appsData,extractAppData);
 
-                        }, (err) => {return processErr('Could not connect to socket:', logger.err)(err);});
+                        }, processErr('Could not connect to socket:', logger.err));
                     });
 
                     rd.on('end', () => {
@@ -312,8 +305,8 @@ function main() {
                         p.catch((err) => logger.err('last data word failed:' + err));
                     });
                 });
-            }, (err) => {return processErr('could no iterate through words in file:', logger.debug)(err);});
-        }, (err) => {return processErr('could no iterate through words in file:', logger.debug)(err);});
+            }, processErr('could no iterate through words in file:', logger.debug));
+        }, processErr('could no iterate through words in file:', logger.debug));
     }).catch(function(err) {
         logger.err('Err with word stash' + err.message);
     });
