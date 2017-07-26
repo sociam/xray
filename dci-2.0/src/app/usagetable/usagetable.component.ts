@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
 import * as _ from 'lodash';
+import { UsageConnectorService } from '../usage-connector.service';
 
 export interface AppUsage { appid: string; mins: number };
 
@@ -17,7 +18,7 @@ export class UsagetableComponent implements OnInit {
   minUsage = 0;
   maxUsage = 50;
 
-  constructor(private loader: LoaderService) { }
+  constructor(private loader: LoaderService, private connector: UsageConnectorService) { }
 
   ngOnInit() {
     this.loader.getAppToHosts().then((a2h) => this.apps = _.keys(a2h));
@@ -25,7 +26,8 @@ export class UsagetableComponent implements OnInit {
   }
 
   appValueChanged(appusage: AppUsage, event) {
-    console.log('app value changed', appusage.appid, event);
+    // console.log('app value changed', appusage.appid, event);
+    this.connector.usageChanged(this.selectedApps.concat());
   }
 
   addApp(appToAdd: string) {

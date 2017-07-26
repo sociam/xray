@@ -1,3 +1,6 @@
-<!--The whole content below can be removed with the new code.-->
-<app-usagetable #ut></app-usagetable>
-<app-refinebar [usage]="ut.selectedApps"></app-refinebar>
+<nav>
+    <a routerLink="/experiment/refinebar" routerLinkActive='active'>Refinebar</a>
+    <a routerLink="/experiment/foobar" routerLinkActive='active'>Foobar</a>
+</nav>
+
+<router-outlet></router-outlet>

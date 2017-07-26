@@ -6,19 +6,51 @@ import { AppComponent } from './app.component';
 import { RefinebarComponent } from './refinebar/refinebar.component';
 import { UsagetableComponent } from './usagetable/usagetable.component';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { ExperimentComponent } from './experiment/experiment.component';
+import { FoobarComponent } from './foobar/foobar.component';
+import { ErrorComponent } from './error/error.component';
+import { UsageConnectorService } from './usage-connector.service';
+
+const appRoutes: Routes = [
+  {
+    path: 'experiment',
+    component: ExperimentComponent,
+    children: [
+      {
+        path: 'refinebar', 
+        component: RefinebarComponent
+      },
+      {
+        path: 'foobar',
+        component: FoobarComponent
+      }
+    ]    
+  },
+  { path: '', redirectTo: '/experiment/refinebar', pathMatch:'full' },
+  { path: '**', component: ErrorComponent, data: { message: 'page not found' } }
+];
+
 
 @NgModule({
   declarations: [
     AppComponent,
     RefinebarComponent,
-    UsagetableComponent
+    UsagetableComponent,
+    ExperimentComponent,
+    FoobarComponent,
+    ErrorComponent
   ],
   imports: [
     HttpModule,
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    )
   ],
-  providers: [LoaderService],
+  providers: [LoaderService, UsageConnectorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

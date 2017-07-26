@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, DoCheck } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
+import { UsageConnectorService } from '../usage-connector.service';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
 
@@ -17,22 +18,25 @@ interface AppImpact {
 })
 export class RefinebarComponent implements OnInit, DoCheck {
 
-
   app2hosts: App2Hosts;
   host2companyid: String2String;
   companyid2info: CompanyID2Info;
   host2short: String2String;
   host2PI: Host2PITypes;
-  @Input() usage: AppUsage[];
+  private usage: AppUsage[];
 
-  constructor(private loader: LoaderService) {
+  constructor(private loader: LoaderService, private connector: UsageConnectorService) {
   //   this.usage = [
   //     { appid: 'bbc iplayer', mins: 50  },
   //     { appid: 'grindr', mins: 14  },
   //     { appid: 'peppa-paintbox', mins: 40  },
   //     { appid: 'Mi Fit', mins: 4  }
   //   ];
-  // 
+    // 
+    this.connector.usageChanged$.subscribe(appuse => {
+        console.log('got an message from the UsageConnectorService', appuse);
+        this.usage = appuse;
+    });
   }
 
   ngDoCheck(): void {
@@ -80,7 +84,7 @@ export class RefinebarComponent implements OnInit, DoCheck {
 
     d3.select('svg').selectAll('*').remove();
 
-    if (this.usage.length < 2 || this.usage.reduce((total, x) => total + x.mins, 0) < 10) { 
+    if (this.usage === undefined || this.usage.length < 2 || this.usage.reduce((total, x) => total + x.mins, 0) < 10) { 
       return;
     }
 
