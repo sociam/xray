@@ -54,8 +54,10 @@ async function fetchAppData(searchTerm, numberOfApps, perSecond) {
     let dbRows = await db.getStaleSearchTerms();
     Promise.each(dbRows, async(dbRow) => {
         logger.info('searching for: ' + dbRow.search_term);
-        await fetchAppData(dbRow.search_term, 4, 1).catch(logger.err);
-        await db.updateLastSearchedDate(dbRow.search_term).catch(logger.err);
+        return await fetchAppData(dbRow.search_term, 4, 1)
+            .then(await db.updateLastSearchedDate(dbRow.search_term)
+                .catch(logger.err))
+            .catch(logger.err);
     });
 })();
 

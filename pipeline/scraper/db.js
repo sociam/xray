@@ -95,7 +95,7 @@ class DB {
             logger.debug(searchTerm + ' exists, updating last searched date.');
             var update_res = await client.lquery('UPDATE search_terms SET last_searched = CURRENT_DATE WHERE search_term = $1', [searchTerm]);
         }
-
+        client.release();
         return update_res;
     }
 
