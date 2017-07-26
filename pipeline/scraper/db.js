@@ -74,20 +74,9 @@ class DB {
     }
 
     async updateDownloadedApp(app) {
-        let cl = await this.connect();
-        logger.debug('Connected');
-        try {
-            await cl.query('UPDATE app_versions SET downloaded=True WHERE id = $1', [
+        await this.query('UPDATE app_versions SET downloaded=True WHERE id = $1', [
                 app.appId
             ]);
-
-            await cl.query('COMMIT');
-        } catch (e) {
-            await cl.query('ROLLBACK');
-            throw e;
-        } finally {
-            cl.release();
-        }
     }
 
     async getAppData() {
