@@ -9,6 +9,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const DB = require('./db');
 const db = new DB('downloader');
+const Promise = require('bluebird');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 
@@ -56,35 +57,28 @@ function downloadApp(appData, appSavePath) {
 
 function main() {
     let appsData = db.queryAppsToDownload(10).then(apps => {
-        let r = Promise.resolve();
-        apps.forEach(app => {
-            r = r.then(() => {
-                return new Promise((resolve) => {
-                    logger.info('Performing download on ', app.app);
-                    let appSavePath = resolveAPKDir(app);
-
-                    appSavePath.then(appSavePath => {
-                        downloadApp(app, appSavePath[1]).then(() => {
-                            //Update app in db
-                            return db.updateDownloadedApp(app).catch((err) => {
+        Promise.each(apps, (app) => {
+            logger.info('Performing download on ', app.app);
+            return resolveAPKDir(app)
+                .then(appSavePath => {
+                    downloadApp(app, appSavePath[1]).then(() => {
+                        return db.updateDownloadedApp(app)
+                            .catch((err) => {
                                 logger.debug('Err when updated the downloaded app', err);
                             });
-                        }).catch((err) => {
-                            try {
-                                logger.debug('Attempting to remove created dir');
-                                fs.rmdir(appSavePath);
-                            } catch (err) {
-                                logger.debug('The directory was never orginally created...', appsSaveDir);
-                            }
-                            logger.warning('Downloading failed with error:', err.message);
+                    }).catch((err) => {
+                        try {
+                            logger.debug('Attempting to remove created dir');
+                            fs.rmdir(appSavePath);
+                        } catch (err) {
+                            logger.debug('The directory was never orginally created...', appsSaveDir);
+                        }
+                        logger.warning('Downloading failed with error:', err.message);
 
-                            return Promise.resolve();
-                        });
-
-                        r.then(() => resolve());
+                        return Promise.resolve();
                     });
+
                 });
-            });
         });
     });
 }
