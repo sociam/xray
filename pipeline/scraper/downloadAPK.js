@@ -60,9 +60,9 @@ function main() {
         Promise.each(apps, (app) => {
             logger.info('Performing download on ', app.app);
             return resolveAPKDir(app)
-                .then(appSavePath => {
-                    downloadApp(app, appSavePath[1]).then(() => {
-                        return db.updateDownloadedApp(app)
+                .then(async(appSavePath) => {
+                    return await downloadApp(app, appSavePath[1]).then(() => {
+                        db.updateDownloadedApp(app)
                             .catch((err) => {
                                 logger.debug('Err when updated the downloaded app', err);
                             });
@@ -74,8 +74,6 @@ function main() {
                             logger.debug('The directory was never orginally created...', appsSaveDir);
                         }
                         logger.warning('Downloading failed with error:', err.message);
-
-                        return Promise.resolve();
                     });
 
                 });
