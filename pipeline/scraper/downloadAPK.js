@@ -7,8 +7,8 @@ const config = require('/etc/xray/config.json');
 const logger = require('./logger.js');
 const fs = require('fs-extra');
 const path = require('path');
-const db = require('./db');
-const _ = require('lodash');
+const DB = require('./db');
+const db = new DB('downloader');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 
@@ -51,7 +51,7 @@ function downloadApp(appData, appSavePath) {
         logger.warning('DL process %d stderr:', downloadProcess.pid, data.toString());
     });
 
-    return apkDownloader.catch((err) => logger.err('Error downloading app:', err.message));
+    return apkDownloader; //.catch((err) => logger.err('Error downloading app:', err.message));
 }
 
 function main() {
@@ -71,6 +71,7 @@ function main() {
                             });
                         }).catch((err) => {
                             try {
+                                logger.debug('Attempting to remove created dir');
                                 fs.rmdir(appSavePath);
                             } catch (err) {
                                 logger.debug('The directory was never orginally created...', appsSaveDir);
