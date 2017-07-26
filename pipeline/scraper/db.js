@@ -32,9 +32,9 @@ class DB {
         return this.pool.query(text, values);
     }
 
-    connect() {
+    async connect() {
         logger.debug('connecting to db pool');
-        let ret = this.pool.connect();
+        let ret = await this.pool.connect();
         ret.lquery = (text, values) => {
             if (values) logger.debug('lquery:', text, values);
             else logger.debug('lquery:', text);
