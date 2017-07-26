@@ -66,10 +66,9 @@ class DB {
     async queryAppsToDownload(batch) {
         var res = await this.query('SELECT * FROM app_versions WHERE downloaded = False');
         if (res.rowCount <= 0) {
-            logger.warning('No downloads found. Consider slowing down donwloader or speeding up scraper');
-            return;
+            return Promise.reject('No downloads found. Consider slowing down downloader or speeding up scraper');
         }
-        logger.info('Found apps to download: ', res.rowCount);
+        logger.info('Found apps to download:', res.rowCount);
         return res.rows.splice(0, batch);
     }
 
