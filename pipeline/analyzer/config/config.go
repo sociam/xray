@@ -71,6 +71,5 @@ func Load(cfgFile string) Config {
 	fmt.Println("\tUnpacked app directory:", cfg.UnpackDir)
 	fmt.Println("\tMessage socket path:", cfg.SockPath)
 
-	fmt.Println("%v", cfg)
 	return cfg
 }

@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -20,6 +19,7 @@ type Permission struct {
 }
 
 type AndroidManifest struct {
+	Package    string       `xml:"package,attr"`
 	Perms      []Permission `xml:"uses-permission"`
 	Sdk23Perms []Permission `xml:"uses-permission-sdk-23"`
 }
@@ -39,6 +39,9 @@ func parseManifest(app *App) (*AndroidManifest, error) {
 		return nil, err
 	}
 
+	if manifest.Package != "" {
+		app.id = manifest.Package
+	}
 	return &manifest, nil
 }
 

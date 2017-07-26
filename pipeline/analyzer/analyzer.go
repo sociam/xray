@@ -4,9 +4,9 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"github.com/sociam/xray/pipeline/analyzer/config"
 	"log"
 	"os"
-	"github.com/sociam/xray/pipeline/analyzer/config"
 )
 
 var cfgFile = flag.String("cfg", "/etc/xray/config.json", "config file location")
@@ -29,6 +29,13 @@ func init() {
 func analyze(app *App) error {
 	var err error
 
+	// if app.store == "cli" {
+	// 	app.dbId, err = db.insertApp(app)
+	// 	if err != nil {
+	// 		fmt.Printf("Error getting database id of app %s: %s", app.id, err.Error())
+	// 	}
+	// }
+
 	fmt.Print("Unpacking... ")
 	err = unpack(app)
 	if err != nil {
@@ -45,8 +52,9 @@ func analyze(app *App) error {
 	} else {
 		app.perms = manifest.getPerms()
 		fmt.Printf("Permissions found: %v\n\n", app.perms)
-		if *useDb {
-			db.addPerms(app, app.perms)
+		db.addPerms(app, app.perms)
+		if err != nil {
+			fmt.Printf("Error writing permissions to DB: %s\n", err.Error())
 		}
 	}
 
@@ -56,11 +64,9 @@ func analyze(app *App) error {
 		fmt.Printf("Error getting hosts: %s\n", err.Error())
 	}
 	fmt.Printf("Hosts found: %v\n\n", app.hosts)
-	if *useDb {
-		err = db.addHosts(app, app.hosts)
-		if err != nil {
-			fmt.Printf("Error writing hosts to DB: %s\n", err.Error())
-		}
+	err = db.addHosts(app, app.hosts)
+	if err != nil {
+		fmt.Printf("Error writing hosts to DB: %s\n", err.Error())
 	}
 
 	app.packages, err = findPackages(app)
@@ -96,6 +102,7 @@ func main() {
 
 		for _, appPath := range flag.Args() {
 			app := AppByPath(appPath)
+			app.store = "cli"
 			fmt.Println("Analyzing apk ", appPath)
 			analyze(app)
 		}
