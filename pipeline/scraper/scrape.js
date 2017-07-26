@@ -28,16 +28,23 @@ const logger = require('./logger.js');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 
-function mkdirp(path) {
-    path.split(path.sep).reduce((parentDir, childDir) => {
+function processErr(msg, func) {
+    return function(err) {
+        func(msg, err);
+        return Promise.reject();
+    };
+}
+
+function mkdirp(dir) {
+    dir.split(path.sep).reduce((parentDir, childDir) => {
         const curDir = path.join(parentDir, childDir);
         if (!fs.existsSync(curDir)) {
             fs.mkdirSync(curDir);
         }
-
         return curDir;
-    }, path.isAbsolute ? path.sep : '');
+    }, path.isAbsolute(dir) ? path.sep : '');
 }
+
 
 try {
     let dirStats = fs.statSync(appsSaveDir);
@@ -63,6 +70,7 @@ let waitForPipe = () => {
         main();
     }
 };
+
 waitForPipe();
 
 //TODO: move region to config or section to iterate over
@@ -98,14 +106,14 @@ function downloadApp(appData, appSavePath) {
     logger.info('DL process %d for %s-%s started.', downloadProcess.pid, appData.appId, appData.version);
 
     downloadProcess.stdout.on('data', data => {
-        logger.debug('DL process %d stdout:', downloadProcess.pid, data);
+        logger.debug('DL process %d stdout:', downloadProcess.pid, data.toString());
     });
 
     downloadProcess.stderr.on('data', data => {
-        logger.warning('DL process %d stderr:', downloadProcess.pid, data);
+        logger.warning('DL process %d stderr:', downloadProcess.pid, data.toString());
     });
 
-    return apkDownloader.catch((err) => logger.err('Error downloading app:', err));
+    return apkDownloader.catch(processErr('Error downloading app:', logger.err));
 }
 
 
@@ -131,7 +139,7 @@ function extractAppData(appData) {
                 try {
                     fs.rmdir(appSavePath);
                 } catch (err) {
-                    // TODO: something
+                    logger.debug('Could not remove app saved path', err);
                 }
                 logger.warning('Downloading failed with error:', err.message);
                 appData.isDownloaded = false;
@@ -140,19 +148,15 @@ function extractAppData(appData) {
         }
     }).then(() => {
         logger.info('Download process complete for ' + appData.appId);
-
-        // TODO: DB Comms... this can be factorised.
         let db = require('./db');
-        return db.insertPlayApp(appData, region).catch((err) => {
-            logger.err('Inserting play app failed', err, region);
-            return err;
-        }).catch((err) => logger.err('Could not write to db:', err.message));
-    }).then(async(dbId) => {
+
+        return db.insertPlayApp(appData, region).catch(processErr('Could not write to db:', logger.err));
+    }).then(async (dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
         let message = Buffer(dbId + '-' + appData.appId + '-' + appStore + '-' + region + '-' + appData.version);
         logger.info('logging to DB');
         //client.on('error', logger.err);
-        return client.send(message, 0, message.length, config.sockpath).catch((err) => logger.err('Could not connect to socket:', err.message));
+        return client.send(message, 0, message.length, config.sockpath).catch(processErr('Could not connect to socket:', logger.err));
     }, () => {
         return Promise.reject();
     });
@@ -181,7 +185,7 @@ function extractAppData(appData) {
 function scrapeWord(word) {
     return gplay.search({
         term: word,
-        num: 120,
+        num: 4,
         region: region,
         price: 'free',
         fullDetail: true,
@@ -288,11 +292,11 @@ function main() {
                                 r = r.then(() => {
                                     logger.info('Attempting to download:' + app.appId);
                                     return extractAppData(app);
-                                }, (err) => logger.warning('downloading app failed:' + err));
+                                }, (err) => logger.warning('Downloading app failed:' + err.message));
                             });
                             //processAppData(appsData,extractAppData);
 
-                        }, (err) => logger.err('going through word list failed:' + err));
+                        }, processErr('Could not connect to socket:', logger.err));
                     });
 
                     rd.on('end', () => {
@@ -300,8 +304,8 @@ function main() {
                         p.catch((err) => logger.err('last data word failed:' + err));
                     });
                 });
-            }, (err) => logger.err('could no iterate through words in file:' + err));
-        }, (err) => logger.err('iterating through dir word list failed::' + err));
+            }, processErr('could no iterate through words in file:', logger.debug));
+        }, processErr('could no iterate through words in file:', logger.debug));
     }).catch(function(err) {
         logger.err('Err with word stash' + err.message);
     });
