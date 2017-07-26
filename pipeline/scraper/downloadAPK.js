@@ -13,7 +13,6 @@ const Promise = require('bluebird');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 
-
 function mkdirp(dir) {
     dir.split(path.sep).reduce((parentDir, childDir) => {
         const curDir = path.join(parentDir, childDir);
@@ -25,7 +24,7 @@ function mkdirp(dir) {
 }
 
 function resolveAPKDir(appData) {
-    logger.info('appdir: ' + appsSaveDir, '\nappId ' + appData.app, '\nappStore ' + appData.store, '\nregion ' + appData.region, '\nversion ' + appData.version);
+    logger.debug('appdir: ' + appsSaveDir, '\nappId ' + appData.app, '\nappStore ' + appData.store, '\nregion ' + appData.region, '\nversion ' + appData.version);
 
     let appSavePath = path.join(appsSaveDir, appData.app, appData.store, appData.region, appData.version);
     logger.info('App desired save dir ' + appSavePath);
@@ -36,7 +35,7 @@ function resolveAPKDir(appData) {
 function downloadApp(appData, appSavePath) {
     const args = ['-pd', appData.app, '-f', appSavePath, '-c', config.credDownload]; /* Command line args for gplay cli */
     const spw = require('child-process-promise').spawn;
-    logger.info('Passing args to downloader' + args);
+    logger.debug('Passing args to downloader' + args);
     const apkDownloader = spw('gplaycli', args);
 
     let downloadProcess = apkDownloader.childProcess;
@@ -52,7 +51,7 @@ function downloadApp(appData, appSavePath) {
         logger.warning('DL process %d stderr:', downloadProcess.pid, data.toString());
     });
 
-    return apkDownloader; //.catch((err) => logger.err('Error downloading app:', err.message));
+    return apkDownloader;
 }
 
 function main() {
