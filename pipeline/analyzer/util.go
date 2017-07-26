@@ -54,9 +54,7 @@ func checkDir(dir, name string) {
 			//TODO: something else
 			panic(err)
 		}
-	}
-
-	if !fif.IsDir() {
+	} else if !fif.IsDir() {
 		panic(fmt.Sprintf("%s isn't a directory!", name))
 	}
 }

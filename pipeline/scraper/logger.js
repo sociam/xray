@@ -17,7 +17,8 @@ const EMERG = 0,
 var prefixes = ['<0>', '<1>', '<2>', '<3>', '<4>', '<5>', '<6>', '<7>'];
 
 function log(level, args) {
-    process.stdout.write(prefixes[level] + util.format.apply(null, args) + '\n');
+    var format = util.format.apply(null, args).replace(/\n/g, '\n' + prefixes[level]);
+    process.stdout.write(prefixes[level] + format + '\n');
 }
 
 module.exports = {

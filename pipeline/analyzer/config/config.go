@@ -10,14 +10,19 @@ import (
 
 type DbCfg struct {
 	Database string `json:"database"`
-	User     string `json:"user"`
-	Password string `json:"password"`
+	User     string `json:"-"`
+	Password string `json:"-"`
 	Host     string `json:"host"`
 	Port     int    `json:"port"`
 }
 
+type DbCreds struct {
+	User     string `json:"user"`
+	Password string `json:"password"`
+}
+
 type AnalyzerCfg struct {
-	Db DbCfg `json:"db"`
+	Db DbCreds `json:"db"`
 }
 
 type Config struct {
@@ -26,7 +31,7 @@ type Config struct {
 	UnpackDir string      `json:"unpackdir"`
 	SockPath  string      `json:"sockpath"`
 	Analyzer  AnalyzerCfg `json:"analyzer"`
-	Db        DbCfg       `json:"-"`
+	Db        DbCfg       `json:"db"`
 }
 
 var UnpackDir string
@@ -58,10 +63,14 @@ func Load(cfgFile string) Config {
 	cfg.UnpackDir = path.Clean(cfg.UnpackDir)
 	cfg.SockPath = path.Clean(cfg.SockPath)
 
+	cfg.Db.User = cfg.Analyzer.Db.User
+	cfg.Db.Password = cfg.Analyzer.Db.Password
+
 	fmt.Println("Config:")
 	fmt.Println("\tApp directory:", cfg.AppDir)
 	fmt.Println("\tUnpacked app directory:", cfg.UnpackDir)
 	fmt.Println("\tMessage socket path:", cfg.SockPath)
 
+	fmt.Println("%v", cfg)
 	return cfg
 }

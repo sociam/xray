@@ -1,9 +1,9 @@
 package main
 
 import (
-	"./config"
 	"flag"
 	"fmt"
+	"github.com/sociam/xray/pipeline/analyzer/config"
 )
 
 var cfgFile = flag.String("cfg", "/etc/xray/config.json", "config file location")

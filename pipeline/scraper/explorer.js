@@ -6,20 +6,14 @@
 var gplay = require('google-play-scraper');
 const alphabet = require('alphabet');
 const _ = require('lodash');
-const config = require('/etc/xray/config.json');
 const fs = require('fs-extra');
 const logger = require('./logger.js');
-const wordStoreLocation = config.datadir + '/suggested_words.txt';
-const db = require('./db.js');
+const Promise = require('bluebird');
+const DB = require('./db.js');
+var db = new DB('explorer');
 
-/**
- * 
- * @param {*The String that is to be insert into the search_term database} search_term 
- */
-function insertSearchTerm(search_term) {
-    // insert search term to db
-    db.insertSearchTerm(search_term);
-}
+//var db = new database('explorer');
+
 
 /**
  * Wipes a file at a specified location of text
@@ -93,18 +87,14 @@ function cartesianProductChars() {
 // TODO: Store scraped word to the Database not txt
 function scrapeSuggestedWords(startingWords) {
     //TODO: return array of suggested search terms
-    _.forEach(startingWords, (letter) => {
-        gplay.suggest({ term: letter, throttle: 10 })
-            .then(
-                (suggestion) => {
-                    _.forEach(suggestion, (word) => {
-                        logger.debug('Inserting to DB: ' + word);
-                        //writeScrapedWords(word, wordStoreLocation);
-                        insertSearchTerm(word);
-                    });
-                },
-                (err) => logger.err(err)
-            );
+    Promise.each(startingWords, (letter) => {
+        return gplay.suggest({ term: letter, throttle: 10 })
+            .then((suggestion) => {
+                Promise.each(suggestion, async(word) => {
+                    logger.debug('Inserting to DB: ' + word);
+                    return await db.insertSearchTerm(word).catch((err) => logger.err(err));
+                }).catch(logger.err);
+            }).catch(logger.err);
     });
 }
 

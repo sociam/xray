@@ -31,11 +31,11 @@ create table playstore_apps(
   price                  text                                         not null,
   free                   bool                                         not null,
   rating         numeric(2,1)                                                 ,
-  num_reviews             int                                                 ,
+  num_reviews          bigint                                                 ,
   genre                  text                                                 ,
   family_genre           text                                                 ,
-  min_installs            int                                                 ,
-  max_installs            int                                                 ,
+  min_installs         bigint                                                 ,
+  max_installs         bigint                                                 ,
   developer               int               references developers(id) not null,
   updated                date                                         not null,
   android_ver            text                                         not null,
@@ -44,7 +44,7 @@ create table playstore_apps(
   video                  text                                                 ,
   recent_changes       text[]                                                 ,
   crawl_date             date                                         not null,
-  permissions          text[]                                                 
+  permissions          text[]
 );
 
 create table search_terms(
