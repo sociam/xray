@@ -56,19 +56,23 @@ function downloadApp(appData, appSavePath) {
 
 function main() {
     db.queryAppsToDownload(10).then(apps => {
-        return Promise.each(apps, (app) => {
+        return Promise.each(apps, async (app) => {
             logger.info('Performing download on', app.app);
-            return resolveAPKDir(app).then((appSavePath) => {
-                return downloadApp(app, appSavePath[1])
-            }).then(() => {
-                return db.updateDownloadedApp(app).catch((err) => {
-                    logger.err('Err when updated the downloaded app', err);
-                });
-            }).catch((err) => {
+            var appSavePath = resolveAPKDir(app);
+            try {
+                await downloadApp(app, appSavePath[1]);
+            } catch(err) {
                 logger.debug('Attempting to remove created dir');
-                fs.rmdir(appSavePath).catch(logger.debug);
+                await fs.rmdir(appSavePath[1]).catch(logger.warning);
                 logger.warning('Downloading failed with warn:', err.message);
-            });
+            }
+
+            try {
+                await db.updateDownloadedApp(app);
+            } catch (err) {
+                // TODO: Maybe do something else? Destroying process as we have apks that don't exist in db...
+                logger.err('Err when updated the downloaded app', err);
+            }
         });
     }).catch(logger.warning);
 }

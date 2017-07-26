@@ -73,9 +73,7 @@ class DB {
     }
 
     async updateDownloadedApp(app) {
-        await this.query('UPDATE app_versions SET downloaded=True WHERE id = $1', [
-                app.appId
-            ]);
+        await this.query('UPDATE app_versions SET downloaded=True WHERE id = $1', [ app.appId ]);
     }
 
     async getAppData() {
