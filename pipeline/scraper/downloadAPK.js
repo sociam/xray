@@ -44,14 +44,14 @@ function downloadApp(appData, appSavePath) {
     logger.info('DL process %d for %s-%s started.', downloadProcess.pid, appData.appId, appData.version);
 
     downloadProcess.stdout.on('data', data => {
-        logger.debug('DL process %d stdout:', downloadProcess.pid, data);
+        logger.debug('DL process %d stdout:', downloadProcess.pid, data.toString());
     });
 
     downloadProcess.stderr.on('data', data => {
-        logger.warning('DL process %d stderr:', downloadProcess.pid, data);
+        logger.warning('DL process %d stderr:', downloadProcess.pid, data.toString());
     });
 
-    return apkDownloader.catch((err) => logger.err('Error downloading app:', err));
+    return apkDownloader.catch((err) => logger.err('Error downloading app:', err.message));
 }
 
 function main() {
