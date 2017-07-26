@@ -87,3 +87,25 @@ create table hosts(
   hostname   text                not null,
   company    text references companies(id)
 );
+
+create user explorer;
+create user retriever;
+create user downloader;
+create user analyzer;
+
+grant insert, select on search_terms to explorer;
+
+grant select, insert on apps to retriever;
+grant select, insert on app_versions to retriever;
+grant select, insert on playstore_apps to retriever;
+grant select, update on search_terms to retriever;
+grant select, insert, update on developers to retriever;
+
+grant select, update on app_versions to downloader;
+
+grant select, update, insert on apps to analyzer;
+grant select, update, insert on app_versions to analyzer;
+grant select on playstore_apps to analyzer;
+grant select, insert, update on app_perms to analyzer;
+grant select, insert on app_hosts to analyzer;
+grant select on companies to analyzer;
