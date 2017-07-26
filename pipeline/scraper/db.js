@@ -37,7 +37,7 @@ class DB {
         ret.lquery = (text, values) => {
             if (values) logger.debug('lquery:', text, values);
             else logger.debug('lquery:', text);
-            return this.query(text, values);
+            return ret.query(text, values);
         };
 
         return ret;
@@ -93,8 +93,7 @@ class DB {
         logger.debug(check_res.rowCount + ' rows found for ' + searchTerm);
         if (check_res.rowCount > 0) {
             logger.debug(searchTerm + ' exists, updating last searched date.');
-            var update_res = await client.lquery('UPDATE search_terms SET last_searched = CURRENT_DATE WHERE search_term = $1',
-                                                [searchTerm]);
+            var update_res = await client.lquery('UPDATE search_terms SET last_searched = CURRENT_DATE WHERE search_term = $1', [searchTerm]);
         }
 
         return update_res;
@@ -122,6 +121,9 @@ class DB {
             } finally {
                 client.release();
             }
+        } else {
+            logger.debug('%s already exists, skipping.', searchTerm);
+            client.release();
         }
     }
 
@@ -148,7 +150,7 @@ class DB {
 
 
         var appExists = false,
-        verExists = false;
+            verExists = false;
         var verId;
         var res = await this.query('SELECT * FROM apps WHERE id = $1', [app.appId]);
 
@@ -176,8 +178,7 @@ class DB {
                 }
 
                 let res = await client.lquery(
-                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-                    [app.appId, 'play', region, app.version, 0]
+                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id', [app.appId, 'play', region, app.version, 0]
                 );
                 verId = res.rows[0].id;
 
