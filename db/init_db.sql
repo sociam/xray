@@ -95,11 +95,12 @@ create user analyzer;
 
 grant insert, select on search_terms to explorer;
 
-grant select, insert on apps to retriever;
+grant select, insert, update on apps to retriever;
 grant select, insert on app_versions to retriever;
 grant select, insert on playstore_apps to retriever;
 grant select, update on search_terms to retriever;
 grant select, insert, update on developers to retriever;
+grant update on app_versions_id_seq, developers_id_seq to retriever;
 
 grant select, update on app_versions to downloader;
 
