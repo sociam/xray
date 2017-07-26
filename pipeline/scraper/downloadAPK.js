@@ -61,17 +61,12 @@ function main() {
             return resolveAPKDir(app)
                 .then(async(appSavePath) => {
                     return await downloadApp(app, appSavePath[1]).then(() => {
-                        db.updateDownloadedApp(app)
-                            .catch((err) => {
-                                logger.err('Err when updated the downloaded app', err);
-                            });
+                        db.updateDownloadedApp(app).catch((err) => {
+                            logger.err('Err when updated the downloaded app', err);
+                        });
                     }).catch((err) => {
-                        try {
-                            logger.debug('Attempting to remove created dir');
-                            fs.rmdir(appSavePath);
-                        } catch (err) {
-                            logger.debug('The directory was never orginally created...', appsSaveDir);
-                        }
+                        logger.debug('Attempting to remove created dir');
+                        fs.rmdir(appSavePath).catch(logger.debug);
                         logger.warning('Downloading failed with warn:', err.message);
                     });
 
