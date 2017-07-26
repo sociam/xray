@@ -41,7 +41,7 @@ function downloadApp(appData, appSavePath) {
     let downloadProcess = apkDownloader.childProcess;
 
     mkdirp(appSavePath);
-    logger.info('DL process %d for %s-%s started.', downloadProcess.pid, appData.appId, appData.version);
+    logger.info('DL process %d for %s-%s started.', downloadProcess.pid, appData.app, appData.version);
 
     downloadProcess.stdout.on('data', data => {
         logger.debug('DL process %d stdout:', downloadProcess.pid, data.toString());
