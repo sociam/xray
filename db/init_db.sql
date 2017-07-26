@@ -10,7 +10,8 @@ create table app_versions(
   region         text                     not null,
   version        text                     not null,
   screen_flags    int                             ,
-  downloaded     bool                     not null
+  downloaded     bool                     not null,
+  analyzed       bool                     not null
 );
 
 create table developers(
@@ -30,11 +31,11 @@ create table playstore_apps(
   price                  text                                         not null,
   free                   bool                                         not null,
   rating         numeric(2,1)                                                 ,
-  num_reviews             int                                                 ,
+  num_reviews          bigint                                                 ,
   genre                  text                                                 ,
   family_genre           text                                                 ,
-  min_installs            int                                                 ,
-  max_installs            int                                                 ,
+  min_installs         bigint                                                 ,
+  max_installs         bigint                                                 ,
   developer               int               references developers(id) not null,
   updated                date                                         not null,
   android_ver            text                                         not null,
@@ -42,7 +43,13 @@ create table playstore_apps(
   screenshots          text[]                                                 ,
   video                  text                                                 ,
   recent_changes       text[]                                                 ,
-  crawl_date             date                                         not null
+  crawl_date             date                                         not null,
+  permissions          text[]
+);
+
+create table search_terms(
+  search_term            text                              primary key not null,
+  last_searched          DATE                                          not null
 );
 
 create table app_perms(

@@ -4,12 +4,16 @@
 
 
 var gplay = require('google-play-scraper');
-var alphabet = require('alphabet');
-var _ = require('lodash');
-var config = require('/etc/xray/config.json');
-var fs = require('fs-extra');
-var logger = require('./logger.js');
-var wordStoreLocation = config.wordStashDir + '/suggested_words.txt';
+const alphabet = require('alphabet');
+const _ = require('lodash');
+const fs = require('fs-extra');
+const logger = require('./logger.js');
+const Promise = require('bluebird');
+const DB = require('./db.js');
+var db = new DB('explorer');
+
+//var db = new database('explorer');
+
 
 /**
  * Wipes a file at a specified location of text
@@ -36,6 +40,27 @@ function writeScrapedWords(word, location) {
     });
 }
 
+
+/**
+ * Used returns an array where each line is a search term.
+ * @param {*the location of the file that is to be read} file_location 
+ */
+function openSearchTerms(file_location) {
+    return fs.readFileSync(file_location).toString().split('\n');
+}
+
+/**
+ * Parses a file of search terms, adding each line as a search term to the DB
+ * @param {*Location of a file to import search terms from} file_location 
+ */
+function importFileTerms(file_location) {
+    _.forEach(
+        openSearchTerms(file_location),
+        (search_term) => insertSearchTerm(search_term)
+    );
+}
+
+
 /**
  * Creates a cartesion product of arrays of strings.
  * 
@@ -59,27 +84,25 @@ function cartesianProductChars() {
  * 
  * @param {*The list of words used to get autocompletes} startingWords 
  */
+// TODO: Store scraped word to the Database not txt
 function scrapeSuggestedWords(startingWords) {
     //TODO: return array of suggested search terms
-    _.forEach(startingWords, (letter) => {
-        gplay.suggest({ term: letter })
-            .then(
-                (suggestion) => {
-                    _.forEach(suggestion, (word) => {
-                        writeScrapedWords(word, wordStoreLocation);
-                    });
-                },
-                (err) => logger.err(err)
-            );
+    Promise.each(startingWords, (letter) => {
+        return gplay.suggest({ term: letter, throttle: 10 })
+            .then((suggestion) => {
+                Promise.each(suggestion, async(word) => {
+                    logger.debug('Inserting to DB: ' + word);
+                    return await db.insertSearchTerm(word).catch((err) => logger.err(err));
+                }).catch(logger.err);
+            }).catch(logger.err);
     });
 }
 
-// TODO this stuff needs moving to a seperate Explorerer.
+// TODO this stuff needs moving somewhere...
 var single = alphabet.lower;
 var double = cartesianProductChars(alphabet.lower, alphabet.lower);
 var triple = cartesianProductChars(alphabet.lower, alphabet.lower, alphabet.lower);
 
 var charTriples = single.concat(double).concat(triple);
 
-wipeScrapedWords(wordStoreLocation);
 scrapeSuggestedWords(charTriples);

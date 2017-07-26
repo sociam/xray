@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.5.0",
-    "await": "^0.2.6",
+    "alphabet": "^1.0.0",
+    "bluebird": "^3.5.0",
     "child-process-promise": "^2.2.1",
     "csv-parse": "^1.2.0",
     "db": "^1.0.6",
