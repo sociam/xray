@@ -6,12 +6,11 @@ const pg = require('pg');
 const logger = require('./logger.js');
 
 class DB {
-    constructor(dbOption) {
-        this.dbOption = dbOption;
+    constructor(module) {
         //WISHLIST: initialise pool for desired db option from the config here.
         var db_cfg = config.db;
-        db_cfg.user = dbOption.user;
-        db_cfg.password = dbOption.password;
+        db_cfg.user = config[module].db.user;
+        db_cfg.password = config[module].db.password;
         db_cfg.max = 10;
         db_cfg.idleTimeoutMillis = 30000;
 
@@ -177,7 +176,8 @@ class DB {
                 }
 
                 let res = await client.lquery(
-                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id', [app.appId, 'play', region, app.version, 0]
+                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+                    [app.appId, 'play', region, app.version, 0]
                 );
                 verId = res.rows[0].id;
 
