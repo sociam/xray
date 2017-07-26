@@ -56,21 +56,19 @@ function downloadApp(appData, appSavePath) {
 
 function main() {
     db.queryAppsToDownload(10).then(apps => {
-        Promise.each(apps, (app) => {
-            logger.info('Performing download on ', app.app);
-            return resolveAPKDir(app)
-                .then(async(appSavePath) => {
-                    return await downloadApp(app, appSavePath[1]).then(() => {
-                        db.updateDownloadedApp(app).catch((err) => {
-                            logger.err('Err when updated the downloaded app', err);
-                        });
-                    }).catch((err) => {
-                        logger.debug('Attempting to remove created dir');
-                        fs.rmdir(appSavePath).catch(logger.debug);
-                        logger.warning('Downloading failed with warn:', err.message);
-                    });
-
+        return Promise.each(apps, (app) => {
+            logger.info('Performing download on', app.app);
+            return resolveAPKDir(app).then((appSavePath) => {
+                return downloadApp(app, appSavePath[1])
+            }).then(() => {
+                return db.updateDownloadedApp(app).catch((err) => {
+                    logger.err('Err when updated the downloaded app', err);
                 });
+            }).catch((err) => {
+                logger.debug('Attempting to remove created dir');
+                fs.rmdir(appSavePath).catch(logger.debug);
+                logger.warning('Downloading failed with warn:', err.message);
+            });
         });
     }).catch(logger.warning);
 }
