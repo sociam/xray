@@ -312,7 +312,6 @@ function main() {
 }
 
 
-
 //let parse = require('csv-parse');
 //let async = require('async');
 //TODO: Promise that you'll change this to promises.

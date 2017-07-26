@@ -56,7 +56,7 @@ function openSearchTerms(file_location) {
 function importFileTerms(file_location) {
     _.forEach(
         openSearchTerms(file_location),
-        (search_term) => insertSearchTerm(search_term)
+        (search_term) => db.insertSearchTerm(search_term)
     );
 }
 

@@ -18,7 +18,8 @@ function insertAppData(app_data) {
     //Checking version data - correct version to update date
     if (!app_data.version || app_data.version === 'Varies with device') {
         logger.debug('Version not found defaulting too', app_data.updated);
-        let formatDate = app_data.updated.replace(/\s+/g, '').replace(',', '/');
+        //let formatDate = app_data.updated.replace(/\s+/g, '').replace(',', '/');
+        let formatDate = new Date(app_data.updated).toISOString().substring(0, 10);
         app_data.version = formatDate;
     }
 
