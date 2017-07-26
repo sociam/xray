@@ -64,7 +64,7 @@ function main() {
                     return await downloadApp(app, appSavePath[1]).then(() => {
                         db.updateDownloadedApp(app)
                             .catch((err) => {
-                                logger.debug('Err when updated the downloaded app', err);
+                                logger.err('Err when updated the downloaded app', err);
                             });
                     }).catch((err) => {
                         try {
@@ -73,7 +73,7 @@ function main() {
                         } catch (err) {
                             logger.debug('The directory was never orginally created...', appsSaveDir);
                         }
-                        logger.warning('Downloading failed with error:', err.message);
+                        logger.warning('Downloading failed with warn:', err.message);
                     });
 
                 });
