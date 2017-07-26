@@ -56,7 +56,7 @@ function downloadApp(appData, appSavePath) {
 }
 
 function main() {
-    let appsData = db.queryAppsToDownload(10).then(apps => {
+    db.queryAppsToDownload(10).then(apps => {
         Promise.each(apps, (app) => {
             logger.info('Performing download on ', app.app);
             return resolveAPKDir(app)
