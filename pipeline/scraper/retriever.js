@@ -3,8 +3,9 @@
 const gplay = require('google-play-scraper');
 const logger = require('./logger.js');
 const _ = require('lodash');
+const Promise = require('bluebird');
 var database = require('./db.js');
-var db = new database('explorer');
+var db = new database('retriever');
 
 const region = 'us';
 
@@ -25,11 +26,6 @@ function insertAppData(app_data) {
     return db.insertPlayApp(app_data, region);
 }
 
-function updateSearchedTermDate(searchTerm) {
-    logger.debug('setting last search date to today: ' + searchTerm);
-    db.updateLastSearchedDate(searchTerm);
-}
-
 // TODO Add Permission list to app Data JSON
 async function fetchAppData(searchTerm, numberOfApps, perSecond) {
     let appDatas = await gplay.search({
@@ -41,36 +37,26 @@ async function fetchAppData(searchTerm, numberOfApps, perSecond) {
     });
 
     // TODO: Move this to DB.
-    await Promise.all(_.map(appDatas, async(app_data) => {
+    return await Promise.all(_.map(appDatas, async(app_data) => {
         logger.debug('inserting ' + app_data.title + ' to the DB');
 
-        let appExists = await db.doesAppExist(app_data);
+        let appExists = await db.doesAppExist(app_data).catch(logger.err);
         if (!appExists) {
-            await insertAppData(app_data);
+            return await insertAppData(app_data).catch(logger.err);
         } else {
             logger.debug('App already existing', app_data.appId);
         }
     }));
 }
 
-/**
- * uses db.js to fetch search terms from the database.
- */
-async function fetch_search_terms() {
-    return await db.getStaleSearchTerms();
-}
 
 (async() => {
-    let dbRows = await fetch_search_terms();
-    let p = Promise.resolve();
-    _.forEach(dbRows, (dbRow) => {
-        p = p.then(async() => {
-            logger.info('searching for: ' + dbRow.search_term);
-            await fetchAppData(dbRow.search_term, 4, 1);
-            await updateSearchedTermDate(dbRow.search_term);
-        });
+    let dbRows = await db.getStaleSearchTerms();
+    Promise.each(dbRows, async(dbRow) => {
+        logger.info('searching for: ' + dbRow.search_term);
+        await fetchAppData(dbRow.search_term, 4, 1).catch(logger.err);
+        await db.updateLastSearchedDate(dbRow.search_term).catch(logger.err);
     });
-    return await p;
 })();
 
 /**
