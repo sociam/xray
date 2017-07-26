@@ -73,7 +73,6 @@ let waitForPipe = () => {
 
 waitForPipe();
 
-
 //TODO: move region to config or section to iterate over
 let region = 'us';
 let appStore = 'play';
@@ -155,7 +154,7 @@ function extractAppData(appData) {
     }).then(async (dbId) => {
         // TODO: Check that '-' won't mess things up on the DB side... eg if region was something like 'en-gb'
         let message = Buffer(dbId + '-' + appData.appId + '-' + appStore + '-' + region + '-' + appData.version);
-
+        logger.info('logging to DB');
         //client.on('error', logger.err);
         return client.send(message, 0, message.length, config.sockpath).catch(processErr('Could not connect to socket:', logger.err));
     }, () => {

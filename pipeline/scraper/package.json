@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "alphabet": "^1.0.0",
     "async": "^2.5.0",
     "await": "^0.2.6",
     "child-process-promise": "^2.2.1",

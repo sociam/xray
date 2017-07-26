@@ -6,7 +6,7 @@ PermissionsStartOnly=true
 ExecStartPre=/bin/mkdir -p /var/run/xray
 ExecStartPre=/bin/chown -R xray:xray /var/run/xray
 
-ExecStart=/usr/local/bin/analyzer
+ExecStart=/usr/local/bin/analyzer -daemon -db
 User=xray
 Group=xray
 Restart=always

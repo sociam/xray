@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -18,13 +19,14 @@ type Permission struct {
 }
 
 type AndroidManifest struct {
+	Package    string       `xml:"package,attr"`
 	Perms      []Permission `xml:"uses-permission"`
 	Sdk23Perms []Permission `xml:"uses-permission-sdk-23"`
 }
 
-func parseManifest(app App) (*AndroidManifest, error) {
+func parseManifest(app *App) (*AndroidManifest, error) {
 	manifest := AndroidManifest{}
-	manifestFile, err := os.Open(path.Join(outDir(app), "AndroidManifest.xml"))
+	manifestFile, err := os.Open(path.Join(app.outDir(), "AndroidManifest.xml"))
 	if err != nil {
 		return nil, err
 	}
@@ -37,6 +39,9 @@ func parseManifest(app App) (*AndroidManifest, error) {
 		return nil, err
 	}
 
+	if manifest.Package != "" {
+		app.id = manifest.Package
+	}
 	return &manifest, nil
 }
 
@@ -61,12 +66,12 @@ type Company struct {
 	Description  string   `json:"description"`
 }
 
-func simpleAnalyze(app App) ([]string, error) {
+func simpleAnalyze(app *App) ([]string, error) {
 	//TODO: fix error handling
 
 	//TODO: replace with DB calls
 	var companies map[string]Company
-	companyFile, err := os.Open("/var/xray/company_details.json")
+	companyFile, err := os.Open(path.Join(cfg.DataDir, "company_details.json"))
 	if err != nil {
 		return []string{}, err
 	}
@@ -96,7 +101,7 @@ func simpleAnalyze(app App) ([]string, error) {
 	// 	return nil
 	// }
 
-	cmd := exec.Command("grep", "-Er", "\"https?://[^ >]+\"", outDir(app))
+	cmd := exec.Command("grep", "-Earho", "\"https?://[^ >]+\"", app.outDir())
 	urls, err := cmd.Output()
 	if err != nil {
 		return []string{}, err
@@ -107,7 +112,7 @@ func simpleAnalyze(app App) ([]string, error) {
 	irrelevant := []string{"app", "identity", "n/a", "other", "", "library"}
 	for name, company := range companies {
 		for _, domain := range company.Domains {
-			if strings.Contains(string(domain), string(urls)) {
+			if strings.Contains(string(urls), string(domain)) {
 				toAppend := true
 				for _, cat := range irrelevant {
 					if companies[name].TypeTag == cat {
@@ -123,4 +128,41 @@ func simpleAnalyze(app App) ([]string, error) {
 	}
 
 	return appTrackers, nil
+}
+
+func findPackages(app *App) ([]string, error) {
+	// TODO: fix error handling
+	paths := make(map[string]Unit)
+	err := os.Chdir(path.Join(app.outDir(), "smali"))
+	if err != nil {
+		return []string{}, err
+	}
+
+	err = filepath.Walk(".",
+		func(fname string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+
+			if path.Ext(fname) == ".smali" {
+				paths[path.Dir(fname)] = unit
+			}
+
+			return nil
+		})
+
+	pkgs := make([]string, 0, 20)
+	for path, _ := range paths {
+		//pkg := strings.Replace(path, string(os.PathSeparator), ".", -1)
+		pkg := strings.Map(func(ch rune) rune {
+			if ch == os.PathSeparator {
+				return '.'
+			} else {
+				return ch
+			}
+		}, path)
+		pkgs = append(pkgs, pkg)
+	}
+
+	return pkgs, err
 }

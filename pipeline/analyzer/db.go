@@ -13,7 +13,7 @@ type XrayDb struct {
 
 func openDb() (*XrayDb, error) {
 	db, err := sql.Open("postgres",
-		fmt.Sprintf("dbname='%s' user='%s' password='%s' host='%s' port='%s'",
+		fmt.Sprintf("dbname='%s' user='%s' password='%s' host='%s' port='%d' sslmode='disable'",
 			cfg.Db.Database, cfg.Db.User, cfg.Db.Password, cfg.Db.Host, cfg.Db.Port,
 		))
 	if err != nil {
@@ -22,7 +22,27 @@ func openDb() (*XrayDb, error) {
 	return &XrayDb{db}, nil
 }
 
-func (db *XrayDb) addPerms(app App, pPerms []Permission) error {
+// func (db *XrayDb) insertApp(app *App) (int, error) {
+// 	if !*useDb {
+// 		return 0, nil
+// 	}
+
+// 	var ret int
+// 	err := db.QueryRow(
+// 		"SELECT id FROM app_versions WHERE app = $1 AND store = $2 AND region = $3 AND version = $4",
+// 		app.id, app.store, app.region, app.ver).Scan(&ret)
+// 	if err != nil {
+// 		return 0, err
+// 	}
+
+// 	return ret, nil
+// }
+
+func (db *XrayDb) addPerms(app *App, pPerms []Permission) error {
+	if !*useDb || app.dbId == 0 {
+		return nil
+	}
+
 	perms := make([]string, 0, len(pPerms))
 	for _, perm := range pPerms {
 		perms = append(perms, perm.Id)
@@ -51,7 +71,11 @@ func (db *XrayDb) addPerms(app App, pPerms []Permission) error {
 	return nil
 }
 
-func (db *XrayDb) addHosts(app App, hosts []string) error {
+func (db *XrayDb) addHosts(app *App, hosts []string) error {
+	if !*useDb || app.dbId == 0 {
+		return nil
+	}
+
 	var dbHosts []string
 	err := db.QueryRow("SELECT hosts FROM app_hosts WHERE id = $1", app.dbId).
 		Scan(pq.Array(&dbHosts))

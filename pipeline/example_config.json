@@ -1,25 +1,38 @@
 {
-	"datadir": "/usr/local/var/xray",
-	"unpackdir": "/tmp/unpacked_apks",
-	"sockpath": "/usr/local/var/run/xray/apks",
-	"credDownload": "/etc/xray/credentials.conf",
-	"wordStashDir": "/etc/xray/wordStash",
-	"scraper": {
-		"db": {
-			"user": "",
-			"database": "xraydb",
-			"password": "",
-			"host": "sociamnat.cs.ox.ac.uk",
-			"port": 5432
-		}
-	},
-	"analyzer": {
-		"db": {
-			"user": "",
-			"database": "xraydb",
-			"password": "",
-			"host": "sociamnat.cs.ox.ac.uk",
-			"port": 5432
-		}
-	}
+    "datadir": "/usr/local/var/xray",
+    "unpackdir": "/tmp/unpacked_apks",
+    "sockpath": "/var/run/xray/apks",
+    "credDownload": "/etc/xray/credentials.conf",
+    "wordStashDir": "/etc/xray/wordStashDir",
+    "db": {
+        "database": "xraydb",
+        "host": "localhost",
+        "port": 5432
+    },
+    "retriever": {
+        "db": {
+            "user": "retriever",
+            "password": ""
+        }
+    },
+    "explorer": {
+        "db": {
+            "user": "explorer",
+            "password": ""
+        }
+
+    },
+    "downloader": {
+        "db": {
+            "user": "downloader",
+            "password": ""
+        }
+
+    },
+    "analyzer": {
+        "db": {
+            "user": "analyzer",
+            "password": ""
+        }
+    }
 }
