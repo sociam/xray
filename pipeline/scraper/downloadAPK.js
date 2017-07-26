@@ -6,6 +6,7 @@ Download spawner process
 const config = require('/etc/xray/config.json');
 const logger = require('./logger.js');
 const fs = require('fs-extra');
+const util = require('util');
 const path = require('path');
 const DB = require('./db');
 const db = new DB('downloader');
@@ -23,13 +24,16 @@ function mkdirp(dir) {
     }, path.isAbsolute(dir) ? path.sep : '');
 }
 
-function resolveAPKDir(appData) {
+async function resolveAPKDir(appData) {
     logger.debug('appdir: ' + appsSaveDir, '\nappId ' + appData.app, '\nappStore ' + appData.store, '\nregion ' + appData.region, '\nversion ' + appData.version);
 
     let appSavePath = path.join(appsSaveDir, appData.app, appData.store, appData.region, appData.version);
     logger.info('App desired save dir ' + appSavePath);
 
-    return Promise.all([fs.pathExists(appSavePath), Promise.resolve(appSavePath)]);
+
+    await mkdirp(appSavePath);
+
+    return appSavePath;
 }
 
 function downloadApp(appData, appSavePath) {
@@ -40,31 +44,47 @@ function downloadApp(appData, appSavePath) {
 
     let downloadProcess = apkDownloader.childProcess;
 
-    mkdirp(appSavePath);
     logger.info('DL process %d for %s-%s started.', downloadProcess.pid, appData.app, appData.version);
 
     downloadProcess.stdout.on('data', data => {
-        logger.debug('DL process %d stdout:', downloadProcess.pid, data.toString());
+        logger.debug('DL process %d stdout:', downloadProcess.pid, 
+            data.toString().replace(/\n/g, util.format('\nDL process %d stdout: ', downloadProcess.pid)));
     });
 
     downloadProcess.stderr.on('data', data => {
-        logger.warning('DL process %d stderr:', downloadProcess.pid, data.toString());
+        logger.warning('DL process %d stderr:', downloadProcess.pid,
+            data.toString().replace(/\n/g, util.format('\nDL process %d stderr: ', downloadProcess.pid)));
     });
 
     return apkDownloader;
 }
 
-function main() {
-    db.queryAppsToDownload(10).then(apps => {
-        return Promise.each(apps, async (app) => {
+async function main() {
+    for (;;) {
+        try {
+            var apps = await db.queryAppsToDownload(100);
+        } catch(err) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            continue;
+        }
+
+        await Promise.each(apps, async (app) => {
             logger.info('Performing download on', app.app);
-            var appSavePath = resolveAPKDir(app);
+
             try {
-                await downloadApp(app, appSavePath[1]);
+                var appSavePath = await resolveAPKDir(app);
+            } catch (err) {
+                logger.warning('Did not have access to resolve dir', err.message);
+                return;
+            }
+
+            try {
+                await downloadApp(app, appSavePath);
             } catch(err) {
+                logger.warning('Downloading failed with err:', err.message);
                 logger.debug('Attempting to remove created dir');
-                await fs.rmdir(appSavePath[1]).catch(logger.warning);
-                logger.warning('Downloading failed with warn:', err.message);
+                await fs.rmdir(appSavePath).catch(logger.warning);
+                return;
             }
 
             try {
@@ -74,6 +94,7 @@ function main() {
                 logger.err('Err when updated the downloaded app', err);
             }
         });
-    }).catch(logger.warning);
+    }
 }
+
 main();

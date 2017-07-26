@@ -64,16 +64,16 @@ class DB {
     }
 
     async queryAppsToDownload(batch) {
-        var res = await this.query('SELECT * FROM app_versions WHERE downloaded = False');
+        var res = await this.query('SELECT * FROM app_versions WHERE downloaded = False LIMIT $1', [ batch ]);
         if (res.rowCount <= 0) {
             return Promise.reject('No downloads found. Consider slowing down downloader or speeding up scraper');
         }
         logger.info('Found apps to download:', res.rowCount);
-        return res.rows.splice(0, batch);
+        return res.rows;
     }
 
     async updateDownloadedApp(app) {
-        await this.query('UPDATE app_versions SET downloaded=True WHERE id = $1', [ app.appId ]);
+        await this.query('UPDATE app_versions SET downloaded=True WHERE app = $1', [ app.app ]);
     }
 
     async getAppData() {
