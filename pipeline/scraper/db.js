@@ -64,7 +64,8 @@ class DB {
     }
 
     async queryAppsToDownload(batch) {
-        var res = await this.query('SELECT * FROM app_versions WHERE downloaded = False LIMIT $1', [ batch ]);
+        var res = await this.query('SELECT * FROM (SELECT * FROM app_versions ORDER BY last_dl_attempt) AS apps WHERE downloaded = False LIMIT $1 ', [batch]);
+
         if (res.rowCount <= 0) {
             return Promise.reject('No downloads found. Consider slowing down downloader or speeding up scraper');
         }
@@ -73,7 +74,11 @@ class DB {
     }
 
     async updateDownloadedApp(app) {
-        await this.query('UPDATE app_versions SET downloaded=True WHERE app = $1', [ app.app ]);
+        await this.query('UPDATE app_versions SET downloaded=True WHERE app = $1', [app.app]);
+    }
+
+    async updatedDlAttempt(app) {
+        await this.query('UPDATE app_versions SET last_dl_attempt=CURRENT_TIMESTAMP WHERE app = $1', [app.app]);
     }
 
     async getAppData() {
@@ -192,7 +197,8 @@ class DB {
                 }
 
                 let res = await client.lquery(
-                    'INSERT INTO app_versions(app, store, region, version, downloaded) VALUES ($1, $2, $3, $4, $5) RETURNING id', [app.appId, 'play', region, app.version, 0]
+                    'INSERT INTO app_versions(app, store, region, version, downloaded, last_dl_attempt, analyzed )' +
+                    'VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [app.appId, 'play', region, app.version, 0, 'epoch', 0]
                 );
                 verId = res.rows[0].id;
 

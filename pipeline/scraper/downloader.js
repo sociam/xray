@@ -47,7 +47,7 @@ function downloadApp(appData, appSavePath) {
     logger.info('DL process %d for %s-%s started.', downloadProcess.pid, appData.app, appData.version);
 
     downloadProcess.stdout.on('data', data => {
-        logger.debug('DL process %d stdout:', downloadProcess.pid, 
+        logger.debug('DL process %d stdout:', downloadProcess.pid,
             data.toString().replace(/\n/g, util.format('\nDL process %d stdout: ', downloadProcess.pid)));
     });
 
@@ -67,10 +67,11 @@ async function main() {
             await new Promise(resolve => setTimeout(resolve, 1000));
             continue;
         }
+      
+        await Promise.each(apps, async(app) => {
 
-        await Promise.each(apps, async (app) => {
-            logger.info('Performing download on', app.app);
-
+            logger.info('Starting download attempt for:', app.app);
+            db.updatedDlAttempt(app); // Could be move to the call to DL app. but this is where the whole DL process starts.
             try {
                 var appSavePath = await resolveAPKDir(app);
             } catch (err) {
