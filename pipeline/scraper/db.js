@@ -81,13 +81,6 @@ class DB {
         await this.query('UPDATE app_versions SET last_dl_attempt=CURRENT_TIMESTAMP WHERE app = $1', [app.app]);
     }
 
-    async getAppData() {
-        logger.debug('Fetching Search Terms');
-        var res = await this.query('SELECT search_term FROM search_terms WHERE age(last_searched) > interval \'1 month\'');
-        logger.debug(res.rows.length + ' terms fetched');
-        return res.rows;
-    }
-
     /**
      *  Query the search_terms table to get a list of terms that are stale
      */
@@ -103,18 +96,13 @@ class DB {
      * Used to track 'stale' search terms.
      */
     async updateLastSearchedDate(searchTerm) {
-        logger.debug('Setting last searched date for ' + searchTerm + ' to current date');
-        var client = await this.connect();
-        logger.debug('connected');
-
         logger.debug('checking if ' + searchTerm + ' exists in db.');
-        var check_res = await client.lquery('SELECT search_term FROM search_terms WHERE search_term = $1', [searchTerm]);
+        var check_res = await this.query('SELECT search_term FROM search_terms WHERE search_term = $1', [searchTerm]);
         logger.debug(check_res.rowCount + ' rows found for ' + searchTerm);
         if (check_res.rowCount > 0) {
             logger.debug(searchTerm + ' exists, updating last searched date.');
-            var update_res = await client.lquery('UPDATE search_terms SET last_searched = CURRENT_DATE WHERE search_term = $1', [searchTerm]);
+            var update_res = await this.query('UPDATE search_terms SET last_searched = CURRENT_DATE WHERE search_term = $1', [searchTerm]);
         }
-        client.release();
         return update_res;
     }
 
@@ -122,27 +110,14 @@ class DB {
      *  Add a search term to the table if it doesn't already exist.
      */
     async insertSearchTerm(searchTerm) {
-        var client = await this.connect();
-        logger.debug('Connected');
-
         logger.debug('Checking if ' + searchTerm + ' exists before adding to search_terms');
-        var checkRes = await client.lquery('SELECT search_term FROM search_terms WHERE search_term = $1', [searchTerm]);
+        var checkRes = await this.query('SELECT search_term FROM search_terms WHERE search_term = $1', [searchTerm]);
 
         if (checkRes.rowCount == 0) {
-            try {
-                await client.lquery('BEGIN');
-                await client.lquery('INSERT INTO search_terms VALUES ($1, \'epoch\')', [searchTerm]);
-                logger.debug(searchTerm + ' added to DB');
-                await client.lquery('COMMIT');
-            } catch (err) {
-                logger.err('Error with previous query:', err);
-                await client.lquery('ROLLBACK');
-            } finally {
-                client.release();
-            }
+            await this.query('INSERT INTO search_terms VALUES ($1, \'epoch\')', [searchTerm]);
+
         } else {
             logger.debug('%s already exists, skipping.', searchTerm);
-            client.release();
         }
     }
 
