@@ -46,6 +46,7 @@ async function fetchAppData(searchTerm, numberOfApps, perSecond) {
             return await insertAppData(app_data).catch(logger.err);
         } else {
             logger.debug('App already existing', app_data.appId);
+            return Promise.reject('App Already Exists');
         }
     }));
 }
@@ -55,7 +56,7 @@ async function fetchAppData(searchTerm, numberOfApps, perSecond) {
     let dbRows = await db.getStaleSearchTerms();
     Promise.each(dbRows, async(dbRow) => {
         logger.info('searching for: ' + dbRow.search_term);
-        return await fetchAppData(dbRow.search_term, 4, 1)
+        return await fetchAppData(dbRow.search_term, 60, 1)
             .then(await db.updateLastSearchedDate(dbRow.search_term)
                 .catch(logger.err))
             .catch(logger.err);
