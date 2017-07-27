@@ -198,7 +198,7 @@ class DB {
 
                 let res = await client.lquery(
                     'INSERT INTO app_versions(app, store, region, version, downloaded, last_dl_attempt, analyzed )' +
-                    ' VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [app.appId, 'play', region, app.version, 0, 'epoch', 0]
+                    'VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [app.appId, 'play', region, app.version, 0, 'epoch', 0]
                 );
                 verId = res.rows[0].id;
 
