@@ -14,31 +14,39 @@ export class UsagetableComponent implements OnInit {
   
   selectedApps: AppUsage[] = [];
   showAdder = false;
-  apps: string[];
+  private all_apps: string[];
+  candidates: string[];
   minUsage = 0;
   maxUsage = 50;
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) { }
 
   ngOnInit() {
-    this.loader.getAppToHosts().then((a2h) => this.apps = _.keys(a2h));
-    this.selectedApps = this.connector.getState().concat();
+    this.loader.getAppToHosts().then((a2h) => {
+      this.all_apps = _.keys(a2h);
+      this.selectedApps = this.connector.getState().concat();
+      this._update_candidates();      
+    });
     (<any>window).selectedApps = this.selectedApps;    
   }
 
+  _update_candidates() {
+    this.candidates = _.difference(this.all_apps, this.selectedApps.map((x) => x.appid));  
+    console.log('this apps', this.all_apps.length, this.selectedApps.length, this.candidates.length);    
+  }
+
   appValueChanged(appusage: AppUsage, event) {
-    console.log('app value changed', appusage.appid, event);
+    // console.log('app value changed', appusage.appid, event);
     this.connector.usageChanged(this.selectedApps.concat());
   }
+
 
   clearState() { this.connector.clearState(); this.selectedApps = []; }
 
   addApp(appToAdd: string) {
     if (appToAdd) {
-      console.log('got app to add ', appToAdd);      
       this.selectedApps.push({appid: appToAdd, mins: 0}); 
-      const has = this.selectedApps.map((x) => x.appid);
-      this.apps = _.difference(this.apps, has);
+      this._update_candidates();
       this.showAdder = false;
     }
   }
