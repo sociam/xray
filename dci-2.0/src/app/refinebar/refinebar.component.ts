@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, DoCheck } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import { UsageConnectorService } from '../usage-connector.service';
@@ -16,7 +16,7 @@ interface AppImpact {
   templateUrl: './refinebar.component.html',
   styleUrls: ['./refinebar.component.css']
 })
-export class RefinebarComponent implements OnInit, DoCheck {
+export class RefinebarComponent implements OnInit {
 
   app2hosts: App2Hosts;
   host2companyid: String2String;
@@ -24,38 +24,25 @@ export class RefinebarComponent implements OnInit, DoCheck {
   host2short: String2String;
   host2PI: Host2PITypes;
   private usage: AppUsage[];
+  private init: Promise<any>;
 
-  constructor(private loader: LoaderService, private connector: UsageConnectorService) {
-  //   this.usage = [
-  //     { appid: 'bbc iplayer', mins: 50  },
-  //     { appid: 'grindr', mins: 14  },
-  //     { appid: 'peppa-paintbox', mins: 40  },
-  //     { appid: 'Mi Fit', mins: 4  }
-  //   ];
-    // 
-    this.connector.usageChanged$.subscribe(appuse => {
-        console.log('got an message from the UsageConnectorService', appuse);
-        this.usage = appuse;
-    });
-  }
-
-  ngDoCheck(): void {
-    console.log('changes ', this.usage);
-    this.render();
-  }
+  constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
   ngOnInit() {
     (<any>window).usage = this.usage;
-    return Promise.all([
+
+    this.init = Promise.all([
       this.loader.getAppToHosts().then((a2h) => this.app2hosts = a2h),
       this.loader.getHostToCompany().then((h2c) => this.host2companyid = h2c),
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
       this.loader.getHostToShort().then((h2h) => this.host2short = h2h),
       this.loader.getHostToPITypes().then((h2pit) => this.host2PI = h2pit)
-    ]).then(() => {
-      console.log('done with loading -> ', this.app2hosts);
-      this.render();
-    });
+    ]).then(() => console.log('then done'));
+
+    this.connector.usageChanged$.subscribe(appuse => {
+        this.usage = appuse.concat();
+        this.init.then(() => this.render());
+    });    
   }
 
   compileImpacts(usage: AppUsage[]): AppImpact[] {
@@ -63,11 +50,8 @@ export class RefinebarComponent implements OnInit, DoCheck {
     // usage has to be in a standard unit: days, minutes
     // first, normalise usage
 
-    // contirbutions [ { app: app, to: company, impact:val } ... ]
-    console.log(usage);
     const total = _.reduce(usage, (tot, appusage): number => tot + appusage.mins, 0),
       impacts = usage.map((u) => ({ ...u, impact: u.mins / (1.0 * total)}));
-    console.log('impacts ~~~ ', impacts);
     return _.flatten(impacts.map((usg): AppImpact[] => {
         const hosts = this.app2hosts[usg.appid];
         if (hosts === undefined) { console.warn('No app found ', usg.appid); return []; }
@@ -104,7 +88,6 @@ export class RefinebarComponent implements OnInit, DoCheck {
     // sort apps
     apps.sort((a, b) => _.filter(usage, {appid: b})[0].mins - _.filter(usage, {appid: a})[0].mins);
 
-    // console.log('apps by impact ', apps, impacts);
     by_company.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
     
     // re-order companies
@@ -114,10 +97,9 @@ export class RefinebarComponent implements OnInit, DoCheck {
 
     const stack = d3.stack(),
       out = stack.keys(apps)(by_company);
-    // console.log(out);
 
     const svg = d3.select('svg'),
-      margin = { top: 20, right: 20, bottom: 30, left: 40 },
+      margin = { top: 20, right: 20, bottom: 80, left: 40 },
       width = +svg.attr('width') - margin.left - margin.right,
       height = +svg.attr('height') - margin.top - margin.bottom,
       g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
@@ -128,7 +110,7 @@ export class RefinebarComponent implements OnInit, DoCheck {
         .rangeRound([height, 0])
         .domain([0, d3.max(by_company, function (d) { return d.total; })]).nice(),
       z = d3.scaleOrdinal()
-        .range(['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#a05d56', '#d0743c', '#ff8c00'])
+        .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
         .domain(apps);    
 
     g.append('g')
@@ -147,14 +129,19 @@ export class RefinebarComponent implements OnInit, DoCheck {
     g.append('g')
       .attr('class', 'axis')
       .attr('transform', 'translate(0,' + height + ')')
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x))
+      .selectAll('text')	
+        .style('text-anchor', 'end')
+        .attr('dx', '-.8em')
+        .attr('dy', '.15em')
+        .attr('transform', 'rotate(-65)');
 
     g.append('g')
       .attr('class', 'axis')
       .call(d3.axisLeft(y).ticks(null, 's'))
       .append('text')
       .attr('x', 2)
-      .attr('y', y(y.ticks().pop()) + 0.5)
+      .attr('y', y(y.ticks().pop()) - 8)
       .attr('dy', '0.32em')
       .attr('fill', '#000')
       .attr('font-weight', 'bold')
@@ -163,7 +150,7 @@ export class RefinebarComponent implements OnInit, DoCheck {
 
     const legend = g.append('g')
       .attr('font-family', 'sans-serif')
-      .attr('font-size', 10)
+      .attr('font-size', 11)
       .attr('text-anchor', 'end')
       .selectAll('g')
       .data(apps.slice().reverse())

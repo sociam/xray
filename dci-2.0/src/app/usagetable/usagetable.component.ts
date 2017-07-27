@@ -22,13 +22,16 @@ export class UsagetableComponent implements OnInit {
 
   ngOnInit() {
     this.loader.getAppToHosts().then((a2h) => this.apps = _.keys(a2h));
-    (<any>window).selectedApps = this.selectedApps;
+    this.selectedApps = this.connector.getState().concat();
+    (<any>window).selectedApps = this.selectedApps;    
   }
 
   appValueChanged(appusage: AppUsage, event) {
-    // console.log('app value changed', appusage.appid, event);
+    console.log('app value changed', appusage.appid, event);
     this.connector.usageChanged(this.selectedApps.concat());
   }
+
+  clearState() { this.connector.clearState(); this.selectedApps = []; }
 
   addApp(appToAdd: string) {
     if (appToAdd) {

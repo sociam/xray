@@ -9,4 +9,5 @@
           <option *ngFor="let app of apps" [value]="app">{{app}} </select>
         <button (click)="addApp(appToAdd)">Add +</button>
     </div>
+    <button (click)="clearState()">Clear</button>
 </div>
