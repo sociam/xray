@@ -74,30 +74,27 @@ async function main() {
             try {
                 var appSavePath = await resolveAPKDir(app);
             } catch (err) {
-                logger.warning('Did not have access to resolve dir', err.message);
                 await new Promise(resolve => setTimeout(resolve, 6000));
-                return;
+                return Promise.reject('Did not have access to resolve dir', err.message);
             }
 
             try {
                 await downloadApp(app, appSavePath);
             } catch(err) {
-                logger.warning('Downloading failed with err:', err.message);
                 logger.debug('Attempting to remove created dir');
                 await fs.rmdir(appSavePath).catch(logger.warning);
-                return;
+                return Promise.reject('Downloading failed with err:', err.message);
             }
 
             try {	
-                console.log(path.join(appSavePath, app.app + '.apk'));
                 if(fs.existsSync(path.join(appSavePath, app.app + '.apk'))) {
                     await db.updateDownloadedApp(app);
                 }
             } catch (err) {
                 // TODO: Maybe do something else? Destroying process as we have apks that don't exist in db...
-                logger.err('Err when updated the downloaded app', err);
+                return Promise.reject('Err when updated the downloaded app', err);
             }
-        });
+        }).catch(logger.err);
     }
 }
 
