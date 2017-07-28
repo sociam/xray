@@ -1,10 +1,10 @@
 'use strict';
-//const config = require('/etc/xray/config.json'); //See example_config.json
 const gplay = require('google-play-scraper');
-const logger = require('./logger.js');
 const _ = require('lodash');
 const Promise = require('bluebird');
-var database = require('./db.js');
+
+const logger = require('../../util/logger');
+var database = require('../../db/db');
 var db = new database('retriever');
 
 const region = 'us';

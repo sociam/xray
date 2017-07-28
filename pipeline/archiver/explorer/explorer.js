@@ -1,19 +1,12 @@
-/**
- * Get the suggested search Autocompetes and find the apps associated with them.
- */
-
-
 var gplay = require('google-play-scraper');
 const alphabet = require('alphabet');
 const _ = require('lodash');
 const fs = require('fs-extra');
-const logger = require('./logger.js');
 const Promise = require('bluebird');
-const DB = require('./db.js');
+
+const logger = require('../../util/logger');
+const DB = require('../../db/db');
 var db = new DB('explorer');
-
-//var db = new database('explorer');
-
 
 /**
  * Wipes a file at a specified location of text

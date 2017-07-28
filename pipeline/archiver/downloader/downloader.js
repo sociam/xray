@@ -4,13 +4,14 @@ Download spawner process
 
 */
 const config = require('/etc/xray/config.json');
-const logger = require('./logger.js');
 const fs = require('fs-extra');
 const util = require('util');
 const path = require('path');
-const DB = require('./db');
-const db = new DB('downloader');
 const Promise = require('bluebird');
+
+const logger = require('../../util/logger');
+const DB = require('../../db/db');
+const db = new DB('downloader');
 
 let appsSaveDir = path.join(config.datadir, 'apps');
 
@@ -63,11 +64,11 @@ async function main() {
     for (;;) {
         try {
             var apps = await db.queryAppsToDownload(4000);
-        } catch(err) {
+        } catch (err) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             continue;
         }
-      
+
         await Promise.each(apps, async(app) => {
 
             logger.info('Starting download attempt for:', app.app);
@@ -81,14 +82,14 @@ async function main() {
 
             try {
                 await downloadApp(app, appSavePath);
-            } catch(err) {
+            } catch (err) {
                 logger.debug('Attempting to remove created dir');
                 await fs.rmdir(appSavePath).catch(logger.warning);
                 return Promise.reject('Downloading failed with err:', err.message);
             }
 
-            try {	
-                if(fs.existsSync(path.join(appSavePath, app.app + '.apk'))) {
+            try {
+                if (fs.existsSync(path.join(appSavePath, app.app + '.apk'))) {
                     await db.updateDownloadedApp(app);
                 }
             } catch (err) {

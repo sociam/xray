@@ -3,7 +3,7 @@
 
 const config = require('/etc/xray/config.json');
 const pg = require('pg');
-const logger = require('./logger.js');
+const logger = require('../util/logger');
 
 class DB {
     constructor(module) {
