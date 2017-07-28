@@ -35,8 +35,8 @@ if [[ $UID -ne 0 ]]; then
 	exit 77
 fi
 
-if [[ ! -d analyzer ]] || [[ ! -d scraper ]]; then
-	echo "analyzer and scraper directories not found! Please run this script from the pipeline directory of the repository!"
+if [[ ! -d analyzer ]] || [[ ! -d archiver ]]; then
+	echo "analyzer and archiver directories not found! Please run this script from the pipeline directory of the repository!"
 	exit 64
 fi
 
@@ -63,14 +63,30 @@ install -o xray -Ddm775 "$DATA_DIR/apk_archive"
 
 install -Dm755 analyzer/analyzer "$PREFIX/bin/analyzer"
 
-install -Dm644 scraper/{logger.js,scrape.js,db.js,package.json} -t "$PREFIX/lib/xray/scraper/"
+# Downloader
+install -Dm644 archiver/downloader/downloader.js -t "$PREFIX/lib/xray/archiver/downloader"
 
-install -Dm644 analyzer/xray-analyzer.service scraper/xray-scraper.service\
+# retriever
+install -Dm644 archiver/retriever/retriever.js -t "$PREFIX/lib/xray/archiver/retriever"
+
+# explorer
+install -Dm644 archiver/explorer/explorer.js -t "$PREFIX/lib/xray/archiver/explorer"
+
+# db
+
+# util
+
+# packages
+
+install -Dm644 analyzer/xray-analyzer.service\
+		 archiver/downloader/xray-downloader.service\
+		 archiver/retriever/xray-retriever.service\
+		 archiver/explorer/xray-explorer.service\
         -t "$PREFIX/lib/systemd/system/"
 
 systemctl daemon-reload
 
-cd "$PREFIX/lib/xray/scraper"
+cd "$PREFIX/lib/xray/archiver"
 npm install
 
 exit 0
