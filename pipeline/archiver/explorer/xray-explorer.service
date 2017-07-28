@@ -1,0 +1,16 @@
+[Unit]
+Description=Google Play Search Term explorer for the xray project.
+
+[Service]
+Environment=NODE_ENV=production
+
+WorkingDirectory=/usr/local/lib/xray/archiver/explorer
+ExecStart=/usr/bin/node /usr/local/lib/xray/archiver/explorer/explorer.js
+#ExecStop=?
+User=xray
+Group=xray
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
