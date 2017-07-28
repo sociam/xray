@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"encoding/xml"
+	"github.com/sociam/xray/pipeline/util"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -13,20 +14,15 @@ import (
 
 type StaticAnalyzer struct{}
 
-type Permission struct {
-	Id        string `xml:"name,attr"`
-	maxSdkVer string `xml:"maxSdkVersion,attr"`
-}
-
 type AndroidManifest struct {
-	Package    string       `xml:"package,attr"`
-	Perms      []Permission `xml:"uses-permission"`
-	Sdk23Perms []Permission `xml:"uses-permission-sdk-23"`
+	Package    string            `xml:"package,attr"`
+	Perms      []util.Permission `xml:"uses-permission"`
+	Sdk23Perms []util.Permission `xml:"uses-permission-sdk-23"`
 }
 
-func parseManifest(app *App) (*AndroidManifest, error) {
+func parseManifest(app *util.App) (*AndroidManifest, error) {
 	manifest := AndroidManifest{}
-	manifestFile, err := os.Open(path.Join(app.outDir(), "AndroidManifest.xml"))
+	manifestFile, err := os.Open(path.Join(app.OutDir(), "AndroidManifest.xml"))
 	if err != nil {
 		return nil, err
 	}
@@ -40,12 +36,12 @@ func parseManifest(app *App) (*AndroidManifest, error) {
 	}
 
 	if manifest.Package != "" {
-		app.id = manifest.Package
+		app.Id = manifest.Package
 	}
 	return &manifest, nil
 }
 
-func (manifest *AndroidManifest) getPerms() []Permission {
+func (manifest *AndroidManifest) getPerms() []util.Permission {
 	return append(manifest.Perms, manifest.Sdk23Perms...)
 }
 
@@ -66,7 +62,7 @@ type Company struct {
 	Description  string   `json:"description"`
 }
 
-func simpleAnalyze(app *App) ([]string, error) {
+func simpleAnalyze(app *util.App) ([]string, error) {
 	//TODO: fix error handling
 
 	//TODO: replace with DB calls
@@ -101,7 +97,7 @@ func simpleAnalyze(app *App) ([]string, error) {
 	// 	return nil
 	// }
 
-	cmd := exec.Command("grep", "-Earho", "\"https?://[^ >]+\"", app.outDir())
+	cmd := exec.Command("grep", "-Earho", "\"https?://[^ >]+\"", app.OutDir())
 	urls, err := cmd.Output()
 	if err != nil {
 		return []string{}, err
@@ -130,10 +126,10 @@ func simpleAnalyze(app *App) ([]string, error) {
 	return appTrackers, nil
 }
 
-func findPackages(app *App) ([]string, error) {
+func findPackages(app *util.App) ([]string, error) {
 	// TODO: fix error handling
-	paths := make(map[string]Unit)
-	err := os.Chdir(path.Join(app.outDir(), "smali"))
+	paths := make(map[string]util.Unit)
+	err := os.Chdir(path.Join(app.OutDir(), "smali"))
 	if err != nil {
 		return []string{}, err
 	}

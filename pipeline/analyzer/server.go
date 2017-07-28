@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/sociam/xray/pipeline/util"
 	"net"
 	"os"
 	"path"
@@ -10,8 +11,8 @@ import (
 )
 
 func runServer() {
-	checkDir(cfg.UnpackDir, "Unpacked APK directory")
-	checkDir(path.Dir(cfg.SockPath), "Socket directory")
+	util.CheckDir(cfg.UnpackDir, "Unpacked APK directory")
+	util.CheckDir(path.Dir(cfg.SockPath), "Socket directory")
 
 	_ = os.Remove(cfg.SockPath) // probably catch errors here?
 
@@ -26,12 +27,6 @@ func runServer() {
 		panic(err)
 	}
 	defer apkSock.Close()
-
-	db, err := openDb()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
 
 	for {
 		b := make([]byte, 1024)
@@ -56,7 +51,7 @@ func runServer() {
 				fmt.Printf("Given app database id %s isn't a number!\n", split[0])
 				continue
 			}
-			app := NewApp(id, split[1], split[2], split[3], split[4])
+			app := util.NewApp(id, split[1], split[2], split[3], split[4])
 			fmt.Printf("Got app %v\n", app)
 			analyze(app)
 		}

@@ -1,4 +1,4 @@
-package main
+package util
 
 import (
 	"errors"
@@ -15,50 +15,55 @@ type Unit struct{}
 var unit Unit
 
 type App struct {
-	dbId                   int
-	id, store, region, ver string
-	path, unpackdir        string
-	perms                  []Permission
-	hosts                  []string
-	packages               []string
+	DbId                   int
+	Id, Store, Region, Ver string
+	Path, UnpackDir        string
+	Perms                  []Permission
+	Hosts                  []string
+	Packages               []string
+}
+
+type Permission struct {
+	Id        string `xml:"name,attr"`
+	MaxSdkVer string `xml:"maxSdkVersion,attr"`
 }
 
 func NewApp(dbId int, id, store, region, ver string) *App {
-	return &App{dbId: dbId, id: id, store: store, region: region, ver: ver}
+	return &App{DbId: dbId, Id: id, Store: store, Region: region, Ver: ver}
 }
 
 func AppByPath(path string) *App {
-	return &App{path: path}
+	return &App{Path: path}
 }
 
-func (app *App) apkPath() string {
-	if app.path != "" {
-		return app.path
+func (app *App) ApkPath() string {
+	if app.Path != "" {
+		return app.Path
 	} else {
 		return path.Join(
-			cfg.AppDir, app.id, app.store, app.region,
-			app.ver, app.id+".apk")
+			Cfg.AppDir, app.Id, app.Store, app.Region,
+			app.Ver, app.Id+".apk")
 	}
 }
 
-func (app *App) outDir() string {
-	if app.unpackdir == "" {
-		if app.path != "" {
+func (app *App) OutDir() string {
+	if app.UnpackDir == "" {
+		if app.Path != "" {
 			var err error
-			app.unpackdir, err = ioutil.TempDir(cfg.UnpackDir, path.Base(app.path))
+			app.UnpackDir, err = ioutil.TempDir(Cfg.UnpackDir, path.Base(app.Path))
 			if err != nil {
 				// maybe do something else?
-				log.Fatal("Failed to create temp dir in ", cfg.UnpackDir, ": ", err)
+				log.Fatal("Failed to create temp dir in ", Cfg.UnpackDir, ": ", err)
 			}
 		} else {
-			app.unpackdir = path.Join(cfg.UnpackDir, app.id, app.store, app.region, app.ver)
+			app.UnpackDir = path.Join(Cfg.UnpackDir, app.Id, app.Store, app.Region, app.Ver)
 		}
 	}
-	return app.unpackdir
+	return app.UnpackDir
 }
 
-func unpack(app *App) error {
-	cmd := exec.Command("apktool", "d", app.apkPath(), "-o", app.outDir(), "-f")
+func (app *App) Unpack() error {
+	cmd := exec.Command("apktool", "d", app.ApkPath(), "-o", app.OutDir(), "-f")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error '%s' unpacking apk; output below:\n%s",
@@ -67,11 +72,11 @@ func unpack(app *App) error {
 	return nil
 }
 
-func cleanup(app *App) error {
-	return os.RemoveAll(app.outDir())
+func (app *App) Cleanup() error {
+	return os.RemoveAll(app.OutDir())
 }
 
-func checkDir(dir, name string) {
+func CheckDir(dir, name string) {
 	fif, err := os.Stat(dir)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -89,7 +94,7 @@ func checkDir(dir, name string) {
 	}
 }
 
-func uniqAppend(a []string, b []string) []string {
+func UniqAppend(a []string, b []string) []string {
 	ret := make([]string, 0, len(a)+len(b))
 	for _, e := range a {
 		ret = append(ret, e)
@@ -129,7 +134,7 @@ func uniqAppend(a []interface{}, b []interface{}) []interface{} {
 }
 */
 
-func combine(a, b map[string]Unit) map[string]Unit {
+func Combine(a, b map[string]Unit) map[string]Unit {
 	ret := a
 	for e, _ := range b {
 		ret[e] = unit
@@ -137,7 +142,7 @@ func combine(a, b map[string]Unit) map[string]Unit {
 	return ret
 }
 
-func strmap(args ...string) map[string]Unit {
+func StrMap(args ...string) map[string]Unit {
 	ret := make(map[string]Unit)
 	for _, e := range args {
 		ret[e] = unit
