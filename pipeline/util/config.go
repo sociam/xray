@@ -26,18 +26,28 @@ type AnalyzerCfg struct {
 	Db DbCreds `json:"db"`
 }
 
+type ApiServCfg struct {
+	Db DbCreds `json:"db"`
+}
+
 type Config struct {
 	DataDir   string      `json:"datadir"`
 	AppDir    string      `json:"-"`
 	UnpackDir string      `json:"unpackdir"`
 	SockPath  string      `json:"sockpath"`
 	Analyzer  AnalyzerCfg `json:"analyzer"`
+	ApiServ   ApiServCfg  `json:"apiserv"`
 	Db        DbCfg       `json:"db"`
 }
 
 var Cfg Config
 
-func LoadCfg(cfgFile string) error {
+const (
+	Analyzer = iota
+	ApiServ
+)
+
+func LoadCfg(cfgFile string, requester int) error {
 	file, err := os.Open(cfgFile)
 	bytes, err := ioutil.ReadAll(file)
 	if err != nil {
@@ -63,8 +73,14 @@ func LoadCfg(cfgFile string) error {
 	Cfg.UnpackDir = path.Clean(Cfg.UnpackDir)
 	Cfg.SockPath = path.Clean(Cfg.SockPath)
 
-	Cfg.Db.User = Cfg.Analyzer.Db.User
-	Cfg.Db.Password = Cfg.Analyzer.Db.Password
+	switch requester {
+	case Analyzer:
+		Cfg.Db.User = Cfg.Analyzer.Db.User
+		Cfg.Db.Password = Cfg.Analyzer.Db.Password
+	case ApiServ:
+		Cfg.Db.User = Cfg.ApiServ.Db.User
+		Cfg.Db.Password = Cfg.ApiServ.Db.Password
+	}
 
 	fmt.Println("Config:")
 	fmt.Println("\tApp directory:", Cfg.AppDir)

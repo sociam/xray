@@ -1,8 +1,10 @@
 package util
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -149,4 +151,19 @@ func StrMap(args ...string) map[string]Unit {
 	}
 
 	return ret
+}
+
+func WriteJSON(w io.Writer, data interface{}) error {
+	enc := json.NewEncoder(w)
+	enc.SetEscapeHTML(false)
+	enc.SetIndent("", "")
+	return enc.Encode(data)
+}
+
+//TODO: real nahmate format
+func WriteDEAN(w io.Writer, data interface{}) error {
+	w.Write([]byte("Nah\n"))
+	WriteJSON(w, data)
+	w.Write([]byte("mate."))
+	return nil
 }
