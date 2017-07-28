@@ -11,6 +11,7 @@ import { ExperimentComponent } from './experiment/experiment.component';
 import { FoobarComponent } from './foobar/foobar.component';
 import { ErrorComponent } from './error/error.component';
 import { UsageConnectorService } from './usage-connector.service';
+import { CompanybarComponent } from './companybar/companybar.component';
 
 const appRoutes: Routes = [
   {
@@ -22,12 +23,16 @@ const appRoutes: Routes = [
         component: RefinebarComponent
       },
       {
+        path: 'companybar',
+        component: CompanybarComponent
+      },
+      {
         path: 'foobar',
         component: FoobarComponent
       }
     ]    
   },
-  { path: '', redirectTo: '/experiment/refinebar', pathMatch:'full' },
+  { path: '', redirectTo: '/experiment/refinebar', pathMatch: 'full' },
   { path: '**', component: ErrorComponent, data: { message: 'page not found' } }
 ];
 
@@ -39,7 +44,8 @@ const appRoutes: Routes = [
     UsagetableComponent,
     ExperimentComponent,
     FoobarComponent,
-    ErrorComponent
+    ErrorComponent,
+    CompanybarComponent
   ],
   imports: [
     HttpModule,

@@ -7,7 +7,7 @@
     <div [hidden]="!showAdder">
         <select class="apps" [(ngModel)]="appToAdd">
           <option *ngFor="let app of candidates" [value]="app">{{app}} </select>
-        <button (click)="addApp(appToAdd)">Add +</button>
+        <button (click)="addApp(appToAdd, $event)">Add +</button>
     </div>
     <button (click)="clearState()">Clear</button>
 </div>

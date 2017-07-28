@@ -43,11 +43,12 @@ export class UsagetableComponent implements OnInit {
 
   clearState() { this.connector.clearState(); this.selectedApps = []; }
 
-  addApp(appToAdd: string) {
+  addApp(appToAdd: string, event) {
     if (appToAdd) {
       this.selectedApps.push({appid: appToAdd, mins: 0}); 
       this._update_candidates();
       this.showAdder = false;
+      this.appValueChanged(this.selectedApps[this.selectedApps.length - 1], event);
     }
   }
 
