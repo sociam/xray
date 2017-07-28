@@ -35,7 +35,7 @@ if [[ $UID -ne 0 ]]; then
 	exit 77
 fi
 
-if [[ ! -d analyzer ]] || [[ ! -d archiver ]] || [[! -d db]]; then
+if [[ ! -d analyzer ]] || [[ ! -d archiver ]] || [[ ! -d db ]]; then
 	echo "analyzer, archiver and db directories not found! Please run this script from the pipeline directory of the repository!"
 	exit 64
 fi
@@ -73,13 +73,13 @@ install -Dm644 archiver/retriever/retriever.js -t "$PREFIX/lib/xray/archiver/ret
 install -Dm644 archiver/explorer/explorer.js -t "$PREFIX/lib/xray/archiver/explorer"
 
 # db
-install -Dm644 db/{db.js,packages.json} -t "$PREFIX/lib/xray/db"
+install -Dm644 db/{db.js,package.json} -t "$PREFIX/lib/xray/db"
 
 # util
 install -Dm644 util/logger.js -t "$PREFIX/lib/xray/util"
 
 # packages
-install -Dm644 archiver/{packages.json,package-lock.json} -t "$PREFIX/lib/xray/archiver"
+install -Dm644 archiver/{package.json,package-lock.json} -t "$PREFIX/lib/xray/archiver"
 
 
 install -Dm644 analyzer/xray-analyzer.service\
