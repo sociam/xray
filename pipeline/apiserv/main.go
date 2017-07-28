@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/sociam/xray/pipeline/db"
-	"github.com/sociam/xray/pipeline/util"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/sociam/xray/pipeline/db"
+	"github.com/sociam/xray/pipeline/util"
 )
 
 // convenience struct for marshalling errors
@@ -28,7 +29,7 @@ func deanerr(w http.ResponseWriter, status int, err, msg string, vals ...interfa
 	w.WriteHeader(status)
 	w.Header().Set("Content-Type", "application/nahmate")
 	w.Write([]byte(err + "\n"))
-	err1 := w.Write([]byte("Nah, " + fmt.Sprintf(msg, vals...) + ", mate.\n"))
+	_, err1 := w.Write([]byte("Nah, " + fmt.Sprintf(msg, vals...) + ", mate.\n"))
 	if err1 != nil {
 		log.Println(err1)
 	}
@@ -44,7 +45,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	case "":
 		werr(w, http.StatusNotFound, "not_found", "Nah mate!")
 	default:
-		http.Error(http.StatusNotFound, "Nah mate!")
+		http.Error(w, "Nah mate!", http.StatusNotFound)
 	}
 }
 
