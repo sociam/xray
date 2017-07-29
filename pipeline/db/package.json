@@ -1,15 +1,11 @@
 {
     "name": "db",
     "version": "1.0.0",
-    "description": "",
+    "description": "Database interface for app data scraped and analysed",
     "main": "db.js",
     "dependencies": {
         "pg": "^7.0.2"
     },
-    "devDependencies": {},
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
+    "author": "SOCIAM",
     "license": "BSD"
 }
