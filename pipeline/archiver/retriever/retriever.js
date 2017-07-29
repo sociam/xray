@@ -62,4 +62,3 @@ async function fetchAppData(searchTerm, numberOfApps, perSecond) {
             .catch(logger.err);
     });
 })();
-
