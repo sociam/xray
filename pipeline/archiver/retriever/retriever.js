@@ -63,13 +63,3 @@ async function fetchAppData(searchTerm, numberOfApps, perSecond) {
     });
 })();
 
-/**
- *  Example of promise to fetch permissions from Google Play Store.
- */
-// gplay.permissions({
-//     appId: 'com.dxco.pandavszombies',
-//     short: true
-// }).then(
-//     (app) => logger.info(app),
-//     (err) => logger.err(err.message)
-// );
