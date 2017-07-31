@@ -12,7 +12,7 @@ import { FoobarComponent } from './foobar/foobar.component';
 import { ErrorComponent } from './error/error.component';
 import { UsageConnectorService } from './usage-connector.service';
 import { CompanybarComponent } from './companybar/companybar.component';
-import { Ng2CompleterModule } from "ng2-completer";
+import { Ng2CompleterModule } from 'ng2-completer';
 
 const appRoutes: Routes = [
   {
