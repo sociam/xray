@@ -49,7 +49,7 @@ div.top {
         * {
             display: inline-block;
         }
-        /deep/ .completer-input {
+         ::shadow .completer-input {
             margin: 0px;
             width: 300px !important;
             font-size: 12pt !important;

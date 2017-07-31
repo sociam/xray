@@ -10,25 +10,35 @@ class AppUsageHHMM implements AppUsage {
   private _hh: number;
   private _mm: number;
   private _mins: number;
+
   constructor(usage: AppUsage) {
+    console.log('constructor ', usage);
     this.mins = usage.mins;
     this.appid = usage.appid;
+    this.update_hhmm(); 
   }
   get hh(): number { return this._hh; }
   get mm(): number { return this._mm; }
   get mins(): number { return this._mins; }
+  private update_mins() {
+    this._mins = this._hh * 60.0 + this._mm;
+  }
+  private update_hhmm() { 
+    console.log('updating hhmm');
+    this._hh = Math.floor(this.mins / 60.0);
+    this._mm = (this.mins % 60);    
+  }
   set hh(val: number) {
     this._hh = val;
-    this._mins = this._hh * 60.0 + this._mm;
+    this.update_mins();
   }
   set mm(val: number) {
     this._mm = val;
-    this._mins = this._hh * 60.0 + this._mm;
+    this.update_mins();
   }    
   set mins(val: number) {
     this._mins = val;
-    this._hh = Math.floor(val / 60.0);
-    this._mm = (val % 60);    
+    this.update_hhmm();
   }
   toAppUsage(): AppUsage {
     return { appid: this.appid, mins: this.mins };
