@@ -80,8 +80,8 @@ export class CompanybarComponent implements OnInit {
       y = d3.scaleLinear()
         .rangeRound([height, 0])
         .domain([0, d3.max(rows, function (d) { return d.total; })]).nice(),
-      z = d3.scaleOrdinal()
-        .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
+      z = d3.scaleOrdinal(d3.schemeCategory20)
+         // .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
         .domain(companies);    
 
     g.append('g')
@@ -92,7 +92,7 @@ export class CompanybarComponent implements OnInit {
       .selectAll('rect')
       .data(function (d) { return d; })
       .enter().append('rect')
-      .attr('x', function (d) { console.log(d.data); return x(d.data.app); })
+      .attr('x', function (d) { return x(d.data.app); })
       .attr('y', function (d) { return y(d[1]); })
       .attr('height', function (d) { return y(d[0]) - y(d[1]); })
       .attr('width', x.bandwidth());
@@ -124,7 +124,7 @@ export class CompanybarComponent implements OnInit {
       .attr('font-size', 11)
       .attr('text-anchor', 'end')
       .selectAll('g')
-      .data(apps.slice().reverse())
+      .data(companies.slice().reverse())
       .enter().append('g')
       .attr('transform', function (d, i) { return 'translate(0,' + i * 20 + ')'; });
 
