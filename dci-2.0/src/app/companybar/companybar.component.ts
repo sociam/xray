@@ -10,7 +10,7 @@ import * as _ from 'lodash';
   templateUrl: './companybar.component.html',
   styleUrls: ['./companybar.component.css']
 })
-export class CompanybarComponent implements OnInit, OnChanges, DoCheck {
+export class CompanybarComponent implements OnInit {
 
   app2hosts: App2Hosts;
   host2companyid: String2String;
@@ -19,7 +19,7 @@ export class CompanybarComponent implements OnInit, OnChanges, DoCheck {
   host2PI: Host2PITypes;
   private usage: AppUsage[];
   private init: Promise<any>;
-  countHosts = 'no';
+  countHosts = 'yes';
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
@@ -144,17 +144,4 @@ export class CompanybarComponent implements OnInit, OnChanges, DoCheck {
 
   }
 
-  // setCH(val: string) {
-  //   this.countHosts = val === 'true';
-  //   console.log('setting CountHosts ', this.countHosts);
-  // }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes > ', changes);
-  }
-  ngDoCheck(): void {
-    // throw new Error("Method not implemented.");
-    console.log(' ~ ', this.countHosts);
-    // this.init.then(() => this.render());
-  }
 }
