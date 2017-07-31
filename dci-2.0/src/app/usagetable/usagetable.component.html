@@ -8,8 +8,8 @@
 
         <div class="appname">{{ appusage.appid }} ({{ appusage.mins }} mins)</div>
         <div class="hhmm">
-            <input type="number" (ngModelChange)="appValueChanged(appusage, $event)" [(ngModel)]="appusage.hh" maxlength="2"> hh,
-            <input type="number" (ngModelChange)="appValueChanged(appusage, $event)" [(ngModel)]="appusage.mm" maxlength="2"> mm
+            <input type="number" (ngModelChange)="appValueChanged(appusage, $event)" [(ngModel)]="appusage.hh" maxlength="2">h
+            <input type="number" (ngModelChange)="appValueChanged(appusage, $event)" [(ngModel)]="appusage.mm" maxlength="2">m
         </div>
         <input type="range" (ngModelChange)="appValueChanged(appusage, $event)" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
         <button class="clearButton" (click)="delete(appusage)">x</button>

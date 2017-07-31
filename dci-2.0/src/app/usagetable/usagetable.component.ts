@@ -29,12 +29,21 @@ class AppUsageHHMM implements AppUsage {
     this._mm = (this.mins % 60);    
   }
   set hh(val: number) {
+    if (val < 0) { val = 0; }
     this._hh = val;
     this.update_mins();
   }
   set mm(val: number) {
+    if (val > 60) {
+      val = val % 60;
+      this.hh = this.hh + 1;
+    }
+    if (val < 0) {
+      this.hh = this.hh - 1;
+      val = 60 + val;       
+    }
     this._mm = val;
-    this.update_mins();
+    this.update_mins();    
   }    
   set mins(val: number) {
     this._mins = val;

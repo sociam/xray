@@ -25,12 +25,20 @@ div.top {
         }
         padding-right:100px;
         border-bottom:1px solid #eee;
+        .hhmm {
+            position: absolute;
+            right: 120px;
+            top: 8px
+        }
         .hhmm input,
         .hhmm * {
             display: inline-block;
             // width: 20px;
             width: 50px;
             font-size: 12pt;
+            border: none !important;
+            border-bottom: 1px solid #eee !important;
+            text-align: right;
         }
     }
     .clearButton {
@@ -49,10 +57,13 @@ div.top {
         * {
             display: inline-block;
         }
-         ::shadow .completer-input {
+        /deep/ .completer-input {
             margin: 0px;
             width: 300px !important;
             font-size: 12pt !important;
+            border: none !important;
+            border-bottom: 1px solid #eee !important;
+            padding: 5px 3px;
         }
         button {
             margin: 10px 0px;
