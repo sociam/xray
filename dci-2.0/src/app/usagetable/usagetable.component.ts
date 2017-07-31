@@ -13,11 +13,11 @@ export interface AppUsage { appid: string; mins: number };
 export class UsagetableComponent implements OnInit {
   
   selectedApps: AppUsage[] = [];
-  showAdder = false;
   private all_apps: string[];
   candidates: string[];
   minUsage = 0;
   maxUsage = 50;
+  appToAdd: string;
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) { }
 
@@ -32,7 +32,7 @@ export class UsagetableComponent implements OnInit {
 
   _update_candidates() {
     this.candidates = _.difference(this.all_apps, this.selectedApps.map((x) => x.appid));  
-    console.log('this apps', this.all_apps.length, this.selectedApps.length, this.candidates.length);    
+    // console.log('this apps', this.all_apps.length, this.selectedApps.length, this.candidates.length);    
   }
 
   appValueChanged(appusage: AppUsage, event) {
@@ -40,6 +40,10 @@ export class UsagetableComponent implements OnInit {
     this.connector.usageChanged(this.selectedApps.concat());
   }
 
+  delete(usage: AppUsage) {
+    this.selectedApps = this.selectedApps.filter((x) => x.appid !== usage.appid);
+    this._update_candidates();
+  }
 
   clearState() { this.connector.clearState(); this.selectedApps = []; }
 
@@ -47,7 +51,7 @@ export class UsagetableComponent implements OnInit {
     if (appToAdd) {
       this.selectedApps.push({appid: appToAdd, mins: 0}); 
       this._update_candidates();
-      this.showAdder = false;
+      this.appToAdd = undefined;
       this.appValueChanged(this.selectedApps[this.selectedApps.length - 1], event);
     }
   }

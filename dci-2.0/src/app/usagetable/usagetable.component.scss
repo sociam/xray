@@ -1,4 +1,5 @@
 div.top {
+    position: relative;
     font-size: 12pt;
     font-family: 'Calibri';
     button {
@@ -12,14 +13,38 @@ div.top {
     padding: 10px 0px;
     border-bottom: 1px solid #ae00ff;
     .rows {
+        position: relative;
         padding: 10px 5px;
         .appname {
             font-weight: bold;
         }
-        width:100%;
+        // width:100%;
         input {
-            width: 80%;
+            width: 100%;
         }
+        padding-right:100px;
         border-bottom:1px solid #eee;
+    }
+    .clearButton {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        border: none;
+    }
+    .adder {
+        width: 100%;
+        // border: 1px solid pink;
+        padding: 5px 0px;
+        * {
+            display: inline-block;
+        }
+        /deep/ .completer-input {
+            margin: 0px;
+            width: 300px !important;
+            font-size: 12pt !important;
+        }
+        button {
+            margin: 10px 0px;
+        }
     }
 }

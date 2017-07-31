@@ -1,13 +1,12 @@
 <div class="top">
+    <button (click)="clearState()">Clear all</button>
+    <div class="adder">
+        <ng2-completer [(ngModel)]="appToAdd" (selected)='addApp(appToAdd, $event)' [datasource]="candidates" [minSearchLength]="0" placeholder="app name"></ng2-completer>
+        <button (click)="addApp(appToAdd, $event)" [disabled]='!appToAdd'>Add</button>
+    </div>
     <div class="rows" *ngFor="let appusage of selectedApps">
         <div class="appname">{{ appusage.appid }} - {{ appusage.mins }} mins</div>
         <input type="range" (ngModelChange)="appValueChanged(appusage, $event)" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
+        <button class="clearButton" (click)="delete(appusage)">x</button>
     </div>
-    <button [hidden]="showAdder" (click)="showAdder = !showAdder">Add another app</button>
-    <div [hidden]="!showAdder">
-        <select class="apps" [(ngModel)]="appToAdd">
-          <option *ngFor="let app of candidates" [value]="app">{{app}} </select>
-        <button (click)="addApp(appToAdd, $event)">Add +</button>
-    </div>
-    <button (click)="clearState()">Clear</button>
 </div>

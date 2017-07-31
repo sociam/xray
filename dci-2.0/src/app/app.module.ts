@@ -12,6 +12,7 @@ import { FoobarComponent } from './foobar/foobar.component';
 import { ErrorComponent } from './error/error.component';
 import { UsageConnectorService } from './usage-connector.service';
 import { CompanybarComponent } from './companybar/companybar.component';
+import { Ng2CompleterModule } from "ng2-completer";
 
 const appRoutes: Routes = [
   {
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    Ng2CompleterModule
   ],
   providers: [LoaderService, UsageConnectorService],
   bootstrap: [AppComponent]
