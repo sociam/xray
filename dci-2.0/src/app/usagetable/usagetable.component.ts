@@ -48,7 +48,7 @@ export class UsagetableComponent implements OnInit {
   clearState() { this.connector.clearState(); this.selectedApps = []; }
 
   addApp(appToAdd: string, event) {
-    if (appToAdd) {
+    if (appToAdd && this.candidates.indexOf(appToAdd) >= 0) {
       this.selectedApps.push({appid: appToAdd, mins: 0}); 
       this._update_candidates();
       this.appToAdd = undefined;
