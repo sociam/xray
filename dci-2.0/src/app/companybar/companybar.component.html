@@ -1,3 +1,8 @@
 <div>
+    <div>
+        Count hosts?
+        <input type="radio" [(ngModel)]="countHosts" (ngModelChange)="render()" name="counthosts" value="yes" [checked]="countHosts==yes">Yes
+        <input type="radio" [(ngModel)]="countHosts" (ngModelChange)="render()" name="counthosts" value="no" [checked]="countHosts==no">No
+    </div>
     <svg width="1024" height="1024"></svg>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, DoCheck, SimpleChanges } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import { UsageConnectorService } from '../usage-connector.service';
@@ -10,7 +10,7 @@ import * as _ from 'lodash';
   templateUrl: './companybar.component.html',
   styleUrls: ['./companybar.component.css']
 })
-export class CompanybarComponent implements OnInit {
+export class CompanybarComponent implements OnInit, OnChanges, DoCheck {
 
   app2hosts: App2Hosts;
   host2companyid: String2String;
@@ -19,6 +19,7 @@ export class CompanybarComponent implements OnInit {
   host2PI: Host2PITypes;
   private usage: AppUsage[];
   private init: Promise<any>;
+  countHosts = 'no';
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
@@ -47,10 +48,11 @@ export class CompanybarComponent implements OnInit {
           if (company === undefined) { console.warn('no company mapping for ', host); };
           return company;
         }).filter((x) => x).reduce((obj: ({ [company: string]: number }), company: string) => {
-          obj[company] = (obj[company] || 0) + 1;
+          obj[company] = this.countHosts === 'yes' ? (obj[company] || 0) + 1 : 1;
+          // obj[company] = (obj[company] || 0) + 1;
           return obj;
         }, {})])),
-      companies = _.uniq(_.flatten(_.values(by_app).map( (x: { [company_counts: string]: number }): string[] => _.keys(x))));
+      companies = _.uniq(_.flatten(_.values(by_app).map( (company_counts: { [cid: string]: number }): string[] => _.keys(company_counts))));
     
     // sort apps
     apps.sort((a, b) => _.sum(_.values(by_app[b])) - _.sum(_.values(by_app[a])));    
@@ -140,5 +142,19 @@ export class CompanybarComponent implements OnInit {
       .attr('dy', '0.32em')
       .text(function (d) { return d; });
 
+  }
+
+  // setCH(val: string) {
+  //   this.countHosts = val === 'true';
+  //   console.log('setting CountHosts ', this.countHosts);
+  // }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('changes > ', changes);
+  }
+  ngDoCheck(): void {
+    // throw new Error("Method not implemented.");
+    console.log(' ~ ', this.countHosts);
+    // this.init.then(() => this.render());
   }
 }
