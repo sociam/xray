@@ -1,3 +1,9 @@
 <div>
+    <div>
+        By time?
+        <input type="radio" [(ngModel)]="byTime" (ngModelChange)="timeModeChange()" name="counthosts" value="yes" [checked]="byTime==yes">Yes
+        <input type="radio" [(ngModel)]="byTime" (ngModelChange)="timeModeChange()" name="counthosts" value="no" [checked]="byTime==no">No
+    </div>
+
     <svg width="1024" height="500"></svg>
 </div>

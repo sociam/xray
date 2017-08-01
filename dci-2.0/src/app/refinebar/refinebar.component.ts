@@ -27,6 +27,7 @@ export class RefinebarComponent implements OnInit {
   private init: Promise<any>;
   normaliseImpacts = false;
   lastMax = 0;
+  byTime = 'yes';
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
@@ -52,8 +53,9 @@ export class RefinebarComponent implements OnInit {
     // usage has to be in a standard unit: days, minutes
     // first, normalise usage
 
-    const total = _.reduce(usage, (tot, appusage): number => tot + appusage.mins, 0),
-      impacts = usage.map((u) => ({ ...u, impact: u.mins / (1.0 * (this.normaliseImpacts ? total : 1.0))}));
+    const timebased = this.byTime === 'yes',
+      total = _.reduce(usage, (tot, appusage): number => tot + (timebased ? appusage.mins : 1.0), 0),
+      impacts = usage.map((u) => ({ ...u, impact: (timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0))}));
     return _.flatten(impacts.map((usg): AppImpact[] => {
         const hosts = this.app2hosts[usg.appid];
         if (hosts === undefined) { console.warn('No app found ', usg.appid); return []; }
@@ -64,6 +66,12 @@ export class RefinebarComponent implements OnInit {
           return company;
         }).filter((x) => x)).map((company) => ({ appid: usg.appid, companyid: company, impact: usg.impact }));
     }));
+  }
+
+  timeModeChange() {
+    console.log('timeModeChange', this.byTime);
+    this.lastMax = 0;
+    this.render();
   }
 
   render() {
