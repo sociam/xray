@@ -25,6 +25,8 @@ export class RefinebarComponent implements OnInit {
   host2PI: Host2PITypes;
   private usage: AppUsage[];
   private init: Promise<any>;
+  normaliseImpacts = false;
+  lastMax = 0;
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
@@ -51,7 +53,7 @@ export class RefinebarComponent implements OnInit {
     // first, normalise usage
 
     const total = _.reduce(usage, (tot, appusage): number => tot + appusage.mins, 0),
-      impacts = usage.map((u) => ({ ...u, impact: u.mins / (1.0 * total)}));
+      impacts = usage.map((u) => ({ ...u, impact: u.mins / (1.0 * (this.normaliseImpacts ? total : 1.0))}));
     return _.flatten(impacts.map((usg): AppImpact[] => {
         const hosts = this.app2hosts[usg.appid];
         if (hosts === undefined) { console.warn('No app found ', usg.appid); return []; }
@@ -108,7 +110,7 @@ export class RefinebarComponent implements OnInit {
         .domain(companies),
       y = d3.scaleLinear()
         .rangeRound([height, 0])
-        .domain([0, d3.max(by_company, function (d) { return d.total; })]).nice(),
+        .domain([0, this.lastMax = Math.max(this.lastMax, d3.max(by_company, function (d) { return d.total; }))]).nice(),
       z = d3.scaleOrdinal()
         .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
         .domain(apps);    
