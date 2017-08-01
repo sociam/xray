@@ -25,9 +25,10 @@ export class RefinebarComponent implements OnInit {
   host2PI: Host2PITypes;
   private usage: AppUsage[];
   private init: Promise<any>;
-  normaliseImpacts = false;
   lastMax = 0;
   byTime = 'yes';
+  normaliseImpacts = false;
+
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
@@ -69,7 +70,6 @@ export class RefinebarComponent implements OnInit {
   }
 
   timeModeChange() {
-    console.log('timeModeChange', this.byTime);
     this.lastMax = 0;
     this.render();
   }
@@ -78,7 +78,7 @@ export class RefinebarComponent implements OnInit {
 
     d3.select('svg').selectAll('*').remove();
 
-    if (this.usage === undefined || this.usage.length < 2 || this.usage.reduce((total, x) => total + x.mins, 0) < 10) { 
+    if (this.usage === undefined || this.usage.length === 0) { // this.usage.reduce((total, x) => total + x.mins, 0) < 10) { 
       return;
     }
 
@@ -102,8 +102,6 @@ export class RefinebarComponent implements OnInit {
     
     // re-order companies
     companies = by_company.map((bc) => bc.company);
-
-    console.log('by company ~', by_company.map((c) => c.company), by_company);
 
     const stack = d3.stack(),
       out = stack.keys(apps)(by_company);

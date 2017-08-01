@@ -24,7 +24,6 @@ class AppUsageHHMM implements AppUsage {
     this._mins = this._hh * 60.0 + this._mm;
   }
   private update_hhmm() { 
-    console.log('updating hhmm');
     this._hh = Math.floor(this.mins / 60.0);
     this._mm = (this.mins % 60);    
   }
