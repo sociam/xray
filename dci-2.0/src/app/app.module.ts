@@ -7,17 +7,19 @@ import { RefinebarComponent } from './refinebar/refinebar.component';
 import { UsagetableComponent } from './usagetable/usagetable.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { ExperimentComponent } from './experiment/experiment.component';
 import { FoobarComponent } from './foobar/foobar.component';
 import { ErrorComponent } from './error/error.component';
 import { UsageConnectorService } from './usage-connector.service';
 import { CompanybarComponent } from './companybar/companybar.component';
 import { Ng2CompleterModule } from 'ng2-completer';
 
+import { SingleDisplayComponent } from './single-display/single-display.component';
+import { TiledDisplayComponent } from './tiled-display/tiled-display.component';
+
 const appRoutes: Routes = [
   {
-    path: 'experiment',
-    component: ExperimentComponent,
+    path: 'single',
+    component: SingleDisplayComponent,
     children: [
       {
         path: 'refinebar', 
@@ -33,6 +35,10 @@ const appRoutes: Routes = [
       }
     ]    
   },
+  {
+    path: 'tiled',
+    component: TiledDisplayComponent,
+  },  
   { path: '', redirectTo: '/experiment/refinebar', pathMatch: 'full' },
   { path: '**', component: ErrorComponent, data: { message: 'page not found' } }
 ];
@@ -43,7 +49,8 @@ const appRoutes: Routes = [
     AppComponent,
     RefinebarComponent,
     UsagetableComponent,
-    ExperimentComponent,
+    SingleDisplayComponent,
+    TiledDisplayComponent,    
     FoobarComponent,
     ErrorComponent,
     CompanybarComponent
