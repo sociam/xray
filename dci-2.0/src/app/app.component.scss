@@ -1,0 +1,28 @@
+html,
+body {
+    box-sizing: border-box;
+    font-size: 14pt;
+}
+
+nav {
+    margin: 20px 0px;
+    font-family: helvetica;
+    font-weight: 200;
+    a {}
+}
+
+div /deep/ {
+    font-family: helvetica;
+    font-weight: 200;
+}
+
+a {
+    font-size: 24pt;
+    padding: 5px;
+    margin: 5px;
+    text-decoration: none;
+}
+
+a.active {
+    border-bottom: 1px solid #bbb;
+}
