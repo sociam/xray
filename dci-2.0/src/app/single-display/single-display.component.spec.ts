@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SingleDisplayComponent } from './experiment.component';
+import { SingleDisplayComponent } from './single-display.component';
 
 describe('SingleDisplayComponent', () => {
   let component: SingleDisplayComponent;

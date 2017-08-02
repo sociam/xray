@@ -1,28 +1,47 @@
-html,
-body {
-    box-sizing: border-box;
-    font-size: 14pt;
+/deep/ div,
+/deep/ label,
+/deep/ input,
+/deep/ * {
+    font-family: helvetica !important;
+    font-weight: 100;
+}
+
+/deep/ button {
+    border: 1px solid #888;
+    box-shadow: none;
+    padding: 5px 12px;
+    color: black;
+    // font-size: 12pt;
+    background-color: white;
+}
+
+/deep/ button:disabled {
+    background-color: #eee !important;
+    opacity: 0.2 !important;
+}
+
+/deep/ input:disabled {
+    background-color: #eee !important;
+    opacity: 0.2 !important;
 }
 
 nav {
     margin: 20px 0px;
     font-family: helvetica;
     font-weight: 200;
-    a {}
+    a {
+        font-size: 120%;
+        color: black;
+        padding: 5px;
+        margin: 5px;
+        text-decoration: none;
+    }
+    a.active {
+        border-bottom: 1px solid #bbb;
+    }
 }
 
-div /deep/ {
-    font-family: helvetica;
-    font-weight: 200;
-}
-
-a {
-    font-size: 24pt;
-    padding: 5px;
-    margin: 5px;
-    text-decoration: none;
-}
-
-a.active {
-    border-bottom: 1px solid #bbb;
-}
+// div /deep/ {
+//     font-family: helvetica;
+//     font-weight: 200;
+// }

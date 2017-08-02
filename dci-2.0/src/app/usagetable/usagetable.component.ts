@@ -84,14 +84,15 @@ export class UsagetableComponent implements OnInit {
     // console.log('this apps', this.all_apps.length, this.selectedApps.length, this.candidates.length);    
   }
 
-  appValueChanged(appusage: AppUsage, event) {
-    console.log('app value changed', appusage.appid, event);
+  appValueChanged() {
+    // console.log('app value changed', appusage.appid, event);
     this.connector.usageChanged(this.selectedApps.map((x) => x.toAppUsage()));
   }
 
   delete(usage: AppUsage) {
     this.selectedApps = this.selectedApps.filter((x) => x.appid !== usage.appid);
     this._update_candidates();
+    this.appValueChanged();
   }
 
   clearState() { this.connector.clearState(); this.selectedApps = []; }
@@ -101,7 +102,7 @@ export class UsagetableComponent implements OnInit {
       this.selectedApps.push(new AppUsageHHMM({appid: appToAdd, mins: 0})); 
       this._update_candidates();
       this.appToAdd = undefined;
-      this.appValueChanged(this.selectedApps[this.selectedApps.length - 1], event);
+      this.appValueChanged();
     }
   }
 

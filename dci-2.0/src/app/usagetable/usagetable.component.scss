@@ -1,10 +1,13 @@
 div.top {
     position: relative;
     font-size: 12pt;
-    font-family: 'Calibri';
     button {
         font-size: 12pt;
         background-color: white;
+    }
+    button:disabled {
+        background-color: #eee !important;
+        opacity: 0.2 !important;
     }
     select {
         font-size: 11pt;
@@ -16,7 +19,7 @@ div.top {
         position: relative;
         padding: 10px 5px;
         .appname {
-            font-weight: bold;
+            // font-weight: bold;
             font-size: 14pt;
         }
         // width:100%;
@@ -58,11 +61,11 @@ div.top {
             display: inline-block;
         }
         /deep/ .completer-input {
-            margin: 0px;
+            margin: 0px 30px 0px 0px;
             width: 300px !important;
             font-size: 12pt !important;
             border: none !important;
-            border-bottom: 1px solid #eee !important;
+            border-bottom: 1px solid #333 !important;
             padding: 5px 3px;
         }
         button {
