@@ -1,0 +1,38 @@
+g.axis text {
+    fill: #000;
+    font-weight: bold;
+}
+
+g.axis.y g.tick text {
+    text-anchor: end;
+    font-weight: normal;
+}
+
+g.axis.x .tick text {
+    font-weight: normal;
+    /* fill: red; */
+    text-anchor: end;
+}
+
+g.axis.x .advertising text {
+    fill: #bb0000;
+}
+
+g.axis.x .analytics text,
+g.axis.x .usage text {
+    fill: #bb0099;
+}
+
+g.axis.x .app text {
+    fill: #889988;
+}
+
+g.axis.x .other text {
+    fill: #eee;
+}
+
+g.legend text {
+    font-family: sans-serif;
+    font-size: 11pt;
+    text-anchor: end;
+}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import { UsageConnectorService } from '../usage-connector.service';
@@ -14,7 +14,8 @@ interface AppImpact {
 @Component({
   selector: 'app-refinebar',
   templateUrl: './refinebar.component.html',
-  styleUrls: ['./refinebar.component.css']
+  styleUrls: ['./refinebar.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RefinebarComponent implements OnInit, AfterViewInit {
 
@@ -64,6 +65,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
         return _.uniq(hosts.map((host) => {
           const company = this.host2companyid[host];
           if (company === undefined) { console.warn('no company for ', host); return undefined; }
+          if (this.companyid2info[company].typetag === 'ignore') { console.info('skipping ', company); return undefined; }
           return company;
         }).filter((x) => x)).map((company) => ({ appid: usg.appid, companyid: company, impact: usg.impact }));
     }));
@@ -142,7 +144,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       .attr('width', x.bandwidth());
 
     g.append('g')
-      .attr('class', 'axis')
+      .attr('class', 'axis x')
       .attr('transform', 'translate(0,' + height + ')')
       .call(d3.axisBottom(x))
       .selectAll('text')	
@@ -151,22 +153,36 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
         .attr('dy', '.15em')
         .attr('transform', 'rotate(-65)');
 
+    d3.selectAll('g.axis.x g.tick')
+      .filter(function(d){ return d; })
+      .attr('class', (d) => { 
+          console.log('d >> ', d);
+          return this.companyid2info[d].typetag;
+      });
+
+      // //only ticks that returned true for the filter will be included
+      // //in the rest of the method calls:
+      // .select('line') //grab the tick line
+      // .attr('class', 'quadrantBorder') //style with a custom class and CSS
+      // .style('stroke-width', 5); //or style directly with attributes or inline styles        
+
     g.append('g')
-      .attr('class', 'axis')
+      .attr('class', 'axis y')
       .call(d3.axisLeft(y).ticks(null, 's'))
       .append('text')
       .attr('x', 2)
       .attr('y', y(y.ticks().pop()) - 8)
       .attr('dy', '0.32em')
-      .attr('fill', '#000')
-      .attr('font-weight', 'bold')
-      .attr('text-anchor', 'start')
+      // .attr('fill', '#000')
+      // .attr('font-weight', 'bold')
+      // .attr('text-anchor', 'end')
       .text('Impact');
 
     const legend = g.append('g')
-      .attr('font-family', 'sans-serif')
-      .attr('font-size', 11)
-      .attr('text-anchor', 'end')
+      // .attr('font-family', 'sans-serif')
+      // .attr('font-size', 11)
+      // .attr('text-anchor', 'end')
+      .attr('class', 'legend')
       .selectAll('g')
       .data(apps.slice().reverse())
       .enter().append('g')
