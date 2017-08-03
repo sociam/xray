@@ -1,0 +1,5 @@
+*.pyc
+apps
+data
+log
+config.json
