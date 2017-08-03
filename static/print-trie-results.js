@@ -9,6 +9,8 @@ const db = level(dbdir, {
 });
 const data = {};
 
+const showCount = process.argv.includes('-c') || process.argv.includes('--count');
+
 db.createReadStream()
   .on('data', ({
     key,
@@ -16,7 +18,10 @@ db.createReadStream()
   }) => {
     data[key] = value;
   }).on('end', () => {
-    //console.log(Object.values(data).length);
-    console.log(JSON.stringify(data, null, 4));
+    if (showCount) {
+      console.log(Object.values(data).length);
+    } else {
+      console.log(JSON.stringify(data, null, 4));
+    }
     process.exit(0);
   });
