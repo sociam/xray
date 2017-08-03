@@ -16,7 +16,6 @@ pip-selfcheck.json
 env/
 *node_modules*
 prototypes/www/lib
-static/apps
 *.DS_Store*
 *~
 ._*
