@@ -18,7 +18,6 @@ interface AppImpact {
 })
 export class RefinebarComponent implements OnInit, AfterViewInit {
 
-
   app2hosts: App2Hosts;
   host2companyid: String2String;
   companyid2info: CompanyID2Info;
@@ -82,15 +81,11 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
   }
 
   render() {
-
-    if (!this.svg) { console.log('this.svg is null '); return; }
-
-    // console.log('svg is a > ', this.svg.nativeElement);
-    // (<any>window)._svg = this.svg;
+    if (!this.svg) { return; }
 
     d3.select(this.svg.nativeElement).selectAll('*').remove();
 
-    if (this.usage === undefined || this.usage.length === 0) { // this.usage.reduce((total, x) => total + x.mins, 0) < 10) { 
+    if (this.usage === undefined || this.usage.length === 0) { 
       return;
     }
 
