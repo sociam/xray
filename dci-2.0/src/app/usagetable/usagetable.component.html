@@ -5,7 +5,6 @@
         <button (click)="clearState()">Clear all</button>
     </div>
     <div class="rows" *ngFor="let appusage of selectedApps">
-
         <div class="appname">{{ appusage.appid }} ({{ appusage.mins }} mins)</div>
         <div class="hhmm">
             <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">h

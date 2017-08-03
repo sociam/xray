@@ -41,6 +41,19 @@ nav {
     }
 }
 
+/deep/ div.mode-options {
+    a {
+        display: inline-block;
+        color: black;
+        padding: 5px;
+        margin: 5px;
+        text-decoration: none;
+    }
+    a.active {
+        border-bottom: 1px solid #bbb;
+    }
+}
+
 // div /deep/ {
 //     font-family: helvetica;
 //     font-weight: 200;

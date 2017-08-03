@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import { UsageConnectorService } from '../usage-connector.service';
@@ -16,7 +16,8 @@ interface AppImpact {
   templateUrl: './refinebar.component.html',
   styleUrls: ['./refinebar.component.css']
 })
-export class RefinebarComponent implements OnInit {
+export class RefinebarComponent implements OnInit, AfterViewInit {
+
 
   app2hosts: App2Hosts;
   host2companyid: String2String;
@@ -26,9 +27,9 @@ export class RefinebarComponent implements OnInit {
   private usage: AppUsage[];
   private init: Promise<any>;
   lastMax = 0;
-  byTime = 'yes';
+  _byTime = 'yes';
   normaliseImpacts = false;
-
+  @ViewChild('thing') svg: ElementRef;
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
@@ -68,15 +69,26 @@ export class RefinebarComponent implements OnInit {
         }).filter((x) => x)).map((company) => ({ appid: usg.appid, companyid: company, impact: usg.impact }));
     }));
   }
+    
+  ngAfterViewInit(): void { this.init.then(() => this.render()); }
 
-  timeModeChange() {
+  set byTime(val) { 
     this.lastMax = 0;
-    this.render();
+    this._byTime = val;
+    this.init.then(() => this.render());
+  }
+  get byTime() {
+    return this._byTime;
   }
 
   render() {
 
-    d3.select('svg').selectAll('*').remove();
+    if (!this.svg) { console.log('this.svg is null '); return; }
+
+    // console.log('svg is a > ', this.svg.nativeElement);
+    // (<any>window)._svg = this.svg;
+
+    d3.select(this.svg.nativeElement).selectAll('*').remove();
 
     if (this.usage === undefined || this.usage.length === 0) { // this.usage.reduce((total, x) => total + x.mins, 0) < 10) { 
       return;
@@ -106,7 +118,7 @@ export class RefinebarComponent implements OnInit {
     const stack = d3.stack(),
       out = stack.keys(apps)(by_company);
 
-    const svg = d3.select('svg'),
+    const svg = d3.select(this.svg.nativeElement),
       margin = { top: 20, right: 20, bottom: 80, left: 40 },
       width = +svg.attr('width') - margin.left - margin.right,
       height = +svg.attr('height') - margin.top - margin.bottom,

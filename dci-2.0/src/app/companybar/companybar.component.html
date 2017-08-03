@@ -1,8 +1,7 @@
 <div>
-    <div>
-        By host?
-        <input type="radio" [(ngModel)]="countHosts" (ngModelChange)="render()" name="counthosts" value="yes" [checked]="countHosts==yes">Yes
-        <input type="radio" [(ngModel)]="countHosts" (ngModelChange)="render()" name="counthosts" value="no" [checked]="countHosts==no">No
+    <div class="mode-options">
+        <a [ngClass]="{active: countHosts=='yes'}" (click)='countHosts="yes"'> By host </a>
+        <a [ngClass]="{active: countHosts=='no'}" (click)='countHosts="no"'> Equal weighting </a>
     </div>
-    <svg width="1024" height="1024"></svg>
+    <svg #svgbar width="1280" height="1024"></svg>
 </div>

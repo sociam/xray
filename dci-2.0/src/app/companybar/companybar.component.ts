@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, DoCheck, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, DoCheck, SimpleChanges, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import { UsageConnectorService } from '../usage-connector.service';
@@ -10,7 +10,7 @@ import * as _ from 'lodash';
   templateUrl: './companybar.component.html',
   styleUrls: ['./companybar.component.css']
 })
-export class CompanybarComponent implements OnInit {
+export class CompanybarComponent implements OnInit, AfterViewInit {
 
   app2hosts: App2Hosts;
   host2companyid: String2String;
@@ -19,7 +19,8 @@ export class CompanybarComponent implements OnInit {
   host2PI: Host2PITypes;
   private usage: AppUsage[];
   private init: Promise<any>;
-  countHosts = 'yes';
+  _countHosts = 'yes';
+  @ViewChild('svgbar') el : ElementRef;
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
@@ -37,9 +38,19 @@ export class CompanybarComponent implements OnInit {
       }); 
     });
   }
+  ngAfterViewInit(): void { this.init.then(() => this.render()); }
+
+  set countHosts(val: string) {
+    this._countHosts = val;
+    this.init.then(() => this.render());
+  }
+  get countHosts() {  return this._countHosts;  }
+  
   render() {
     // awful, later we want to transition
-    d3.select('svg').selectAll('*').remove();
+    if (!this.el) { return; }
+    d3.select(this.el.nativeElement).selectAll('*').remove();
+    
     // to prepare for stack() let's
     let apps = _.uniq(this.usage.map((x) => x.appid)),
       by_app = _.fromPairs(apps.map((app) => [app,
@@ -62,16 +73,10 @@ export class CompanybarComponent implements OnInit {
         ..._.fromPairs(companies.map((comp) => [comp, by_app[app][comp] || 0])) 
       }));
 
-    console.log('companies', companies);
-    console.log('apps sorted ', apps);
-    console.log('rows ', rows, rows.map((c) => c.app));
-
     const stack = d3.stack(),
       out = stack.keys(companies)(rows);
 
-    console.log('out ', out);
-
-    const svg = d3.select('svg'),
+    const svg = d3.select(this.el.nativeElement),
       margin = { top: 20, right: 20, bottom: 80, left: 40 },
       width = +svg.attr('width') - margin.left - margin.right,
       height = +svg.attr('height') - margin.top - margin.bottom,
