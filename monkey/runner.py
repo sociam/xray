@@ -79,8 +79,7 @@ def pcapToJson(pcapPath, jsonPath):
         fixDuplicatedJsonFile(f)
 
 
-filenames = glob.glob(os.path.join(appsdir, '*.apk'))
-filenames = filenames[filenames.index(os.path.join(appsdir, 'com.astroframe.seoulbus.apk')):]
+filenames = glob.iglob(os.path.join(appsdir, '*.apk'))
 for filename in filenames:
     baseFilename = os.path.basename(filename)
     [apkName, _] = os.path.splitext(baseFilename)
