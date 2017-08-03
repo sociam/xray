@@ -3,18 +3,18 @@ import itertools
 
 
 def flattenDict(d, parent_key='', sep='_', ignore_list=None):
-    items = []
+    items = {}
     for k, v in d.items():
         keepKey = not ignore_list or all(
             keyword not in k for keyword in ignore_list)
         if keepKey:
             new_key = parent_key + sep + k if parent_key else k
             if isinstance(v, collections.MutableMapping):
-                items.extend(flattenDict(v, new_key, sep=sep,
-                                         ignore_list=ignore_list).items())
+                items.update(flattenDict(v, new_key, sep=sep,
+                                         ignore_list=ignore_list))
             else:
-                items.append((new_key, v))
-    return dict(items)
+                items[new_key] = v
+    return items
 
 
 flatten = itertools.chain.from_iterable

@@ -5,6 +5,7 @@ import time
 import sys
 import logging
 import random
+import glob
 
 import delegator
 from features import extract
@@ -48,19 +49,41 @@ def startMonkey(apkName, deleteApp=True):
     logger.error(process.err)
 
 
+def fixDuplicatedJsonFile(fp):
+    # http.request.line and http.response.line are used as keys several times
+    # for different values. json.loads will only give us the last value.
+    # We need to handle them seperately.
+    HEADERS = ['http.request.line', 'http.response.line']
+
+    def list_hook(pairs):
+        result = {}
+        for name, value in pairs:
+            if name in HEADERS:
+                result.setdefault(name, []).append(value)
+            else:
+                result[name] = value
+        return result
+    data = json.load(fp, object_pairs_hook=list_hook)
+    fp.seek(0)
+    json.dump(data, fp)
+    fp.truncate()
+
+
 def pcapToJson(pcapPath, jsonPath):
     process = delegator.run('tshark -T json -r {path} -o "ssl.keylog_file:{keyPath}" > {jsonPath}'.format(
         path=pcapPath, keyPath=premasterKeyPath, jsonPath=jsonPath))
     logger.info(process.out)
     logger.error(process.err)
+    # Fix duplicate keys in the outputted JSON
+    with open(jsonPath, 'r+') as f:
+        fixDuplicatedJsonFile(f)
 
 
-filenames = os.listdir(appsdir)
+filenames = glob.glob(os.path.join(appsdir, '*.apk'))
+filenames = filenames[filenames.index(os.path.join(appsdir, 'com.astroframe.seoulbus.apk')):]
 for filename in filenames:
     baseFilename = os.path.basename(filename)
-    [apkName, ext] = os.path.splitext(baseFilename)
-    if ext != '.apk':
-        continue
+    [apkName, _] = os.path.splitext(baseFilename)
     timestamp = str(time.time()).replace('.', '')
 
     logger.info('Starting mitmproxy')
