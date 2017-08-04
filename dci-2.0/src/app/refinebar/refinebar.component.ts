@@ -29,7 +29,8 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
   lastMax = 0;
   _byTime = 'yes';
   normaliseImpacts = false;
-  @ViewChild('thing') svg: ElementRef;
+
+  @ViewChild('thing') svg: ElementRef; // this gets a direct el reference to the svg element
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
 
@@ -73,15 +74,15 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
     
   ngAfterViewInit(): void { this.init.then(() => this.render()); }
 
+  // accessors for .byTime 
   set byTime(val) { 
     this.lastMax = 0;
     this._byTime = val;
     this.init.then(() => this.render());
   }
-  get byTime() {
-    return this._byTime;
-  }
+  get byTime() { return this._byTime;  }
 
+  // 
   render() {
     if (!this.svg) { return; }
 
@@ -100,12 +101,55 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
         const t = impacts.filter((imp) => imp.companyid === cid && imp.appid === aid)[0];
         return t !== undefined ? t.impact : 0;
       },
-      by_company = companies.map((c) => ({company: c,
+      by_company = companies.map((c) => ({
+        company: c,
         total: apps.reduce((total, aid) => total += get_impact(c, aid), 0),
         ..._.fromPairs(apps.map((aid) => [aid, get_impact(c, aid)]))}));
 
     // sort apps
     apps.sort((a, b) => _.filter(usage, {appid: b})[0].mins - _.filter(usage, {appid: a})[0].mins);
+
+    const satBand = (name, domain, h, l, slow, shigh) => {
+      return (appkey) => {
+        var ki = domain.indexOf(appkey),
+          bandwidth = (shigh-slow)/domain.length,
+          starget = slow + ki*bandwidth,
+          targetc = d3.hsl(h, starget, l);
+          console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
+          return targetc;
+      };
+    },
+    catcolours = { // .interpolate(d3.interpolateHsl).
+      'advertising':  satBand('adv', apps, 0.2, 0.6, 0, 1), 
+      'app': satBand('app', apps, 80, 0.6, 0, 1), 
+      'analytics': satBand('analytics', apps, 30, 0.4, 0, 1), 
+      'usage': satBand('usage', apps, 30, 0.6, 0, 1), 
+      'other': satBand('other', apps, 0.5, 0.6, 0, 1)
+    },    
+    // catcolours = { // .interpolate(d3.interpolateHsl).
+    //   'advertising': 
+    //     d3.scaleBand().domain(apps).range([d3.hsl(0.2,0,0.8), d3.hsl(0.2,1,0.8)]),
+    //   'app':
+    //     d3.scaleBand().domain(apps).range([d3.hsl(0.8,0,0.8), d3.hsl(0.8,1,0.8)]),
+    //   'analytics':
+    //     d3.scaleBand().domain(apps).range([d3.hsl(0.6,0,0.8), d3.hsl(0.6,1,0.8)]),                            
+    //   'usage':
+    //     d3.scaleBand().domain(apps).range([d3.hsl(0.6,0,0.8), d3.hsl(0.6,1,0.8)]),                                    
+    //   'other':
+    //     d3.scaleBand().domain(apps).range([d3.hsl(0.4,0,0.8), d3.hsl(0.4,1,0.8)])
+    // },
+    getColor = (app: string, company: string): string => {
+    
+      let companyInfo = this.companyid2info[company];
+      console.log('getColour >>> ', app, company, companyInfo.typetag);
+      if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
+        console.log('win! ', companyInfo.typetag, catcolours[companyInfo.typetag](app));
+        return catcolours[companyInfo.typetag](app);
+      }
+      return catcolours.other(app);
+    }
+
+    (<any>window).d3 = d3;
 
     by_company.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
     
@@ -128,20 +172,28 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
         .domain([0, this.lastMax = Math.max(this.lastMax, d3.max(by_company, function (d) { return d.total; }))]).nice(),
       z = d3.scaleOrdinal()
         .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
-        .domain(apps);    
+        .domain(apps);
+
+
+    const f = function(selection, first, last) { 
+      return selection.selectAll('rect')
+        .data(function (d) { console.log(' D ~ ', d); return d; })
+        .enter().append('rect')
+        .attr('fill', function(d, i) { 
+          // console.log('parentnode > ', this.parentNode, );
+          return getColor(d3.select(this.parentNode).datum().key, d.data.company); 
+        }).attr('x', function (d) { return x(d.data.company); })
+        .attr('stroke', '#fff')
+        .attr('y', function (d) { return y(d[1]); })
+        .attr('height', function (d) { return y(d[0]) - y(d[1]); })
+        .attr('width', x.bandwidth());
+    };
 
     g.append('g')
       .selectAll('g')
       .data(d3.stack().keys(apps)(by_company))
       .enter().append('g')
-      .attr('fill', function (d) { return z(d.key); })
-      .selectAll('rect')
-      .data(function (d) { return d; })
-      .enter().append('rect')
-      .attr('x', function (d) { return x(d.data.company); })
-      .attr('y', function (d) { return y(d[1]); })
-      .attr('height', function (d) { return y(d[0]) - y(d[1]); })
-      .attr('width', x.bandwidth());
+      .call(f);
 
     g.append('g')
       .attr('class', 'axis x')
