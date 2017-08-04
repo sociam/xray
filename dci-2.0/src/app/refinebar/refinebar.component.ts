@@ -29,6 +29,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
   lastMax = 0;
   _byTime = 'yes';
   normaliseImpacts = false;
+  apps: string[];
 
   @ViewChild('thing') svg: ElementRef; // this gets a direct el reference to the svg element
 
@@ -106,25 +107,30 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
         total: apps.reduce((total, aid) => total += get_impact(c, aid), 0),
         ..._.fromPairs(apps.map((aid) => [aid, get_impact(c, aid)]))}));
 
-    // sort apps
-    apps.sort((a, b) => _.filter(usage, {appid: b})[0].mins - _.filter(usage, {appid: a})[0].mins);
+    if (this.apps === undefined) {
+      // sort apps
+      apps.sort((a, b) => _.filter(usage, {appid: b})[0].mins - _.filter(usage, {appid: a})[0].mins);
+      this.apps = apps;
+    } else {
+      apps = this.apps;
+    }
 
     const satBand = (name, domain, h, l, slow, shigh) => {
       return (appkey) => {
         var ki = domain.indexOf(appkey),
           bandwidth = (shigh-slow)/domain.length,
           starget = slow + ki*bandwidth,
-          targetc = d3.hsl(h, starget, l);
-          console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
+          targetc = d3.hsl(h, starget, starget);
+          // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
           return targetc;
       };
     },
     catcolours = { // .interpolate(d3.interpolateHsl).
-      'advertising':  satBand('adv', apps, 0.2, 0.6, 0, 1), 
-      'app': satBand('app', apps, 80, 0.6, 0, 1), 
-      'analytics': satBand('analytics', apps, 30, 0.4, 0, 1), 
-      'usage': satBand('usage', apps, 30, 0.6, 0, 1), 
-      'other': satBand('other', apps, 0.5, 0.6, 0, 1)
+      'advertising':  satBand('adv', apps, 0.2, 0.6, 0.2, 1), 
+      'app': satBand('app', apps, 80, 0.6, 0.2, 1), 
+      'analytics': satBand('analytics', apps, 30, 0.4, 0.2, 1), 
+      'usage': satBand('usage', apps, 30, 0.6, 0.2, 1), 
+      'other': satBand('other', apps, 0.5, 0.6, 0.2, 1)
     },    
     // catcolours = { // .interpolate(d3.interpolateHsl).
     //   'advertising': 
@@ -141,9 +147,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
     getColor = (app: string, company: string): string => {
     
       let companyInfo = this.companyid2info[company];
-      console.log('getColour >>> ', app, company, companyInfo.typetag);
       if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
-        console.log('win! ', companyInfo.typetag, catcolours[companyInfo.typetag](app));
         return catcolours[companyInfo.typetag](app);
       }
       return catcolours.other(app);
@@ -180,7 +184,6 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
         .data(function (d) { console.log(' D ~ ', d); return d; })
         .enter().append('rect')
         .attr('fill', function(d, i) { 
-          // console.log('parentnode > ', this.parentNode, );
           return getColor(d3.select(this.parentNode).datum().key, d.data.company); 
         }).attr('x', function (d) { return x(d.data.company); })
         .attr('stroke', '#fff')
@@ -207,10 +210,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
 
     d3.selectAll('g.axis.x g.tick')
       .filter(function(d){ return d; })
-      .attr('class', (d) => { 
-          console.log('d >> ', d);
-          return this.companyid2info[d].typetag;
-      });
+      .attr('class', (d) => this.companyid2info[d].typetag);
 
       // //only ticks that returned true for the filter will be included
       // //in the rest of the method calls:
