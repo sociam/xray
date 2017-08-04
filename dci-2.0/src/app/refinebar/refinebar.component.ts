@@ -83,6 +83,20 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
   }
   get byTime() { return this._byTime;  }
 
+
+  _selectedType: string;
+  setSelectedTypeHighlight(ctype: string) {
+    var svg = this.svg.nativeElement;
+      this._selectedType = ctype;
+      d3.select(svg).selectAll('rect.back').classed('reveal', false);
+      d3.select(svg).selectAll('.ctypelegend g').classed('selected', false)
+      
+      if (ctype) { 
+        d3.select(svg).selectAll('rect.back.' + ctype).classed('reveal', true);
+        d3.select(svg).selectAll('.ctypelegend g.'+ctype).classed('selected', true)
+      };
+      
+  }
   // 
   render() {
     if (!this.svg) { return; }
@@ -131,21 +145,11 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       'analytics': satBand('analytics', apps, 30, 0.4, 0.2, 1), 
       'usage': satBand('usage', apps, 30, 0.6, 0.2, 1), 
       'other': satBand('other', apps, 0.5, 0.6, 0.2, 1)
-    },    
-    // catcolours = { // .interpolate(d3.interpolateHsl).
-    //   'advertising': 
-    //     d3.scaleBand().domain(apps).range([d3.hsl(0.2,0,0.8), d3.hsl(0.2,1,0.8)]),
-    //   'app':
-    //     d3.scaleBand().domain(apps).range([d3.hsl(0.8,0,0.8), d3.hsl(0.8,1,0.8)]),
-    //   'analytics':
-    //     d3.scaleBand().domain(apps).range([d3.hsl(0.6,0,0.8), d3.hsl(0.6,1,0.8)]),                            
-    //   'usage':
-    //     d3.scaleBand().domain(apps).range([d3.hsl(0.6,0,0.8), d3.hsl(0.6,1,0.8)]),                                    
-    //   'other':
-    //     d3.scaleBand().domain(apps).range([d3.hsl(0.4,0,0.8), d3.hsl(0.4,1,0.8)])
-    // },
-    getColor = (app: string, company: string): string => {
-    
+    },  
+    getColor = (app: string, company: string): string => {    
+      if (app === undefined) {
+        app = apps[0]; // apps.length - 1];
+      }
       let companyInfo = this.companyid2info[company];
       if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
         return catcolours[companyInfo.typetag](app);
@@ -174,19 +178,28 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       y = d3.scaleLinear()
         .rangeRound([height, 0])
         .domain([0, this.lastMax = Math.max(this.lastMax, d3.max(by_company, function (d) { return d.total; }))]).nice(),
-      z = d3.scaleOrdinal()
-        .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
-        .domain(apps);
+      z = d3.scaleOrdinal(d3.schemeCategory20)
+        .domain(apps);            
+      // z = d3.scaleOrdinal()
+      //   .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
+      //   .domain(apps);
 
+    g.selectAll('rect.back')
+      .data(companies)
+      .enter().append('rect')      
+      .attr('class', (company) => 'back ' + this.companyid2info[company].typetag)
+      .attr('x', (company) => x(company))
+      .attr('y', 0)
+      .attr('height', height)
+      .attr('width', x.bandwidth());
 
     const f = function(selection, first, last) { 
       return selection.selectAll('rect')
         .data(function (d) { console.log(' D ~ ', d); return d; })
         .enter().append('rect')
-        .attr('fill', function(d, i) { 
-          return getColor(d3.select(this.parentNode).datum().key, d.data.company); 
-        }).attr('x', function (d) { return x(d.data.company); })
-        .attr('stroke', '#fff')
+        .attr('class','bar')
+        // .attr('stroke', function(d, i) { return getColor(d3.select(this.parentNode).datum().key, d.data.company);  })
+        .attr('x', function (d) { return x(d.data.company); })
         .attr('y', function (d) { return y(d[1]); })
         .attr('height', function (d) { return y(d[0]) - y(d[1]); })
         .attr('width', x.bandwidth());
@@ -196,8 +209,10 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       .selectAll('g')
       .data(d3.stack().keys(apps)(by_company))
       .enter().append('g')
+      .attr('fill', function (d) { return z(d.key); })      
       .call(f);
 
+      
     g.append('g')
       .attr('class', 'axis x')
       .attr('transform', 'translate(0,' + height + ')')
@@ -212,12 +227,6 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       .filter(function(d){ return d; })
       .attr('class', (d) => this.companyid2info[d].typetag);
 
-      // //only ticks that returned true for the filter will be included
-      // //in the rest of the method calls:
-      // .select('line') //grab the tick line
-      // .attr('class', 'quadrantBorder') //style with a custom class and CSS
-      // .style('stroke-width', 5); //or style directly with attributes or inline styles        
-
     g.append('g')
       .attr('class', 'axis y')
       .call(d3.axisLeft(y).ticks(null, 's'))
@@ -225,15 +234,10 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       .attr('x', 2)
       .attr('y', y(y.ticks().pop()) - 8)
       .attr('dy', '0.32em')
-      // .attr('fill', '#000')
-      // .attr('font-weight', 'bold')
-      // .attr('text-anchor', 'end')
       .text('Impact');
 
+    // legend
     const legend = g.append('g')
-      // .attr('font-family', 'sans-serif')
-      // .attr('font-size', 11)
-      // .attr('text-anchor', 'end')
       .attr('class', 'legend')
       .selectAll('g')
       .data(apps.slice().reverse())
@@ -252,6 +256,30 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       .attr('dy', '0.32em')
       .text(function (d) { return d; });
 
-  // }
+    const ctypes = ['advertising', 'analytics', 'app', 'other'],
+      ctypeslegend = g.append('g')
+        .attr('class', 'ctypelegend')
+        .selectAll('g')
+        .data(ctypes)
+        .enter().append('g')
+        .attr('class', (d) => d)
+        .on("mouseenter", (d) => this.setSelectedTypeHighlight(d))
+        // .on("mouseleave", (d) => d3.selectAll('rect.back.' + d).classed('reveal', false))
+        .attr('transform', (d, i) => 'translate(0,' + i * 20 + ')');
+    ctypeslegend.append('rect')
+      .attr('x', width - 200 - 19)
+      .attr('width', 19)
+      .attr('height', 19)
+      .attr('class', (d) => 'legend ' + d);
+    ctypeslegend.append('text')
+      .attr('x', width - 200 - 24)
+      .attr('y', 9.5)
+      .attr('dy', '0.32em')
+      .text((d) => d);
+
+    if (this._selectedType) {
+      this.setSelectedTypeHighlight(this._selectedType)
+    }
+
   }
 }
