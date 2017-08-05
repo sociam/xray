@@ -1,6 +1,10 @@
 g.axis text {
     fill: #000;
-    font-weight: bold;
+    font-weight: 100;
+}
+
+g.axis.x text {
+    font-size: 10pt;
 }
 
 g.axis.y g.tick text {
@@ -14,10 +18,15 @@ g.axis.x .tick text {
     text-anchor: end;
 }
 
-g.axis.x .advertising text,
+// category colours
+$advertising: #bb0000;
+$analytics:#bb0099;
+$app: #889988;
+$other: #eee;
 rect.back.advertising,
-rect.legend.advertising {
-    fill: #bb0000;
+rect.legend.advertising,
+g.axis.x .advertising text {
+    fill: $advertising;
 }
 
 g.axis.x .analytics text,
@@ -26,15 +35,16 @@ rect.back.usage,
 rect.back.analytics,
 rect.legend.usage,
 rect.legend.analytics {
-    fill: #bb0099;
+    fill: $analytics;
 }
 
 rect.back {
+    -webkit-animate: 0.8s;
+    transition: 0.15s;
     opacity: 0;
-}
-
-rect.back.reveal {
-    opacity: 0.12;
+    &.reveal {
+        opacity: 0.12;
+    }
 }
 
 g.axis.x .app text,
@@ -57,8 +67,7 @@ g.ctypelegend text {
 }
 
 g.ctypelegend .selected {
-    stroke-width: 1px;
-    stroke: #bb0099;
+    fill: $advertising;
 }
 
 rect.bar {

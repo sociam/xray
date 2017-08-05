@@ -14,7 +14,7 @@ interface AppImpact {
 @Component({
   selector: 'app-refinebar',
   templateUrl: './refinebar.component.html',
-  styleUrls: ['./refinebar.component.css'],
+  styleUrls: ['./refinebar.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class RefinebarComponent implements OnInit, AfterViewInit {
@@ -168,7 +168,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       out = stack.keys(apps)(by_company);
 
     const svg = d3.select(this.svg.nativeElement),
-      margin = { top: 20, right: 20, bottom: 80, left: 40 },
+      margin = { top: 20, right: 20, bottom: 130, left: 40 },
       width = +svg.attr('width') - margin.left - margin.right,
       height = +svg.attr('height') - margin.top - margin.bottom,
       g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
@@ -193,6 +193,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       .attr('height', height)
       .attr('width', x.bandwidth());
 
+    // main rects
     const f = function(selection, first, last) { 
       return selection.selectAll('rect')
         .data(function (d) { console.log(' D ~ ', d); return d; })
@@ -204,24 +205,24 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
         .attr('height', function (d) { return y(d[0]) - y(d[1]); })
         .attr('width', x.bandwidth());
     };
-
     g.append('g')
       .selectAll('g')
       .data(d3.stack().keys(apps)(by_company))
       .enter().append('g')
       .attr('fill', function (d) { return z(d.key); })      
       .call(f);
-
       
+    // x axis
     g.append('g')
       .attr('class', 'axis x')
       .attr('transform', 'translate(0,' + height + ')')
       .call(d3.axisBottom(x))
       .selectAll('text')	
         .style('text-anchor', 'end')
+        .attr('y', 1)
         .attr('dx', '-.8em')
         .attr('dy', '.15em')
-        .attr('transform', 'rotate(-65)');
+        .attr('transform', 'rotate(-90)');
 
     d3.selectAll('g.axis.x g.tick')
       .filter(function(d){ return d; })
@@ -237,12 +238,14 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
       .text('Impact');
 
     // legend
-    const legend = g.append('g')
+    const leading = 26,
+      legend = g.append('g')
       .attr('class', 'legend')
+      .attr('transform', 'translate(0,10)')              
       .selectAll('g')
       .data(apps.slice().reverse())
       .enter().append('g')
-      .attr('transform', function (d, i) { return 'translate(0,' + i * 20 + ')'; });
+      .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; });
 
     legend.append('rect')
       .attr('x', width - 19)
@@ -259,13 +262,15 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
     const ctypes = ['advertising', 'analytics', 'app', 'other'],
       ctypeslegend = g.append('g')
         .attr('class', 'ctypelegend')
+        .attr('transform', 'translate(0,10)')        
         .selectAll('g')
         .data(ctypes)
         .enter().append('g')
         .attr('class', (d) => d)
         .on("mouseenter", (d) => this.setSelectedTypeHighlight(d))
         // .on("mouseleave", (d) => d3.selectAll('rect.back.' + d).classed('reveal', false))
-        .attr('transform', (d, i) => 'translate(0,' + i * 20 + ')');
+        .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
+
     ctypeslegend.append('rect')
       .attr('x', width - 200 - 19)
       .attr('width', 19)

@@ -1,6 +1,6 @@
 <div class="top">
     <div class="adder">
-        <ng2-completer [(ngModel)]="appToAdd" [datasource]="candidates" [minSearchLength]="0" placeholder="app name"></ng2-completer>
+        <ng2-completer [(ngModel)]="appToAdd" [datasource]="candidates" [minSearchLength]="0" placeholder="Add app"></ng2-completer>
         <button (click)="addApp(appToAdd, $event)" [disabled]='!appToAdd'>Add</button>
         <button (click)="clearState()">Clear all</button>
     </div>
