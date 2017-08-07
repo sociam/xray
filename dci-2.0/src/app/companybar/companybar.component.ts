@@ -34,26 +34,29 @@ export class CompanybarComponent implements OnInit, AfterViewInit {
     ]).then(() => {
       this.connector.usageChanged$.subscribe(appuse => {
           this.usage = appuse.concat();
-          this.init.then(() => this.render());
+          this.init.then(() => this.render_base());
       }); 
     });
   }
-  ngAfterViewInit(): void { this.init.then(() => this.render()); }
+  ngAfterViewInit(): void { this.init.then(() => this.render_base()); }
 
   set countHosts(val: string) {
     this._countHosts = val;
-    this.init.then(() => this.render());
+    this.init.then(() => this.render_base());
   }
   get countHosts() {  return this._countHosts;  }
   
-  render() {
+  render_base() { 
+    this.render(this.usage.map((x) => x.appid), this.el.nativeElement)
+  }
+
+  render(apps: string[], container_el: HTMLElement) {
     // awful, later we want to transition
     if (!this.el) { return; }
-    d3.select(this.el.nativeElement).selectAll('*').remove();
+    d3.select(container_el).selectAll('*').remove();
     
     // to prepare for stack() let's
-    let apps = _.uniq(this.usage.map((x) => x.appid)),
-      by_app = _.fromPairs(apps.map((app) => [app,
+    let by_app = _.fromPairs(apps.map((app) => [app,
         (this.app2hosts[app] || []).map((host: string): string => { 
           let company: string = this.host2companyid[host];
           if (company === undefined) { console.warn('no company mapping for ', host); };
@@ -76,7 +79,7 @@ export class CompanybarComponent implements OnInit, AfterViewInit {
     const stack = d3.stack(),
       out = stack.keys(companies)(rows);
 
-    const svg = d3.select(this.el.nativeElement),
+    const svg = d3.select(container_el),
       margin = { top: 20, right: 20, bottom: 80, left: 40 },
       width = +svg.attr('width') - margin.left - margin.right,
       height = +svg.attr('height') - margin.top - margin.bottom,
