@@ -37,6 +37,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() appusage: AppUsage[];
   @Input() showModes = true;
   @Input() highlightApp : string;
+  @Input() showLegend = true;
 
   highlightColour = '#FF066A';
 
@@ -252,26 +253,28 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       .text('Impact');
 
     // legend
-    const leading = 26,
-      legend = g.append('g')
-      .attr('class', 'legend')
-      .attr('transform', 'translate(0,10)')              
-      .selectAll('g')
-      .data(apps.slice().reverse())
-      .enter().append('g')
-      .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; });
+    const leading = 26;
+    if (this.showLegend) {
+      const legend = g.append('g')
+        .attr('class', 'legend')
+        .attr('transform', 'translate(0,10)')              
+        .selectAll('g')
+        .data(apps.slice().reverse())
+        .enter().append('g')
+        .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; });
 
-    legend.append('rect')
-      .attr('x', width - 19)
-      .attr('width', 19)
-      .attr('height', 19)
-      .attr('fill', z);
+      legend.append('rect')
+        .attr('x', width - 19)
+        .attr('width', 19)
+        .attr('height', 19)
+        .attr('fill', z);
 
-    legend.append('text')
-      .attr('x', width - 24)
-      .attr('y', 9.5)
-      .attr('dy', '0.32em')
-      .text(function (d) { return d; });
+      legend.append('text')
+        .attr('x', width - 24)
+        .attr('y', 9.5)
+        .attr('dy', '0.32em')
+        .text(function (d) { return d; });
+    }
 
     const ctypes = ['advertising', 'analytics', 'app', 'other'],
       ctypeslegend = g.append('g')
@@ -286,12 +289,12 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
 
     ctypeslegend.append('rect')
-      .attr('x', width - 200 - 19)
+      .attr('x', this.showLegend ? width - 200 - 24 : width - 19)
       .attr('width', 19)
       .attr('height', 19)
       .attr('class', (d) => 'legend ' + d);
     ctypeslegend.append('text')
-      .attr('x', width - 200 - 24)
+      .attr('x', this.showLegend ? width - 200 - 24 : width - 19)
       .attr('y', 9.5)
       .attr('dy', '0.32em')
       .text((d) => d);

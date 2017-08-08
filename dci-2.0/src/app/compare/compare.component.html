@@ -1,7 +1,7 @@
 <div class="container">
     <div class="comparison" *ngFor='let sub of substitutions'>
         <h1>{{ sub.target.appid }}</h1>
-        <app-refinebar [appusage]='sub.all' [showModes]='false' [highlightApp]='sub.target.appid'></app-refinebar>
+        <app-refinebar [appusage]='sub.all' [showModes]='false' [highlightApp]='sub.target.appid' [showLegend]='false'></app-refinebar>
         <app-company-list [app]='sub.target.appid'></app-company-list>
     </div>
 </div>
