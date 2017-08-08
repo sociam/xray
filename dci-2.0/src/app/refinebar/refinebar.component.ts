@@ -30,10 +30,15 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   normaliseImpacts = false;
   apps: string[];
 
+
   @ViewChild('thing') svg: ElementRef; // this gets a direct el reference to the svg element
 
   // incoming attribute
   @Input() appusage: AppUsage[];
+  @Input() showModes = true;
+  @Input() highlightApp : string;
+
+  highlightColour = '#FF066A';
 
   constructor(private loader: LoaderService) {
     this.init = Promise.all([
@@ -204,7 +209,6 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .data((d) => d)
         .enter().append('rect')
         .attr('class','bar')
-        // .attr('stroke', function(d, i) { return getColor(d3.select(this.parentNode).datum().key, d.data.company);  })
         .attr('x', function (d) { return x(d.data.company); })
         .attr('y', function (d) { return y(d[1]); })
         .attr('height', function (d) { return y(d[0]) - y(d[1]); })
@@ -214,7 +218,12 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       .selectAll('g')
       .data(d3.stack().keys(apps)(by_company))
       .enter().append('g')
-      .attr('fill', function (d) { return z(d.key); })      
+      .attr('fill', (d) => { 
+        if (this.highlightApp !== undefined) {
+          return d.key === this.highlightApp ? this.highlightColour : '#bbb';
+        }
+        return z(d.key); 
+      })      
       .call(f);
       
     // x axis
