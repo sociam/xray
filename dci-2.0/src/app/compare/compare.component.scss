@@ -9,8 +9,9 @@
     align-items: stretch;
     align-content: stretch;
     .comparison {
-        flex-grow: 1.0;
         border-right: 1px solid #eee;
         padding: 50px 20px;
+        flex-basis: 33%;
+        flex-grow: 1.0;
     }
 }

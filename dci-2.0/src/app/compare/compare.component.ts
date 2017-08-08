@@ -31,9 +31,6 @@ export class CompareComponent implements OnInit, OnChanges {
     console.info('recomputing substitutions ~ ', changes);
     this.init.then(() => {
       if (this.targetApp === undefined) { console.error('target is undefined ~~ skipping'); return;  }
-      
-      console.log('using is ', this.using);
-
 
       // others is AppUsage for everything except targetapp
       const target = this.using.filter((x) => x.appid.toLowerCase() === this.targetApp.toLowerCase())[0];

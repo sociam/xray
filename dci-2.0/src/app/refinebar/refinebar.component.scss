@@ -1,3 +1,16 @@
+div.main {
+    width: 100%;
+    // position: relative;
+    svg {
+        width: 100%;
+        // position: absolute;
+        // bottom: 0px;
+        // left: 0px;
+        // right: 0px;
+        // top: 50px;
+    }
+}
+
 g.axis text {
     fill: #000;
     font-weight: 100;

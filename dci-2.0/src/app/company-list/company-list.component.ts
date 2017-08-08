@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
-  styleUrls: ['./company-list.component.css']
+  styleUrls: ['./company-list.component.scss']
 })
 export class CompanyListComponent implements OnInit, OnChanges {
   app2hosts: App2Hosts;
@@ -21,11 +21,15 @@ export class CompanyListComponent implements OnInit, OnChanges {
   by_cat: { [category: string] : string[] };
   categories: string[];
 
+  getCompanyTypeTag(company: string): string {
+    return this.companyid2info[company] && this.companyid2info[company].typetag;
+  }
+
   catfilter = {
-    'advertising': (company) => company.typetag == 'advertising',
-    'analytics': (company) => company.typetag == 'advertising' || company.typetag=='usage',
-    'functionality': (company) => company.typetag == 'app',
-    'other': (company) => ['advertising', 'usage', 'app'].indexOf(company.typetag) < 0
+    'advertising': (company) =>  this.getCompanyTypeTag(company) == 'advertising',
+    'analytics': (company) => ['advertising', 'usage', 'advertizing'].indexOf(this.getCompanyTypeTag(company)) >= 0, 
+    'functionality': (company) => this.getCompanyTypeTag(company) == 'app',
+    'other': (company) => ['advertising', 'usage', 'app'].indexOf(this.getCompanyTypeTag(company)) < 0
   };
 
   constructor(private loader: LoaderService) {
@@ -49,9 +53,10 @@ export class CompanyListComponent implements OnInit, OnChanges {
 
         console.log('this app ', this.app, ' hosts ', hosts, this.app2hosts);
 
-        const  companies = _.uniq(hosts.map((h) => this.host2companyid[h]));
+        const companies = _.uniq(hosts.map((h) => this.host2companyid[h]));
+        
+        this.by_cat = _.toPairs(_.mapValues(this.catfilter, (filterfn, cat) => companies.filter(filterfn)));
 
-        this.by_cat = _.mapKeys(this.catfilter, (filterfn, cat) => companies.filter(filterfn));
         this.categories = _.keys(this.by_cat);
       } 
     });

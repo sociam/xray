@@ -174,8 +174,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     const svg = d3.select(this.svg.nativeElement),
       margin = { top: 20, right: 20, bottom: 130, left: 40 },
-      width = +svg.attr('width') - margin.left - margin.right,
-      height = +svg.attr('height') - margin.top - margin.bottom,
+      width = +svg.attr('virtualWidth') - margin.left - margin.right,
+      height = +svg.attr('virtualHeight') - margin.top - margin.bottom,
       g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
       x = d3.scaleBand()
         .rangeRound([0, width]).paddingInner(0.05).align(0.1)
