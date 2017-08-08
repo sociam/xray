@@ -1,0 +1,62 @@
+$advertising: #BC0000;
+$analytics:#9E0089;
+$app: #A6ED00;
+$other: #0C1B33;
+div.category {
+    h4 {
+        margin: 20px 0px 0px 0px;
+        padding: 0px;
+    }
+    padding:0px;
+    margin:0px;
+    div.companies {
+        margin: 0px;
+        padding: 0px;
+    }
+}
+
+div.company {
+    font-size: 10pt;
+    display: inline-block;
+    width: 80px 50px;
+    padding: 10px 13px;
+    margin: 10px 5px 0px 0px;
+    text-align: center;
+    color: white;
+}
+
+div.category.analytics {
+    h4 {
+        color: $analytics;
+    }
+    div.company {
+        background-color: $analytics;
+    }
+}
+
+div.category.advertising {
+    h4 {
+        color: $advertising;
+    }
+    div.company {
+        background-color: $advertising;
+    }
+}
+
+div.category.functionality {
+    h4 {
+        color: $app;
+    }
+    div.company {
+        background-color: $app;
+    }
+}
+
+div.category.other {
+    h4 {
+        color: $other;
+    }
+    div.company {
+        background-color: $other;
+    }
+}
