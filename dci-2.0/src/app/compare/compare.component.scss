@@ -1,0 +1,16 @@
+.container {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: none;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+    .comparison {
+        flex-grow: 1.0;
+        border-right: 1px solid #eee;
+        padding: 50px 20px;
+    }
+}

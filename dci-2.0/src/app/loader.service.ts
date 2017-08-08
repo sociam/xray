@@ -10,6 +10,7 @@ export interface App2Hosts { [app: string]: string[] }
 export interface Host2PITypes { [host: string]: PI_TYPES[] }
 export interface String2String { [host: string]: string }
 export interface CompanyID2Info { [host: string]: CompanyInfo }
+export interface AppSubstitutions { [app: string]: string[] };
 
 export interface CompanyInfo {
     id: string;
@@ -63,5 +64,10 @@ export class LoaderService {
     return this.http.get('assets/data/company_details.json').toPromise().then(response => {
       return response.json() as CompanyID2Info;
     });
-  }  
+  }
+  getSubstitutions(): Promise<AppSubstitutions> {
+    return this.http.get('assets/data/app_substitutions.json').toPromise().then(response => {
+      return response.json() as AppSubstitutions;
+    });
+  }
 }

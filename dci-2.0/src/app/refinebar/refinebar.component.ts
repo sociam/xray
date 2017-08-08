@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
-import { UsageConnectorService } from '../usage-connector.service';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
 
@@ -17,7 +16,7 @@ interface AppImpact {
   styleUrls: ['./refinebar.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RefinebarComponent implements OnInit, AfterViewInit {
+export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   app2hosts: App2Hosts;
   host2companyid: String2String;
@@ -33,23 +32,29 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
 
   @ViewChild('thing') svg: ElementRef; // this gets a direct el reference to the svg element
 
-  constructor(private loader: LoaderService, private connector: UsageConnectorService) {}
+  // incoming attribute
+  @Input() appusage: AppUsage[];
 
-  ngOnInit() {
-    (<any>window).usage = this.usage;
-
+  constructor(private loader: LoaderService) {
     this.init = Promise.all([
       this.loader.getAppToHosts().then((a2h) => this.app2hosts = a2h),
       this.loader.getHostToCompany().then((h2c) => this.host2companyid = h2c),
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
       this.loader.getHostToShort().then((h2h) => this.host2short = h2h),
       this.loader.getHostToPITypes().then((h2pit) => this.host2PI = h2pit)
-    ]).then(() => console.log('then done'));
+    ]).then(() => console.log('then done'));  
+  }
 
-    this.connector.usageChanged$.subscribe(appuse => {
-        this.usage = appuse.concat();
-        this.init.then(() => this.render());
-    });    
+  ngOnChanges(changes: SimpleChanges): void {
+      if (!this.appusage) { return; }
+      this.init.then(() => {
+        if (this.appusage && this.usage && this.appusage.length !== this.usage.length) {
+          delete this.apps;
+        }
+        this.usage = this.appusage;
+        console.log('>> REFINEBAR new usage ', JSON.stringify(this.usage));
+        this.render();
+      });
   }
 
   compileImpacts(usage: AppUsage[]): AppImpact[] {
@@ -67,7 +72,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
         return _.uniq(hosts.map((host) => {
           const company = this.host2companyid[host];
           if (company === undefined) { console.warn('no company for ', host); return undefined; }
-          if (this.companyid2info[company].typetag === 'ignore') { console.info('skipping ', company); return undefined; }
+          if (this.companyid2info[company].typetag === 'ignore') { return undefined; }
           return company;
         }).filter((x) => x)).map((company) => ({ appid: usg.appid, companyid: company, impact: usg.impact }));
     }));
@@ -196,7 +201,7 @@ export class RefinebarComponent implements OnInit, AfterViewInit {
     // main rects
     const f = function(selection, first, last) { 
       return selection.selectAll('rect')
-        .data(function (d) { console.log(' D ~ ', d); return d; })
+        .data((d) => d)
         .enter().append('rect')
         .attr('class','bar')
         // .attr('stroke', function(d, i) { return getColor(d3.select(this.parentNode).datum().key, d.data.company);  })

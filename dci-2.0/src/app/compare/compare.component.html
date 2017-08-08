@@ -1,0 +1,7 @@
+<div class="container">
+    <div class="comparison" *ngFor='let sub of substitutions'>
+        <h1>{{ sub.target.appid }}</h1>
+        <app-refinebar [appusage]='sub.all'></app-refinebar>
+        <app-company-list [app]='sub.target.appid'></app-company-list>
+    </div>
+</div>

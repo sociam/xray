@@ -4,6 +4,7 @@ import { LoaderService } from './loader.service';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { RefinebarComponent } from './refinebar/refinebar.component';
+import { UsageListenerComponent } from './usage-listener/usage-listener.component';
 import { UsagetableComponent } from './usagetable/usagetable.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -15,6 +16,9 @@ import { Ng2CompleterModule } from 'ng2-completer';
 
 import { SingleDisplayComponent } from './single-display/single-display.component';
 import { TiledDisplayComponent } from './tiled-display/tiled-display.component';
+import { CompareComponent } from './compare/compare.component';
+import { CompanyListComponent } from './company-list/company-list.component';
+import { CompareContainerComponent } from './compare-container/compare-container.component';
 
 const appRoutes: Routes = [
   {
@@ -23,7 +27,7 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'refinebar', 
-        component: RefinebarComponent
+        component: UsageListenerComponent
       },
       {
         path: 'companybar',
@@ -35,6 +39,10 @@ const appRoutes: Routes = [
       }
     ]    
   },
+  {
+    path: 'alternatives/:app',
+    component: CompareContainerComponent
+  },  
   {
     path: 'tiled',
     component: TiledDisplayComponent,
@@ -53,7 +61,11 @@ const appRoutes: Routes = [
     TiledDisplayComponent,    
     FoobarComponent,
     ErrorComponent,
-    CompanybarComponent
+    CompanybarComponent,
+    CompareComponent,
+    CompanyListComponent,
+    UsageListenerComponent,
+    CompareContainerComponent
   ],
   imports: [
     HttpModule,

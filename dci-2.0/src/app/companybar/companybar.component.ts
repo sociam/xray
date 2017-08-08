@@ -47,7 +47,7 @@ export class CompanybarComponent implements OnInit, AfterViewInit {
   get countHosts() {  return this._countHosts;  }
   
   render_base() { 
-    this.render(this.usage.map((x) => x.appid), this.el.nativeElement)
+    this.render(this.usage.map((x) => x.appid), this.el.nativeElement);    
   }
 
   render(apps: string[], container_el: HTMLElement) {
