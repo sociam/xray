@@ -59,7 +59,8 @@ class AppUsageHHMM implements AppUsage {
   styleUrls: ['./usagetable.component.scss']
 })
 export class UsagetableComponent implements OnInit {
-  
+
+  init: Promise<void[]>;
   selectedApps: AppUsageHHMM[] = [];
   private all_apps: string[];
   candidates: string[];
@@ -67,15 +68,21 @@ export class UsagetableComponent implements OnInit {
   maxUsage = 720;
   stepUsage = 1;
   appToAdd: string;
+  private alternatives: { [app: string] : string[] };
 
-  constructor(private loader: LoaderService, private connector: UsageConnectorService) { }
+  constructor(private loader: LoaderService, private connector: UsageConnectorService) { 
+
+  }
 
   ngOnInit() {
-    this.loader.getAppToHosts().then((a2h) => {
-      this.all_apps = _.keys(a2h);
-      this.selectedApps = this.connector.getState().concat().map((x) => new AppUsageHHMM(x));
-      this._update_candidates();      
-    });
+    this.init = Promise.all([
+      this.loader.getAppToHosts().then((a2h) => { 
+        this.all_apps = _.keys(a2h);
+        this.selectedApps = this.connector.getState().concat().map((x) => new AppUsageHHMM(x));
+        this._update_candidates();      
+      }),
+      this.loader.getSubstitutions().then((submap) => { this.alternatives = submap; })
+    ]);
     (<any>window).selectedApps = this.selectedApps;    
   }
 
@@ -104,6 +111,11 @@ export class UsagetableComponent implements OnInit {
       this.appToAdd = undefined;
       this.appValueChanged();
     }
+  }
+
+  hasAlternatives(appid: string): boolean {
+    // console.log('hasAlterantives ', appid, this.alternatives[appid]);
+    return this.alternatives && this.alternatives[appid] && this.alternatives[appid].length > 0;
   }
 
 }

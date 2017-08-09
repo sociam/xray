@@ -11,6 +11,7 @@
             <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mm" maxlength="2">m
         </div>
         <input type="range" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
+        <a [routerLink]="['/alternatives/', appusage.appid]" [hidden]='!hasAlternatives(appusage.appid)'>find alternatives</a>
         <button class="clearButton" (click)="delete(appusage)">x</button>
     </div>
 </div>
