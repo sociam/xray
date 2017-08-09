@@ -1,7 +1,7 @@
 <div class="top">
     <div class="adder">
         <!-- <ng2-completer [(ngModel)]="appToAdd" [datasource]="completer" [minSearchLength]="1" placeholder="Add app"></ng2-completer> -->
-        <app-autocomplete></app-autocomplete>
+        <app-autocomplete [(selected)]='selectedApp' (selectedChange)='appSelected(selectedApp)'></app-autocomplete>
         <button (click)="addApp(appToAdd, $event)" [disabled]='!appToAdd'>Add</button>
         <button (click)="clearState()">Clear all</button>
     </div>
@@ -18,7 +18,7 @@
             <td class="right">
                 <!-- <div class="tohide">actions</div> -->
                 <!-- <div class="reveal"> -->
-                <button class="clearButton" (click)="delete(appusage)">uninstall</button> <a [routerLink]="['/alternatives/', appusage.appid]" [hidden]='!hasAlternatives(appusage.appid)'><button>substitute</button></a>
+                <button class="clearButton" (click)="delete(appusage)">uninstall</button> <a [routerLink]="['/alternatives/ ', appusage.appid]" [hidden]='!hasAlternatives(appusage.appid) '><button>substitute</button></a>
                 <!-- </div> -->
             </td>
         </tr>

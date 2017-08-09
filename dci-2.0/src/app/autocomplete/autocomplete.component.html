@@ -5,8 +5,8 @@
     </div>
     <div class="suggestions" *ngIf="filteredList.length > 0">
         <ul *ngFor="let item of filteredList">
-            <li>
-                <a (click)="select(item)"><img [src]='item.icon'> {{item.storeinfo.title}}</a>
+            <li (click)="select(item)">
+                <a><img [src]='item.icon'> {{item.storeinfo.title}}</a>
             </li>
         </ul>
     </div>

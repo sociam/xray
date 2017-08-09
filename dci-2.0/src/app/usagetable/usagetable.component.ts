@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes, API_ENDPOINT } from '../loader.service';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes, APIAppInfo } from '../loader.service';
 import { Http, HttpModule, Headers } from '@angular/http';
 
 import * as _ from 'lodash';
@@ -61,7 +61,8 @@ class AppUsageHHMM implements AppUsage {
   templateUrl: './usagetable.component.html',
   styleUrls: ['./usagetable.component.scss']
 })
-export class UsagetableComponent implements OnInit {
+export class UsagetableComponent implements OnInit, OnChanges {
+
 
   init: Promise<any>;
   selectedApps: AppUsageHHMM[] = [];
@@ -71,6 +72,7 @@ export class UsagetableComponent implements OnInit {
   maxUsage = 720;
   stepUsage = 1;
   appToAdd: string;
+  selectedApp: APIAppInfo;
   private alternatives: { [app: string] : string[] };
 
   apps : any[];
@@ -88,22 +90,16 @@ export class UsagetableComponent implements OnInit {
         this.selectedApps = this.connector.getState().concat().map((x) => new AppUsageHHMM(x));
         this._update_candidates();      
       }),
-      this.loader.getSubstitutions().then((submap) => { this.alternatives = submap; }),
-      this.loader.getApps().then(apps => {
-        (<any>window)._apps = apps;
-        this.apps = apps;
-      })
-    ]).then(() => {
-      this.completer = this.completerSvc.remote(API_ENDPOINT+"?isFull=false&title=", '', null);
-      console.log('completer > ', this.completer, this.completer.convertToItem);
-      var ctI = this.completer.convertToItem;
-      this.completer.convertToItem = function(x) { 
-        console.log('yo ! ', x);
-        return ctI.call(this, x.Title);
-      };
-      
-    });    
-    (<any>window).selectedApps = this.selectedApps;    
+      this.loader.getSubstitutions().then((submap) => { this.alternatives = submap; })
+    ]);
+  }
+
+  appSelected(appinfo: APIAppInfo) {
+    console.log('output connection is working ', appinfo);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    // throw new Error("Method not implemented.");
+      console.log('input changes ', changes);
   }
 
   _update_candidates() {

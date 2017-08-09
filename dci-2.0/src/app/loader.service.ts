@@ -33,7 +33,7 @@ export interface CompanyInfo {
     description ?: string;
 }
 
-export interface APIAppInfo {
+export class APIAppInfo {
     app: string;
     title: string;
     summary: string;
@@ -53,7 +53,7 @@ export interface APIAppInfo {
     video: string;
     recentChanges: string[];
     crawlDate: string; // date string    
-    string: string, // what's this?
+    string: string; // what's this?
     region: string; // us
     ver: string; // date string 
     screenFlags: number;

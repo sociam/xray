@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { LoaderService, APIAppInfo } from "app/loader.service";
 
 // thanks to http://4dev.tech/2016/03/tutorial-creating-an-angular2-autocomplete/ !
@@ -16,7 +16,8 @@ export class AutocompleteComponent implements OnInit {
   public query = '';
   public filteredList = [];
   
-  selected: APIAppInfo;
+  @Input() selected: APIAppInfo;  
+  @Output() selectedChange = new EventEmitter<APIAppInfo>();
   
   constructor(private myElement: ElementRef, private loader: LoaderService) {
   }
@@ -26,7 +27,6 @@ export class AutocompleteComponent implements OnInit {
   filter() {
     if (this.query.trim() !== ""){
       this.loader.findApps(this.query.trim()).then((results: APIAppInfo[]) => {
-        console.log('resul;ts ', results);
         const qL = this.query.toLowerCase();
         this.filteredList = results.filter((x) => x.storeinfo.title.toLowerCase().indexOf(qL) == 0);
         this.filteredList.sort((a,b) => {
@@ -48,6 +48,9 @@ export class AutocompleteComponent implements OnInit {
   
   select(item){
     console.log('selected ', item);
+    if (item) {
+      this.selectedChange.emit(item);
+    }
     this.selected = item;
     this.query = item.storeinfo.title;
     this.filteredList = [];
