@@ -33,15 +33,39 @@ div.top {
                 }
             }
             td.right {
+                a,
+                button {
+                    font-size: 10pt;
+                }
+                button {
+                    padding: 5px 6px;
+                }
+                // border: 1px solid pink;
                 padding: 0px;
-                width: 80px;
-                .clearButton {
-                    border: none;
-                    font-size: 18pt;
-                    border-radius: 10pt;
-                    font-family: 'arial';
-                    padding: 0px 5px;
-                    margin: 0px
+                width: 145px;
+                // .tohide {
+                //     display: block;
+                // }
+                // .reveal {
+                // display: none;
+                text-align:middle;
+                // }
+                // .clearButton {
+                //     border: none;
+                //     // display: none;
+                //     font-size: 18pt;
+                //     border-radius: 10pt;
+                //     font-family: 'arial';
+                //     padding: 0px 5px;
+                //     margin: 0px
+                // }
+            }
+            td.right:hover {
+                .tohide {
+                    display: none;
+                }
+                .reveal {
+                    display: inline-block;
                 }
             }
             // .hhmm {

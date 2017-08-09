@@ -15,8 +15,10 @@
                 <input type="range" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
             </td>
             <td class="right">
-                <!-- <a [routerLink]="['/alternatives/', appusage.appid]" [hidden]='!hasAlternatives(appusage.appid)'>s</a> -->
-                <button class="clearButton" (click)="delete(appusage)">x</button>
+                <!-- <div class="tohide">actions</div> -->
+                <!-- <div class="reveal"> -->
+                <button class="clearButton" (click)="delete(appusage)">uninstall</button> <a [routerLink]="['/alternatives/', appusage.appid]" [hidden]='!hasAlternatives(appusage.appid)'><button>substitute</button></a>
+                <!-- </div> -->
             </td>
         </tr>
     </table>
