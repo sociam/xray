@@ -4,14 +4,20 @@
         <button (click)="addApp(appToAdd, $event)" [disabled]='!appToAdd'>Add</button>
         <button (click)="clearState()">Clear all</button>
     </div>
-    <div class="rows" *ngFor="let appusage of selectedApps">
-        <div class="appname">{{ appusage.appid }} ({{ appusage.mins }} mins)</div>
-        <div class="hhmm">
-            <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">h
-            <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mm" maxlength="2">m
-        </div>
-        <input type="range" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
-        <a [routerLink]="['/alternatives/', appusage.appid]" [hidden]='!hasAlternatives(appusage.appid)'>find alternatives</a>
-        <button class="clearButton" (click)="delete(appusage)">x</button>
-    </div>
+    <table>
+        <tr class="rows" *ngFor="let appusage of selectedApps">
+            <td class="left">{{ appusage.appid }}</td>
+            <td class="hhmminput">
+                <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">h
+                <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mm" maxlength="2">m
+            </td>
+            <td class="middle">
+                <input type="range" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
+            </td>
+            <td class="right">
+                <!-- <a [routerLink]="['/alternatives/', appusage.appid]" [hidden]='!hasAlternatives(appusage.appid)'>s</a> -->
+                <button class="clearButton" (click)="delete(appusage)">x</button>
+            </td>
+        </tr>
+    </table>
 </div>

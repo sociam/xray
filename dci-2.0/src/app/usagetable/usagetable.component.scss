@@ -4,43 +4,62 @@ div.top {
     margin: 10px;
     padding: 10px 0px;
     border-bottom: 1px solid #ae00ff;
-    .rows {
-        position: relative;
-        padding: 8px 0px;
-        .appname {
-            // font-weight: bold;
+    table {
+        width: 100%;
+        .rows {
+            position: relative;
+            padding: 8px 0px;
             font-size: 14pt;
+            td.left {
+                width: 130px;
+                text-align: right;
+                padding: 0px 20px;
+            }
+            td.hhmminput {
+                width: 120px;
+                input {
+                    font-size: 14pt;
+                    text-align: right;
+                    width: 40px;
+                    border: none;
+                    border-bottom: 1px solid #222;
+                }
+            }
+            td.middle {
+                padding: 0px 15px;
+                input[type=range] {
+                    width: 100%;
+                    flex-grow: 1.0;
+                }
+            }
+            td.right {
+                padding: 0px;
+                width: 80px;
+                .clearButton {
+                    border: none;
+                    font-size: 18pt;
+                    border-radius: 10pt;
+                    font-family: 'arial';
+                    padding: 0px 5px;
+                    margin: 0px
+                }
+            }
+            // .hhmm {
+            //     position: absolute;
+            //     right: 120px;
+            //     top: 8px
+            // }
+            // .hhmm input,
+            // .hhmm * {
+            //     display: inline-block;
+            //     // width: 20px;
+            //     width: 50px;
+            //     font-size: 12pt;
+            //     border: none !important;
+            //     border-bottom: 1px solid #eee !important;
+            //     text-align: right;
+            // }
         }
-        // width:100%;
-        input {
-            width: 100%;
-        }
-        padding-right:100px;
-        // border-bottom:1px solid #eee;
-        .hhmm {
-            position: absolute;
-            right: 120px;
-            top: 8px
-        }
-        .hhmm input,
-        .hhmm * {
-            display: inline-block;
-            // width: 20px;
-            width: 50px;
-            font-size: 12pt;
-            border: none !important;
-            border-bottom: 1px solid #eee !important;
-            text-align: right;
-        }
-    }
-    .clearButton {
-        position: absolute;
-        right: 20px;
-        top: 15px;
-        border: none;
-        font-size: 18pt;
-        border-radius: 10pt;
-        font-family: 'arial';
     }
     .adder {
         width: 100%;
