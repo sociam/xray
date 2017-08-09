@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes, API_ENDPOINT } from '../loader.service';
+import { Http, HttpModule, Headers } from '@angular/http';
+
 import * as _ from 'lodash';
 import { UsageConnectorService } from '../usage-connector.service';
+import { CompleterService, CompleterData, RemoteData } from 'ng2-completer';
 
 export interface AppUsage { appid: string; mins: number };
 
@@ -60,7 +63,7 @@ class AppUsageHHMM implements AppUsage {
 })
 export class UsagetableComponent implements OnInit {
 
-  init: Promise<void[]>;
+  init: Promise<any>;
   selectedApps: AppUsageHHMM[] = [];
   private all_apps: string[];
   candidates: string[];
@@ -70,7 +73,11 @@ export class UsagetableComponent implements OnInit {
   appToAdd: string;
   private alternatives: { [app: string] : string[] };
 
-  constructor(private loader: LoaderService, private connector: UsageConnectorService) { 
+  apps : any[];
+
+  completer : CompleterData; 
+
+  constructor(private loader: LoaderService, private connector: UsageConnectorService, private completerSvc: CompleterService) { 
 
   }
 
@@ -81,8 +88,21 @@ export class UsagetableComponent implements OnInit {
         this.selectedApps = this.connector.getState().concat().map((x) => new AppUsageHHMM(x));
         this._update_candidates();      
       }),
-      this.loader.getSubstitutions().then((submap) => { this.alternatives = submap; })
-    ]);
+      this.loader.getSubstitutions().then((submap) => { this.alternatives = submap; }),
+      this.loader.getApps().then(apps => {
+        (<any>window)._apps = apps;
+        this.apps = apps;
+      })
+    ]).then(() => {
+      this.completer = this.completerSvc.remote(API_ENDPOINT+"?isFull=false&title=", '', null);
+      console.log('completer > ', this.completer, this.completer.convertToItem);
+      var ctI = this.completer.convertToItem;
+      this.completer.convertToItem = function(x) { 
+        console.log('yo ! ', x);
+        return ctI.call(this, x.Title);
+      };
+      
+    });    
     (<any>window).selectedApps = this.selectedApps;    
   }
 

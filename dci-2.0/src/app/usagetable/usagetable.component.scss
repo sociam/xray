@@ -129,9 +129,7 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 1px;
     cursor: pointer;
-    animate: 0.4s;
-    // box-shadow: 1px 1px 1px #000000;
-    // background: #3071A9;
+    transition: 0.4s;
     background: #bbb;
     border-radius: 0px;
     border: 0px solid #000000;
@@ -142,9 +140,9 @@ input[type=range]::-webkit-slider-thumb {
     // box-shadow: 1px 1px 1px #000000;
     // border: 1px solid #000000;
     border: 0.5px solid #000000;
-    animate: 0.2s;
-    // width: 8px;
-    width: 0.5px;
+    transition: 0.2s;
+    width: 2px;
+    // width: 0.5px;
     // border-radius: 5px;
     background: #eee; // #FFFFFF;
     cursor: pointer;

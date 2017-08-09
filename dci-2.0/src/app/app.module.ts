@@ -19,6 +19,7 @@ import { TiledDisplayComponent } from './tiled-display/tiled-display.component';
 import { CompareComponent } from './compare/compare.component';
 import { CompanyListComponent } from './company-list/company-list.component';
 import { CompareContainerComponent } from './compare-container/compare-container.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 
 const appRoutes: Routes = [
   {
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
     CompareComponent,
     CompanyListComponent,
     UsageListenerComponent,
-    CompareContainerComponent
+    CompareContainerComponent,
+    AutocompleteComponent
   ],
   imports: [
     HttpModule,
