@@ -57,9 +57,10 @@ export class HostUtilsService {
       // old code was O(n) and fast but only exact matched
       return Promise.all([
           this.loader.getCompanyInfo(),
-          this.getIdByDomain()          
+          this.getIdByDomain(),
+          this.fetchccSLDs()          
         ]).then(loaded => {
-          const [ companyDetails, d2id ] = loaded,
+          const [ companyDetails, d2id, cclds ] = loaded,
             name2id = companyDetails.getCompanyInfos().reduce((a, x) => {
                 a[x.company] = x.id;
                 a[x.company.toLowerCase()] = x.id;
@@ -95,8 +96,10 @@ export class HostUtilsService {
             if (host.split('.').map(x => x.toLowerCase().trim()).filter((y) => appdev.indexOf(y) >= 0).length > 0) {
                 // do we try to find a company in our company database? or do we just return it ... :| i dont know          
                 console.error('host matched with developer > ', host);
-
-                return;
+                const ld2 = this.shorten_2ld(host, cclds),
+                    newInfo = new CompanyInfo(ld2, app.developer.name, [host], 'app');
+                companyDetails.add(newInfo);
+                return newInfo;
             }
             
             // // phase 2: Try to match with app company name

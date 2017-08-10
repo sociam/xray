@@ -62,7 +62,7 @@ export class CompanyInfo {
     data_source ?: string;
     description ?: string;
     constructor(readonly id: string, readonly company: string, domains: string[], readonly typetag: string) {
-
+      this.domains = domains;
     }
 }
 
