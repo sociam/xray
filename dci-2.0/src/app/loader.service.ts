@@ -15,7 +15,7 @@ export interface String2String { [host: string]: string }
 export interface CompanyID2Info { [host: string]: CompanyInfo }
 export interface AppSubstitutions { [app: string]: string[] };
 
-export interface CompanyInfo {
+export class CompanyInfo {
     id: string;
     company: string;
     domains: string[];
@@ -45,7 +45,12 @@ export class APIAppInfo {
     numReviews: number;
     genre: string;
     installs: { min: number, max: number};
-    developer: string;
+    developer: {
+      email: string[];
+      name: string;
+      site: string;
+      storeSite: string;
+    };
     updated: string;
     androidVer: string;
     contentRating: string;

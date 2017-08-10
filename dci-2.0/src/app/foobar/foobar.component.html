@@ -1,3 +1,25 @@
 <div>
-    hello this is foobar!
+    <app-autocomplete [(selected)]='selectedApp' (selectedChange)='appSelected(selectedApp)'></app-autocomplete>
+
+    <div [hidden]='!selectedApp'>
+        <h2> About {{ selectedApp && selectedApp.storeinfo.title }} : </h2>
+        <table *ngFor='let h of hosts'>
+            <tr *ngIf="h2c[h]">
+                <td> {{ h }} </td>
+                <td> {{ h2c[h] && h2c[h].company || "bloop" }} </td>
+            </tr>
+        </table>
+
+        <h4> missing </h4>
+        <ul>
+            <li *ngFor="let m of missingHosts">{{m}}</li>
+        </ul>
+
+        <div [hidden]="hosts.length > 0 || missingHosts.length > 0">
+            No hosts found.
+        </div>
+    </div>
+    <div [hidden]="selectedApp">
+        Please select an app
+    </div>
 </div>

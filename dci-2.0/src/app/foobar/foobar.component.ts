@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HostUtilsService } from "app/host-utils.service";
+import { APIAppInfo, CompanyInfo } from "app/loader.service";
 
 @Component({
   selector: 'app-foobar',
@@ -7,9 +9,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FoobarComponent implements OnInit {
 
-  constructor() { }
+  selectedApp: APIAppInfo;
+  h2c : { [host: string] : CompanyInfo } = {};
+  missingHosts : string[] = [];
+  hosts : string[] = [];
+
+  constructor(private hostutils: HostUtilsService) { 
+    (<any>window)._fbc = this;
+  }
 
   ngOnInit() {
   }
 
+  appSelected(s: APIAppInfo) {
+    // recompute hosts
+    console.log('selected app ', s);
+
+    this.missingHosts = [];
+    this.hosts = [];
+
+    this.hosts = s.hosts || [];
+
+    this.hosts.map((host) => {
+      let company = this.hostutils.findCompany(host, s)
+        .then(company => {
+          if (company) {
+            console.info(`resolved ${host} -> ${company.id}`);
+            this.h2c[host] = company;
+          } else {
+            console.error("Could not resolve company ", host)
+            this.missingHosts.push(host);
+          }
+        });
+    });
+  }
 }

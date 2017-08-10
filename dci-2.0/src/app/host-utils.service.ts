@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
-import { LoaderService, APIAppInfo } from "app/loader.service";
+import { LoaderService, APIAppInfo, CompanyInfo } from "app/loader.service";
 import * as _ from 'lodash';
 
 const ipv4re = /((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$)|(^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$))/;
@@ -10,7 +10,7 @@ export class HostUtilsService {
 
   constructor(private httpM: HttpModule, private http: Http, private loader: LoaderService) { }
   fetchccSLDs() : Promise<string[]> {
-      return this.http.get('assets/data/cclds.txt').toPromise()
+      return this.http.get('assets/data/ccsld.txt').toPromise()
         .then((x) => x.text())
         .then((ccsld) => ccsld.split('\n').filter((x) => (x && x.trim().length > 0 && x.indexOf('.') >= 0 && x.indexOf('//') < 0 && x.indexOf('!') < 0 && x.indexOf('*') < 0)));
   }
@@ -50,14 +50,14 @@ export class HostUtilsService {
       }
       return host;
   }
-  findCompany = (host: string, app: APIAppInfo): Promise<string> => {
+  findCompany = (host: string, app: APIAppInfo): Promise<CompanyInfo|undefined> => {
       // old code was O(n) and fast but only exact matched
       return Promise.all([
           this.loader.getCompanyInfo(),
           this.getIdByDomain()          
         ]).then(loaded => {
-          const [ details, d2id ] = loaded,
-            name2id = _.values(details).reduce((a, x) => {
+          const [ companyDetails, d2id ] = loaded,
+            name2id = _.values(companyDetails).reduce((a, x) => {
                 a[x.company] = x.id;
                 a[x.company.toLowerCase()] = x.id;
                 return a;
@@ -65,23 +65,25 @@ export class HostUtilsService {
             names = _.keys(name2id).filter((x) => x),
             domains = _.keys(d2id).filter((x) => x.length),
             missing = [],            
-            app_company = app.developer && app.developer.toLowerCase();
+            app_company = app.developer && app.developer.name.toLowerCase();
 
             // Phase 1: check to see if the host is among domains of companies we know
-            var matching_domains = _(domains)
+            const matching_domains = _(domains)
                 .filter((domain_frag) => host.indexOf(domain_frag) >= 0)
                 .sortBy((x) => -x.length) // longer matches first
                 .value(),
-                company = matching_domains.length && d2id[matching_domains[0]];
+                match1 = matching_domains.length && d2id[matching_domains[0]];
             
-            if (company) {
-                return company;
+            if (match1) {
+                return companyDetails[match1];
             }
 
             /// phase 2 :: match with developer name
-            const appdev = app.developer.split(' ').map(x => x.toLowerCase().trim()).filter(x => x);
+            const appdev = app.developer.name.split(' ').map(x => x.toLowerCase().trim()).filter(x => x);
             if (host.split('.').map(x => x.toLowerCase().trim()).filter((y) => appdev.indexOf(y) >= 0).length > 0) {
-              // do we try to find a company in our company database? or do we just return it ... :| i dont know              
+                // do we try to find a company in our company database? or do we just return it ... :| i dont know          
+                console.error('host matched with developer > ', host);
+                return;
             }
             
             // // phase 2: Try to match with app company name
@@ -101,7 +103,7 @@ export class HostUtilsService {
                 .sortBy((x) => -x.length) // longer matches first
                 .value();
             if (matching_companies.length) {
-                return matching_companies[0]
+                return companyDetails[name2id[matching_companies[0]]];
             }
 
             console.info('could not identify company for ', host);
