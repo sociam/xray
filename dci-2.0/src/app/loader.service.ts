@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import { mapValues, keys, mapKeys, values } from 'lodash';
+import { mapValues, keys, mapKeys, values, trim, uniq } from 'lodash';
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
@@ -95,7 +95,7 @@ export class APIAppInfo {
     region: string; // us
     ver: string; // date string 
     screenFlags: number;
-    hosts: null;
+    hosts: string[] | undefined;
     storeinfo: { 
       title: string;
       summary: string;
@@ -175,7 +175,10 @@ export class LoaderService {
           console.log(' null returned ', query);
           return [];
         } 
-        appinfos.map(appinfo => appinfo.icon = this.augmentUrl(appinfo.icon));
+        appinfos.map(appinfo => {
+          appinfo.icon = this.augmentUrl(appinfo.icon)
+          appinfo.hosts = uniq((appinfo.hosts || []).map((host: string): string => trim(host.trim(), '".%')));
+        });
         return appinfos;
       })
   }

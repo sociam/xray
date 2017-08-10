@@ -71,6 +71,10 @@ export class HostUtilsService {
             missing = [],            
             app_company = app.developer && app.developer.name.toLowerCase();
 
+            host = _.trim(host.trim(), '".%');
+
+            if (['http://', 'https://'].indexOf(host) >= 0 || host.indexOf("%s") >= 0 || host.indexOf("*") >= 0 || host.indexOf("\"") >= 0) { return; }
+
             // Phase 1: check to see if the host is among domains of companies we know
             const matching_domains = _(domains)
                 .filter((domain_frag) => host.indexOf(domain_frag) >= 0)
@@ -112,8 +116,13 @@ export class HostUtilsService {
             //     }
             //     return;
             // }
-            
-            console.info('could not identify company for ', host);
+
+            // maybe make a synthetic company?
+            console.info('making a synthetic company > ');
+            const ld2 = this.shorten_2ld(host, cclds),
+            newInfo = new CompanyInfo(ld2, ld2, [host], 'advertising');
+            companyDetails.add(newInfo);
+            return newInfo;
         });
     };
 
