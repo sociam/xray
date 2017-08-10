@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyDB, CompanyInfo, Host2PITypes } from '../loader.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 export class CompanyListComponent implements OnInit, OnChanges {
   app2hosts: App2Hosts;
   host2companyid: String2String;
-  companyid2info: CompanyID2Info;
+  companyid2info: CompanyDB;
   host2short: String2String;
   host2PI: Host2PITypes;
 
@@ -22,7 +22,7 @@ export class CompanyListComponent implements OnInit, OnChanges {
   categories: string[];
 
   getCompanyTypeTag(company: string): string {
-    return this.companyid2info[company] && this.companyid2info[company].typetag;
+    return this.companyid2info.get(company) && this.companyid2info.get(company).typetag;
   }
 
   catfilter = {

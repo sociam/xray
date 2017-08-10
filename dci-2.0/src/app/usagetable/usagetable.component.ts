@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes, APIAppInfo } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, Host2PITypes, APIAppInfo } from '../loader.service';
 import { Http, HttpModule, Headers } from '@angular/http';
 
 import * as _ from 'lodash';

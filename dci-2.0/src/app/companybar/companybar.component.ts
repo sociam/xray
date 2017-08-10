@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, DoCheck, SimpleChanges, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import { UsageConnectorService } from '../usage-connector.service';
 import * as d3 from 'd3';
@@ -14,7 +14,7 @@ export class CompanybarComponent implements OnInit, AfterViewInit {
 
   app2hosts: App2Hosts;
   host2companyid: String2String;
-  companyid2info: CompanyID2Info;
+  companyid2info: CompanyDB;
   host2short: String2String;
   host2PI: Host2PITypes;
   private usage: AppUsage[];

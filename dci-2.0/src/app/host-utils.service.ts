@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
-import { LoaderService, APIAppInfo, CompanyInfo } from "app/loader.service";
+import { LoaderService, APIAppInfo, CompanyInfo, cache } from "app/loader.service";
 import * as _ from 'lodash';
 
 const ipv4re = /((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$)|(^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$))/;
@@ -9,19 +9,22 @@ const ipv4re = /((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([
 export class HostUtilsService {
 
   constructor(private httpM: HttpModule, private http: Http, private loader: LoaderService) { }
+
+  @cache
   fetchccSLDs() : Promise<string[]> {
       return this.http.get('assets/data/ccsld.txt').toPromise()
         .then((x) => x.text())
         .then((ccsld) => ccsld.split('\n').filter((x) => (x && x.trim().length > 0 && x.indexOf('.') >= 0 && x.indexOf('//') < 0 && x.indexOf('!') < 0 && x.indexOf('*') < 0)));
   }
+
   getIdByDomain = (): Promise<{[id: string] : string}> => {
     // reversed version of ^^ getDomainsById for O(1)
     // returns { domain => rowid, shorten_2ld(domain) => rowid }
     return Promise.all([this.loader.getCompanyInfo(),this.fetchccSLDs()]).then((rarr) => {
       const [ cinfo, ccslds ] = rarr;
-      return _.keys(cinfo).reduce((domains, company) => { 
-          cinfo[company].domains.map( (domain) => {
-              domains[domain] = domains[this.shorten_2ld(domain,ccslds)] = company;
+      return cinfo.getCompanyInfos().reduce((domains, companyinfo: CompanyInfo) => { 
+          companyinfo.domains.map( (domain) => {
+              domains[domain] = domains[this.shorten_2ld(domain,ccslds)] = companyinfo.id;
           });
           return domains;
         }, {});
@@ -57,7 +60,7 @@ export class HostUtilsService {
           this.getIdByDomain()          
         ]).then(loaded => {
           const [ companyDetails, d2id ] = loaded,
-            name2id = _.values(companyDetails).reduce((a, x) => {
+            name2id = companyDetails.getCompanyInfos().reduce((a, x) => {
                 a[x.company] = x.id;
                 a[x.company.toLowerCase()] = x.id;
                 return a;
@@ -75,14 +78,24 @@ export class HostUtilsService {
                 match1 = matching_domains.length && d2id[matching_domains[0]];
             
             if (match1) {
-                return companyDetails[match1];
+                return companyDetails.get(match1);
             }
 
-            /// phase 2 :: match with developer name
+            // Phase 2 : check to see if the host contains the name is among companies we know
+            var matching_companies = _(names)
+                .filter((name_frag) => host.indexOf(name_frag.toLowerCase()) >= 0)
+                .sortBy((x) => -x.length) // longer matches first
+                .value();
+            if (matching_companies.length) {
+                return companyDetails.get(name2id[matching_companies[0]]);
+            }
+
+            /// phase 3 :: match with developer name
             const appdev = app.developer.name.split(' ').map(x => x.toLowerCase().trim()).filter(x => x);
             if (host.split('.').map(x => x.toLowerCase().trim()).filter((y) => appdev.indexOf(y) >= 0).length > 0) {
                 // do we try to find a company in our company database? or do we just return it ... :| i dont know          
                 console.error('host matched with developer > ', host);
+
                 return;
             }
             
@@ -96,16 +109,7 @@ export class HostUtilsService {
             //     }
             //     return;
             // }
-
-            // Phase 3 : check to see if the host contains the name is among companies we know
-            var matching_companies = _(names)
-                .filter((name_frag) => host.indexOf(name_frag.toLowerCase()) >= 0)
-                .sortBy((x) => -x.length) // longer matches first
-                .value();
-            if (matching_companies.length) {
-                return companyDetails[name2id[matching_companies[0]]];
-            }
-
+            
             console.info('could not identify company for ', host);
         });
     };

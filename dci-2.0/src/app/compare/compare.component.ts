@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes, AppSubstitutions } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, Host2PITypes, AppSubstitutions } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as _ from 'lodash';
 

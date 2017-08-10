@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyID2Info, Host2PITypes } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, Host2PITypes } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
@@ -20,7 +20,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   app2hosts: App2Hosts;
   host2companyid: String2String;
-  companyid2info: CompanyID2Info;
+  companyid2info: CompanyDB;
   host2short: String2String;
   host2PI: Host2PITypes;
   private usage: AppUsage[];
@@ -78,7 +78,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         return _.uniq(hosts.map((host) => {
           const company = this.host2companyid[host];
           if (company === undefined) { console.warn('no company for ', host); return undefined; }
-          if (this.companyid2info[company].typetag === 'ignore') { return undefined; }
+          if (this.companyid2info.get(company).typetag === 'ignore') { return undefined; }
           return company;
         }).filter((x) => x)).map((company) => ({ appid: usg.appid, companyid: company, impact: usg.impact }));
     }));
@@ -161,7 +161,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       if (app === undefined) {
         app = apps[0]; // apps.length - 1];
       }
-      let companyInfo = this.companyid2info[company];
+      let companyInfo = this.companyid2info.get(company);
       if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
         return catcolours[companyInfo.typetag](app);
       }
@@ -198,7 +198,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     g.selectAll('rect.back')
       .data(companies)
       .enter().append('rect')      
-      .attr('class', (company) => 'back ' + this.companyid2info[company].typetag)
+      .attr('class', (company) => 'back ' + this.companyid2info.get(company).typetag)
       .attr('x', (company) => x(company))
       .attr('y', 0)
       .attr('height', height)
@@ -241,7 +241,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     d3.selectAll('g.axis.x g.tick')
       .filter(function(d){ return d; })
-      .attr('class', (d) => this.companyid2info[d].typetag);
+      .attr('class', (d) => this.companyid2info.get(d).typetag);
 
     g.append('g')
       .attr('class', 'axis y')

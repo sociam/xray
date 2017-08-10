@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import { mapValues, keys, mapKeys } from 'lodash';
+import { mapValues, keys, mapKeys, values } from 'lodash';
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
@@ -12,17 +12,47 @@ export let API_ENDPOINT = 'http://localhost:8118/api/apps/';
 export interface App2Hosts { [app: string]: string[] }
 export interface Host2PITypes { [host: string]: PI_TYPES[] }
 export interface String2String { [host: string]: string }
-export interface CompanyID2Info { [host: string]: CompanyInfo }
+
 export interface AppSubstitutions { [app: string]: string[] };
 
+export let cache = (target: Object,  propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+  // console.log('@cache:: ~~ ', target, propertyKey, descriptor);
+  let retval: {[method: string] : any} = {},
+    method = descriptor.value;
+
+  descriptor.value  = function (...args: any[]) {
+      if (retval[propertyKey]) { 
+        return retval[propertyKey]; 
+      }
+      return retval[propertyKey] = method.apply(this, args);
+    };
+};
+
+export class CompanyDB {
+  constructor(private _data: { [id: string] : CompanyInfo } ) {
+  }
+  get(companyid: string): CompanyInfo | undefined {
+    return this._data[companyid];
+  }
+  add(info: CompanyInfo) {
+    this._data[info.id] = info;
+  }
+  getCompanyInfos(): CompanyInfo[] {
+    return values(this._data);
+  }
+  getIDs(): string[] {
+    return keys(this._data);
+  }
+}
+
 export class CompanyInfo {
-    id: string;
-    company: string;
+    // readonly id: string;
+    // readonly company: string;
     domains: string[];
     founded ?: string;
     acquired ?: string;
     type: string[];
-    typetag ?: string;
+    // readonly typetag ?: string;
     jurisdiction ?: string;
     jurisdiction_code ?: string;
     parent ?: string;
@@ -31,6 +61,9 @@ export class CompanyInfo {
     size ?: string;
     data_source ?: string;
     description ?: string;
+    constructor(readonly id: string, readonly company: string, domains: string[], readonly typetag: string) {
+
+    }
 }
 
 export class APIAppInfo {
@@ -87,11 +120,15 @@ export interface APIAppStub {
 @Injectable()
 export class LoaderService {
   constructor(private httpM: HttpModule, private http: Http) { }
+
+  @cache
   getAppToHosts(): Promise<App2Hosts> {
     return this.http.get('assets/data/host_by_app.json').toPromise().then(response => {
-      return Promise.resolve(mapValues(response.json(), ((hvobj) => keys(hvobj))) as { [app: string]: string[] });
+      return mapValues(response.json(), ((hvobj) => keys(hvobj))) as { [app: string]: string[] };
     });
   }
+
+  @cache  
   getHostToPITypes(): Promise<Host2PITypes> {
     return this.http.get('assets/data/pi_by_host.json').toPromise().then(response => {
       return response.json() as { [app: string]: string[] };
@@ -114,10 +151,10 @@ export class LoaderService {
       return response.json() as String2String;
     });
   }
-
-  getCompanyInfo(): Promise<CompanyID2Info> {
+  @cache
+  getCompanyInfo(): Promise<CompanyDB> {
     return this.http.get('assets/data/company_details.json').toPromise().then(response => {
-      return response.json() as CompanyID2Info;
+      return new CompanyDB(response.json());
     });
   }
   getSubstitutions(): Promise<AppSubstitutions> {
