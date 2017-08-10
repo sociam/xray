@@ -20,6 +20,7 @@ import { CompareComponent } from './compare/compare.component';
 import { CompanyListComponent } from './company-list/company-list.component';
 import { CompareContainerComponent } from './compare-container/compare-container.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { HostUtilsService } from "app/host-utils.service";
 
 const appRoutes: Routes = [
   {
@@ -79,7 +80,7 @@ const appRoutes: Routes = [
     ),
     Ng2CompleterModule
   ],
-  providers: [LoaderService, UsageConnectorService],
+  providers: [LoaderService, UsageConnectorService, HostUtilsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

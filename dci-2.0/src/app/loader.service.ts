@@ -109,6 +109,7 @@ export class LoaderService {
       return response.json() as String2String;
     });
   }
+
   getCompanyInfo(): Promise<CompanyID2Info> {
     return this.http.get('assets/data/company_details.json').toPromise().then(response => {
       return response.json() as CompanyID2Info;
@@ -119,17 +120,6 @@ export class LoaderService {
       return response.json() as AppSubstitutions;
     });
   }
-
-  getApps(): Promise<any> {
-    // var headers = new Headers();
-    // headers.set('Accept', 'application/json');
-    return this.http.get(API_ENDPOINT + '?isFull=false&limit=10000').toPromise().then(response => {
-      let json = response.json();
-      console.log('got these > ', json);
-      return json;      
-    });
-  }
-
   augmentUrl(url: string) : string {
     return BASE_API + url;
   }
@@ -150,6 +140,4 @@ export class LoaderService {
   getAppRecord(appid: string): Promise<any> {
     return this.http.get(API_ENDPOINT + `?isFull=true&limit=10000&appId=${appid}`).toPromise().then(response => response.json());
   }
-
-
 }
