@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, Host2PITypes, APIAppInfo } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, Host2PITypes, APIAppInfo, CompanyDB } from '../loader.service';
 import { Http, HttpModule, Headers } from '@angular/http';
 
 import * as _ from 'lodash';
@@ -61,7 +61,7 @@ class AppUsageHHMM implements AppUsage {
   templateUrl: './usagetable.component.html',
   styleUrls: ['./usagetable.component.scss']
 })
-export class UsagetableComponent implements OnInit, OnChanges {
+export class UsagetableComponent implements OnInit {
 
 
   init: Promise<any>;
@@ -73,65 +73,49 @@ export class UsagetableComponent implements OnInit, OnChanges {
   stepUsage = 1;
   appToAdd: string;
   selectedApp: APIAppInfo;
+  companies: CompanyDB;
   private alternatives: { [app: string] : string[] };
 
-  apps : any[];
 
   completer : CompleterData; 
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService, private completerSvc: CompleterService) { 
-
   }
 
   ngOnInit() {
-    this.init = Promise.all([
-      this.loader.getAppToHosts().then((a2h) => { 
-        this.all_apps = _.keys(a2h);
-        this.selectedApps = this.connector.getState().concat().map((x) => new AppUsageHHMM(x));
-        this._update_candidates();      
-      }),
-      this.loader.getSubstitutions().then((submap) => { this.alternatives = submap; })
-    ]);
+    this.loader.getCompanyInfo().then(companydb => this.companies = companydb);
   }
 
   appSelected(appinfo: APIAppInfo) {
     console.log('output connection is working ', appinfo);
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    // throw new Error("Method not implemented.");
-      console.log('input changes ', changes);
-  }
-
-  _update_candidates() {
-    this.candidates = _.difference(this.all_apps, this.selectedApps.map((x) => x.appid));  
-    // console.log('this apps', this.all_apps.length, this.selectedApps.length, this.candidates.length);    
-  }
 
   appValueChanged() {
-    // console.log('app value changed', appusage.appid, event);
     this.connector.usageChanged(this.selectedApps.map((x) => x.toAppUsage()));
   }
 
   delete(usage: AppUsage) {
     this.selectedApps = this.selectedApps.filter((x) => x.appid !== usage.appid);
-    this._update_candidates();
     this.appValueChanged();
   }
-
+  
   clearState() { this.connector.clearState(); this.selectedApps = []; }
 
-  addApp(appToAdd: string, event) {
-    if (appToAdd && this.candidates.indexOf(appToAdd) >= 0) {
-      this.selectedApps.push(new AppUsageHHMM({appid: appToAdd, mins: 0})); 
-      this._update_candidates();
+  getAppName(id: string): string {
+    return this.loader.getCachedAppInfo(id).storeinfo.title;
+  }
+
+  addApp() {
+    if (this.selectedApp) {
+      this.selectedApps.push(new AppUsageHHMM({appid: this.selectedApp.app, mins: 0})); 
       this.appToAdd = undefined;
       this.appValueChanged();
     }
   }
 
   hasAlternatives(appid: string): boolean {
-    // console.log('hasAlterantives ', appid, this.alternatives[appid]);
-    return this.alternatives && this.alternatives[appid] && this.alternatives[appid].length > 0;
+    // TODO this will involve making a call to the server 
+    return false; // -> this.alternatives && this.alternatives[appid] && this.alternatives[appid].length > 0;
   }
 
 }

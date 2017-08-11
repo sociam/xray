@@ -165,6 +165,9 @@ export class LoaderService {
   augmentUrl(url: string) : string {
     return BASE_API + url;
   }
+
+  apps : { [id: string] : APIAppInfo } = {};
+
   findApps(query: string): Promise<APIAppInfo[]> {
     // var headers = new Headers();
     // headers.set('Accept', 'application/json');
@@ -178,10 +181,17 @@ export class LoaderService {
         appinfos.map(appinfo => {
           appinfo.icon = this.augmentUrl(appinfo.icon)
           appinfo.hosts = uniq((appinfo.hosts || []).map((host: string): string => trim(host.trim(), '".%')));
+          this.apps[appinfo.app] = appinfo;
         });
         return appinfos;
       })
   }
+
+  getCachedAppInfo(appid: string):APIAppInfo | undefined {
+    // returns a previously seen appid
+    return this.apps[appid];
+  }
+  
   getAppRecord(appid: string): Promise<any> {
     return this.http.get(API_ENDPOINT + `?isFull=true&limit=10000&appId=${appid}`).toPromise().then(response => response.json());
   }
