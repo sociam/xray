@@ -15,18 +15,34 @@ export interface String2String { [host: string]: string }
 
 export interface AppSubstitutions { [app: string]: string[] };
 
-export let cache = (target: Object,  propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+export let cache = (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
   // console.log('@cache:: ~~ ', target, propertyKey, descriptor);
-  let retval: {[method: string] : any} = {},
+  let retval: { [method: string]: any } = {},
     method = descriptor.value;
 
-  descriptor.value  = function (...args: any[]) {
-      if (retval[propertyKey]) { 
-        return retval[propertyKey]; 
-      }
-      return retval[propertyKey] = method.apply(this, args);
-    };
+  descriptor.value = function (...args: any[]) {
+    if (retval[propertyKey]) {
+      return retval[propertyKey];
+    }
+    return retval[propertyKey] = method.apply(this, args);
+  };
 };
+
+// can be customised to be sensitive to target
+export let memoize = (f: (...args: any[]) => string) => {
+  return function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
+    let retval: { [method: string]: any } = {},
+      method = descriptor.value;
+    descriptor.value = function (...args: any[]) {
+      var cache_key = propertyKey + '_' + f.apply(null, args);
+      if (retval[cache_key]) {
+        return retval[cache_key];
+      }
+      return retval[cache_key] = method.apply(this, args);
+    };
+  };
+}
+
 
 export class CompanyDB {
   constructor(private _data: { [id: string] : CompanyInfo } ) {

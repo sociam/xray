@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
-import { LoaderService, APIAppInfo, CompanyInfo, cache } from "app/loader.service";
+import { LoaderService, APIAppInfo, CompanyInfo, cache, memoize } from "app/loader.service";
 
 import * as _ from 'lodash';
 
@@ -32,6 +32,7 @@ export class HostUtilsService {
     });
   }    
 
+  @memoize((host: string, cclds: string[]) => host)
   shorten_2ld (host: string, ccslds: string[]): string {
       host = host.trim().toLowerCase();
       // raw ip address
@@ -56,8 +57,7 @@ export class HostUtilsService {
       return host;
   }
 
-//  i wish :
-//   @Memoize((host: string, app: APIAppInfo): string  => host + '-' + app.app)
+  @memoize((host: string, app: APIAppInfo): string  => host + '-' + app.app)
   public findCompany (host: string, app: APIAppInfo): Promise<CompanyInfo|undefined> {
       // old code was O(n) and fast but only exact matched
       return Promise.all([
