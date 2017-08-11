@@ -37,7 +37,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @ViewChild('thing') svg: ElementRef; // this gets a direct el reference to the svg element
 
   // incoming attribute
-  @Input() appusage: AppUsage[];
+  @Input('appusage') usage_in: AppUsage[];
   @Input() showModes = true;
   @Input() highlightApp: string;
   @Input() showLegend = true;
@@ -51,16 +51,18 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
       // this.loader.getHostToShort().then((h2h) => this.host2short = h2h),
     ]).then(() => console.log('refinebar init done'));
+
+    (<any>window)._rb = this;
   }
 
-  // this gets called when this.appusage changes
+  // this gets called when this.usage_in changes
   ngOnChanges(changes: SimpleChanges): void {
-    if (!this.appusage) { return; }
+    if (!this.usage_in) { return; }
     this.init.then(() => {
-      if (this.appusage && this.usage && this.appusage.length !== this.usage.length) {
+      if (!this.usage_in || !this.usage || this.apps.length !== this.usage_in.length) {
         delete this.apps;
       }
-      this.usage = this.appusage;
+      this.usage = this.usage_in;
       console.log('>> REFINEBAR new usage ', JSON.stringify(this.usage));
       this.render();
     });
