@@ -28,7 +28,10 @@ export let cache = (target: Object, propertyKey: string, descriptor: TypedProper
   };
 };
 
-// can be customised to be sensitive to target
+// can be customised to be sensitive to target.
+// pass in function that will generate keys for the cache:
+// e.g. if values varies on multiple parameters, then return 
+// a concatenation of dependent values
 export let memoize = (f: (...args: any[]) => string) => {
   return function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
     let retval: { [method: string]: any } = {},
