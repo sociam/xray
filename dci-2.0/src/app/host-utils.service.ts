@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
 import { LoaderService, APIAppInfo, CompanyInfo, cache } from "app/loader.service";
+
 import * as _ from 'lodash';
 
 const ipv4re = /((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$)|(^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$))/;
@@ -17,7 +18,7 @@ export class HostUtilsService {
         .then((ccsld) => ccsld.split('\n').filter((x) => (x && x.trim().length > 0 && x.indexOf('.') >= 0 && x.indexOf('//') < 0 && x.indexOf('!') < 0 && x.indexOf('*') < 0)));
   }
 
-  getIdByDomain = (): Promise<{[id: string] : string}> => {
+  getIdByDomain(): Promise<{[id: string] : string}> {
     // reversed version of ^^ getDomainsById for O(1)
     // returns { domain => rowid, shorten_2ld(domain) => rowid }
     return Promise.all([this.loader.getCompanyInfo(),this.fetchccSLDs()]).then((rarr) => {
@@ -30,7 +31,8 @@ export class HostUtilsService {
         }, {});
     });
   }    
-  shorten_2ld = (host: string, ccslds: string[]): string => {
+
+  shorten_2ld (host: string, ccslds: string[]): string {
       host = host.trim().toLowerCase();
       // raw ip address
       if (ipv4re.test(host)) {
@@ -53,7 +55,10 @@ export class HostUtilsService {
       }
       return host;
   }
-  findCompany = (host: string, app: APIAppInfo): Promise<CompanyInfo|undefined> => {
+
+//  i wish :
+//   @Memoize((host: string, app: APIAppInfo): string  => host + '-' + app.app)
+  public findCompany (host: string, app: APIAppInfo): Promise<CompanyInfo|undefined> {
       // old code was O(n) and fast but only exact matched
       return Promise.all([
           this.loader.getCompanyInfo(),
