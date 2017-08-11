@@ -182,7 +182,9 @@ export class LoaderService {
     });
   }
   augmentUrl(url: string) : string {
-    return BASE_API + url;
+    if (url) {
+      return BASE_API + url;
+    }
   }
 
   apps : { [id: string] : APIAppInfo } = {};
@@ -198,7 +200,7 @@ export class LoaderService {
           return [];
         } 
         appinfos.map(appinfo => {
-          appinfo.icon = this.augmentUrl(appinfo.icon)
+          appinfo.icon = this.augmentUrl(appinfo.icon);
           appinfo.hosts = uniq((appinfo.hosts || []).map((host: string): string => trim(host.trim(), '".%')));
           this.apps[appinfo.app] = appinfo;
         });

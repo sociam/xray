@@ -28,7 +28,7 @@ export class AutocompleteComponent implements OnInit {
     if (this.query.trim() !== ""){
       this.loader.findApps(this.query.trim()).then((results: APIAppInfo[]) => {
         const qL = this.query.toLowerCase();
-        this.filteredList = results.filter((x) => x.storeinfo.title.toLowerCase().indexOf(qL) == 0);
+        this.filteredList = results.filter((x) => x.storeinfo.title.toLowerCase().indexOf(qL) == 0 && x.icon);
         this.filteredList.sort((a,b) => {
             var atitle = a.storeinfo.title.toUpperCase(); // ignore upper and lowercase
             var btitle = b.storeinfo.title.toUpperCase(); // ignore upper and lowercase
