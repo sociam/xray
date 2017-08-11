@@ -233,7 +233,9 @@ export class LoaderService {
   
   @memoize(appid => appid)
   getFullAppInfo(appid: string): Promise<APIAppInfo|undefined> {
-    return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=10000&appId=${appid}`).toPromise().then(response => (response.json() as APIAppInfo[])[0] || undefined);
+    return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=10000&appId=${appid}`).toPromise()
+    .then(response => (response.json() as APIAppInfo[])[0] || undefined)
+    .then(appinfo => appinfo ? this.apps[appinfo.app] = appinfo : undefined);      
   }
 
 

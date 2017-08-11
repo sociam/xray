@@ -84,6 +84,11 @@ export class UsagetableComponent implements OnInit {
 
   ngOnInit() {
     this.loader.getCompanyInfo().then(companydb => this.companies = companydb);
+    this.selectedApps = this.connector.getState().map(usage => {
+      console.log('usage >> ', usage);
+      return new AppUsageHHMM(usage);
+    });
+    this.selectedApps.map(usage => this.loader.getFullAppInfo(usage.appid));
   }
 
   appSelected(appinfo: APIAppInfo) {
@@ -103,7 +108,9 @@ export class UsagetableComponent implements OnInit {
   clearState() { this.connector.clearState(); this.selectedApps = []; }
 
   getAppName(id: string): string {
-    return this.loader.getCachedAppInfo(id).storeinfo.title;
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.storeinfo.title; }
+    return '';
   }
 
   addApp() {
