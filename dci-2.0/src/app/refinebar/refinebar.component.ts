@@ -78,9 +78,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       impacts = usage.map((u) => ({ ...u, impact: (timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0)) }));
 
     return Promise.all(impacts.map((usg): Promise<AppImpact[]> => {
-      const app = this.loader.getCachedAppInfo(usg.appid), hosts = app.hosts;
 
-      if (hosts === undefined) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
+      const app = this.loader.getCachedAppInfo(usg.appid), hosts = app && app.hosts;
+
+      if (!hosts) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
 
       return Promise.all(hosts.map(host => this.hostutils.findCompany(host, app)))
         .then((companies: CompanyInfo[]) => _.uniq(companies.filter((company) => company !== undefined && company.typetag !== 'ignore')))
@@ -126,7 +127,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     // to prepare for stack() let's
     this.compileImpacts(this.usage).then(impacts => {
-      console.log('got impacts > ', impacts);
+      // console.log('got impacts > ', impacts);
 
       let apps = _.uniq(impacts.map((x) => x.appid)),
         companies = _.uniq(impacts.map((x) => x.companyid)),
@@ -195,9 +196,11 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         x = d3.scaleBand()
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
           .domain(companies),
+        d3maxx = d3.max(by_company, function (d) { return d.total; }) || 0,
+        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx),
         y = d3.scaleLinear()
           .rangeRound([height, 0])
-          .domain([0, this.lastMax = Math.max(this.lastMax, d3.max(by_company, function (d) { return d.total; }))]).nice(),
+          .domain([0, ymaxx]).nice(),
         z = d3.scaleOrdinal(d3.schemeCategory20)
           .domain(apps);
       // z = d3.scaleOrdinal()
@@ -282,7 +285,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .attr('x', width - 24)
           .attr('y', 9.5)
           .attr('dy', '0.32em')
-          .text(function (d) { return d; });
+          .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
       }
 
       const ctypes = ['advertising', 'analytics', 'app', 'other'],
