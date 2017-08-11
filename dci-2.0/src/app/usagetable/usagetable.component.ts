@@ -74,7 +74,7 @@ export class UsagetableComponent implements OnInit {
   appToAdd: string;
   selectedApp: APIAppInfo;
   companies: CompanyDB;
-  private alternatives: { [app: string] : string[] };
+  private alternatives: { [app: string] : APIAppInfo[] } = {};
 
 
   completer : CompleterData; 
@@ -91,6 +91,7 @@ export class UsagetableComponent implements OnInit {
   }
 
   appValueChanged() {
+    console.info('appValueChanged >> ');
     this.connector.usageChanged(this.selectedApps.map((x) => x.toAppUsage()));
   }
 
@@ -107,6 +108,10 @@ export class UsagetableComponent implements OnInit {
 
   addApp() {
     if (this.selectedApp) {
+      this.loader.getAlternatives(this.selectedApp.app).then(alts => {
+        this.alternatives[this.selectedApp.app] = alts;
+        console.log("ALTERNATIVES CHANGED > ", this.alternatives);
+      });
       this.selectedApps.push(new AppUsageHHMM({appid: this.selectedApp.app, mins: 0})); 
       this.appToAdd = undefined;
       this.appValueChanged();
@@ -115,7 +120,7 @@ export class UsagetableComponent implements OnInit {
 
   hasAlternatives(appid: string): boolean {
     // TODO this will involve making a call to the server 
-    return false; // -> this.alternatives && this.alternatives[appid] && this.alternatives[appid].length > 0;
+    return this.alternatives && this.alternatives[appid] && this.alternatives[appid].length > 0;
   }
 
 }

@@ -7,7 +7,7 @@ import { mapValues, keys, mapKeys, values, trim, uniq } from 'lodash';
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
 export let BASE_API = 'http://localhost:8118';
-export let API_ENDPOINT = 'http://localhost:8118/api/apps/';
+export let API_ENDPOINT = 'http://localhost:8118/api';
 
 export interface App2Hosts { [app: string]: string[] }
 export interface Host2PITypes { [host: string]: PI_TYPES[] }
@@ -34,13 +34,13 @@ export let cache = (target: Object, propertyKey: string, descriptor: TypedProper
 // a concatenation of dependent values
 export let memoize = (f: (...args: any[]) => string) => {
   return function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
-    let retval: { [method: string]: any } = {},
-      method = descriptor.value;
+    let retval: { [method: string]: any } = {}, method = descriptor.value;
     descriptor.value = function (...args: any[]) {
       var cache_key = propertyKey + '_' + f.apply(null, args);
       if (retval[cache_key]) {
         return retval[cache_key];
       }
+      console.log('cache miss ', cache_key);
       return retval[cache_key] = method.apply(this, args);
     };
   };
@@ -62,6 +62,16 @@ export class CompanyDB {
   getIDs(): string[] {
     return keys(this._data);
   }
+}
+
+export class AppAlternative {
+  altAppTitle: string;
+  altToURL: string; // e.g. "http://alternativeto.net/software/pricealarm-net/",
+  gPlayURL: string;
+  gPlayID: string;
+  iconURL: string; // "d2.alternativeto.net/dist/icons/pricealarm-net_105112.png?width=128&height=128&mode=crop&upscale=false",
+  officialSiteURL: string; //  "http://www.PriceAlarm.net",
+  isScraped: boolean; 
 }
 
 export class CompanyInfo {
@@ -192,7 +202,7 @@ export class LoaderService {
   findApps(query: string): Promise<APIAppInfo[]> {
     // var headers = new Headers();
     // headers.set('Accept', 'application/json');
-    return this.http.get(API_ENDPOINT + `?isFull=true&limit=120&title=${query.trim()}`).toPromise()
+    return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=120&title=${query.trim()}`).toPromise()
       .then(response => response.json() as APIAppInfo[])
       .then((appinfos: APIAppInfo[]) => {
         if (!appinfos) {
@@ -208,12 +218,23 @@ export class LoaderService {
       })
   }
 
+  @memoize(app => app)
+  getAlternatives(appid: string): Promise<APIAppInfo[]> {
+    return this.http.get(API_ENDPOINT + `/alt/${appid}`).toPromise()
+      .then(response => response && response.text().toString().trim() !== 'null' ? response.json() as AppAlternative[] : [])
+      .then(alts => alts.filter(x => x.isScraped && x.gPlayID))
+      .then(scrapedAlts => Promise.all(scrapedAlts.map(alt => this.getCachedAppInfo(alt.gPlayID) || this.getFullAppInfo(alt.gPlayID))))
+  }
+
   getCachedAppInfo(appid: string):APIAppInfo | undefined {
     // returns a previously seen appid
     return this.apps[appid];
   }
   
-  getAppRecord(appid: string): Promise<any> {
-    return this.http.get(API_ENDPOINT + `?isFull=true&limit=10000&appId=${appid}`).toPromise().then(response => response.json());
+  @memoize(appid => appid)
+  getFullAppInfo(appid: string): Promise<APIAppInfo|undefined> {
+    return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=10000&appId=${appid}`).toPromise().then(response => (response.json() as APIAppInfo[])[0] || undefined);
   }
+
+
 }
