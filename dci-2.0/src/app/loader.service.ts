@@ -198,22 +198,24 @@ export class LoaderService {
 
   apps : { [id: string] : APIAppInfo } = {};
 
+  _prepareAppInfo(appinfo: APIAppInfo) {
+    appinfo.icon = this.augmentUrl(appinfo.icon);
+    appinfo.hosts = uniq((appinfo.hosts || []).map((host: string): string => trim(host.trim(), '".%')));
+    this.apps[appinfo.app] = appinfo;
+  }
+
   findApps(query: string): Promise<APIAppInfo[]> {
     // var headers = new Headers();
     // headers.set('Accept', 'application/json');
     query = query && query.trim();
     if (!query) return Promise.resolve([]);
-    return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=120&title=${query.trim()}`).toPromise()
+    return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&title=${query.trim()}`).toPromise()
       .then(response => response.json() as APIAppInfo[])
       .then((appinfos: APIAppInfo[]) => {
         if (!appinfos) {
           throw new Error('null returned from endpoint ' + query);
         } 
-        appinfos.map(appinfo => {
-          appinfo.icon = this.augmentUrl(appinfo.icon);
-          appinfo.hosts = uniq((appinfo.hosts || []).map((host: string): string => trim(host.trim(), '".%')));
-          this.apps[appinfo.app] = appinfo;
-        });
+        appinfos.map(appinfo => this._prepareAppInfo(appinfo));
         return appinfos;
       })
   }
@@ -235,11 +237,12 @@ export class LoaderService {
   
   @memoize((appid:string):string => appid)
   getFullAppInfo(appid: string): Promise<APIAppInfo|undefined> {
-    return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=10000&appId=${appid}`).toPromise()
+    return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=10000&appId=${appid}`).toPromise()
     .then(response => (response && response.json() as APIAppInfo[])[0] || undefined)
     .then(appinfo => {
       if (appinfo) { 
-        this.apps[appinfo.app] = this.apps[appid] = appinfo;
+        this._prepareAppInfo(appinfo);
+        this.apps[appid] = appinfo;
       } else {
         console.warn('null appinfo');
       }

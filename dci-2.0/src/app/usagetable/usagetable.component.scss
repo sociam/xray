@@ -8,12 +8,19 @@ div.top {
         width: 100%;
         .rows {
             position: relative;
-            padding: 8px 0px;
-            font-size: 14pt;
+            padding: 25px 0px;
+            font-size: 12pt;
             td.left {
-                width: 130px;
-                text-align: right;
-                padding: 0px 20px;
+                width: 180px;
+                text-align: left;
+                padding: 0px 0px 0px 50px;
+                position: relative;
+                img.appicon {
+                    position: absolute;
+                    left: 10px;
+                    top: 10px;
+                    width: 30px;
+                }
             }
             td.hhmminput {
                 width: 120px;

@@ -7,7 +7,7 @@
     </div>
     <table>
         <tr class="rows" *ngFor="let appusage of selectedApps">
-            <td class="left">{{ getAppName(appusage.appid) }}</td>
+            <td class="left"><img class='appicon' [src]="getAppIcon(appusage.appid)">{{ getAppName(appusage.appid).split(' ').slice(0,3).join(' ') }}</td>
             <td class="hhmminput">
                 <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">h
                 <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mm" maxlength="2">m

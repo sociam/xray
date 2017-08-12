@@ -109,6 +109,12 @@ export class UsagetableComponent implements OnInit {
     if (cached) { return cached.storeinfo.title; }
     return '';
   }
+  getAppIcon(id: string): string {
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.icon; }
+    return '';
+  }
+
 
   addApp() {
     if (this.selectedApp) {
