@@ -234,7 +234,15 @@ export class LoaderService {
   getFullAppInfo(appid: string): Promise<APIAppInfo|undefined> {
     return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=10000&appId=${appid}`).toPromise()
     .then(response => (response.json() as APIAppInfo[])[0] || undefined)
-    .then(appinfo => appinfo ? this.apps[appinfo.app] = appinfo : undefined);      
+    .then(appinfo => {
+      console.log('storing appinfo ~', appid, appinfo, appinfo.app);
+      if (appinfo) { 
+        this.apps[appinfo.app] = this.apps[appid] = appinfo;
+      } else {
+        console.log('null appinfo');
+      }
+      return appinfo;
+    });
   }
 
 

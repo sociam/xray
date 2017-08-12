@@ -82,8 +82,9 @@ export class UsagetableComponent implements OnInit {
   ngOnInit() {
     this.loader.getCompanyInfo().then(companydb => this.companies = companydb);
     this.selectedApps = this.connector.getState().map(usage => new AppUsageHHMM(usage));    
-    Promise.all(this.selectedApps.map(usage => this.loader.getFullAppInfo(usage.appid))).then(() => {
-      console.log('loaded all');      
+    Promise.all(this.selectedApps.map(usage => this.loader.getFullAppInfo(usage.appid))).then((appinfos) => {
+      console.log('app infos > ', appinfos);
+      console.log('loaded all ~ apps : ', this.selectedApps.map(usg => this.getAppName(usg.appid)));
     });
   }
 
