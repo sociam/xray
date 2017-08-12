@@ -40,7 +40,6 @@ export let memoize = (f: (...args: any[]) => string) => {
       if (retval[cache_key]) {
         return retval[cache_key];
       }
-      console.log('cache miss ', cache_key);
       return retval[cache_key] = method.apply(this, args);
     };
   };
@@ -218,7 +217,7 @@ export class LoaderService {
       })
   }
 
-  @memoize(app => app)
+  @memoize((appid:string): string => appid)
   getAlternatives(appid: string): Promise<APIAppInfo[]> {
     return this.http.get(API_ENDPOINT + `/alt/${appid}`).toPromise()
       .then(response => response && response.text().toString().trim() !== 'null' ? response.json() as AppAlternative[] : [])
@@ -231,7 +230,7 @@ export class LoaderService {
     return this.apps[appid];
   }
   
-  @memoize(appid => appid)
+  @memoize((appid:string):string => appid)
   getFullAppInfo(appid: string): Promise<APIAppInfo|undefined> {
     return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=10000&appId=${appid}`).toPromise()
     .then(response => (response.json() as APIAppInfo[])[0] || undefined)

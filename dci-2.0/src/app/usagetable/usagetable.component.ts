@@ -63,7 +63,6 @@ class AppUsageHHMM implements AppUsage {
 })
 export class UsagetableComponent implements OnInit {
 
-
   init: Promise<any>;
   selectedApps: AppUsageHHMM[] = [];
   private all_apps: string[];
@@ -75,8 +74,6 @@ export class UsagetableComponent implements OnInit {
   selectedApp: APIAppInfo;
   companies: CompanyDB;
   private alternatives: { [app: string] : APIAppInfo[] } = {};
-
-
   completer : CompleterData; 
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService, private completerSvc: CompleterService) { 
@@ -84,11 +81,10 @@ export class UsagetableComponent implements OnInit {
 
   ngOnInit() {
     this.loader.getCompanyInfo().then(companydb => this.companies = companydb);
-    this.selectedApps = this.connector.getState().map(usage => {
-      console.log('usage >> ', usage);
-      return new AppUsageHHMM(usage);
+    this.selectedApps = this.connector.getState().map(usage => new AppUsageHHMM(usage));    
+    Promise.all(this.selectedApps.map(usage => this.loader.getFullAppInfo(usage.appid))).then(() => {
+      console.log('loaded all');      
     });
-    this.selectedApps.map(usage => this.loader.getFullAppInfo(usage.appid));
   }
 
   appSelected(appinfo: APIAppInfo) {

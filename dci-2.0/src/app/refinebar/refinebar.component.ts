@@ -46,10 +46,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   constructor(private loader: LoaderService, private hostutils: HostUtilsService) {
     this.init = Promise.all([
-      // this.loader.getAppToHosts().then((a2h) => this.app2hosts = a2h),
-      // this.loader.getHostToCompany().then((h2c) => this.host2companyid = h2c),
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
-      // this.loader.getHostToShort().then((h2h) => this.host2short = h2h),
     ]).then(() => console.log('refinebar init done'));
 
     (<any>window)._rb = this;
@@ -59,7 +56,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.usage_in) { return; }
     this.init.then(() => {
-      if (!this.usage_in || !this.usage || this.apps.length !== this.usage_in.length) {
+      if (!this.usage_in || !this.usage || !this.apps || this.apps.length !== this.usage_in.length) {
         delete this.apps;
       }
       this.usage = this.usage_in;
@@ -94,7 +91,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .then((companies: CompanyInfo[]) => _.uniq(companies.filter((company) => company !== undefined && company.typetag !== 'ignore')))
           .then((companies: CompanyInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.id, impact: usg.impact })));
       });
-    })).then((impacts: AppImpact[][]) => _.flatten(impacts));
+    })).then((impacts: AppImpact[][]): AppImpact[]=> _.flatten(impacts));
   }
 
 

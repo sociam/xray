@@ -18,7 +18,7 @@
             <td class="right">
                 <!-- <div class="tohide">actions</div> -->
                 <!-- <div class="reveal"> -->
-                <button class="clearButton" (click)="delete(appusage)">uninstall</button> <a [routerLink]="['/alternatives/ ', appusage.appid]" [hidden]='!hasAlternatives(appusage.appid) '><button>substitute</button></a>
+                <button class="clearButton" (click)="delete(appusage)">uninstall</button> <a [routerLink]="['/alternatives/', appusage.appid.trim()]" [hidden]='!hasAlternatives(appusage.appid) '><button>substitute</button></a>
                 <!-- </div> -->
             </td>
         </tr>

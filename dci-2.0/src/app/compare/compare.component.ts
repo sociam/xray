@@ -1,7 +1,12 @@
 import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, Host2PITypes, AppSubstitutions } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, Host2PITypes, AppSubstitutions, APIAppInfo } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as _ from 'lodash';
+
+class Substitution {
+  target: AppUsage;
+  all: AppUsage[];
+}
 
 @Component({
   selector: 'app-compare',
@@ -10,52 +15,47 @@ import * as _ from 'lodash';
 })
 export class CompareComponent implements OnInit, OnChanges {
 
-  @Input() using: AppUsage[];
-  @Input() targetApp: string;
+  @Input() using: AppUsage[];   // using represents the background app
+  @Input() targetAppId: string;
 
-  substitutions: { target: AppUsage,  all: AppUsage[] }[];
-  submap: AppSubstitutions;
+  substitutions: Substitution[];
 
-  usages: { [appid: string] : AppUsage[] };
-
-  init: Promise<any>;
-
-  constructor(private loader: LoaderService) { 
-    this.init = loader.getSubstitutions().then((submap) => { this.submap = submap; });
+  constructor(private loader: LoaderService) {
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     // recompute substitutions
-    console.info('recomputing substitutions ~ ', changes);
-    this.init.then(() => {
-      if (this.targetApp === undefined) { console.error('target is undefined ~~ skipping'); return;  }
+    if (!this.using || !this.targetAppId) {
+      console.log('not using or targetAppId :(');
+      return;
+    }
+    Promise.all(this.using.map(usg => this.loader.getFullAppInfo(usg.appid)))
+      .then(() => {
+        // loaded all 
+        this.loader.getAlternatives(this.targetAppId).then((subs: APIAppInfo[]): undefined => {
+          // others is AppUsage for everything except targetapp
+          const targetUsage: AppUsage = this.using.filter(usg => usg.appid === this.targetAppId)[0],
+            otherUsages: AppUsage[] = this.using.filter(usg => usg.appid !== this.targetAppId);
 
-      // others is AppUsage for everything except targetapp
-      const target = this.using.filter((x) => x.appid.toLowerCase() === this.targetApp.toLowerCase())[0];
-      if (target === undefined) {
-        console.error('warning, app not found ', this.targetApp);
-        this.substitutions = [];
-        return;
-      }
+          if (targetUsage === undefined) {
+            console.error('Error : Corresponding app not found in usage - internal error - or could your URL be messed up?', this.targetAppId);
+            this.substitutions = [];
+            return;
+          }
 
-      const subs = this.submap[target.appid] || [],
-        others = this.using.filter((x) => subs.concat([target.appid]).indexOf(x.appid) < 0),
-        makeClone = (appid: string, target: AppUsage):AppUsage => {
-          console.log('making clone > ', appid);
-          const clone = _.extend({}, target, {appid: appid});
-          console.log('clone ', clone);
-          return clone;
-        };
+          subs = subs.filter(app => app.app !== this.targetAppId);
 
-      console.log('others is ', others, ' for target ', target.appid);
-      this.substitutions = [target.appid].concat(subs).map((appid) => {
-        let clone = makeClone(appid, target);
-        return ({ target: clone, all: [clone].concat(others)});
+          const makeUsage = (appid: string, target: AppUsage): AppUsage => _.extend({}, target, { appid: appid });
+
+          // substitutions are usages
+          this.substitutions = [{ target: targetUsage, all: this.using }].concat(subs.map(app => {
+            let clone = makeUsage(app.app, targetUsage);
+            return ({ target: clone, all: [clone].concat(otherUsages) });
+          }));
+          console.log('substitutions are ', this.substitutions);
+        });
       });
-      console.log('substitutions are ', this.substitutions  );
-
-    });    
   }
 }

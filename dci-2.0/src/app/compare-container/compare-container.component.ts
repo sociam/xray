@@ -11,22 +11,13 @@ import { UsageConnectorService } from "app/usage-connector.service";
 export class CompareContainerComponent implements OnInit {
 
   using : AppUsage[];  
-  selected : string;
+  selectedAppId : string;
 
-  constructor(private connector: UsageConnectorService, private route: ActivatedRoute) { 
-    console.log('ComparecontainerComponent ... ');
+  constructor(private connector: UsageConnectorService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    console.log('ngOnInit ... ');
-    this.route.paramMap.subscribe((pm) => {
-      // console.log(' YO ~~~ ', pm.get('app'));
-      this.selected = pm.get('app');
-      console.log('got selected ', pm.get('app'));
-    });    
+    this.route.paramMap.subscribe((pm) => this.selectedAppId = pm.get('app'));
     this.using = this.connector.getState();
-    console.log('hello, compare container component', this.selected, this.using);
-    (<any>window)._route = this.route;
   }
-
 }
