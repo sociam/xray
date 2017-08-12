@@ -201,12 +201,13 @@ export class LoaderService {
   findApps(query: string): Promise<APIAppInfo[]> {
     // var headers = new Headers();
     // headers.set('Accept', 'application/json');
+    query = query && query.trim();
+    if (!query) return Promise.resolve([]);
     return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=120&title=${query.trim()}`).toPromise()
       .then(response => response.json() as APIAppInfo[])
       .then((appinfos: APIAppInfo[]) => {
         if (!appinfos) {
-          console.log(' null returned ', query);
-          return [];
+          throw new Error('null returned from endpoint ' + query);
         } 
         appinfos.map(appinfo => {
           appinfo.icon = this.augmentUrl(appinfo.icon);
@@ -220,8 +221,10 @@ export class LoaderService {
   @memoize((appid:string): string => appid)
   getAlternatives(appid: string): Promise<APIAppInfo[]> {
     return this.http.get(API_ENDPOINT + `/alt/${appid}`).toPromise()
-      .then(response => response && response.text().toString().trim() !== 'null' ? response.json() as AppAlternative[] : [])
-      .then(alts => alts.filter(x => x.isScraped && x.gPlayID))
+      .then(response => {
+        if (response && response.text().toString().trim() === 'null') {  throw new Error('got a null coming from the endpoint');    }
+        return response && response.text().toString().trim() !== 'null' ? response.json() as AppAlternative[] : [];
+      }).then(alts => alts.filter(x => x.isScraped && x.gPlayID))
       .then(scrapedAlts => Promise.all(scrapedAlts.map(alt => this.getCachedAppInfo(alt.gPlayID) || this.getFullAppInfo(alt.gPlayID))))
   }
 
@@ -233,13 +236,12 @@ export class LoaderService {
   @memoize((appid:string):string => appid)
   getFullAppInfo(appid: string): Promise<APIAppInfo|undefined> {
     return this.http.get(API_ENDPOINT + `/apps/?isFull=true&limit=10000&appId=${appid}`).toPromise()
-    .then(response => (response.json() as APIAppInfo[])[0] || undefined)
+    .then(response => (response && response.json() as APIAppInfo[])[0] || undefined)
     .then(appinfo => {
-      console.log('storing appinfo ~', appid, appinfo, appinfo.app);
       if (appinfo) { 
         this.apps[appinfo.app] = this.apps[appid] = appinfo;
       } else {
-        console.log('null appinfo');
+        console.warn('null appinfo');
       }
       return appinfo;
     });
