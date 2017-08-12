@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
@@ -70,6 +70,11 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void { this.init.then(() => this.render()); }
 
+  private _getApp(appid: string): Promise<APIAppInfo> {
+    return this.loader.getCachedAppInfo(appid) && Promise.resolve(this.loader.getCachedAppInfo(appid))
+      || this.loader.getFullAppInfo(appid);
+  }
+
   compileImpacts(usage: AppUsage[]): Promise<AppImpact[]> {
     // folds privacy impact in simply by doing a weighted sum over hosts
     // usage has to be in a standard unit: days, minutes
@@ -81,14 +86,14 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     return Promise.all(impacts.map((usg): Promise<AppImpact[]> => {
 
-      const app = this.loader.getCachedAppInfo(usg.appid), hosts = app && app.hosts;
+      return this._getApp(usg.appid).then(app => {
+        const hosts = app && app.hosts;
+        if (!hosts) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
 
-      if (!hosts) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
-
-      return Promise.all(hosts.map(host => this.hostutils.findCompany(host, app)))
-        .then((companies: CompanyInfo[]) => _.uniq(companies.filter((company) => company !== undefined && company.typetag !== 'ignore')))
-        .then((companies: CompanyInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.id, impact: usg.impact })));
-
+        return Promise.all(hosts.map(host => this.hostutils.findCompany(host, app)))
+          .then((companies: CompanyInfo[]) => _.uniq(companies.filter((company) => company !== undefined && company.typetag !== 'ignore')))
+          .then((companies: CompanyInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.id, impact: usg.impact })));
+      });
     })).then((impacts: AppImpact[][]) => _.flatten(impacts));
   }
 
@@ -117,11 +122,13 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   }
   // 
   render() {
+    console.log(':: render usage:', this.usage && this.usage.length);
     if (!this.svg) { return; }
 
     d3.select(this.svg.nativeElement).selectAll('*').remove();
 
     if (this.usage === undefined || this.usage.length === 0) {
+      
       return;
     }
 
@@ -129,7 +136,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     // to prepare for stack() let's
     this.compileImpacts(this.usage).then(impacts => {
-      // console.log('got impacts > ', impacts);
+      console.log('got impacts > ', impacts);
 
       let apps = _.uniq(impacts.map((x) => x.appid)),
         companies = _.uniq(impacts.map((x) => x.companyid)),
