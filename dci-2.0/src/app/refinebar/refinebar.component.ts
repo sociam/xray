@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
@@ -41,6 +41,9 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() showModes = true;
   @Input() highlightApp: string;
   @Input() showLegend = true;
+
+  @Input() selectedCompany : CompanyInfo;
+  @Output() selectedCompanyChange = new EventEmitter<CompanyInfo>();
 
   highlightColour = '#FF066A';
 
@@ -115,7 +118,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       d3.select(svg).selectAll('rect.back.' + ctype).classed('reveal', true);
       d3.select(svg).selectAll('.ctypelegend g.' + ctype).classed('selected', true)
     };
+  }
 
+  _selectCompany(company: CompanyInfo) {
+    console.log('selectCompany >', company);
   }
   // 
   render() {
@@ -259,7 +265,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
       d3.selectAll('g.axis.x g.tick')
         .filter(function (d) { return d; })
-        .attr('class', (d) => this.companyid2info.get(d).typetag);
+        .attr('class', (d) => this.companyid2info.get(d).typetag)
+        .on('click', (d) => this._selectCompany(this.companyid2info.get(d)));
 
       g.append('g')
         .attr('class', 'axis y')

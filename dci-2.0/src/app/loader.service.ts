@@ -200,7 +200,9 @@ export class LoaderService {
 
   _prepareAppInfo(appinfo: APIAppInfo) {
     appinfo.icon = this.augmentUrl(appinfo.icon);
-    appinfo.hosts = uniq((appinfo.hosts || []).map((host: string): string => trim(host.trim(), '".%')));
+    appinfo.hosts = uniq((appinfo.hosts || [])
+      .map((host: string): string => trim(host.trim(), '".%')))
+      .filter(host => host.length > 3 && host.indexOf('.') >= 0 && host.indexOf('[') < 0);
     this.apps[appinfo.app] = appinfo;
   }
 
