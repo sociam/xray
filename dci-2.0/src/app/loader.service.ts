@@ -68,7 +68,7 @@ export class AppAlternative {
   altToURL: string; // e.g. "http://alternativeto.net/software/pricealarm-net/",
   gPlayURL: string;
   gPlayID: string;
-  iconURL: string; // "d2.alternativeto.net/dist/icons/pricealarm-net_105112.png?width=128&height=128&mode=crop&upscale=false",
+  iconURL: string; // e.g. "d2.alternativeto.net/dist/icons/pricealarm-net_105112.png?width=128&height=128&mode=crop&upscale=false",
   officialSiteURL: string; //  "http://www.PriceAlarm.net",
   isScraped: boolean; 
 }
@@ -190,16 +190,16 @@ export class LoaderService {
       return response.json() as AppSubstitutions;
     });
   }
-  augmentUrl(url: string) : string {
+  makeIconPath(url: string) : string {
     if (url) {
-      return BASE_API + url;
+      return [BASE_API + '/appFiles' + url].join('/');
     }
   }
 
   apps : { [id: string] : APIAppInfo } = {};
 
   _prepareAppInfo(appinfo: APIAppInfo) {
-    appinfo.icon = this.augmentUrl(appinfo.icon);
+    appinfo.icon = this.makeIconPath(appinfo.icon);
     appinfo.hosts = uniq((appinfo.hosts || [])
       .map((host: string): string => trim(host.trim(), '".%')))
       .filter(host => host.length > 3 && host.indexOf('.') >= 0 && host.indexOf('[') < 0);
@@ -211,7 +211,7 @@ export class LoaderService {
     // headers.set('Accept', 'application/json');
     query = query && query.trim();
     if (!query) return Promise.resolve([]);
-    return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&title=${query.trim()}`).toPromise()
+    return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&startsWith=${query.trim()}`).toPromise()
       .then(response => response.json() as APIAppInfo[])
       .then((appinfos: APIAppInfo[]) => {
         if (!appinfos) {

@@ -64,13 +64,13 @@ class AppUsageHHMM implements AppUsage {
 export class UsagetableComponent implements OnInit {
 
   init: Promise<any>;
-  selectedApps: AppUsageHHMM[] = [];
+  private _usages: AppUsageHHMM[] = [];
+  private _selectedapps: APIAppInfo[] = [];
   private all_apps: string[];
   candidates: string[];
   minUsage = 0;
   maxUsage = 720;
   stepUsage = 1;
-  appToAdd: string;
   selectedApp: APIAppInfo;
   companies: CompanyDB;
   private alternatives: { [app: string] : APIAppInfo[] } = {};
@@ -79,13 +79,18 @@ export class UsagetableComponent implements OnInit {
   constructor(private loader: LoaderService, private connector: UsageConnectorService, private completerSvc: CompleterService) { 
   }
 
+  get usages() { return this._usages; }
+  set usages(newusgs : AppUsageHHMM[]) { 
+    this._usages = newusgs;
+    Promise.all(newusgs.map(usage => this.loader.getFullAppInfo(usage.appid))).then(appinfos => {
+      this._selectedapps = appinfos;
+    });
+    newusgs.map(usage => this.loadAlternatives(usage.appid));
+  }
+
   ngOnInit() {
     this.loader.getCompanyInfo().then(companydb => this.companies = companydb);
-    this.selectedApps = this.connector.getState().map(usage => new AppUsageHHMM(usage));    
-    console.log('starting with selectedApps ', this.selectedApps);
-    Promise.all(_.flatten(this.selectedApps
-        .map(usage => [this.loader.getFullAppInfo(usage.appid), this.loadAlternatives(usage.appid)])))
-        .then(() => console.log('got all apps and alternates'));
+    this.usages = this.connector.getState().map(usage => new AppUsageHHMM(usage));    
   }
 
   appSelected(appinfo: APIAppInfo) {
@@ -94,15 +99,15 @@ export class UsagetableComponent implements OnInit {
 
   appValueChanged() {
     console.info('appValueChanged >> ');
-    this.connector.usageChanged(this.selectedApps.map((x) => x.toAppUsage()));
+    this.connector.usageChanged(this.usages.map((x) => x.toAppUsage()));
   }
 
   delete(usage: AppUsage) {
-    this.selectedApps = this.selectedApps.filter((x) => x.appid !== usage.appid);
+    this.usages = this.usages.filter((x) => x.appid !== usage.appid);
     this.appValueChanged();
   }
   
-  clearState() { this.connector.clearState(); this.selectedApps = []; }
+  clearState() { this.connector.clearState(); this.usages = []; }
 
   getAppName(id: string): string {
     let cached = this.loader.getCachedAppInfo(id);
@@ -116,14 +121,13 @@ export class UsagetableComponent implements OnInit {
   }
 
   private loadAlternatives(appid: string) {
-    this.loader.getAlternatives(appid).then(alts => this.alternatives[appid] = alts);
+    return this.loader.getAlternatives(appid).then(alts => this.alternatives[appid] = alts);
   }
 
   addApp() {
     if (this.selectedApp) {
-      this.loadAlternatives(this.selectedApp.app);
-      this.selectedApps.push(new AppUsageHHMM({appid: this.selectedApp.app, mins: 0})); 
-      this.appToAdd = undefined;
+      this.usages = this.usages.concat([new AppUsageHHMM({appid: this.selectedApp.app, mins: 0})]); 
+      this.selectedApp = undefined;
       this.appValueChanged();
     }
   }

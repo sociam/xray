@@ -1,12 +1,12 @@
 <div class="top">
     <div class="adder">
         <!-- <ng2-completer [(ngModel)]="appToAdd" [datasource]="completer" [minSearchLength]="1" placeholder="Add app"></ng2-completer> -->
-        <app-autocomplete [(selected)]='selectedApp' (selectedChange)='appSelected(selectedApp)'></app-autocomplete>
+        <app-autocomplete [(selected)]='selectedApp' (selectedChange)='appSelected(selectedApp)' [omit]='_selectedapps'></app-autocomplete>
         <button (click)="addApp()" [disabled]='!selectedApp'>Add</button>
-        <button (click)="clearState()">Clear all</button>
+        <button (click)="clearState()" [disabled]='usages.length == 0'>Clear all</button>
     </div>
     <table>
-        <tr class="rows" *ngFor="let appusage of selectedApps">
+        <tr class="rows" *ngFor="let appusage of usages">
             <td class="left"><img class='appicon' [src]="getAppIcon(appusage.appid)">{{ getAppName(appusage.appid).split(' ').slice(0,3).join(' ') }}</td>
             <td class="hhmminput">
                 <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">h
