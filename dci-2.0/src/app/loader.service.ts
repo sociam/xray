@@ -192,7 +192,7 @@ export class LoaderService {
   }
   makeIconPath(url: string) : string {
     if (url) {
-      return [BASE_API + '/appFiles' + url].join('/');
+      return [BASE_API + url].join('/');
     }
   }
 
