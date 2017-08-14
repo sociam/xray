@@ -82,10 +82,10 @@ export class UsagetableComponent implements OnInit {
   ngOnInit() {
     this.loader.getCompanyInfo().then(companydb => this.companies = companydb);
     this.selectedApps = this.connector.getState().map(usage => new AppUsageHHMM(usage));    
-    Promise.all(this.selectedApps.map(usage => this.loader.getFullAppInfo(usage.appid))).then((appinfos) => {
-      console.log('app infos > ', appinfos);
-      console.log('loaded all ~ apps : ', this.selectedApps.map(usg => this.getAppName(usg.appid)));
-    });
+    console.log('starting with selectedApps ', this.selectedApps);
+    Promise.all(_.flatten(this.selectedApps
+        .map(usage => [this.loader.getFullAppInfo(usage.appid), this.loadAlternatives(usage.appid)])))
+        .then(() => console.log('got all apps and alternates'));
   }
 
   appSelected(appinfo: APIAppInfo) {
@@ -115,13 +115,13 @@ export class UsagetableComponent implements OnInit {
     return '';
   }
 
+  private loadAlternatives(appid: string) {
+    this.loader.getAlternatives(appid).then(alts => this.alternatives[appid] = alts);
+  }
 
   addApp() {
     if (this.selectedApp) {
-      this.loader.getAlternatives(this.selectedApp.app).then(alts => {
-        this.alternatives[this.selectedApp.app] = alts;
-        console.log("ALTERNATIVES CHANGED > ", this.alternatives);
-      });
+      this.loadAlternatives(this.selectedApp.app);
       this.selectedApps.push(new AppUsageHHMM({appid: this.selectedApp.app, mins: 0})); 
       this.appToAdd = undefined;
       this.appValueChanged();

@@ -226,7 +226,7 @@ export class LoaderService {
   getAlternatives(appid: string): Promise<APIAppInfo[]> {
     return this.http.get(API_ENDPOINT + `/alt/${appid}`).toPromise()
       .then(response => {
-        if (response && response.text().toString().trim() === 'null') {  throw new Error('got a null coming from the endpoint ~ ' + appid);    }
+        if (response && response.text().toString().trim() === 'null') {  console.error('ERROR - got a null coming from the endpoint ~ ' + appid);    }
         return response && response.text().toString().trim() !== 'null' ? response.json() as AppAlternative[] : [];
       }).then(alts => alts.filter(x => x.isScraped && x.gPlayID))
       .then(scrapedAlts => Promise.all(scrapedAlts.map(alt => this.getCachedAppInfo(alt.gPlayID) || this.getFullAppInfo(alt.gPlayID))))
