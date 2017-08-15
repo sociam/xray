@@ -227,9 +227,9 @@ export class LoaderService {
     return this.http.get(API_ENDPOINT + `/alt/${appid}`).toPromise()
       .then(response => {
         if (response && response.text().toString().trim() === 'null') {  console.error('ERROR - got a null coming from the endpoint ~ ' + appid);    }
-        return response && response.text().toString().trim() !== 'null' ? response.json() as AppAlternative[] : [];
-      }).then(alts => alts.filter(x => x.isScraped && x.gPlayID))
-      .then(scrapedAlts => Promise.all(scrapedAlts.map(alt => this.getCachedAppInfo(alt.gPlayID) || this.getFullAppInfo(alt.gPlayID))))
+        return response && response.text().toString().trim() !== 'null' ? response.json() as string[] : [];
+      }).then(appids => Promise.all(appids.map(id => this.getFullAppInfo(id))))
+      .then(appinfos => appinfos.filter(x => x));
   }
 
   getCachedAppInfo(appid: string):APIAppInfo | undefined {
