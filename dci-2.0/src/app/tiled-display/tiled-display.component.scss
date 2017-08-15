@@ -1,0 +1,24 @@
+div.root {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: none;
+    align-content: flex-start;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.left {
+    flex-basis: 600px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: none;
+    .top,
+    .bottom {
+        flex-grow: 1.0;
+    }
+}
+
+.right {
+    flex-grow: 1.0;
+}

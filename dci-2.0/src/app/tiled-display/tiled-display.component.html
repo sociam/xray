@@ -1,7 +1,15 @@
 <div class="root">
     <div class="left">
         <app-usagetable></app-usagetable>
-        <div class="focus"></div>
+        <div class="focus">
+            <div *ngIf="targettype == 'app'">
+                <h4> {{ target.storeinfo.title }} </h4>
+                <app-company-list [app]='target.app'></app-company-list>
+            </div>
+            <div *ngIf="targettype == 'company'">
+                <h4> {{ target.company }} </h4>
+            </div>
+        </div>
     </div>
     <div class="right">
         <app-usage-listener></app-usage-listener>

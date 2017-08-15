@@ -4,7 +4,7 @@ import { Http, HttpModule, Headers } from '@angular/http';
 
 import * as _ from 'lodash';
 import { UsageConnectorService } from '../usage-connector.service';
-import { CompleterService, CompleterData, RemoteData } from 'ng2-completer';
+import { FocusService } from "app/focus.service";
 
 export interface AppUsage { appid: string; mins: number };
 
@@ -74,9 +74,8 @@ export class UsagetableComponent implements OnInit {
   selectedApp: APIAppInfo;
   companies: CompanyDB;
   private alternatives: { [app: string] : APIAppInfo[] } = {};
-  completer : CompleterData; 
 
-  constructor(private loader: LoaderService, private connector: UsageConnectorService, private completerSvc: CompleterService) { 
+  constructor(private loader: LoaderService, private connector: UsageConnectorService, private focus: FocusService) { 
   }
 
   get usages() { return this._usages; }
@@ -96,6 +95,11 @@ export class UsagetableComponent implements OnInit {
   appSelected(appinfo: APIAppInfo) {
     console.log('output connection is working ', appinfo);
   }
+  appFocused(appid: string) {
+    console.log('app focusing ', appid);    
+    this.focus.focusChanged(this.loader.getCachedAppInfo(appid));
+  }
+  
 
   appValueChanged() {
     console.info('appValueChanged >> ');

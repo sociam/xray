@@ -4,6 +4,7 @@ import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
 import { HostUtilsService } from "app/host-utils.service";
+import { FocusService } from "app/focus.service";
 
 interface AppImpact {
   appid: string;
@@ -42,12 +43,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() highlightApp: string;
   @Input() showLegend = true;
 
-  @Input() selectedCompany : CompanyInfo;
-  @Output() selectedCompanyChange = new EventEmitter<CompanyInfo>();
 
   highlightColour = '#FF066A';
 
-  constructor(private loader: LoaderService, private hostutils: HostUtilsService) {
+  constructor(private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
     this.init = Promise.all([
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
     ]).then(() => console.log('refinebar init done'));
@@ -226,7 +225,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .attr('x', (company) => x(company))
         .attr('y', 0)
         .attr('height', height)
-        .attr('width', x.bandwidth());
+        .attr('width', x.bandwidth())
+        .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
 
       // main rects
       const f = function (selection, first, last) {

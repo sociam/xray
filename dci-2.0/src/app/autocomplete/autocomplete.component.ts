@@ -27,14 +27,11 @@ export class AutocompleteComponent implements OnInit, OnChanges {
 
   ngOnInit() { }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('omit -- ngonchanges!! ', changes);
     if (this.omit) {
       this._omitIDs = this.omit.reduce((obj, a) => {
-        console.log('omit ', a);
         obj[a.app] = true;
         return obj;
       }, {});      
-      console.log('_omit ids : ', this._omitIDs)
     }
     if (changes.selected) {
       this.query = changes.selected.currentValue === undefined ? '' : changes.selected.currentValue.storeinfo.title;
@@ -65,7 +62,6 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   }
   
   select(item){
-    console.log(' autocomplete : select ', item);
     if (item) {
       this.selectedChange.emit(item);
     }

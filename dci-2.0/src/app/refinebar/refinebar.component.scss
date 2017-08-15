@@ -52,11 +52,17 @@ rect.legend.analytics {
 }
 
 rect.back {
-    -webkit-animate: 0.8s;
-    transition: 0.15s;
+    // -webkit-animate: 0.8s;
+    // transition: 0.15s;
     opacity: 0;
     &.reveal {
         opacity: 0.12;
+    }
+    &:hover {
+        opacity: 0.2;
+        stroke: #222 !important;
+        fill: #fff !important;
+        stroke-width: 1px;
     }
 }
 

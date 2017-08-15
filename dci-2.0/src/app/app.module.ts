@@ -21,6 +21,9 @@ import { CompanyListComponent } from './company-list/company-list.component';
 import { CompareContainerComponent } from './compare-container/compare-container.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { HostUtilsService } from "app/host-utils.service";
+import { AppinfoComponent } from './appinfo/appinfo.component';
+import { CompanyinfoComponent } from './companyinfo/companyinfo.component';
+import { FocusService } from "app/focus.service";
 
 const appRoutes: Routes = [
   {
@@ -68,7 +71,9 @@ const appRoutes: Routes = [
     CompanyListComponent,
     UsageListenerComponent,
     CompareContainerComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    AppinfoComponent,
+    CompanyinfoComponent
   ],
   imports: [
     HttpModule,
@@ -80,7 +85,7 @@ const appRoutes: Routes = [
     ),
     Ng2CompleterModule
   ],
-  providers: [LoaderService, UsageConnectorService, HostUtilsService],
+  providers: [LoaderService, UsageConnectorService, HostUtilsService, FocusService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
