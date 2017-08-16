@@ -1,4 +1,6 @@
 import { Directive, AfterViewChecked, ElementRef, HostListener } from '@angular/core';
+import { RerenderAnnouncerService } from "app/rerender-announcer.service";
+import * as d3 from 'd3';
 
 @Directive({
   selector: '[app-resizeSVG]'
@@ -8,43 +10,68 @@ export class ResizesvgDirective implements AfterViewChecked {
   width: number;
   height: number;
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef, private rerender: RerenderAnnouncerService) {
   }
 
   ngAfterViewChecked() {
     // call our matchHeight function here later
-    this.matchHeight();
+    this.log('ngAfterViewCheck - ', this.el && this.el.nativeElement && this.el.nativeElement.getBoundingClientRect());
+    this.checkHeight();
   }
 
   log(...x: any[]) {
-    console.log('resizeSVG::', ...x);
+    console.info('resizeSVG::', ...x);
   }
 
-  matchHeight() {
+  checkHeight() {
       // match height logic here
-
       const el: HTMLElement = this.el && this.el.nativeElement;
       if (!el) return;      
 
       const rect = el.getBoundingClientRect(),
-        height = Math.max(this.height || 0, rect.height), 
-        width = Math.max(this.width || 0, rect.width);
+        height = rect.height, 
+        width = rect.width, 
+        margin_w = 40,
+        margin_h = 100;
+
+      if (height < 300) { this.log(' warning - height too small ', height); return; }
+      if (width < 300) { this.log(' warning - width too small ', width); return; }
 
       if (this.width !== width || this.height !== height) {
-        this.log('current bounding rect ', el.getBoundingClientRect());      
-        
-        const children = el.getElementsByTagName('svg');
 
-        // remove and add
-        // Array.from(children).map((value: SVGSVGElement, index: number, array: SVGSVGElement[]) => value.remove());
-        // const svg_el = document.createElement('svg');
-        // this.log('setting width >> ', width);
-        // svg_el.setAttribute('width', ""+(width-80));
-        // svg_el.setAttribute('height', ""+(height-80));
-        // el.appendChild(svg_el);
-        
+
+        // remove mode
+        /*
+        const children = el.getElementsByTagName('svg');
+        Array.from(children)
+          .map((value: SVGSVGElement, index: number, array: SVGSVGElement[]) => value.remove());
+
+        const width_svgel = Math.round(width-margin_w*2),
+          height_svgel = Math.round(height-margin_h*2);
+      
+        d3.select(el)
+          .append('svg')
+          .attr('width', ""+width_svgel)
+          .attr('height', ""+height_svgel)
+          .attr('viewbox', `0 0 ${width_svgel} ${height_svgel}`);
+
         this.width = width;
         this.height = height;
+        this.log('announcing rerender ', width-margin_w*2, height-margin_h*2);        
+        // setTimeout(() => this.rerender.annouce(this), 1000);
+        this.rerender.annouce(this);
+        */
+        const width_svgel = Math.round(width-margin_w*2),
+        height_svgel = Math.round(height-margin_h*2);
+    
+        d3.select(el).select('svg')
+          .attr('width', ""+width_svgel)
+          .attr('height', ""+height_svgel)
+          .attr('viewbox', `0 0 ${width_svgel} ${height_svgel}`);
+
+        this.width = width;
+        this.height = height;
+        this.rerender.annouce(this);       
       }
       
       // // step 1: find all the child elements with the selected class name
@@ -69,6 +96,6 @@ export class ResizesvgDirective implements AfterViewChecked {
   @HostListener('window:resize') 
   onResize() {
       // call our matchHeight function here
-      this.matchHeight();
+      this.checkHeight();
   }
 }
