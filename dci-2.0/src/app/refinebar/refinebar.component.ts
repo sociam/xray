@@ -35,7 +35,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   apps: string[]; // keeps app ordering between renders
 
-  @ViewChild('thing') svg: ElementRef; // this gets a direct el reference to the svg element
+  // @ViewChild('thing') svg: ElementRef; // this gets a direct el reference to the svg element
 
   // incoming attribute
   @Input('appusage') usage_in: AppUsage[];
@@ -46,12 +46,17 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   highlightColour = '#FF066A';
 
-  constructor(private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
+  constructor(private el: ElementRef, private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
     this.init = Promise.all([
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
     ]).then(() => console.log('refinebar init done'));
 
     (<any>window)._rb = this;
+  }
+
+  getSVGElement() {
+    const nE : HTMLElement = this.el.nativeElement;
+    return Array.from(nE.getElementsByTagName('svg'))[0]
   }
 
   // this gets called when this.usage_in changes
@@ -108,7 +113,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   _selectedType: string;
   setSelectedTypeHighlight(ctype: string) {
-    var svg = this.svg.nativeElement;
+    var svg = this.getSVGElement(); // this.svg.nativeElement;
     this._selectedType = ctype;
     d3.select(svg).selectAll('rect.back').classed('reveal', false);
     d3.select(svg).selectAll('.ctypelegend g').classed('selected', false)
@@ -125,9 +130,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   // 
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
-    if (!this.svg) { return; }
+    const svgel = this.getSVGElement();
+    if (!svgel) { return; }
 
-    d3.select(this.svg.nativeElement).selectAll('*').remove();
+    d3.select(svgel).selectAll('*').remove();
 
     if (this.usage === undefined || this.usage.length === 0) {
       
@@ -199,7 +205,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       const stack = d3.stack(),
         out = stack.keys(apps)(by_company);
 
-      const svg = d3.select(this.svg.nativeElement),
+      const svg = d3.select(svgel),
         margin = { top: 20, right: 20, bottom: 130, left: 40 },
         width = +svg.attr('virtualWidth') - margin.left - margin.right,
         height = +svg.attr('virtualHeight') - margin.top - margin.bottom,

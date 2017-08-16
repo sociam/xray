@@ -24,6 +24,7 @@ import { HostUtilsService } from "app/host-utils.service";
 import { AppinfoComponent } from './appinfo/appinfo.component';
 import { CompanyinfoComponent } from './companyinfo/companyinfo.component';
 import { FocusService } from "app/focus.service";
+import { ResizesvgDirective } from './resizesvg.directive';
 
 const appRoutes: Routes = [
   {
@@ -73,7 +74,8 @@ const appRoutes: Routes = [
     CompareContainerComponent,
     AutocompleteComponent,
     AppinfoComponent,
-    CompanyinfoComponent
+    CompanyinfoComponent,
+    ResizesvgDirective
   ],
   imports: [
     HttpModule,

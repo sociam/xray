@@ -1,7 +1,7 @@
-<div class="main">
+<div class="main" app-resizeSVG>
     <div class="mode-options" [hidden]='!showModes'>
         <a [ngClass]="{active: byTime=='yes'}" (click)='byTime="yes"'> By time </a>
         <a [ngClass]="{active: byTime=='no'}" (click)='byTime="no"'> Equal weights </a>
     </div>
-    <svg #thing viewBox="0 0 1024 700" preserveAspectRatio="xMinYMin meet" virtualWidth="1024" virtualHeight="700"></svg>
+    <svg #thing></svg>
 </div>
