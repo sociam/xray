@@ -26,22 +26,23 @@ export class ResizesvgDirective implements AfterViewChecked {
       const el: HTMLElement = this.el && this.el.nativeElement;
       if (!el) return;      
 
-
       const rect = el.getBoundingClientRect(),
-        height = rect.height, 
-        width = rect.width;
+        height = Math.max(this.height || 0, rect.height), 
+        width = Math.max(this.width || 0, rect.width);
 
       if (this.width !== width || this.height !== height) {
         this.log('current bounding rect ', el.getBoundingClientRect());      
         
         const children = el.getElementsByTagName('svg');
-        Array.from(children).map((value: SVGSVGElement, index: number, array: SVGSVGElement[]) => value.remove());
-        // el.appendChild(el.)
-        const svg_el = document.createElement('svg');
-        this.log('setting width >> ', width);
-        svg_el.setAttribute('width', ""+(width-80));
-        svg_el.setAttribute('height', ""+(height-80));
-        el.appendChild(svg_el);
+
+        // remove and add
+        // Array.from(children).map((value: SVGSVGElement, index: number, array: SVGSVGElement[]) => value.remove());
+        // const svg_el = document.createElement('svg');
+        // this.log('setting width >> ', width);
+        // svg_el.setAttribute('width', ""+(width-80));
+        // svg_el.setAttribute('height', ""+(height-80));
+        // el.appendChild(svg_el);
+        
         this.width = width;
         this.height = height;
       }

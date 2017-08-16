@@ -56,7 +56,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   getSVGElement() {
     const nE : HTMLElement = this.el.nativeElement;
-    return Array.from(nE.getElementsByTagName('svg'))[0]
+    return Array.from(nE.getElementsByTagName('svg'))[0];
   }
 
   // this gets called when this.usage_in changes
@@ -113,7 +113,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   _selectedType: string;
   setSelectedTypeHighlight(ctype: string) {
-    var svg = this.getSVGElement(); // this.svg.nativeElement;
+    var svg = this.getSVGElement(); 
     this._selectedType = ctype;
     d3.select(svg).selectAll('rect.back').classed('reveal', false);
     d3.select(svg).selectAll('.ctypelegend g').classed('selected', false)
@@ -131,6 +131,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
     const svgel = this.getSVGElement();
+    console.log('getSVGElement > ', svgel);
     if (!svgel) { return; }
 
     d3.select(svgel).selectAll('*').remove();
