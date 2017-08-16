@@ -2,6 +2,8 @@ import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/cor
 import { LoaderService, App2Hosts, String2String, Host2PITypes, AppSubstitutions, APIAppInfo } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as _ from 'lodash';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { UsageConnectorService } from "app/usage-connector.service";
 
 class Substitution {
   target: AppUsage;
@@ -22,7 +24,7 @@ export class CompareComponent implements OnInit, OnChanges {
   substitutions_all: Substitution[];
   substitutions: Substitution[][];
 
-  constructor(private loader: LoaderService) {
+  constructor(private loader: LoaderService, private usage: UsageConnectorService,  private router: Router) {
   }
 
   ngOnInit() { }
@@ -74,5 +76,10 @@ export class CompareComponent implements OnInit, OnChanges {
       console.log('setting true ', _s);
       _s.selected = true;
     }));
+  }
+
+  replaceTarget(s: Substitution) {
+    this.usage.usageChanged(s.all);
+    this.router.navigate(['/tiled']);
   }
 }
