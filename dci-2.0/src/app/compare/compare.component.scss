@@ -16,9 +16,11 @@
             transition: all 0.2s;
             padding: 20px;
             overflow: hidden;
+            height: initial;
+            transition: all 0.2s;
             &.selected {
                 border: 5px solid #ff22ee;
-                height: 800px;
+                height: 700px;
                 overflow: scroll;
             }
             width: 25%;
@@ -61,11 +63,12 @@
                 width: 100%;
                 text-align: center;
                 button {
-                    background-color: #300052 !important;
+                    background-color: #ff22ee !important;
                     color: white;
                     font-size: 14pt !important;
                     border: 0px solid #000;
                     padding: 8px 20px;
+                    border-radius: 3px;
                 }
             }
         }
