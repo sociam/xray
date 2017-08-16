@@ -13,6 +13,7 @@ import { ErrorComponent } from './error/error.component';
 import { UsageConnectorService } from './usage-connector.service';
 import { CompanybarComponent } from './companybar/companybar.component';
 import { Ng2CompleterModule } from 'ng2-completer';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SingleDisplayComponent } from './single-display/single-display.component';
 import { TiledDisplayComponent } from './tiled-display/tiled-display.component';
@@ -24,6 +25,9 @@ import { HostUtilsService } from "app/host-utils.service";
 import { AppinfoComponent } from './appinfo/appinfo.component';
 import { CompanyinfoComponent } from './companyinfo/companyinfo.component';
 import { FocusService } from "app/focus.service";
+
+import { APIService } from './services/api.service';
+import { APITypesService } from './services/apitypes.service';
 
 const appRoutes: Routes = [
   {
@@ -83,9 +87,10 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     ),
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    HttpClientModule,
   ],
-  providers: [LoaderService, UsageConnectorService, HostUtilsService, FocusService],
+  providers: [LoaderService, UsageConnectorService, HostUtilsService, FocusService, APIService, APITypesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

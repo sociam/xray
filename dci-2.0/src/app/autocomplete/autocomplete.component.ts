@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { LoaderService, APIAppInfo } from "app/loader.service";
-
+import { APIService } from '../services/api.service';
+import { FullApp } from '../services/apitypes.service';
 // thanks to http://4dev.tech/2016/03/tutorial-creating-an-angular2-autocomplete/ !
 
 @Component({
@@ -16,13 +17,14 @@ export class AutocompleteComponent implements OnInit, OnChanges {
 
   public query = '';
   public filteredList = [];
+  public appData: FullApp[];
   
   @Input() selected: APIAppInfo;  
   @Input() omit: APIAppInfo[]; 
   private _omitIDs: { [id: string] : boolean } = {};
   @Output() selectedChange = new EventEmitter<APIAppInfo>();
   
-  constructor(private myElement: ElementRef, private loader: LoaderService) {
+  constructor(private myElement: ElementRef, private loader: LoaderService, private api: APIService) {
   }
 
   ngOnInit() { }
@@ -39,26 +41,21 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   }  
 
   filter() {
-    if (this.query.trim() !== ""){
-      this.loader.findApps(this.query.trim()).then((results: APIAppInfo[]) => {
-        const qL = this.query.toLowerCase().trim();
-        this.filteredList = results.filter((x) => !this._omitIDs[x.app] && x.storeinfo.title.toLowerCase().indexOf(qL) == 0 && x.icon);
-        console.log(`omit results > "${qL}"`, results.map(r => r.storeinfo.title), this.filteredList, this._omitIDs);        
-        this.filteredList.sort((a,b) => {
-            var atitle = a.storeinfo.title.toUpperCase(); // ignore upper and lowercase
-            var btitle = b.storeinfo.title.toUpperCase(); // ignore upper and lowercase
-            if (atitle < btitle) { 
-              return -1;
-            }
-            if (atitle > btitle) {
-              return 1;
-            }
-            return 0;
-          });
-      });
-    } else {
+  if (this.query !== ""){
+        this.api.fetchApps({
+          title: this.query,
+          fullInfo: true,
+          onlyAnalyzed: true
+        })
+        .then((apps: FullApp[])=>{
+          this.filteredList = apps.filter(function(el){
+            return el.storeinfo.title.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
+          }.bind(this));
+        })
+        .catch((err) => console.log(err));
+      }else{
         this.filteredList = [];
-    }
+      }
   }
   
   select(item){

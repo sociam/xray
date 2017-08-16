@@ -190,6 +190,7 @@ export class LoaderService {
       return response.json() as AppSubstitutions;
     });
   }
+
   makeIconPath(url: string) : string {
     if (url) {
       return [BASE_API + url].join('/');
