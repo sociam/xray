@@ -42,6 +42,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() showModes = true;
   @Input() highlightApp: string;
   @Input() showLegend = true;
+  @Input() scale = false;
 
   highlightColour = '#FF066A';
 
