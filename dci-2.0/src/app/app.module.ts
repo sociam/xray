@@ -24,7 +24,6 @@ import { HostUtilsService } from "app/host-utils.service";
 import { AppinfoComponent } from './appinfo/appinfo.component';
 import { CompanyinfoComponent } from './companyinfo/companyinfo.component';
 import { FocusService } from "app/focus.service";
-import { RerenderAnnouncerService } from "app/rerender-announcer.service";
 
 
 const appRoutes: Routes = [
