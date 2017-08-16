@@ -130,7 +130,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     // console.log(':: render usage:', this.usage && this.usage.length);
     const svgel = this.getSVGElement();
     if (!svgel || this.usage === undefined || this.usage.length === 0) { return; }
-    console.log('refinebar render! getSVGElement > ', svgel);
+    // console.log('refinebar render! getSVGElement > ', svgel);
 
     let rect = svgel.getBoundingClientRect(),
       width_svgel = Math.round(rect.width - 5),
@@ -234,9 +234,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       // z = d3.scaleOrdinal()
       //   .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
       //   .domain(apps);
-      console.log('width ', width_svgel);
-      console.log('height ', height_svgel);
-
+      
       g.selectAll('rect.back')
         .data(companies)
         .enter().append('rect')
