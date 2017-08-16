@@ -8,10 +8,72 @@
     justify-content: center;
     align-items: stretch;
     align-content: stretch;
+    table.comparison {
+        width: 100%;
+        td {
+            vertical-align: top;
+            border: 5px solid #fff;
+            transition: all 0.2s;
+            padding: 20px;
+            overflow: hidden;
+            &.selected {
+                border: 5px solid #ff22ee;
+                height: 800px;
+                overflow: scroll;
+            }
+            width: 25%;
+            // border-bottom: 10px solid #fefefe;
+            // border-right: 10px solid #fefefe;
+            .apptitle {
+                height: 70px;
+                padding-top: 10px;
+                position: relative;
+                padding-left: 80px;
+                img {
+                    position: absolute;
+                    left: 10px;
+                    top: 10px;
+                    width: 50px;
+                }
+                .title {
+                    font-weight: bold;
+                }
+                .publisher {
+                    font-size: 70%;
+                    // font-variant: 
+                }
+            }
+            .appdesc {
+                max-width: 100%;
+                .summmary {
+                    padding: 28px 0px 5px 0px;
+                }
+                .desc {
+                    font-style: italic;
+                    justify-content: space-around;
+                    padding: 10px 0px 0px 0px;
+                    ;
+                    font-size: 85%;
+                }
+            }
+        }
+    }
+    /*
     .comparison {
         border-right: 1px solid #eee;
-        padding: 50px 20px;
+        padding: 50px  20px;
         flex-basis: 33%;
         flex-grow: 1.0;
     }
+    .title {
+        position: relative;
+        padding-left: 60px;
+        img {
+            position: absolute;
+            left: 0px;
+            top: 20px;
+            width: 50px;
+        }
+    }
+    */
 }

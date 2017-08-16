@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 class Substitution {
   target: AppUsage;
   all: AppUsage[];
+  selected ?: boolean = false;
 }
 
 @Component({
@@ -18,7 +19,8 @@ export class CompareComponent implements OnInit, OnChanges {
   @Input() using: AppUsage[];   // using represents the background app
   @Input() targetAppId: string;
 
-  substitutions: Substitution[];
+  substitutions_all: Substitution[];
+  substitutions: Substitution[][];
 
   constructor(private loader: LoaderService) {
   }
@@ -50,12 +52,27 @@ export class CompareComponent implements OnInit, OnChanges {
           const makeUsage = (appid: string, target: AppUsage): AppUsage => _.extend({}, target, { appid: appid });
 
           // substitutions are usages
-          this.substitutions = [{ target: targetUsage, all: this.using }].concat(subs.map(app => {
+          this.substitutions_all = [{ target: targetUsage, all: this.using }].concat(subs.map(app => {
             let clone = makeUsage(app.app, targetUsage);
             return ({ target: clone, all: [clone].concat(otherUsages) });
           }));
+          this.substitutions = this.splitIntoRows<Substitution>(4, this.substitutions_all);
           console.log('substitutions are ', this.substitutions);
         });
       });
+  }
+
+  splitIntoRows<T>(columns: number, list: T[]): T[][] {
+    return _.range(0, list.length / columns).map(index => list.slice(index*columns, (index + 1)*columns));
+  }
+
+  appInfo(appid: string): APIAppInfo { return this.loader.getCachedAppInfo(appid); }
+
+  select(s: Substitution) {
+    this.substitutions.map(srow => srow.map(_s => { 
+      if (_s !== s) { delete _s.selected; return }
+      console.log('setting true ', _s);
+      _s.selected = true;
+    }));
   }
 }

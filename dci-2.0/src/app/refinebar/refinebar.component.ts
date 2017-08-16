@@ -124,7 +124,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   }
   // 
   render() {
-    console.log(':: render usage:', this.usage && this.usage.length);
+    // console.log(':: render usage:', this.usage && this.usage.length);
     if (!this.svg) { return; }
 
     d3.select(this.svg.nativeElement).selectAll('*').remove();
@@ -138,7 +138,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     // to prepare for stack() let's
     this.compileImpacts(this.usage).then(impacts => {
-      console.log('got impacts > ', impacts);
+      // console.log('got impacts > ', impacts);
 
       let apps = _.uniq(impacts.map((x) => x.appid)),
         companies = _.uniq(impacts.map((x) => x.companyid)),
