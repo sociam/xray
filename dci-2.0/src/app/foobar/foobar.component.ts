@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HostUtilsService } from "app/host-utils.service";
-import { APIAppInfo, CompanyInfo } from "app/loader.service";
+import { CompanyInfo } from "app/loader.service";
+
+import { FullApp } from '../services/apitypes.service';
+type APIAppInfo = FullApp;
+
 
 @Component({
   selector: 'app-foobar',

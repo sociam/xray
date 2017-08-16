@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { mapValues, keys, mapKeys, values, trim, uniq } from 'lodash';
+import { FullApp } from './services/apitypes.service';
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
@@ -94,51 +95,7 @@ export class CompanyInfo {
     }
 }
 
-export class APIAppInfo {
-    app: string;
-    title: string;
-    summary: string;
-    description: string;
-    storeURL: string;
-    price: string;
-    free: boolean;
-    rating: string;
-    numReviews: number;
-    genre: string;
-    installs: { min: number, max: number};
-    developer: {
-      email: string[];
-      name: string;
-      site: string;
-      storeSite: string;
-    };
-    updated: string;
-    androidVer: string;
-    contentRating: string;
-    screenshots: string[];
-    video: string;
-    recentChanges: string[];
-    crawlDate: string; // date string    
-    string: string; // what's this?
-    region: string; // us
-    ver: string; // date string 
-    screenFlags: number;
-    hosts: string[] | undefined;
-    storeinfo: { 
-      title: string;
-      summary: string;
-      androidVer: string;
-      numReviews: number;
-      installs: { min: number, max: number };
-      rating: number;
-      updated: string;
-    }
-    icon: string;
-    emails: string[]; // author contact email
-    name: string; 
-    storeSite: string;
-    site:string;
-}
+type APIAppInfo = FullApp;
 
 export interface APIAppStub {
   Title: string;
@@ -169,6 +126,7 @@ export class LoaderService {
       );
     });
   }
+  
   getHostToCompany(): Promise<String2String> {
     return this.http.get('assets/data/h2c.json').toPromise().then(response => {
       return response.json() as String2String;
@@ -190,7 +148,6 @@ export class LoaderService {
       return response.json() as AppSubstitutions;
     });
   }
-
   makeIconPath(url: string) : string {
     if (url) {
       return [BASE_API + url].join('/');

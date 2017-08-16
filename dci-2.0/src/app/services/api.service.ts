@@ -82,7 +82,7 @@ export class APIService {
     .then((data: FullApp[]) => { 
       console.log(data); 
       data.forEach(app => this._prepareAppInfo(app));
-      return data; 
+      return data;
     })
     .catch((err) => { return err; })
   }

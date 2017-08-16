@@ -1,10 +1,13 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
 import { HostUtilsService } from "app/host-utils.service";
 import { FocusService } from "app/focus.service";
+
+import { FullApp } from '../services/apitypes.service';
+type APIAppInfo = FullApp;
 
 interface AppImpact {
   appid: string;
@@ -22,7 +25,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   // refactor to get rid of -- 
   // app2hosts: App2Hosts;
   // host2companyid: String2String;
-  // host2short: String2String;
+  // host2short: String2String; 
 
   // still in use!
   companyid2info: CompanyDB;

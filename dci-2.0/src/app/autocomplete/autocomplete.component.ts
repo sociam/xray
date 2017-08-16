@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { LoaderService, APIAppInfo } from "app/loader.service";
+import { LoaderService } from "app/loader.service";
 import { APIService } from '../services/api.service';
 import { FullApp } from '../services/apitypes.service';
 // thanks to http://4dev.tech/2016/03/tutorial-creating-an-angular2-autocomplete/ !
@@ -19,10 +19,10 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   public filteredList = [];
   public appData: FullApp[];
   
-  @Input() selected: APIAppInfo;  
-  @Input() omit: APIAppInfo[]; 
+  @Input() selected: FullApp;  
+  @Input() omit: FullApp[]; 
   private _omitIDs: { [id: string] : boolean } = {};
-  @Output() selectedChange = new EventEmitter<APIAppInfo>();
+  @Output() selectedChange = new EventEmitter<FullApp>();
   
   constructor(private myElement: ElementRef, private loader: LoaderService, private api: APIService) {
   }
