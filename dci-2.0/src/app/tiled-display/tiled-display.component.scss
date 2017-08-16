@@ -1,14 +1,12 @@
 div.root {
     height: 1200px;
     width: 100%;
-    border: 1px solid pink;
     div.left,
     div.right {
         margin: 0px;
         vertical-align: top;
         display: inline-block;
         height: 100%;
-        border: 1px solid #eee;
     }
     div.left {
         width: 45%;

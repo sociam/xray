@@ -8,7 +8,7 @@
                     <div class="publisher">by {{ appInfo(sub.target.appid).developer?.name }}</div>
                     <div class="rating">{{ appInfo(sub.target.appid).storeinfo.rating }}</div>
                 </div>
-                <app-refinebar [appusage]='sub.all' [showModes]='false' [highlightApp]='sub.target.appid' [showLegend]='false'></app-refinebar>
+                <app-refinebar [appusage]='sub.all' [showModes]='false' [highlightApp]='sub.target.appid' [showLegend]='false' [scale]='true'></app-refinebar>
                 <div class="appdesc" [hidden]="!sub.selected">
                     <div class="summary">{{ appInfo(sub.target.appid).storeinfo.summary }}</div>
                     <div class="desc">{{ appInfo(sub.target.appid).storeinfo.description.split(' ').slice(0,50).join(' ') }}</div>

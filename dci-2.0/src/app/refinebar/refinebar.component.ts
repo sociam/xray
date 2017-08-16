@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, EventEmitter, Output, HostListener } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
@@ -130,17 +130,29 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     // console.log(':: render usage:', this.usage && this.usage.length);
     const svgel = this.getSVGElement();
     if (!svgel || this.usage === undefined || this.usage.length === 0) { return; }
-    console.log('resizeSVG: refinebar render! getSVGElement > ', svgel);
+    console.log('refinebar render! getSVGElement > ', svgel);
 
-    const rect = svgel.getBoundingClientRect(),
-      width_svgel = Math.round(rect.width - 20),
-      height_svgel = Math.round(rect.height - 20),
+    let rect = svgel.getBoundingClientRect(),
+      width_svgel = Math.round(rect.width - 5),
+      height_svgel = Math.round(rect.height - 5),
       svg = d3.select(svgel);
 
-    svg.attr('width', width_svgel)
-      .attr('height', height_svgel)
-      .attr('viewbox', `0 0 ${width_svgel} ${height_svgel}`)
-      .selectAll('*').remove();
+    if (!this.scale) {
+      svg.attr('width', width_svgel)
+        .attr('height', height_svgel);
+    } else {
+      // <svg #thing viewBox="0 0 1024 700" preserveAspectRatio="xMinYMin meet" virtualWidth="1024" virtualHeight="700"></svg      
+
+      svg.attr('viewBox', `0 0 1024 500`)
+        .attr('virtualWidth', 1024)
+        .attr('virtualHeight', 700)
+        .attr('preserveAspectRatio', "none") //  "xMinYMin meet")
+
+        width_svgel = 1024;
+        height_svgel = 700;          
+    }
+
+    svg.selectAll('*').remove();
 
     const usage = this.usage;
 
@@ -206,8 +218,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         out = stack.keys(apps)(by_company);
 
       const margin = { top: 20, right: 20, bottom: 130, left: 40 },
-        width = +svg.attr('width') - margin.left - margin.right,
-        height = +svg.attr('height') - margin.top - margin.bottom,
+        width = width_svgel - margin.left - margin.right, //+svg.attr('width') - margin.left - margin.right,
+        height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
         g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
         x = d3.scaleBand()
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
@@ -222,6 +234,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       // z = d3.scaleOrdinal()
       //   .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
       //   .domain(apps);
+      console.log('width ', width_svgel);
+      console.log('height ', height_svgel);
 
       g.selectAll('rect.back')
         .data(companies)
@@ -333,5 +347,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         this.setSelectedTypeHighlight(this._selectedType)
       }
     });
+  }
+  @HostListener('window:resize') 
+  onResize() {
+      // call our matchHeight function here
+      this.render();
   }
 }

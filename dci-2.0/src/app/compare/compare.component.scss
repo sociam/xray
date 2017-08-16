@@ -16,15 +16,12 @@
             transition: all 0.2s;
             padding: 20px;
             overflow: hidden;
-            height: initial;
+            // height: initial;
             transition: all 0.2s;
             &.selected {
                 border: 5px solid #ff22ee;
                 height: 700px;
                 overflow: scroll;
-            }
-            app-refinebar {
-                height: 300px;
             }
             width: 25%;
             // border-bottom: 10px solid #fefefe;
