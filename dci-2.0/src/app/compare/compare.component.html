@@ -23,7 +23,7 @@
     <div class="right">
         <table class="comparison">
             <tr *ngFor='let sub of other_substitutions' class="alt-row">
-                <td [ngClass]="{toptd: true, selected: sub.selected}">
+                <td class="top" (click)="replaceTarget(sub)">
                     <table>
                         <tr>
                             <td>
@@ -41,6 +41,9 @@
                                     <app-company-list [app]='sub.target.appid'></app-company-list>
                                 </div>
                             </td>
+                            <!-- <td class="appswap">
+                                <button (click)="replaceTarget(sub)">Swap app</button>
+                            </td> -->
                         </tr>
                     </table>
                 </td>
