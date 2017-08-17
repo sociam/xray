@@ -23,6 +23,8 @@ export class CompareComponent implements OnInit, OnChanges {
 
   substitutions_all: Substitution[];
   substitutions: Substitution[][];
+  original_app: Substitution;
+  other_substitutions: Substitution[];
 
   constructor(private loader: LoaderService, private usage: UsageConnectorService,  private router: Router) {
   }
@@ -58,6 +60,8 @@ export class CompareComponent implements OnInit, OnChanges {
             let clone = makeUsage(app.app, targetUsage);
             return ({ target: clone, all: [clone].concat(otherUsages) });
           }));
+          this.original_app = this.substitutions_all[0];
+          this.other_substitutions = this.substitutions_all.slice(1)
           this.substitutions = this.splitIntoRows<Substitution>(4, this.substitutions_all);
           console.log('substitutions are ', this.substitutions);
         });

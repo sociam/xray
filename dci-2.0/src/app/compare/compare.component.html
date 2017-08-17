@@ -1,25 +1,47 @@
 <div class="container">
-    <table class="comparison">
-        <tr *ngFor='let row of substitutions'>
-            <td *ngFor='let sub of row' (click)="select(sub)" [ngClass]="{selected: sub.selected}">
-                <div class="apptitle">
-                    <img [src]="appInfo(sub.target.appid).icon">
-                    <div class="title">{{ appInfo(sub.target.appid).storeinfo.title }}</div>
-                    <div class="publisher">by {{ appInfo(sub.target.appid).developer?.name }}</div>
-                    <div class="rating">{{ appInfo(sub.target.appid).storeinfo.rating }}</div>
-                </div>
-                <app-refinebar [appusage]='sub.all' [showModes]='false' [highlightApp]='sub.target.appid' [showLegend]='false' [scale]='true'></app-refinebar>
-                <div class="appdesc" [hidden]="!sub.selected">
-                    <div class="summary">{{ appInfo(sub.target.appid).storeinfo.summary }}</div>
-                    <div class="desc">{{ appInfo(sub.target.appid).storeinfo.description.split(' ').slice(0,50).join(' ') }}</div>
-                    <app-company-list [app]='sub.target.appid'></app-company-list>
-                </div>
-                <div class="appswap">
-                    <button [hidden]="!sub.selected" (click)="replaceTarget(sub)">Swap app</button>
-                </div>
-            </td>
-        </tr>
-    </table>
+    <div class="left">
+        <table class="comparison">
+            <tr>
+                <td>
+                    <div class="apptitle">
+                        <img [src]="appInfo(original_app.target.appid).icon">
+                        <div class="title">{{ appInfo(original_app.target.appid).storeinfo.title }}</div>
+                        <div class="publisher">by {{ appInfo(original_app.target.appid).developer?.name }}</div>
+                        <div class="rating">{{ appInfo(original_app.target.appid).storeinfo.rating }}</div>
+                    </div>
+                    <app-refinebar [appusage]='original_app.all' [showModes]='false' [highlightApp]='original_app.target.appid' [showLegend]='false'></app-refinebar>
+                    <div class="appdesc">
+                        <div class="summary">{{ appInfo(original_app.target.appid).storeinfo.summary }}</div>
+                        <div class="desc">{{ appInfo(original_app.target.appid).storeinfo.description.split(' ').slice(0,50).join(' ') }}</div>
+                        <app-company-list [app]='original_app.target.appid'></app-company-list>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="right">
+        <table class="comparison">
+            <tr *ngFor='let sub of other_substitutions'>
+                <td (click)="select(sub)" [ngClass]="{selected: sub.selected}">
+                    <div class="apptitle">
+                        <img [src]="appInfo(sub.target.appid).icon">
+                        <div class="title">{{ appInfo(sub.target.appid).storeinfo.title }}</div>
+                        <div class="publisher">by {{ appInfo(sub.target.appid).developer?.name }}</div>
+                        <div class="rating">{{ appInfo(sub.target.appid).storeinfo.rating }}</div>
+                    </div>
+                    <app-refinebar [appusage]='sub.all' [showModes]='false' [highlightApp]='sub.target.appid' [showLegend]='false'></app-refinebar>
+                    <div class="appdesc" [hidden]="!sub.selected">
+                        <div class="summary">{{ appInfo(sub.target.appid).storeinfo.summary }}</div>
+                        <div class="desc">{{ appInfo(sub.target.appid).storeinfo.description.split(' ').slice(0,50).join(' ') }}</div>
+                        <app-company-list [app]='sub.target.appid'></app-company-list>
+                    </div>
+                    <div class="appswap">
+                        <button [hidden]="!sub.selected" (click)="replaceTarget(sub)">Swap app</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
     <!-- 
     <div class="comparison" *ngFor='let sub of substitutions'>
         <div class="title">
