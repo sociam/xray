@@ -1,7 +1,3 @@
-.alt-row {
-    border: 5px solid #000000!important;
-}
-
 .container {
     width: 100%;
     padding: 0px;
@@ -12,19 +8,22 @@
     align-items: stretch;
     align-content: stretch;
     div.left {
-        width: 30%;
+        width: 50%;
         float: left;
         overflow: scroll;
         height: 100vh;
     }
     div.right {
-        width: 70%;
+        width: 50%;
         float: right;
         overflow: scroll;
         height: 100vh;
     }
     table.comparison {
         width: 100%;
+        tr {
+            border: 5px solid #000;
+        }
         td {
             vertical-align: top;
             border: 5px solid #fff;
@@ -33,14 +32,13 @@
             overflow: hidden;
             // height: initial;
             transition: all 0.2s;
-            &.selected {
-                border: 5px solid #ff22ee;
-                height: 700px;
-                overflow: scroll;
-            }
             width: 25%;
             app-refinebar /deep/ .main svg {
                 height: 230px;
+                width: 90%;
+            }
+            app-company-list /deep/ div.category {
+                width: 90%;
             }
             // border-bottom: 10px solid #fefefe;
             // border-right: 10px solid #fefefe;

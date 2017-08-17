@@ -61,7 +61,7 @@ export class CompareComponent implements OnInit, OnChanges {
             return ({ target: clone, all: [clone].concat(otherUsages) });
           }));
           this.original_app = this.substitutions_all[0];
-          this.other_substitutions = this.substitutions_all.slice(1)
+          this.other_substitutions = this.substitutions_all.slice(1);
           this.substitutions = this.splitIntoRows<Substitution>(4, this.substitutions_all);
           console.log('substitutions are ', this.substitutions);
         });

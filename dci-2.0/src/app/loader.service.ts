@@ -235,7 +235,7 @@ export class LoaderService {
     // headers.set('Accept', 'application/json');
     query = query && query.trim();
     if (!query) return Promise.resolve([]);
-    return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&startsWith=${query.trim()}`).toPromise()
+    return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=10&startsWith=${query.trim()}`).toPromise()
       .then(response => response.json() as APIAppInfo[])
       .then((appinfos: APIAppInfo[]) => {
         if (!appinfos) {
