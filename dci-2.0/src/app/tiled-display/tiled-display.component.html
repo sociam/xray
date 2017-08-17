@@ -16,8 +16,8 @@
                 </div>
                 <app-company-list [app]='target?.app'></app-company-list>
             </div>
+            <app-companyinfo *ngIf="targettype == 'company'" [selected]="target"></app-companyinfo>
         </div>
-        <app-companyinfo *ngIf="targettype == 'company'" [selected]="target"></app-companyinfo>
     </div>
     <div class="right">
         <app-usage-listener></app-usage-listener>
