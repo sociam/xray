@@ -12,13 +12,13 @@
     align-items: stretch;
     align-content: stretch;
     div.left {
-        width: 40%;
+        width: 30%;
         float: left;
         overflow: scroll;
         height: 100vh;
     }
     div.right {
-        width: 60%;
+        width: 70%;
         float: right;
         overflow: scroll;
         height: 100vh;
@@ -49,11 +49,17 @@
                 padding-top: 10px;
                 position: relative;
                 padding-left: 80px;
-                img {
+                img.icon {
                     position: absolute;
                     left: 10px;
                     top: 10px;
                     width: 50px;
+                }
+                .rating {
+                    vertical-align: top;
+                    img {
+                        width: 16px;
+                    }
                 }
                 .title {
                     font-weight: bold;
@@ -80,6 +86,7 @@
             div.appswap {
                 width: 100%;
                 text-align: center;
+                align-content: center;
                 button {
                     background-color: #ff22ee !important;
                     color: white;

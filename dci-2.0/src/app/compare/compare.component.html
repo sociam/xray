@@ -4,10 +4,10 @@
             <tr>
                 <td>
                     <div class="apptitle">
-                        <img [src]="appInfo(original_app.target.appid).icon">
+                        <img class="icon" [src]="appInfo(original_app.target.appid).icon">
                         <div class="title">{{ appInfo(original_app.target.appid).storeinfo.title }}</div>
                         <div class="publisher">by {{ appInfo(original_app.target.appid).developer?.name }}</div>
-                        <div class="rating">{{ appInfo(original_app.target.appid).storeinfo.rating }}</div>
+                        <div class="rating">{{ appInfo(original_app.target.appid).storeinfo.rating }} <img src="../../assets/start.png"> </div>
                     </div>
                     <app-refinebar [appusage]='original_app.all' [showModes]='false' [highlightApp]='original_app.target.appid' [showLegend]='false'></app-refinebar>
                     <div class="appdesc">
@@ -25,19 +25,17 @@
                 <td [ngClass]="{selected: sub.selected}">
                     <table>
                         <tr>
-                            <td style="width:65%">
+                            <td>
                                 <div class="apptitle">
-                                    <img [src]="appInfo(sub.target.appid).icon">
+                                    <img class="icon" [src]="appInfo(sub.target.appid).icon">
                                     <div class="title">{{ appInfo(sub.target.appid).storeinfo.title }}</div>
                                     <div class="publisher">by {{ appInfo(sub.target.appid).developer?.name }}</div>
-                                    <div class="rating">{{ appInfo(sub.target.appid).storeinfo.rating }}</div>
+                                    <div class="rating">{{ appInfo(sub.target.appid).storeinfo.rating }} <img src="../../assets/start.png"></div>
                                 </div>
                                 <app-refinebar [appusage]='sub.all' [showModes]='false' [highlightApp]='sub.target.appid' [showLegend]='false'></app-refinebar>
+
                             </td>
-                            <td style="width:35%">
-                                <div class="appswap">
-                                    <button (click)="replaceTarget(sub)">Swap app</button>
-                                </div>
+                            <td>
                                 <div class="appdesc">
                                     <app-company-list [app]='sub.target.appid'></app-company-list>
                                 </div>
