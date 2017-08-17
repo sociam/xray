@@ -36,7 +36,7 @@ export let memoize = (f: (...args: any[]) => string) => {
   return function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
     let retval: { [method: string]: any } = {}, method = descriptor.value;
     descriptor.value = function (...args: any[]) {
-      var cache_key = propertyKey + '_' + f.apply(null, args);
+      let cache_key = propertyKey + '_' + f.apply(null, args);
       if (retval[cache_key]) {
         return retval[cache_key];
       }
@@ -57,12 +57,12 @@ export class CompanyDB {
     DE: '&#x1F1E9;&#x1F1EA;'
   };
 
-  constructor(private _data: { [id: string] : CompanyInfo } ) {
+  constructor(private _data: { [id: string]: CompanyInfo } ) {
     mapValues(this._data, (s) => {
       if (s && s.company && s.equity && s.equity.length) {
-          var n = parseInt(s.equity);
-          if (n > 1e6) { s.equity = Math.round(n / 1.0e5) / 10.0 + "m"; }
-          if (n > 1e9) { s.equity = Math.round(n / 1.0e8) / 10.0 + "bn"; }
+          let n = parseInt(s.equity, 10);
+          if (n > 1e6) { s.equity = Math.round(n / 1.0e5) / 10.0 + 'm'; }
+          if (n > 1e9) { s.equity = Math.round(n / 1.0e8) / 10.0 + 'bn'; }
       }
       if (s && s.company && s.jurisdiction_code && this.emoji_table[s.jurisdiction_code.toUpperCase()]) {
           s.jurisdiction_flag = this.emoji_table[s.jurisdiction_code.toUpperCase()];
@@ -161,7 +161,7 @@ export class APIAppInfo {
     emails: string[]; // author contact email
     name: string; 
     storeSite: string;
-    site:string;
+    site: string;
 }
 
 export interface APIAppStub {
@@ -171,6 +171,9 @@ export interface APIAppStub {
 
 @Injectable()
 export class LoaderService {
+
+  apps: { [id: string]: APIAppInfo } = {};
+  
   constructor(private httpM: HttpModule, private http: Http) { }
 
   @cache
@@ -214,19 +217,20 @@ export class LoaderService {
       return response.json() as AppSubstitutions;
     });
   }
-  makeIconPath(url: string) : string {
+  makeIconPath(url: string): string {
     if (url) {
       return [BASE_API + url].join('/');
     }
   }
-
-  apps : { [id: string] : APIAppInfo } = {};
-
   _prepareAppInfo(appinfo: APIAppInfo) {
     appinfo.icon = this.makeIconPath(appinfo.icon);
     appinfo.hosts = uniq((appinfo.hosts || [])
       .map((host: string): string => trim(host.trim(), '".%')))
       .filter(host => host.length > 3 && host.indexOf('.') >= 0 && host.indexOf('[') < 0);
+    if (appinfo.hosts && appinfo.hosts.length > 100) {
+      console.error('WARNING: this app has too many hosts', appinfo.app);
+      appinfo.hosts = appinfo.hosts.slice(0, 50);
+    }
     this.apps[appinfo.app] = appinfo;
   }
 
@@ -234,7 +238,7 @@ export class LoaderService {
     // var headers = new Headers();
     // headers.set('Accept', 'application/json');
     query = query && query.trim();
-    if (!query) return Promise.resolve([]);
+    if (!query) { return Promise.resolve([]); }
     return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&startsWith=${query.trim()}`).toPromise()
       .then(response => response.json() as APIAppInfo[])
       .then((appinfos: APIAppInfo[]) => {
@@ -246,7 +250,7 @@ export class LoaderService {
       })
   }
 
-  @memoize((appid:string): string => appid)
+  @memoize((appid: string): string => appid)
   getAlternatives(appid: string): Promise<APIAppInfo[]> {
     return this.http.get(API_ENDPOINT + `/alt/${appid}`).toPromise()
       .then(response => {
@@ -256,12 +260,12 @@ export class LoaderService {
       .then(appinfos => appinfos.filter(x => x));
   }
 
-  getCachedAppInfo(appid: string):APIAppInfo | undefined {
+  getCachedAppInfo(appid: string): APIAppInfo | undefined {
     // returns a previously seen appid
     return this.apps[appid];
   }
   
-  @memoize((appid:string):string => appid)
+  @memoize((appid: string): string => appid)
   getFullAppInfo(appid: string): Promise<APIAppInfo|undefined> {
     return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=10000&appId=${appid}`).toPromise()
     .then(response => (response && response.json() as APIAppInfo[])[0] || undefined)

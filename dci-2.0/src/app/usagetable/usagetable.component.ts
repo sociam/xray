@@ -4,7 +4,7 @@ import { Http, HttpModule, Headers } from '@angular/http';
 
 import * as _ from 'lodash';
 import { UsageConnectorService } from '../usage-connector.service';
-import { FocusService } from "app/focus.service";
+import { FocusService } from 'app/focus.service';
 
 export interface AppUsage { appid: string; mins: number };
 
@@ -68,18 +68,18 @@ export class UsagetableComponent implements OnInit {
   private _selectedapps: APIAppInfo[] = [];
   private all_apps: string[];
   candidates: string[];
-  minUsage = 0;
+  minUsage = 1;
   maxUsage = 720;
   stepUsage = 1;
   selectedApp: APIAppInfo;
   companies: CompanyDB;
-  private alternatives: { [app: string] : APIAppInfo[] } = {};
+  private alternatives: { [app: string]: APIAppInfo[] } = {};
 
   constructor(private loader: LoaderService, private connector: UsageConnectorService, private focus: FocusService) { 
   }
 
   get usages() { return this._usages; }
-  set usages(newusgs : AppUsageHHMM[]) { 
+  set usages(newusgs: AppUsageHHMM[]) { 
     this._usages = newusgs;
     Promise.all(newusgs.map(usage => this.loader.getFullAppInfo(usage.appid))).then(appinfos => {
       this._selectedapps = appinfos;
@@ -94,6 +94,9 @@ export class UsagetableComponent implements OnInit {
 
   appSelected(appinfo: APIAppInfo) {
     console.log('output connection is working ', appinfo);
+    if (appinfo) {
+      this.addApp();
+    }
   }
   appFocused(appid: string) {
     console.log('app focusing ', appid);    
@@ -102,7 +105,7 @@ export class UsagetableComponent implements OnInit {
   
 
   appValueChanged() {
-    console.info('appValueChanged >> ');
+    // console.info('appValueChanged >> ');
     this.connector.usageChanged(this.usages.map((x) => x.toAppUsage()));
   }
 
@@ -130,7 +133,7 @@ export class UsagetableComponent implements OnInit {
 
   addApp() {
     if (this.selectedApp) {
-      this.usages = this.usages.concat([new AppUsageHHMM({appid: this.selectedApp.app, mins: 0})]); 
+      this.usages = this.usages.concat([new AppUsageHHMM({appid: this.selectedApp.app, mins: 15})]); 
       this.selectedApp = undefined;
       this.appValueChanged();
     }

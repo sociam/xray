@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { APIAppInfo, CompanyInfo } from "app/loader.service";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { Subject } from "rxjs/Subject";
+import { APIAppInfo, CompanyInfo } from 'app/loader.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 export type FocusTarget = APIAppInfo | CompanyInfo;
 
@@ -11,8 +11,8 @@ export class FocusService {
   focusChanged$ = this.focusChangedSource.asObservable();
   constructor() {}
 
-  focusChanged(focusTarget : FocusTarget) {
-    console.info('focus changed:: ', focusTarget);
+  focusChanged(focusTarget: FocusTarget) {
+    // console.info('focus changed:: ', focusTarget);
     this.focusChangedSource.next(focusTarget);
   }
   clearState() {
