@@ -21,11 +21,11 @@
     </div>
     <div class="right">
         <table class="comparison">
-            <tr *ngFor='let sub of other_substitutions'>
+            <tr *ngFor='let sub of other_substitutions' class="alt-row">
                 <td [ngClass]="{selected: sub.selected}">
                     <table>
                         <tr>
-                            <td>
+                            <td style="width:65%">
                                 <div class="apptitle">
                                     <img [src]="appInfo(sub.target.appid).icon">
                                     <div class="title">{{ appInfo(sub.target.appid).storeinfo.title }}</div>
@@ -33,17 +33,13 @@
                                     <div class="rating">{{ appInfo(sub.target.appid).storeinfo.rating }}</div>
                                 </div>
                                 <app-refinebar [appusage]='sub.all' [showModes]='false' [highlightApp]='sub.target.appid' [showLegend]='false'></app-refinebar>
-                                <div class="appdesc" style="width:30%">
-                                    <div class="summary">{{ appInfo(sub.target.appid).storeinfo.summary }}</div>
-                                    <div class="desc">{{ appInfo(sub.target.appid).storeinfo.description.split(' ').slice(0,50).join(' ') }}</div>
-                                </div>
                             </td>
-                            <td>
+                            <td style="width:35%">
+                                <div class="appswap">
+                                    <button (click)="replaceTarget(sub)">Swap app</button>
+                                </div>
                                 <div class="appdesc">
                                     <app-company-list [app]='sub.target.appid'></app-company-list>
-                                </div>
-                                <div class="appswap">
-                                    <button [hidden]="!sub.selected" (click)="replaceTarget(sub)">Swap app</button>
                                 </div>
                             </td>
                         </tr>

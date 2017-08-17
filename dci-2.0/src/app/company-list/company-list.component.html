@@ -1,6 +1,12 @@
-<div *ngFor="let cset of by_cat" [ngClass]="[cset[0], 'category']">
-    <h4>{{ cset[0] }}</h4>
-    <div class="companies">
-        <div class="company" *ngFor="let c of cset[1]">{{c.company}}</div>
-    </div>
-</div>
+<table>
+    <tr>
+        <td *ngFor="let cset of by_cat">
+            <div [ngClass]="[cset[0], 'category']">
+                <h4>{{ cset[0] }}</h4>
+                <div class="companies">
+                    <div class="company" *ngFor="let c of cset[1]">{{c.company}}</div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
