@@ -14,6 +14,17 @@ div.root {
     div.right {
         width: 54%;
     }
+    // this shoud be in its own 
+    .focus {
+        padding: 20px 20px;
+        .title {
+            font-size: 18pt;
+            font-weight: bold;
+        }
+        .developer {
+            font-size: 16pt;
+        }
+    }
     // display: flex;
     // flex-direction: row;
     // flex-wrap: none;
