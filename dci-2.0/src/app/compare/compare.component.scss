@@ -23,13 +23,20 @@
         overflow: scroll;
         height: 100vh;
     }
+    div.right table.comparison td .appdesc {
+        padding: 0px 0px 0px 0px;
+    }
     table.comparison {
         width: 100%;
         td {
+            table {
+                border-bottom: 2px solid #eee;
+                padding-bottom: 15px;
+            }
+            padding: 0px;
             vertical-align: top;
             border: 5px solid #fff;
             transition: all 0.2s;
-            padding: 20px;
             overflow: hidden;
             // height: initial;
             transition: all 0.2s;
@@ -43,7 +50,6 @@
                 height: 230px;
             }
             // border-bottom: 10px solid #fefefe;
-            // border-right: 10px solid #fefefe;
             .apptitle {
                 height: 70px;
                 padding-top: 10px;
@@ -51,9 +57,9 @@
                 padding-left: 80px;
                 img.icon {
                     position: absolute;
-                    left: 10px;
-                    top: 10px;
-                    width: 50px;
+                    left: 0px;
+                    top: 5px;
+                    width: 60px;
                 }
                 .rating {
                     vertical-align: top;
@@ -79,7 +85,6 @@
                     font-style: italic;
                     justify-content: space-around;
                     padding: 10px 0px 0px 0px;
-                    ;
                     font-size: 85%;
                 }
             }
@@ -98,22 +103,4 @@
             }
         }
     }
-    /*
-    .comparison {
-        border-right: 1px solid #eee;
-        padding: 50px  20px;
-        flex-basis: 33%;
-        flex-grow: 1.0;
-    }
-    .title {
-        position: relative;
-        padding-left: 60px;
-        img {
-            position: absolute;
-            left: 0px;
-            top: 20px;
-            width: 50px;
-        }
-    }
-    */
 }

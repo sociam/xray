@@ -4,11 +4,11 @@ $app: #A6ED00;
 $other: #0C1B33;
 div.category {
     h4 {
-        margin: 20px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;
         padding: 0px;
     }
     padding:0px;
-    margin:0px;
+    margin:0px 0px 17px 0px;
     div.companies {
         margin: 0px;
         padding: 0px;
@@ -20,7 +20,7 @@ div.company {
     display: inline-block;
     width: 80px 50px;
     padding: 10px 13px;
-    margin: 10px 5px 0px 0px;
+    margin: 6.5px 5px 0px 0px;
     text-align: center;
     color: white;
 }

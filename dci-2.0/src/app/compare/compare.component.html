@@ -13,6 +13,7 @@
                     <div class="appdesc">
                         <div class="summary">{{ appInfo(original_app?.target.appid)?.storeinfo.summary }}</div>
                         <div class="desc">{{ appInfo(original_app?.target.appid)?.storeinfo.description?.split(' ').slice(0,50).join(' ') }}</div>
+                        <p></p>
                         <app-company-list [app]='original_app?.target.appid'></app-company-list>
                     </div>
                 </td>
@@ -22,7 +23,7 @@
     <div class="right">
         <table class="comparison">
             <tr *ngFor='let sub of other_substitutions' class="alt-row">
-                <td [ngClass]="{selected: sub.selected}">
+                <td [ngClass]="{toptd: true, selected: sub.selected}">
                     <table>
                         <tr>
                             <td>
@@ -42,7 +43,6 @@
                             </td>
                         </tr>
                     </table>
-
                 </td>
             </tr>
         </table>

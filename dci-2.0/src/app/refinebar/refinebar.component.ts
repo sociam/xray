@@ -219,7 +219,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       const stack = d3.stack(),
         out = stack.keys(apps)(by_company);
 
-      const margin = { top: 20, right: 20, bottom: 130, left: 40 },
+      const margin = { top: 20, right: 20, bottom: this.showXAxis ? 130 : 0, left: 40 },
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
         height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
         g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
@@ -272,22 +272,25 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .call(f);
 
       // x axis
-      if (this.showXAxis) {
-        g.append('g')
-          .attr('class', 'axis x')
-          .attr('transform', 'translate(0,' + height + ')')
-          .call(d3.axisBottom(x))
-          .selectAll('text')
-          .style('text-anchor', 'end')
-          .attr('y', 1)
-          .attr('dx', '-.8em')
-          .attr('dy', '.15em')
-          .attr('transform', 'rotate(-90)');
+      g.append('g')
+        .attr('class', 'axis x')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+        .style('text-anchor', 'end')
+        .attr('y', 1)
+        .attr('dx', '-.8em')
+        .attr('dy', '.15em')
+        .attr('transform', 'rotate(-90)');
 
-        d3.selectAll('g.axis.x g.tick')
-          .filter(function (d) { return d; })
-          .attr('class', (d) => this.companyid2info.get(d).typetag)
-          .on('click', (d) => this._selectCompany(this.companyid2info.get(d)));
+        if (!this.showXAxis) {
+        svg.selectAll('g.axis.x text').text('');
+        svg.selectAll('g.axis.x g.tick').remove();
+      } else {
+        svg.selectAll('g.axis.x g.tick')
+        .filter(function (d) { return d; })
+        .attr('class', (d) => this.companyid2info.get(d).typetag)
+        .on('click', (d) => this._selectCompany(this.companyid2info.get(d)));
       }
 
       g.append('g')
@@ -298,7 +301,6 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .attr('y', y(y.ticks().pop()) - 8)
         .attr('dy', '0.32em')
         .text('Impact');
-
 
       // legend
       const leading = 26;

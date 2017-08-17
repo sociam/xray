@@ -1,6 +1,6 @@
 <div *ngFor="let cset of by_cat" [ngClass]="[cset[0], 'category']">
-    <h4>{{ cset[0] }}</h4>
-    <div class="companies">
+    <h4 *ngIf='cset[1].length > 0'>{{ cset[0] }}</h4>
+    <div *ngIf='cset[1].length > 0' class="companies">
         <div class="company" *ngFor="let c of cset[1]">{{c.company}}</div>
     </div>
 </div>
