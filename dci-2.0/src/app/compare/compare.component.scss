@@ -26,19 +26,24 @@
     div.right table.comparison td .appdesc {
         padding: 0px 0px 0px 0px;
     }
-    div.right table.comparison td.top {
+    div.right table.comparison tr td.top {
         &:hover {
             border: 5px solid #ff22ee;
+            opacity: 1.0;
         }
+        opacity:0.82;
+        border: 5px solid white;
+        border-bottom: 2px solid #eee;
+        padding: 5px 10px 15px 10px;
+    }
+    div.right table.comparison tr:first-child {
+        padding-top: 5px !important;
+        margin-top: -10px !important;
     }
     table.comparison {
         // warning this applies to both sides
         width: 100%;
         td {
-            table {
-                border-bottom: 2px solid #eee;
-                padding-bottom: 15px;
-            }
             padding: 0px;
             vertical-align: top;
             border: 5px solid #fff;
