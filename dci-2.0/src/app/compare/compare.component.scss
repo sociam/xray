@@ -2,12 +2,23 @@
     width: 100%;
     padding: 0px;
     margin: 0px;
-    display: flex;
     flex-direction: row;
     flex-wrap: none;
     justify-content: center;
     align-items: stretch;
     align-content: stretch;
+    div.left {
+        width: 40%;
+        float: left;
+        overflow: scroll;
+        height: 100vh;
+    }
+    div.right {
+        width: 60%;
+        float: right;
+        overflow: scroll;
+        height: 100vh;
+    }
     table.comparison {
         width: 100%;
         td {
