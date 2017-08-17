@@ -25,6 +25,7 @@ export class CompareComponent implements OnInit, OnChanges {
   substitutions: Substitution[][];
   original_app: Substitution;
   other_substitutions: Substitution[];
+  other_substitution_rows: Substitution[][];
 
   constructor(private loader: LoaderService, private usage: UsageConnectorService,  private router: Router) {
   }
@@ -63,6 +64,7 @@ export class CompareComponent implements OnInit, OnChanges {
           this.original_app = this.substitutions_all[0];
           this.other_substitutions = this.substitutions_all.slice(1);
           this.substitutions = this.splitIntoRows<Substitution>(4, this.substitutions_all);
+          this.other_substitution_rows = this.splitIntoRows<Substitution>(2, this.other_substitutions);
           console.log('substitutions are ', this.substitutions);
         });
       });

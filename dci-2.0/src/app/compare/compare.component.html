@@ -21,8 +21,8 @@
     </div>
     <div class="right">
         <table class="comparison">
-            <tr *ngFor='let sub of other_substitutions'>
-                <td (click)="select(sub)" [ngClass]="{selected: sub.selected}">
+            <tr *ngFor='let row of other_substitution_rows'>
+                <td *ngFor='let sub of row' (click)="select(sub)" [ngClass]="{selected: sub.selected}">
                     <div class="apptitle">
                         <img [src]="appInfo(sub.target.appid).icon">
                         <div class="title">{{ appInfo(sub.target.appid).storeinfo.title }}</div>
