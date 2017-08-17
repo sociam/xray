@@ -5,7 +5,15 @@
     <div class="suggestions" *ngIf="filteredList.length > 0">
         <ul *ngFor="let item of filteredList">
             <li (click)="select(item)">
-                <a><img [src]='item.icon'> {{item.storeinfo.title}}</a>
+                <table class="suggestion">
+                    <tr>
+                        <td><img [src]='item.icon'></td>
+                        <td>
+                            <div>{{item.storeinfo.title}}</div>
+                            <div class="dev">By {{item.developer?.name}}</div>
+                        </td>
+                    </tr>
+                </table>
             </li>
         </ul>
     </div>
