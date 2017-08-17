@@ -42,14 +42,16 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() showModes = true;
   @Input() highlightApp: string;
   @Input() showLegend = true;
+  @Input() showTypesLegend = true;
+  @Input() showXAxis = true;
 
   @Input() scale = false;
   vbox = { width: 700, height: 1024 };
   highlightColour = '#FF066A';
-  
+
 
   _selectedType: string;
-  
+
 
   constructor(private el: ElementRef, private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
     this.init = Promise.all([
@@ -148,8 +150,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .attr('virtualWidth', this.vbox.width)
         .attr('virtualHeight', this.vbox.height)
         .attr('preserveAspectRatio', 'none') //  "xMinYMin meet")
-        width_svgel = this.vbox.width;
-        height_svgel = this.vbox.height;          
+      width_svgel = this.vbox.width;
+      height_svgel = this.vbox.height;
     }
 
     svg.selectAll('*').remove();
@@ -180,15 +182,15 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       }
 
       const satBand = (name, domain, h, l, slow, shigh) => {
-          return (appkey) => {
-            let ki = domain.indexOf(appkey),
-              bandwidth = (shigh - slow) / domain.length,
-              starget = slow + ki * bandwidth,
-              targetc = d3.hsl(h, starget, starget);
-            // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
-            return targetc;
-          };
-        },
+        return (appkey) => {
+          let ki = domain.indexOf(appkey),
+            bandwidth = (shigh - slow) / domain.length,
+            starget = slow + ki * bandwidth,
+            targetc = d3.hsl(h, starget, starget);
+          // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
+          return targetc;
+        };
+      },
         catcolours = { // .interpolate(d3.interpolateHsl).
           'advertising': satBand('adv', apps, 0.2, 0.6, 0.2, 1),
           'app': satBand('app', apps, 80, 0.6, 0.2, 1),
@@ -234,7 +236,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       // z = d3.scaleOrdinal()
       //   .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
       //   .domain(apps);
-      
+
       g.selectAll('rect.back')
         .data(companies)
         .enter().append('rect')
@@ -270,21 +272,23 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .call(f);
 
       // x axis
-      g.append('g')
-        .attr('class', 'axis x')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(d3.axisBottom(x))
-        .selectAll('text')
-        .style('text-anchor', 'end')
-        .attr('y', 1)
-        .attr('dx', '-.8em')
-        .attr('dy', '.15em')
-        .attr('transform', 'rotate(-90)');
+      if (this.showXAxis) {
+        g.append('g')
+          .attr('class', 'axis x')
+          .attr('transform', 'translate(0,' + height + ')')
+          .call(d3.axisBottom(x))
+          .selectAll('text')
+          .style('text-anchor', 'end')
+          .attr('y', 1)
+          .attr('dx', '-.8em')
+          .attr('dy', '.15em')
+          .attr('transform', 'rotate(-90)');
 
-      d3.selectAll('g.axis.x g.tick')
-        .filter(function (d) { return d; })
-        .attr('class', (d) => this.companyid2info.get(d).typetag)
-        .on('click', (d) => this._selectCompany(this.companyid2info.get(d)));
+        d3.selectAll('g.axis.x g.tick')
+          .filter(function (d) { return d; })
+          .attr('class', (d) => this.companyid2info.get(d).typetag)
+          .on('click', (d) => this._selectCompany(this.companyid2info.get(d)));
+      }
 
       g.append('g')
         .attr('class', 'axis y')
@@ -295,8 +299,34 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .attr('dy', '0.32em')
         .text('Impact');
 
+
       // legend
       const leading = 26;
+      
+      if (this.showTypesLegend) {
+        const ctypes = ['advertising', 'analytics', 'app', 'other'],
+          ctypeslegend = g.append('g')
+            .attr('class', 'ctypelegend')
+            .attr('transform', 'translate(0,10)')
+            .selectAll('g')
+            .data(ctypes)
+            .enter().append('g')
+            .attr('class', (d) => d)
+            .on('mouseenter', (d) => this.setSelectedTypeHighlight(d))
+            // .on("mouseleave", (d) => d3.selectAll('rect.back.' + d).classed('reveal', false))
+            .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
+
+        ctypeslegend.append('rect')
+          .attr('x', width - 19)
+          .attr('width', 19)
+          .attr('height', 19)
+          .attr('class', (d) => 'legend ' + d);
+        ctypeslegend.append('text')
+          .attr('x', width - 24)
+          .attr('y', 9.5)
+          .attr('dy', '0.32em')
+          .text((d) => d);
+      }
       if (this.showLegend) {
         const legend = g.append('g')
           .attr('class', 'legend')
@@ -307,49 +337,27 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; });
 
         legend.append('rect')
-          .attr('x', width - 19)
+          .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
           .attr('width', 19)
           .attr('height', 19)
           .attr('fill', z);
 
         legend.append('text')
-          .attr('x', width - 24)
+          .attr('x', this.showTypesLegend ? width - 140 - 24 : width - 24)
           .attr('y', 9.5)
           .attr('dy', '0.32em')
           .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
       }
 
-      const ctypes = ['advertising', 'analytics', 'app', 'other'],
-        ctypeslegend = g.append('g')
-          .attr('class', 'ctypelegend')
-          .attr('transform', 'translate(0,10)')
-          .selectAll('g')
-          .data(ctypes)
-          .enter().append('g')
-          .attr('class', (d) => d)
-          .on('mouseenter', (d) => this.setSelectedTypeHighlight(d))
-          // .on("mouseleave", (d) => d3.selectAll('rect.back.' + d).classed('reveal', false))
-          .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
-
-      ctypeslegend.append('rect')
-        .attr('x', this.showLegend ? width - 200 - 24 : width - 19)
-        .attr('width', 19)
-        .attr('height', 19)
-        .attr('class', (d) => 'legend ' + d);
-      ctypeslegend.append('text')
-        .attr('x', this.showLegend ? width - 200 - 24 : width - 19)
-        .attr('y', 9.5)
-        .attr('dy', '0.32em')
-        .text((d) => d);
 
       if (this._selectedType) {
         this.setSelectedTypeHighlight(this._selectedType)
       }
     });
   }
-  @HostListener('window:resize') 
+  @HostListener('window:resize')
   onResize() {
-      // call our matchHeight function here
-      this.render();
+    // call our matchHeight function here
+    this.render();
   }
 }
