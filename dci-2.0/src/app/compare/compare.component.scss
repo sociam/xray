@@ -39,6 +39,9 @@
                 overflow: scroll;
             }
             width: 25%;
+            app-refinebar /deep/ .main svg {
+                height: 230px;
+            }
             // border-bottom: 10px solid #fefefe;
             // border-right: 10px solid #fefefe;
             .apptitle {
