@@ -246,15 +246,16 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
 
       // main rects
-      const f = function (selection, first, last) {
+      const f = (selection, first, last) => {
         return selection.selectAll('rect')
           .data((d) => d)
           .enter().append('rect')
           .attr('class', 'bar')
-          .attr('x', function (d) { return x(d.data.company); })
-          .attr('y', function (d) { return y(d[1]); })
+          .attr('x', (d) => x(d.data.company))
+          .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
-          .attr('width', x.bandwidth());
+          .attr('width', x.bandwidth())
+          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)));
       };
       g.append('g')
         .selectAll('g')

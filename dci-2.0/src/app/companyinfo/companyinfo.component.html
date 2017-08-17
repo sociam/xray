@@ -1,7 +1,8 @@
 <div class='companyinfo'>
     <div class="title company">
         <div [ngClass]="['name', selected.typetag]">{{ selected.id }}
-            <span *ngIf="selected.id !== selected.company">{{selected.company}}</span><span *ngIf="selected.parent"> ({{ selected.parentInfo?.id }})</span>
+            <div *ngIf="selected.id !== selected.company">{{selected.company}}</div>
+            <div *ngIf="selected.parent"> ({{ selected.parentInfo?.id }})</div>
         </div>
         <div class="jurisdiction" *ngIf="selected.jurisdiction">{{ selected.jurisdiction.toUpperCase() }} <span *ngIf="selected.jurisdiction_flag" [innerHTML]="selected.jurisdiction_flag"></span></div>
     </div>

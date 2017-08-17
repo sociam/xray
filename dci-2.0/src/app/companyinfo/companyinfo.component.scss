@@ -1,13 +1,21 @@
+$hpad: 20px;
 .companyinfo {
-    padding: 40px 80px;
+    padding: 20px $hpad 20px $hpad;
     .title {
+        position: relative;
         font-size: 14pt;
         .name {
             font-size: 18pt;
             font-weight: bold;
         }
+        .jurisdiction {
+            position: absolute;
+            right: $hpad;
+            top: 10px;
+        }
     }
     .props ul {
-        list-style-type: square type none;
+        list-style-type: none;
+        padding-left: 0px;
     }
 }
