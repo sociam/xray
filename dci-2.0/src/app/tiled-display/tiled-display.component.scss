@@ -14,6 +14,31 @@ div.root {
     div.right {
         width: 54%;
     }
+    // this shoud be in its own 
+    .focus {
+        padding: 20px 20px;
+        .app {
+            position: relative;
+            .appicon {
+                position: absolute;
+                left: 0px;
+                width: 60px;
+            }
+            .titledev {
+                padding: 0px 0px 10px 80px;
+                .title {
+                    font-size: 18pt;
+                    font-weight: bold;
+                }
+                .developer {
+                    font-size: 16pt;
+                }
+            }
+            .appdesc {
+                padding: 10px 0px;
+            }
+        }
+    }
     // display: flex;
     // flex-direction: row;
     // flex-wrap: none;

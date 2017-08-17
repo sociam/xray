@@ -3,8 +3,8 @@ import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIApp
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
-import { HostUtilsService } from "app/host-utils.service";
-import { FocusService } from "app/focus.service";
+import { HostUtilsService } from 'app/host-utils.service';
+import { FocusService } from 'app/focus.service';
 
 interface AppImpact {
   appid: string;
@@ -45,8 +45,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   @Input() scale = false;
   vbox = { width: 700, height: 1024 };
-
   highlightColour = '#FF066A';
+  
+
+  _selectedType: string;
   
 
   constructor(private el: ElementRef, private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
@@ -99,7 +101,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .then((companies: CompanyInfo[]) => _.uniq(companies.filter((company) => company !== undefined && company.typetag !== 'ignore')))
           .then((companies: CompanyInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.id, impact: usg.impact })));
       });
-    })).then((impacts: AppImpact[][]): AppImpact[] => _.flatten(impacts));
+    })).then((nested_impacts: AppImpact[][]): AppImpact[] => _.flatten(nested_impacts));
   }
 
 
@@ -112,13 +114,11 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   get byTime() { return this._byTime; }
 
 
-  _selectedType: string;
   setSelectedTypeHighlight(ctype: string) {
-    var svg = this.getSVGElement();
+    let svg = this.getSVGElement();
     this._selectedType = ctype;
     d3.select(svg).selectAll('rect.back').classed('reveal', false);
     d3.select(svg).selectAll('.ctypelegend g').classed('selected', false)
-
     if (ctype) {
       d3.select(svg).selectAll('rect.back.' + ctype).classed('reveal', true);
       d3.select(svg).selectAll('.ctypelegend g.' + ctype).classed('selected', true)
@@ -147,7 +147,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       svg.attr('viewBox', `0 0 ${this.vbox.width} ${this.vbox.height}`)
         .attr('virtualWidth', this.vbox.width)
         .attr('virtualHeight', this.vbox.height)
-        .attr('preserveAspectRatio', "none") //  "xMinYMin meet")
+        .attr('preserveAspectRatio', 'none') //  "xMinYMin meet")
         width_svgel = this.vbox.width;
         height_svgel = this.vbox.height;          
     }
@@ -181,7 +181,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
       const satBand = (name, domain, h, l, slow, shigh) => {
           return (appkey) => {
-            var ki = domain.indexOf(appkey),
+            let ki = domain.indexOf(appkey),
               bandwidth = (shigh - slow) / domain.length,
               starget = slow + ki * bandwidth,
               targetc = d3.hsl(h, starget, starget);
@@ -218,7 +218,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         out = stack.keys(apps)(by_company);
 
       const margin = { top: 20, right: 20, bottom: 130, left: 40 },
-        width = width_svgel - margin.left - margin.right, //+svg.attr('width') - margin.left - margin.right,
+        width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
         height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
         g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
         x = d3.scaleBand()
@@ -246,15 +246,16 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
 
       // main rects
-      const f = function (selection, first, last) {
+      const f = (selection, first, last) => {
         return selection.selectAll('rect')
           .data((d) => d)
           .enter().append('rect')
           .attr('class', 'bar')
-          .attr('x', function (d) { return x(d.data.company); })
-          .attr('y', function (d) { return y(d[1]); })
+          .attr('x', (d) => x(d.data.company))
+          .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
-          .attr('width', x.bandwidth());
+          .attr('width', x.bandwidth())
+          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)));
       };
       g.append('g')
         .selectAll('g')
@@ -326,7 +327,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .data(ctypes)
           .enter().append('g')
           .attr('class', (d) => d)
-          .on("mouseenter", (d) => this.setSelectedTypeHighlight(d))
+          .on('mouseenter', (d) => this.setSelectedTypeHighlight(d))
           // .on("mouseleave", (d) => d3.selectAll('rect.back.' + d).classed('reveal', false))
           .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
 

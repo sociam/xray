@@ -2,9 +2,19 @@
     <div class="left">
         <app-usagetable></app-usagetable>
         <div class="focus">
-            <div *ngIf="targettype == 'app'">
-                <h4> {{ target.storeinfo.title }} </h4>
-                <app-company-list [app]='target.app'></app-company-list>
+            <div class="app" *ngIf="targettype == 'app'">
+                <img class='appicon' [src]="target?.icon">
+                <div class="titledev">
+                    <div class="title"> {{ target?.storeinfo.title }} </div>
+                    <div *ngIf="target?.developer" class="developer">by {{ target?.developer?.name }}
+                        <span *ngIf="target?.storeinfo?.rating" class="rating">- rating: {{ target?.storeinfo?.rating }} &#x2606; </span>
+                    </div>
+                </div>
+                <div class="appdesc" [hidden]="!target">
+                    <div class="summary">{{ target?.storeinfo.summary }}</div>
+                    <div class="desc">{{ target?.storeinfo.description.split(' ').slice(0,50).join(' ') }}</div>
+                </div>
+                <app-company-list [app]='target?.app'></app-company-list>
             </div>
             <app-companyinfo *ngIf="targettype == 'company'" [selected]="target"></app-companyinfo>
         </div>

@@ -1,14 +1,15 @@
 <div class='companyinfo'>
     <div class="title company">
         <div [ngClass]="['name', selected.typetag]">{{ selected.id }}
-            <span *ngIf="selected.id !== selected.company">{{selected.company}}</span><span *ngIf="selected.parent"> ({{ selected.parentInfo?.id }})</span>
+            <div *ngIf="selected.id !== selected.company">{{selected.company}}</div>
+            <div *ngIf="selected.parent"> ({{ selected.parentInfo?.id }})</div>
         </div>
         <div class="jurisdiction" *ngIf="selected.jurisdiction">{{ selected.jurisdiction.toUpperCase() }} <span *ngIf="selected.jurisdiction_flag" [innerHTML]="selected.jurisdiction_flag"></span></div>
     </div>
     <div class="props">
         <ul>
             <li class="property description" *ngIf="selected.description"> {{ selected.description }}</li>
-            <li class="property description" *ngIf="!selected.description && selected.parent && selected.parentInfo.description">{{ selected.parentInfo.description }}</li>
+            <li class="property description" *ngIf="!selected.description && selected?.parent && selected.parentInfo?.description">{{ selected.parentInfo.description }}</li>
             <li class="property equity textonly" *ngIf="selected.equity || selected.parentInfo?.equity"><span class="lbl">equity:</span> ${{ selected.equity || selected.parentInfo?.equity }}</li>
             <li class="property size" *ngIf="selected.size || selected.parentInfo?.size"><span class="lbl">employees:</span><span [innerHTML]="selected.size + '\&\#x1f466'"></span></li>
             <li class="property founded textonly" *ngIf="selected.founded"><span class="lbl">founded:</span> {{ selected.founded }}</li>
