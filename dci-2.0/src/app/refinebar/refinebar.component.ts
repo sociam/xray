@@ -42,9 +42,12 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() showModes = true;
   @Input() highlightApp: string;
   @Input() showLegend = true;
+
   @Input() scale = false;
+  vbox = { width: 700, height: 1024 };
 
   highlightColour = '#FF066A';
+  
 
   constructor(private el: ElementRef, private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
     this.init = Promise.all([
@@ -141,15 +144,12 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       svg.attr('width', width_svgel)
         .attr('height', height_svgel);
     } else {
-      // <svg #thing viewBox="0 0 1024 700" preserveAspectRatio="xMinYMin meet" virtualWidth="1024" virtualHeight="700"></svg      
-
-      svg.attr('viewBox', `0 0 1024 500`)
-        .attr('virtualWidth', 1024)
-        .attr('virtualHeight', 700)
+      svg.attr('viewBox', `0 0 ${this.vbox.width} ${this.vbox.height}`)
+        .attr('virtualWidth', this.vbox.width)
+        .attr('virtualHeight', this.vbox.height)
         .attr('preserveAspectRatio', "none") //  "xMinYMin meet")
-
-        width_svgel = 1024;
-        height_svgel = 700;          
+        width_svgel = this.vbox.width;
+        height_svgel = this.vbox.height;          
     }
 
     svg.selectAll('*').remove();
