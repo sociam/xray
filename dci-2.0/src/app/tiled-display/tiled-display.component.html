@@ -6,9 +6,7 @@
                 <h4> {{ target.storeinfo.title }} </h4>
                 <app-company-list [app]='target.app'></app-company-list>
             </div>
-            <div *ngIf="targettype == 'company'">
-                <h4> {{ target.company }} </h4>
-            </div>
+            <app-companyinfo *ngIf="targettype == 'company'" [selected]="target"></app-companyinfo>
         </div>
     </div>
     <div class="right">
