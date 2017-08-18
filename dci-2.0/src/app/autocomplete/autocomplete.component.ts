@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { LoaderService, APIAppInfo } from 'app/loader.service';
 import { sortBy, pullAllBy, differenceBy } from 'lodash';
+import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 
 // thanks to http://4dev.tech/2016/03/tutorial-creating-an-angular2-autocomplete/ !
 
@@ -23,6 +25,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   private _omitIDs: { [id: string]: boolean } = {};
   @Output() selectedChange = new EventEmitter<APIAppInfo>();
   private nonce = '';
+  private fetching: Subscription;
 
   constructor(private myElement: ElementRef, private loader: LoaderService) {
   }
@@ -50,9 +53,21 @@ export class AutocompleteComponent implements OnInit, OnChanges {
     if (this.query.trim() !== '') {
       let nonce = this.nonce = Math.round(1e12 * Math.random()).toString();
 
-      this.loader.findApps$({startsWith: this.query.trim(), fullInfo:true, onlyAnalyzed:true})
+      if (this.fetching) { 
+        console.log('cancelling previous subscription');
+        this.fetching.unsubscribe();  
+        delete this.fetching;
+      }
+
+      this.fetching = this.loader.findApps$({startsWith: this.query.trim(), fullInfo:true, onlyAnalyzed:true})
       .subscribe((results) => {
-        console.info('results > ', results);
+
+        if (this.fetching) {
+          this.fetching.unsubscribe();
+          delete this.fetching;
+        }
+        
+        console.log('results > ', results);
         if (nonce !== this.nonce) { return; }
 
         let qL = this.query.toLowerCase().trim(),

@@ -2,8 +2,10 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import { mapValues, keys, mapKeys, values, trim, uniq } from 'lodash';
+import { mapValues, keys, mapKeys, values, trim, uniq, toPairs } from 'lodash';
 import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject'
+
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
@@ -39,13 +41,31 @@ export let memoize = (f: (...args: any[]) => string) => {
     descriptor.value = function (...args: any[]) {
       let cache_key = propertyKey + '_' + f.apply(null, args);
       if (retval[cache_key]) {
+        if (propertyKey.indexOf('findApps$') >= 0) { 
+          console.log('cache hit on ', propertyKey, cache_key);
+        }
         return retval[cache_key];
+      }
+      if (propertyKey.indexOf('findApps$') >= 0) { 
+        console.log('cache miss on ', propertyKey, cache_key);   
       }
       return retval[cache_key] = method.apply(this, args);
     };
   };
 }
 
+export class CachingSubscription<T> {
+  private dataSubject: ReplaySubject<T> = new ReplaySubject<T>();
+  data$: Observable<T> = this.dataSubject.asObservable();
+  resolved = false;
+  constructor(private obs: Observable<T>) {    
+    this.obs.subscribe(result => {
+      this.resolved = true;
+      this.dataSubject.next(result);
+    });    
+  }
+  getObservable() { return this.data$;  }
+}
 
 export class CompanyDB {
   emoji_table = {
@@ -296,6 +316,14 @@ export class LoaderService {
    * helper function to stringify the optins into a URL acceptable string.
    * @param options JSON of param options that can be used to query the xray API.
    */
+  @memoize((options) => { 
+    let key = toPairs(options).map(pair => {
+      console.log('pair ', pair);
+      return pair.map((x) => x.toString()).join(':');
+    }).join('--');
+    console.log('key > ', key);
+    return key;
+  })
   findApps$(options: {
       title?: string,
       startsWith?: string, 
@@ -308,7 +336,8 @@ export class LoaderService {
     let body = this.parseFetchAppParams(options);    
     let appData: APIAppInfo[];
 
-    return this.http.get('http://localhost:8118/api/apps?' + body).map((data) => {
+    // this makes me want to stab my eyes out -> 
+    return new CachingSubscription(this.http.get('http://localhost:8118/api/apps?' + body).map((data) => {
       const res = data.json() as APIAppInfo[];
       return res.map((app: APIAppInfo) => {
         if (!app) {
@@ -316,7 +345,7 @@ export class LoaderService {
         } 
         return this._prepareAppInfo(app);
        });
-    });
+    })).getObservable();
   }
   
 
