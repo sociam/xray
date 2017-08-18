@@ -219,7 +219,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       const stack = d3.stack(),
         out = stack.keys(apps)(by_company);
 
-      const margin = { top: 20, right: 20, bottom: this.showXAxis ? 130 : 0, left: 40 },
+      let margin = { top: 20, right: 20, bottom: this.showXAxis ? 130 : 0, left: 40 },
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
         height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
         g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
@@ -227,8 +227,14 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
           .domain(companies),
         d3maxx = d3.max(by_company, function (d) { return d.total; }) || 0,
-        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx),
-        y = d3.scaleLinear()
+        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
+
+
+        if (d3maxx < 0.7 * ymaxx) {
+          ymaxx = 1.1 * d3maxx;
+        }  
+
+      let  y = d3.scaleLinear()
           .rangeRound([height, 0])
           .domain([0, ymaxx]).nice(),
         z = d3.scaleOrdinal(d3.schemeCategory20)
@@ -237,6 +243,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       //   .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
       //   .domain(apps);
 
+      
       g.selectAll('rect.back')
         .data(companies)
         .enter().append('rect')
