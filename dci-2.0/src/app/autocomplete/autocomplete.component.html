@@ -7,10 +7,12 @@
             <li (click)="select(item)">
                 <table class="suggestion">
                     <tr>
-                        <td><img [src]='item.icon'></td>
+                        <td>
+                            <img [src]='item.icon' alt="^_^">
+                        </td>
                         <td>
                             <div>{{item.storeinfo.title}}</div>
-                            <div class="dev">By {{item.developer?.name}}</div>
+                            <div class=" dev ">By {{item.developer?.name}}</div>
                         </td>
                     </tr>
                 </table>

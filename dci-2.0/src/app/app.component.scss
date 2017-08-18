@@ -26,18 +26,28 @@
 }
 
 nav {
-    margin: 20px 0px;
+    margin: 0px 0px;
     font-family: helvetica;
     font-weight: 200;
+    font-size: 0px;
+    width: 100%;
+    padding: 0px 0px 5px 0px;
+    border-bottom: 0.5px solid #eee;
     a {
-        font-size: 120%;
+        font-size: 16px;
         color: black;
-        padding: 5px;
-        margin: 5px;
+        padding: 5px 20px;
+        margin: 0px;
         text-decoration: none;
+        transition: all 0.2s;
+        border-right: 0.5px solid #eee;
     }
     a.active {
-        border-bottom: 1px solid #bbb;
+        background: #f0f0f0;
+    }
+    a:hover {
+        background: #f0f0f0;
+        transition: all 0.2s;
     }
 }
 

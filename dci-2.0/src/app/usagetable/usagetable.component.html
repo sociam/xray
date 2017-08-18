@@ -3,12 +3,12 @@
         <!-- <ng2-completer [(ngModel)]="appToAdd" [datasource]="completer" [minSearchLength]="1" placeholder="Add app"></ng2-completer> -->
         <app-autocomplete [(selected)]='selectedApp' (selectedChange)='appSelected(selectedApp)' [omit]='_selectedapps'></app-autocomplete>
         <button (click)="addApp()" [disabled]='!selectedApp'>Add</button>
-        <button (click)="clearState()" [disabled]='usages.length == 0'>Clear all</button>
+        <button class="usage-button" (click)="clearState()" [disabled]='usages.length == 0'>Clear all</button>
     </div>
     <table>
         <tr class="rows" *ngFor="let appusage of usages">
             <td class="left" (click)="appFocused(appusage.appid)">
-                <img *ngIf="getAppIcon(appusage.appid)" class='appicon' [src]="getAppIcon(appusage.appid)">
+                <img *ngIf="getAppIcon(appusage.appid)" class='appicon' [src]="getAppIcon(appusage.appid)" alt="^_^">
                 <div *ngIf="!getAppIcon(appusage.appid)" class="noicon"></div>
                 <a class="title">{{ getAppName(appusage.appid).split(' ').slice(0,3).join(' ') }}</a>
                 <br><a class="dev"> by {{ getAppDev(appusage.appid )}}</a>
@@ -23,7 +23,8 @@
             <td class="right">
                 <!-- <div class="tohide">actions</div> -->
                 <!-- <div class="reveal"> -->
-                <button class="clearButton" (click)="delete(appusage)">uninstall</button> <a [routerLink]="['/alternatives/', appusage.appid.trim()]" [hidden]='!hasAlternatives(appusage.appid) '><button>substitute</button></a>
+                <button class="clearButton usage-button" (click)="delete(appusage)">uninstall</button>
+                <a [routerLink]="['/alternatives/', appusage.appid.trim()]" [hidden]='!hasAlternatives(appusage.appid) '><button class="usage-button">substitute</button></a>
                 <!-- </div> -->
             </td>
         </tr>

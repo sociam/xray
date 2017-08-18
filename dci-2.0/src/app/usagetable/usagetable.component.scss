@@ -2,6 +2,11 @@ button {
     border-radius: 3px;
     // box-shadow: 7px 6px 47px -19px rgba(0, 0, 0, 0.75) !important;
     box-shadow: 14px 13px 47px -19px rgba(0, 0, 0, 0.75);
+    transition: all 0.2s;
+    &:hover {
+        transition: all 0.2s;
+        background: #eee;
+    }
 }
 
 div.noicon {
