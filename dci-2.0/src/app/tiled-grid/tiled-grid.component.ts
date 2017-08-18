@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FocusService, FocusTarget } from "app/focus.service";
-import { APIAppInfo, CompanyInfo } from "app/loader.service";
+import { FocusService, FocusTarget } from 'app/focus.service';
+import { APIAppInfo, CompanyInfo } from 'app/loader.service';
 
 @Component({
-  selector: 'app-tiled-display',
-  templateUrl: './tiled-display.component.html',
-  styleUrls: ['./tiled-display.component.scss']
+  selector: 'app-tiled-grid',
+  templateUrl: './tiled-grid.component.html',
+  styleUrls: ['./tiled-grid.component.scss']
 })
-export class TiledDisplayComponent implements OnInit {
+export class TiledGridComponent implements OnInit {
 
   target : FocusTarget;
   targettype : string;
