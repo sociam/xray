@@ -301,7 +301,7 @@ export class LoaderService {
       fullInfo?: boolean, 
       onlyAnalyzed?: boolean, 
       limit?: number
-    }) {
+    })/*:Observable<Response>*/{
     
     let body = this.parseFetchAppParams(options);    
     let appData: APIAppInfo[];
