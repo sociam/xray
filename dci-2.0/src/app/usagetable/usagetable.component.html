@@ -11,7 +11,7 @@
                 <img *ngIf="getAppIcon(appusage.appid)" class='appicon' [src]="getAppIcon(appusage.appid)">
                 <div *ngIf="!getAppIcon(appusage.appid)" class="noicon"></div>
                 <a class="title">{{ getAppName(appusage.appid).split(' ').slice(0,3).join(' ') }}</a>
-                <br><a class="dev"> by {{ getAppDev(appusage.appid)}}</a>
+                <br><a class="dev"> by {{ getAppDev(appusage.appid )}}</a>
             </td>
             <td class="hhmminput">
                 <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">h

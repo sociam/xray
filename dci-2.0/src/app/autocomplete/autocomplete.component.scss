@@ -20,7 +20,10 @@ input {
     border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
     max-height: 300px;
-    overflow-y: scroll;
+    position: fixed;
+    z-index: 50;
+    background: #fefefe;
+    overflow-y: auto;
     ul {
         padding: 0px;
     }
