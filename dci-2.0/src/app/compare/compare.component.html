@@ -15,6 +15,7 @@
                         <div class="summary">{{ appInfo(original_app?.target.appid)?.storeinfo.summary }}</div>
                         <div class="desc">{{ appInfo(original_app?.target.appid)?.storeinfo.description?.split(' ').slice(0,50).join(' ') }}</div>
                         <p></p>
+
                         <app-company-list [app]='original_app?.target.appid'></app-company-list>
                     </div>
                 </td>
