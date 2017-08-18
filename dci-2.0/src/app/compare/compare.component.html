@@ -1,5 +1,8 @@
 <div class="container">
     <div class="left">
+        <div class="header">
+            Your App
+        </div>
         <table class="comparison">
             <tr>
                 <td>
@@ -23,6 +26,9 @@
         </table>
     </div>
     <div class="right">
+        <div class="header">
+            Alternatives
+        </div>
         <table class="comparison">
             <tr *ngFor='let sub of other_substitutions' class="alt-row">
                 <td class="top" (click)="replaceTarget(sub)">
