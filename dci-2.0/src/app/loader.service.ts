@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { mapValues, keys, mapKeys, values, trim, uniq } from 'lodash';
+import { Observable } from 'rxjs/Observable';
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
@@ -233,6 +234,7 @@ export class LoaderService {
       appinfo.hosts = appinfo.hosts.slice(0, 50);
     }
     this.apps[appinfo.app] = appinfo;
+    return appinfo;
   }
 
   findApps(query: string): Promise<APIAppInfo[]> {
@@ -263,26 +265,26 @@ export class LoaderService {
       fullInfo?: boolean, 
       onlyAnalyzed?: boolean, 
       limit?: number
-    }) :string {
+    }): string {
       // Initialising URL Parameters from passed in options.
     let urlParams = new URLSearchParams();
 
-    if(options.title) {
+    if (options.title) {
       urlParams.append('title', options.title);
     }
-    if(options.startsWith) {
+    if (options.startsWith) {
       urlParams.append('startsWith', options.startsWith);
     }
-    if(options.appID) {
+    if (options.appID) {
       urlParams.append('appID', options.appID);
     }
-    if(options.fullInfo) {
+    if (options.fullInfo) {
       urlParams.append('isFull',  options.fullInfo ? 'true': 'false');
     }
-    if(options.onlyAnalyzed) {
+    if (options.onlyAnalyzed) {
       urlParams.append('onlyAnalyzed', options.onlyAnalyzed ? 'true': 'false');
     }
-    if(options.limit) {
+    if (options.limit) {
       urlParams.append('limit', options.limit.toString());
     }
     return urlParams.toString();
@@ -301,19 +303,19 @@ export class LoaderService {
       fullInfo?: boolean, 
       onlyAnalyzed?: boolean, 
       limit?: number
-    })/*:Observable<Response>*/{
+    }): Observable<APIAppInfo[]> {
     
     let body = this.parseFetchAppParams(options);    
     let appData: APIAppInfo[];
 
-    return this.http.get('http://localhost:8118/api/apps?' + body).do((data) => {
-      var res = data.json() as APIAppInfo[];
-      return data.json().map((app :APIAppInfo) => {
+    return this.http.get('http://localhost:8118/api/apps?' + body).map((data) => {
+      const res = data.json() as APIAppInfo[];
+      return res.map((app: APIAppInfo) => {
         if (!app) {
           throw new Error('null returned from endpoint ' + body);
         } 
         return this._prepareAppInfo(app);
-       }) as APIAppInfo[];
+       });
     });
   }
   

@@ -51,9 +51,8 @@ export class AutocompleteComponent implements OnInit, OnChanges {
       let nonce = this.nonce = Math.round(1e12 * Math.random()).toString();
 
       this.loader.findApps$({startsWith: this.query.trim(), fullInfo:true, onlyAnalyzed:true})
-      .subscribe((data) => {
-        var results = data.json() as APIAppInfo[];
-        console.log(results);
+      .subscribe((results) => {
+        console.info('results > ', results);
         if (nonce !== this.nonce) { return; }
 
         let qL = this.query.toLowerCase().trim(),
