@@ -4,6 +4,13 @@ button {
     box-shadow: 14px 13px 47px -19px rgba(0, 0, 0, 0.75);
 }
 
+div.noicon {
+    background-color: orange;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+}
+
 div.top {
     position: relative;
     font-size: 12pt;
@@ -21,6 +28,7 @@ div.top {
                 text-align: left;
                 padding: 0px 0px 0px 50px;
                 position: relative;
+                .noicon,
                 img.appicon {
                     position: absolute;
                     left: 10px;

@@ -7,7 +7,10 @@
     </div>
     <table>
         <tr class="rows" *ngFor="let appusage of usages">
-            <td class="left" (click)="appFocused(appusage.appid)"><img class='appicon' [src]="getAppIcon(appusage.appid)">{{ getAppName(appusage.appid).split(' ').slice(0,3).join(' ') }}</td>
+            <td class="left" (click)="appFocused(appusage.appid)">
+                <img *ngIf="getAppIcon(appusage.appid)" class='appicon' [src]="getAppIcon(appusage.appid)">
+                <div *ngIf="!getAppIcon(appusage.appid)" class="noicon"></div>
+                {{ getAppName(appusage.appid).split(' ').slice(0,3).join(' ') }}</td>
             <td class="hhmminput">
                 <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">h
                 <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mm" maxlength="2">m

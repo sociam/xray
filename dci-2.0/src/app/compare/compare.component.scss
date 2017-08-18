@@ -2,6 +2,13 @@
     border: 5px solid #000000!important;
 }
 
+div.noicon {
+    background-color: orange;
+    border-radius: 5px;
+    width: 60px;
+    height: 60px;
+}
+
 .container {
     width: 100%;
     padding: 0px;
@@ -61,6 +68,7 @@
                 padding-top: 10px;
                 position: relative;
                 padding-left: 80px;
+                .noicon,
                 img.icon {
                     position: absolute;
                     left: 0px;

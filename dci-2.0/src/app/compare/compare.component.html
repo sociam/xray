@@ -4,7 +4,8 @@
             <tr>
                 <td>
                     <div class="apptitle">
-                        <img class="icon" [src]="appInfo(original_app?.target.appid)?.icon">
+                        <img class="icon" *ngIf="appInfo(original_app?.target.appid)?.icon" [src]="appInfo(original_app?.target.appid)?.icon">
+                        <div class="noicon" *ngIf="!appInfo(original_app?.target.appid)?.icon"></div>
                         <div class="title">{{ appInfo(original_app?.target.appid)?.storeinfo.title }}</div>
                         <div class="publisher">by {{ appInfo(original_app?.target.appid)?.developer?.name }}</div>
                         <div class="rating">{{ appInfo(original_app?.target.appid)?.storeinfo.rating }} <img src="../../assets/start.png"> </div>
@@ -28,7 +29,9 @@
                         <tr>
                             <td>
                                 <div class="apptitle">
-                                    <img class="icon" [src]="appInfo(sub.target.appid).icon">
+                                    <img class="icon" *ngIf="appInfo(sub?.target.appid)?.icon" [src]="appInfo(sub?.target.appid)?.icon">
+                                    <div class="noicon" *ngIf="!appInfo(sub?.target.appid)?.icon"></div>
+
                                     <div class="title">{{ appInfo(sub.target.appid).storeinfo.title }}</div>
                                     <div class="publisher">by {{ appInfo(sub.target.appid).developer?.name }}</div>
                                     <div class="rating">{{ appInfo(sub.target.appid).storeinfo.rating }} <img src="../../assets/start.png"></div>

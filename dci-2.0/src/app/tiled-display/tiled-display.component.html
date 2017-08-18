@@ -3,7 +3,7 @@
         <app-usagetable></app-usagetable>
         <div class="focus">
             <div class="app" *ngIf="targettype == 'app'">
-                <img class='appicon' [src]="target?.icon">
+                <img class='appicon' *ngIf="target?.icon" [src]="target?.icon">
                 <div class="titledev">
                     <div class="title"> {{ target?.storeinfo.title }} </div>
                     <div *ngIf="target?.developer" class="developer">by {{ target?.developer?.name }}

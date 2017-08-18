@@ -223,7 +223,8 @@ export class LoaderService {
     }
   }
   _prepareAppInfo(appinfo: APIAppInfo) {
-    appinfo.icon = this.makeIconPath(appinfo.icon);
+    appinfo.icon = appinfo.icon && appinfo.icon !== null && appinfo.icon.trim() !== 'null' ? this.makeIconPath(appinfo.icon) : undefined;
+    console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
     appinfo.hosts = uniq((appinfo.hosts || [])
       .map((host: string): string => trim(host.trim(), '".%')))
       .filter(host => host.length > 3 && host.indexOf('.') >= 0 && host.indexOf('[') < 0);
