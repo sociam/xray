@@ -126,6 +126,12 @@ export class UsagetableComponent implements OnInit {
     if (cached) { return cached.icon; }
     return '';
   }
+  
+  getAppDev(id: string): string {
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.developer.name};
+    return '';
+  }
 
   private loadAlternatives(appid: string) {
     return this.loader.getAlternatives(appid).then(alts => this.alternatives[appid] = alts);
