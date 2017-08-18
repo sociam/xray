@@ -13,6 +13,10 @@ input {
     }
 }
 
+.container {
+    position: relative;
+}
+
 .suggestions {
     background-color: #fcfcfc;
     padding: 5px 10px;
@@ -20,8 +24,8 @@ input {
     border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
     max-height: 300px;
-    position: fixed;
     z-index: 50;
+    position: absolute;
     background: #fefefe;
     overflow-y: auto;
     ul {
