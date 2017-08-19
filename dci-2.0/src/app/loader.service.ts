@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import { mapValues, keys, mapKeys, values, trim, uniq, toPairs } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
@@ -95,6 +95,7 @@ export class CompanyDB {
       if (s.crunchbase_url) {
         s.crunchbase_url = this.sanitiser.bypassSecurityTrustResourceUrl(s.crunchbase_url);
       }      
+      // http://www.google.com/search?btnI=I%27m+Feeling+Lucky&ie=UTF-8&oe=UTF-8&q=
     });
   }
   get(companyid: string): CompanyInfo | undefined {
@@ -133,7 +134,8 @@ export class CompanyInfo {
     jurisdiction_code ?: string;
     parent ?: string;
     parentInfo ?: CompanyInfo;
-    crunchbase_url ?: string;
+    crunchbase_url ?: string | SafeResourceUrl;
+    lucky_url ?: string | SafeResourceUrl;
     capita ?: string;
     equity ?: string;
     size ?: string;

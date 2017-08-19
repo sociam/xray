@@ -4831,10 +4831,10 @@
         "": ""
     },
     "Linkedin": {
-        "ch": "linkedin",
-        "id": "Linkedin",
-        "company-old": "linkedin ",
-        "company": "Linkedin ",
+        "ch": "LinkedIn",
+        "id": "LinkedIn",
+        "company-old": "linkedin",
+        "company": "LinkedIn",
         "domains": [
             "linkedin.com",
             "licdn.com",
@@ -4851,8 +4851,7 @@
         "equity": "",
         "size": "",
         "data source": "",
-        "description": "",
-        "": ""
+        "description": "LinkedIn, a professional networking site, allows its members to create business connections, search for jobs, and find potential clients",
     },
     "Limelight Networks": {
         "ch": "Limelight Networks",

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
-// tslint:disable-next-line:quotemark
 import { LoaderService, APIAppInfo, CompanyInfo, cache, memoize } from "app/loader.service";
+import { DomSanitizer } from '@angular/platform-browser';
 
 import * as _ from 'lodash';
 
@@ -10,7 +10,7 @@ const ipv4re = /((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([
 @Injectable()
 export class HostUtilsService {
 
-  constructor(private httpM: HttpModule, private http: Http, private loader: LoaderService) { }
+  constructor(private httpM: HttpModule, private http: Http, private loader: LoaderService, private sanitiser: DomSanitizer) { }
 
   @cache
   fetchccSLDs() : Promise<string[]> {
@@ -126,8 +126,9 @@ export class HostUtilsService {
             // maybe make a synthetic company?
             console.info('making a synthetic company > ');
             const ld2 = this.shorten_2ld(host, cclds),
-            newInfo = new CompanyInfo(ld2, ld2, [host], 'advertising');
+            newInfo = new CompanyInfo(ld2, ld2, [host], 'other');
             companyDetails.add(newInfo);
+            newInfo.lucky_url = this.sanitiser.bypassSecurityTrustResourceUrl('http://www.google.com/search?btnI=I%27m+Feeling+Lucky&ie=UTF-8&oe=UTF-8&q='+ld2);
             return newInfo;
         });
     };
