@@ -16,12 +16,18 @@ div.root {
     }
     // this shoud be in its own 
     .focus {
-        padding: 20px 20px;
+        // padding: 20px 20px;
+        position: relative;
+        padding: 10px 0px;
+        // padding: 0px;
         .app {
             position: relative;
+            border: 1px solid #eee;
+            padding: 20px 20px;
+            font-size: 12pt;
             .appicon {
                 position: absolute;
-                left: 0px;
+                left: 20px;
                 width: 60px;
             }
             .titledev {
@@ -33,14 +39,15 @@ div.root {
                 .developer {
                     font-size: 16pt;
                 }
+                margin-bottom:1em;
             }
             .appdesc {
                 padding: 0px 0px;
+                max-width: 500px;
+                * {
+                    margin-bottom: 1em;
+                }
             }
-        }
-        iframe {
-            min-height: 800px;
-            width: 100%;
         }
     }
     // display: flex;

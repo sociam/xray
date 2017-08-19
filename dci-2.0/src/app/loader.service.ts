@@ -197,12 +197,18 @@ export interface APIAppStub {
   appid: string;
 }
 
+const host_blacklist = ['127.0.0.1','::1','localhost'];
+
 @Injectable()
 export class LoaderService {
 
+  _host_blacklist : {[key:string]:boolean};n
+
   apps: { [id: string]: APIAppInfo } = {};
   
-  constructor(private httpM: HttpModule, private http: Http, private sanitiser: DomSanitizer) { }
+  constructor(private httpM: HttpModule, private http: Http, private sanitiser: DomSanitizer) { 
+    this._host_blacklist = host_blacklist.reduce((obj, a) => obj[a]=true && obj, {});
+  }
 
   @cache
   getAppToHosts(): Promise<App2Hosts> {
@@ -255,7 +261,7 @@ export class LoaderService {
     console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
     appinfo.hosts = uniq((appinfo.hosts || [])
       .map((host: string): string => trim(host.trim(), '".%')))
-      .filter(host => host.length > 3 && host.indexOf('.') >= 0 && host.indexOf('[') < 0);
+      .filter(host => host.length > 3 && host.indexOf('.') >= 0 && host.indexOf('[') < 0 && !this._host_blacklist[host]);
     if (appinfo.hosts && appinfo.hosts.length > 100) {
       console.error('WARNING: this app has too many hosts', appinfo.app);
       appinfo.hosts = appinfo.hosts.slice(0, 50);

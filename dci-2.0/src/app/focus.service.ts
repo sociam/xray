@@ -12,7 +12,6 @@ export class FocusService {
   constructor() {}
 
   focusChanged(focusTarget: FocusTarget) {
-    // console.info('focus changed:: ', focusTarget);
     this.focusChangedSource.next(focusTarget);
   }
   clearState() {

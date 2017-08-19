@@ -1,18 +1,27 @@
-<div class='companyinfo'>
-    <div class="title company">
-        <div [ngClass]="['name', selected.typetag]">{{ selected.id }}
-            <div *ngIf="selected.id !== selected.company">{{selected.company}}</div>
-            <div *ngIf="selected.parent"> ({{ selected.parentInfo?.id }})</div>
+<div [ngClass]='["companytype", selected.typetag]' [ngSwitch]='selected.typetag'>
+    <span *ngSwitchCase='"advertising"'>Mobile Advertising</span>
+    <span *ngSwitchCase='"analytics"'>Analytics</span>
+    <span *ngSwitchCase='"app"'>App Functionality</span>
+    <span *ngSwitchCase='"other"'>Other Functionality</span>
+    <span class="unknown" *ngSwitchDefault>Unknown Type</span>
+</div>
+<div [ngClass]="['companyinfo', selected.typetag]">
+    <div class="curated company">
+        <div class="name">{{ selected.id }}
+            <span class="name" *ngIf="selected.id !== selected.company"> by {{selected.company}}</span>
+            <span class="parent" *ngIf="selected.parent"> by {{ selected.parentInfo?.id }} </span>
         </div>
         <div class="jurisdiction" *ngIf="selected.jurisdiction">{{ selected.jurisdiction.toUpperCase() }} <span *ngIf="selected.jurisdiction_flag" [innerHTML]="selected.jurisdiction_flag"></span></div>
+        <div class="props">
+            <ul>
+                <li class="property description" *ngIf="selected.description"> {{ selected.description }}</li>
+                <li class="property description" *ngIf="!selected.description && selected?.parent && selected.parentInfo?.description">{{ selected.parentInfo.description }}</li>
+                <li class="property equity textonly" *ngIf="selected.equity || selected.parentInfo?.equity"><span class="lbl">equity:</span> ${{ selected.equity || selected.parentInfo?.equity }}</li>
+                <li class="property size" *ngIf="selected.size || selected.parentInfo?.size"><span class="lbl">employees:</span><span [innerHTML]="selected.size + '\&\#x1f466'"></span></li>
+                <li class="property founded textonly" *ngIf="selected.founded"><span class="lbl">founded:</span> {{ selected.founded }}</li>
+            </ul>
+        </div>
     </div>
-    <div class="props">
-        <ul>
-            <li class="property description" *ngIf="selected.description"> {{ selected.description }}</li>
-            <li class="property description" *ngIf="!selected.description && selected?.parent && selected.parentInfo?.description">{{ selected.parentInfo.description }}</li>
-            <li class="property equity textonly" *ngIf="selected.equity || selected.parentInfo?.equity"><span class="lbl">equity:</span> ${{ selected.equity || selected.parentInfo?.equity }}</li>
-            <li class="property size" *ngIf="selected.size || selected.parentInfo?.size"><span class="lbl">employees:</span><span [innerHTML]="selected.size + '\&\#x1f466'"></span></li>
-            <li class="property founded textonly" *ngIf="selected.founded"><span class="lbl">founded:</span> {{ selected.founded }}</li>
-        </ul>
-    </div>
+    <iframe *ngIf="selected?.crunchbase_url" [src]="selected?.crunchbase_url"></iframe>
+    <iframe *ngIf="selected?.lucky_url" [src]="selected?.lucky_url"></iframe>
 </div>
