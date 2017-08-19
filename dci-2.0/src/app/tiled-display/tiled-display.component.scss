@@ -38,6 +38,10 @@ div.root {
                 padding: 0px 0px;
             }
         }
+        iframe {
+            min-height: 800px;
+            width: 100%;
+        }
     }
     // display: flex;
     // flex-direction: row;
