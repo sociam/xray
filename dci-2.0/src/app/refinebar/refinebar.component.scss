@@ -63,6 +63,18 @@ rect.back {
     }
 }
 
+rect.back.advertising:hover {
+    stroke: $advertising !important;
+}
+
+rect.back.analytics:hover {
+    stroke: $analytics !important;
+}
+
+rect.back.app:hover {
+    stroke: $app !important;
+}
+
 g.axis.x .app text,
 rect.back.app,
 rect.legend.app {

@@ -48,10 +48,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() scale = false;
   vbox = { width: 700, height: 1024 };
   highlightColour = '#FF066A';
-
-
   _selectedType: string;
-
+  _companyHovering: CompanyInfo;
 
   constructor(private el: ElementRef, private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
     this.init = Promise.all([
@@ -129,6 +127,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
   _selectCompany(company: CompanyInfo) {
     console.log('selectCompany >', company);
+  }
+  _companyHover(company:CompanyInfo, hovering: boolean) {
+    console.log('_companyHover', company, hovering);
+    this._companyHovering = hovering ? company : undefined;
   }
   // 
   render() {
@@ -252,7 +254,9 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .attr('y', 0)
         .attr('height', height)
         .attr('width', x.bandwidth())
-        .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
+        .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)))
+        .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d), true))
+        .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d), false));        
 
       // main rects
       const f = (selection, first, last) => {
@@ -264,7 +268,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
           .attr('width', x.bandwidth())
-          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)));
+          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
+          .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
+          .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
+  
       };
       g.append('g')
         .selectAll('g')

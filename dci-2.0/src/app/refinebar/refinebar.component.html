@@ -2,6 +2,7 @@
     <div class="mode-options" [hidden]='!showModes'>
         <a [ngClass]="{active: byTime=='yes'}" (click)='byTime="yes"'> By time </a>
         <a [ngClass]="{active: byTime=='no'}" (click)='byTime="no"'> Equal weights </a>
+        <span *ngIf="_companyHovering"> {{ _companyHovering.id }} </span>
     </div>
     <svg #thing></svg>
 </div>
