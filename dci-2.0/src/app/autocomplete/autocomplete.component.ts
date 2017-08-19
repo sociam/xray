@@ -59,7 +59,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
         delete this.fetching;
       }
 
-      this.fetching = this.loader.findApps$({startsWith: this.query.trim(), fullInfo:true, onlyAnalyzed:true})
+      this.fetching = this.loader.findApps$({startsWith: this.query.trim(), fullInfo: true, onlyAnalyzed: true})
       .subscribe((results) => {
 
         if (this.fetching) {

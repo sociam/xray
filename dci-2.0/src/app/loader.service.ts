@@ -4,7 +4,8 @@ import { Http, HttpModule, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { mapValues, keys, mapKeys, values, trim, uniq, toPairs } from 'lodash';
 import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject'
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
@@ -78,7 +79,7 @@ export class CompanyDB {
     DE: '&#x1F1E9;&#x1F1EA;'
   };
 
-  constructor(private _data: { [id: string]: CompanyInfo } ) {
+  constructor(private _data: { [id: string]: CompanyInfo }, private sanitiser: DomSanitizer) {
     mapValues(this._data, (s) => {
       if (s && s.company && s.equity && s.equity.length) {
           let n = parseInt(s.equity, 10);
@@ -91,6 +92,9 @@ export class CompanyDB {
       if (s.parent) {
         s.parentInfo = this.get(s.parent);
       }
+      if (s.crunchbase_url) {
+        s.crunchbase_url = this.sanitiser.bypassSecurityTrustResourceUrl(s.crunchbase_url);
+      }      
     });
   }
   get(companyid: string): CompanyInfo | undefined {
@@ -129,6 +133,7 @@ export class CompanyInfo {
     jurisdiction_code ?: string;
     parent ?: string;
     parentInfo ?: CompanyInfo;
+    crunchbase_url ?: string;
     capita ?: string;
     equity ?: string;
     size ?: string;
@@ -195,7 +200,7 @@ export class LoaderService {
 
   apps: { [id: string]: APIAppInfo } = {};
   
-  constructor(private httpM: HttpModule, private http: Http) { }
+  constructor(private httpM: HttpModule, private http: Http, private sanitiser: DomSanitizer) { }
 
   @cache
   getAppToHosts(): Promise<App2Hosts> {
@@ -230,7 +235,7 @@ export class LoaderService {
   @cache
   getCompanyInfo(): Promise<CompanyDB> {
     return this.http.get('assets/data/company_details.json').toPromise().then(response => {
-      return new CompanyDB(response.json());
+      return new CompanyDB(response.json() as {[name: string]: CompanyInfo}, this.sanitiser);
     });
   }
   getSubstitutions(): Promise<AppSubstitutions> {
@@ -299,10 +304,10 @@ export class LoaderService {
       urlParams.append('appID', options.appID);
     }
     if (options.fullInfo) {
-      urlParams.append('isFull',  options.fullInfo ? 'true': 'false');
+      urlParams.append('isFull',  options.fullInfo ? 'true' : 'false');
     }
     if (options.onlyAnalyzed) {
-      urlParams.append('onlyAnalyzed', options.onlyAnalyzed ? 'true': 'false');
+      urlParams.append('onlyAnalyzed', options.onlyAnalyzed ? 'true' : 'false');
     }
     if (options.limit) {
       urlParams.append('limit', options.limit.toString());

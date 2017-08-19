@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, CompanyDB, CompanyInfo, Host2PITypes } from '../loader.service';
 import * as _ from 'lodash';
-import { HostUtilsService } from "app/host-utils.service";
+import { HostUtilsService } from 'app/host-utils.service';
 
 @Component({
   selector: 'app-company-list',
@@ -19,8 +19,15 @@ export class CompanyListComponent implements OnInit, OnChanges {
   
   init: Promise<any>;
 
-  by_cat: { [category: string] : string[] };
+  by_cat: { [category: string]: string[] };
   categories: string[];
+
+  catfilter = {
+    'advertising': (company: CompanyInfo) =>  company.typetag === 'advertising',
+    'analytics': (company: CompanyInfo) => ['advertising', 'usage', 'advertizing'].indexOf(company.typetag) >= 0, 
+    'functionality': (company: CompanyInfo) => company.typetag === 'app',
+    'other': (company: CompanyInfo) => ['advertising', 'usage', 'app'].indexOf(company.typetag) < 0
+  };
 
   constructor(private loader: LoaderService, private hostutils: HostUtilsService) {
   }
@@ -28,17 +35,7 @@ export class CompanyListComponent implements OnInit, OnChanges {
   getCompanyTypeTag(company: string): string {
     return this.companyid2info.get(company) && this.companyid2info.get(company).typetag;
   }
-
-  catfilter = {
-    'advertising': (company: CompanyInfo) =>  company.typetag == 'advertising',
-    'analytics': (company: CompanyInfo) => ['advertising', 'usage', 'advertizing'].indexOf(company.typetag) >= 0, 
-    'functionality': (company: CompanyInfo) => company.typetag == 'app',
-    'other': (company: CompanyInfo) => ['advertising', 'usage', 'app'].indexOf(company.typetag) < 0
-  };
-
-
   ngOnInit() {  }
-
   ngOnChanges(changes: SimpleChanges): void {
 
     if (!this.app) { return; }

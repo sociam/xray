@@ -25,7 +25,7 @@
         "interface-over-type-literal": true,
         "label-position": true,
         "max-line-length": [
-            true,
+            false,
             320
         ],
         "member-access": false,
@@ -37,7 +37,7 @@
         "no-arg": true,
         "no-bitwise": true,
         "no-console": [
-            true,
+            false,
             "debug",
             "info",
             "time",
@@ -64,7 +64,7 @@
         "no-unnecessary-initializer": true,
         "no-unused-expression": true,
         "no-use-before-declare": true,
-        "no-var-keyword": true,
+        "no-var-keyword": false,
         "object-literal-sort-keys": false,
         "one-line": [
             true,
@@ -75,7 +75,7 @@
         ],
         "prefer-const": false,
         "quotemark": [
-            true,
+            false,
             "single"
         ],
         "radix": true,
@@ -87,7 +87,7 @@
             "allow-null-check"
         ],
         "typedef-whitespace": [
-            true,
+            false,
             {
                 "call-signature": "nospace",
                 "index-signature": "nospace",
@@ -100,7 +100,7 @@
         "unified-signatures": true,
         "variable-name": false,
         "whitespace": [
-            true,
+            false,
             "check-branch",
             "check-decl",
             "check-operator",

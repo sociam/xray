@@ -16,7 +16,8 @@
                 </div>
                 <app-company-list [app]='target?.app'></app-company-list>
             </div>
-            <app-companyinfo *ngIf="targettype == 'company'" [selected]="target"></app-companyinfo>
+            <app-companyinfo *ngIf="targettype == 'company' && !target?.crunchbase_url" [selected]="target"></app-companyinfo>
+            <iframe *ngIf="target?.crunchbase_url" [src]="target?.crunchbase_url"></iframe>
         </div>
     </div>
     <div class="right">

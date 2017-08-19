@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers } from '@angular/http';
+// tslint:disable-next-line:quotemark
 import { LoaderService, APIAppInfo, CompanyInfo, cache, memoize } from "app/loader.service";
 
 import * as _ from 'lodash';
