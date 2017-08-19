@@ -76,7 +76,7 @@ const appRoutes: Routes = [
     AutocompleteComponent,
     AppinfoComponent,
     CompanyinfoComponent,
-    TiledGridComponent
+    TiledGridComponent    
   ],
   imports: [
     HttpModule,

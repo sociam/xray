@@ -92,7 +92,7 @@ export class HostUtilsService {
                 return companyDetails.get(match1);
             }
 
-            // Phase 2 : check to see if the host contains the name is among companies we know
+            // Phase 2 : check to see if the host contains the name of companies we know
             var matching_companies = _(names)
                 .filter((name_frag) => host.indexOf(name_frag.toLowerCase()) >= 0)
                 .sortBy((x) => -x.length) // longer matches first
@@ -101,16 +101,25 @@ export class HostUtilsService {
                 return companyDetails.get(name2id[matching_companies[0]]);
             }
 
-            /// phase 3 :: match with developer name
-            const appdev = app.developer.name.split(' ').map(x => x.toLowerCase().trim()).filter(x => x);
+            /// phase 3 :: match with app developer 
+            const appdev = _.flatten([
+                app.developer.name.split(' '), // try dev name
+                app.app.split('.').slice(1), // try app id
+                app.storeinfo.title.split(' ') // try title
+            ]).map(x => x.toLowerCase().trim()).filter(x => x);
+
             if (host.split('.').map(x => x.toLowerCase().trim()).filter((y) => appdev.indexOf(y) >= 0).length > 0) {
                 // do we try to find a company in our company database? or do we just return it ... :| i dont know          
-                console.error('host matched with developer > ', host);
+                console.error('host matched with developer > ', host, app);
                 const ld2 = this.shorten_2ld(host, cclds),
                     newInfo = new CompanyInfo(ld2, app.developer.name, [host], 'app');
+                newInfo.description = `${app.developer.name} is an app publisher that created ${app.storeinfo.title} and other apps.`;
                 companyDetails.add(newInfo);
                 return newInfo;
             }
+
+            // match with appid
+
             
             // // phase 2: Try to match with app company name
             // if (app_company && row.host.indexOf(app_company) >= 0) {
@@ -127,8 +136,8 @@ export class HostUtilsService {
             console.info('making a synthetic company > ');
             const ld2 = this.shorten_2ld(host, cclds),
             newInfo = new CompanyInfo(ld2, ld2, [host], 'other');
-            companyDetails.add(newInfo);
             newInfo.lucky_url = this.sanitiser.bypassSecurityTrustResourceUrl('http://www.google.com/search?btnI=I%27m+Feeling+Lucky&ie=UTF-8&oe=UTF-8&q='+ld2);
+            companyDetails.add(newInfo);            
             return newInfo;
         });
     };

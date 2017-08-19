@@ -421,9 +421,9 @@
         "": ""
     },
     "Microsoft": {
-        "ch": "microsoft",
+        "ch": "Microsoft",
         "id": "Microsoft",
-        "company-old": "microsoft",
+        "company-old": "Microsoft",
         "company": "Microsoft",
         "domains": [
             "www.msftncsi.com",
@@ -452,7 +452,7 @@
     "Skype": {
         "ch": "skype",
         "id": "Skype",
-        "company-old": "microsoft",
+        "company-old": "Microsoft",
         "company": "Microsoft",
         "domains": [
             "skypeassets.com",
@@ -475,7 +475,7 @@
     "MSN": {
         "ch": "msn",
         "id": "MSN",
-        "company-old": "microsoft",
+        "company-old": "Microsoft",
         "company": "Microsoft",
         "domains": [
             "bat.r.msn.com",
@@ -2579,7 +2579,7 @@
     "Bingads": {
         "ch": "bingads",
         "id": "Bingads",
-        "company-old": "microsoft",
+        "company-old": "Microsoft",
         "company": "Microsoft",
         "domains": [
             "bat.bing.com"
@@ -4301,7 +4301,7 @@
     "Microsoft-Azure": {
         "ch": "microsoft-azure",
         "id": "Microsoft-Azure",
-        "company-old": "microsoft",
+        "company-old": "Microsoft",
         "company": "Microsoft",
         "domains": [
             "azureedge.net"
@@ -4832,12 +4832,13 @@
     },
     "Linkedin": {
         "ch": "LinkedIn",
-        "id": "LinkedIn",
+        "id": "linkedin",
         "company-old": "linkedin",
         "company": "LinkedIn",
         "domains": [
             "linkedin.com",
             "licdn.com",
+            "lnkd.in",
             "bizographics.com"
         ],
         "founded": "",
@@ -4846,12 +4847,12 @@
         "typetag": "app",
         "jurisdiction": "us",
         "jurisdiction_code": "us",
-        "parent": "microsoft",
+        "parent": "Microsoft",
         "capital": "",
         "equity": "",
         "size": "",
         "data source": "",
-        "description": "LinkedIn, a professional networking site, allows its members to create business connections, search for jobs, and find potential clients",
+        "description": "LinkedIn, a professional networking site, allows its members to create business connections, search for jobs, and find potential clients"
     },
     "Limelight Networks": {
         "ch": "Limelight Networks",
