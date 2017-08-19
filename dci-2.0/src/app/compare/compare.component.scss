@@ -9,6 +9,12 @@ div.noicon {
     height: 60px;
 }
 
+.header {
+    text-align: center;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+}
+
 .container {
     width: 100%;
     padding: 0px;
@@ -34,9 +40,21 @@ div.noicon {
         padding: 0px 0px 0px 0px;
     }
     div.right table.comparison tr td.top {
+        .sub-label {
+            //visibility: hidden;
+            text-align: center;
+            color: #ff22ee;
+            opacity: 0.0;
+            font-weight: bold;
+        }
         &:hover {
-            border: 5px solid #ff22ee;
+            border: 3px solid #ff22ee;
             opacity: 1.0;
+            .sub-label {
+                //visibility: visible;
+                transition: all 0.2s;
+                opacity: 1.0;
+            }
         }
         opacity:0.82;
         border: 5px solid white;
