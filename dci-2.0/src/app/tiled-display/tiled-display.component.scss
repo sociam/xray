@@ -16,15 +16,13 @@ div.root {
     }
     // this shoud be in its own 
     .focus {
-        // padding: 20px 20px;
         position: relative;
-        padding: 10px 0px;
-        // padding: 0px;
+        padding: 0px 10px;
         .app {
             position: relative;
-            border: 1px solid #eee;
-            padding: 20px 20px;
+            padding: 20px 0px;
             font-size: 12pt;
+            border-bottom: 1px solid #eee;
             .appicon {
                 position: absolute;
                 left: 20px;
