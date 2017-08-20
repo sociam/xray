@@ -64,8 +64,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     ]);
     hover.HoverChanged$.subscribe((target) => {
       // console.log('hover changed > ', target);
-      this._hoveringApp = target ? target as APIAppInfo : undefined;
-      this.render();
+      if (target !== this._hoveringApp) {
+        this._hoveringApp = target ? target as APIAppInfo : undefined;
+        this.render();
+      }
     });
     (<any>window)._rb = this;
   }
@@ -363,25 +365,12 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .enter()
           .append('g')
           .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
-          .on('mouseenter', (d) => {
-            let app = this.loader.getCachedAppInfo(d);
-            this.hover.hoverChanged(app);
-            setTimeout(() => {
-              if (this.hover.getState() === app) {
-                this.hover.hoverChanged(undefined);
-              }
-            }, 1000);
-          }).on('mouseout', (d) => {
-            console.log('mouse OUT');
-            this.hover.hoverChanged(undefined);
+          .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
+          .on('mouseout', (d) => this.hover.hoverChanged(undefined))
+          .on('click', (d) => {
+            console.log('click! ', d);
+            this.focus.focusChanged(this.loader.getCachedAppInfo(d));
           });
-          // .on('click', (d) => {
-          //   if (!this.hover.getState() || this.hover.getState() !== this.loader.getCachedAppInfo(d)) {
-          //     this.hover.hoverChanged(this.loader.getCachedAppInfo(d));
-          //   } else {
-          //     this.hover.hoverChanged(undefined);
-          //   }
-          // });
                   
         legend.append('rect')
           .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
