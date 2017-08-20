@@ -291,6 +291,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           // highlightApp comes in from @Input() attribute, set using compare
           // _apphover comes in from hovering service, namely usagetable hover
           let highApp = this.highlightApp || this._hoveringApp;
+          console.log('highApp > ', highApp);
           if (highApp) {
             return d.key === highApp.app ? z(d.key) : 'rgba(200,200,200,0.2)';
           }
