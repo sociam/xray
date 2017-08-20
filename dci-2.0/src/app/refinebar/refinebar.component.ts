@@ -290,7 +290,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           // _apphover comes in from hovering service, namely usagetable hover
           let highApp = this.highlightApp || this._hoveringApp;
           if (highApp) {
-            return d.key === highApp.app ? this.highlightColour : 'rgba(100,100,100,0.2)';
+            return d.key === highApp.app ? z(d.key) : 'rgba(200,200,200,0.2)';
           }
           return z(d.key);
         })
@@ -361,8 +361,13 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .selectAll('g')
           .data(apps.slice().reverse())
           .enter().append('g')
-          .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; });
-
+          .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
+          .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
+          .on("mouseleave", (d) => {
+            console.log('mouseleave -- ', d);
+            this.hover.hoverChanged(undefined);
+          });
+        
         legend.append('rect')
           .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
           .attr('width', 19)
@@ -374,6 +379,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .attr('y', 9.5)
           .attr('dy', '0.32em')
           .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
+
       }
 
       if (this._hoveringType) {
