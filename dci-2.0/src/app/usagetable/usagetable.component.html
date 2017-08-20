@@ -7,7 +7,7 @@
     </div>
     <table>
         <tr class="rows" *ngFor="let appusage of usages">
-            <td class="left" (click)="appFocused(appusage.appid)">
+            <td class="left" (click)="appFocused(appusage.appid)" (mouseenter)="_onHover(appusage.appid)" (mouseleave)="_onHover()">
                 <img *ngIf="getAppIcon(appusage.appid)" class='appicon' [src]="getAppIcon(appusage.appid)" alt="^_^">
                 <div *ngIf="!getAppIcon(appusage.appid)" class="noicon"></div>
                 <a class="title">{{ getAppName(appusage.appid).split(' ').slice(0,3).join(' ') }}</a>

@@ -23,8 +23,11 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { HostUtilsService } from "app/host-utils.service";
 import { AppinfoComponent } from './appinfo/appinfo.component';
 import { CompanyinfoComponent } from './companyinfo/companyinfo.component';
-import { FocusService } from "app/focus.service";
 import { TiledGridComponent } from './tiled-grid/tiled-grid.component';
+import { RefinecatComponent } from './refinecat/refinecat.component';
+
+import { FocusService } from "app/focus.service";
+import { HoverService } from "app/hover.service";
 
 
 const appRoutes: Routes = [
@@ -76,7 +79,8 @@ const appRoutes: Routes = [
     AutocompleteComponent,
     AppinfoComponent,
     CompanyinfoComponent,
-    TiledGridComponent    
+    TiledGridComponent,
+    RefinecatComponent    
   ],
   imports: [
     HttpModule,
@@ -88,7 +92,7 @@ const appRoutes: Routes = [
     ),
     Ng2CompleterModule
   ],
-  providers: [LoaderService, UsageConnectorService, HostUtilsService, FocusService],
+  providers: [LoaderService, UsageConnectorService, HostUtilsService, FocusService, HoverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

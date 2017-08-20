@@ -5,7 +5,6 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 import { HostUtilsService } from 'app/host-utils.service';
 import { FocusService } from 'app/focus.service';
-import { HoverService, HoverTarget } from "app/hover.service";
 
 interface AppImpact {
   appid: string;
@@ -14,17 +13,14 @@ interface AppImpact {
 };
 
 @Component({
-  selector: 'app-refinebar',
-  templateUrl: './refinebar.component.html',
-  styleUrls: ['./refinebar.component.scss'],
+  selector: 'app-refinecat',
+  templateUrl: './refinecat.component.html',
+  styleUrls: ['./refinecat.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RefinebarComponent implements AfterViewInit, OnChanges {
-  // refactor to get rid of -- 
-  // app2hosts: App2Hosts;
-  // host2companyid: String2String;
-  // host2short: String2String;
-
+export class RefinecatComponent implements AfterViewInit, OnChanges {
+  // clone of refinebar but orgnaised by category
+  
   // still in use!
   companyid2info: CompanyDB;
 
@@ -41,7 +37,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   // incoming attribute
   @Input('appusage') usage_in: AppUsage[];
   @Input() showModes = true;
-  @Input() highlightApp: APIAppInfo;
+  @Input() highlightApp: string;
   @Input() showLegend = true;
   @Input() showTypesLegend = true;
   @Input() showXAxis = true;
@@ -49,31 +45,19 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() scale = false;
   vbox = { width: 700, height: 1024 };
   highlightColour = '#FF066A';
-
-  _hoveringType: string;
+  _selectedType: string;
   _companyHovering: CompanyInfo;
-  _hoveringApp: APIAppInfo;
 
-  constructor(private el: ElementRef,
-    private loader: LoaderService,
-    private hostutils: HostUtilsService,
-    private focus: FocusService,
-    private hover: HoverService) {
+  constructor(private el: ElementRef, private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
     this.init = Promise.all([
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
     ]);
-    hover.HoverChanged$.subscribe((target) => {
-      // console.log('hover changed > ', target);
-      this._hoveringApp = target ? target as APIAppInfo : undefined;
-      this.render();
-    });
     (<any>window)._rb = this;
   }
   getSVGElement() {
     const nE: HTMLElement = this.el.nativeElement;
     return Array.from(nE.getElementsByTagName('svg'))[0];
   }
-  
 
   // this gets called when this.usage_in changes
   ngOnChanges(changes: SimpleChanges): void {
@@ -127,9 +111,9 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   get byTime() { return this._byTime; }
 
 
-  setHoveringTypeHighlight(ctype: string) {
+  setSelectedTypeHighlight(ctype: string) {
     let svg = this.getSVGElement();
-    this._hoveringType = ctype;
+    this._selectedType = ctype;
     d3.select(svg).selectAll('rect.back').classed('reveal', false);
     d3.select(svg).selectAll('.ctypelegend g').classed('selected', false)
     if (ctype) {
@@ -138,12 +122,13 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     };
   }
 
-  // this is for displaying what company you're hovering on based 
-  // on back rects
-  _companyHover(company: CompanyInfo, hovering: boolean) {
+  _selectCompany(company: CompanyInfo) {
+    console.log('selectCompany >', company);
+  }
+  _companyHover(company:CompanyInfo, hovering: boolean) {
+    console.log('_companyHover', company, hovering);
     this._companyHovering = hovering ? company : undefined;
   }
-
   // 
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
@@ -244,16 +229,20 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
 
 
-      if (d3maxx < 0.7 * ymaxx) {
-        ymaxx = 1.1 * d3maxx;
-      }
+        if (d3maxx < 0.7 * ymaxx) {
+          ymaxx = 1.1 * d3maxx;
+        }  
 
-      let y = d3.scaleLinear()
-        .rangeRound([height, 0])
-        .domain([0, ymaxx]).nice(),
+      let  y = d3.scaleLinear()
+          .rangeRound([height, 0])
+          .domain([0, ymaxx]).nice(),
         z = d3.scaleOrdinal(d3.schemeCategory20)
           .domain(apps);
+      // z = d3.scaleOrdinal()
+      //   .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
+      //   .domain(apps);
 
+      
       g.selectAll('rect.back')
         .data(companies)
         .enter().append('rect')
@@ -264,7 +253,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .attr('width', x.bandwidth())
         .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)))
         .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d), true))
-        .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d), false));
+        .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d), false));        
 
       // main rects
       const f = (selection, first, last) => {
@@ -279,18 +268,15 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
           .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
           .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
+  
       };
-
       g.append('g')
         .selectAll('g')
         .data(d3.stack().keys(apps)(by_company))
         .enter().append('g')
         .attr('fill', (d) => {
-          // highlightApp comes in from @Input() attribute, set using compare
-          // _apphover comes in from hovering service, namely usagetable hover
-          let highApp = this.highlightApp || this._hoveringApp;
-          if (highApp) {
-            return d.key === highApp.app ? this.highlightColour : 'rgba(100,100,100,0.2)';
+          if (this.highlightApp !== undefined) {
+            return d.key === this.highlightApp ? this.highlightColour : '#bbb';
           }
           return z(d.key);
         })
@@ -308,14 +294,14 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         .attr('dy', '.15em')
         .attr('transform', 'rotate(-90)');
 
-      if (!this.showXAxis) {
+        if (!this.showXAxis) {
         svg.selectAll('g.axis.x text').text('');
         svg.selectAll('g.axis.x g.tick').remove();
       } else {
         svg.selectAll('g.axis.x g.tick')
-          .filter(function (d) { return d; })
-          .attr('class', (d) => this.companyid2info.get(d).typetag)
-          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
+        .filter(function (d) { return d; })
+        .attr('class', (d) => this.companyid2info.get(d).typetag)
+        .on('click', (d) => this._selectCompany(this.companyid2info.get(d)));
       }
 
       g.append('g')
@@ -329,7 +315,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
       // legend
       const leading = 26;
-
+      
       if (this.showTypesLegend) {
         const ctypes = ['advertising', 'analytics', 'app', 'other'],
           ctypeslegend = g.append('g')
@@ -339,7 +325,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
             .data(ctypes)
             .enter().append('g')
             .attr('class', (d) => d)
-            .on('mouseenter', (d) => this.setHoveringTypeHighlight(d))
+            .on('mouseenter', (d) => this.setSelectedTypeHighlight(d))
             // .on("mouseleave", (d) => d3.selectAll('rect.back.' + d).classed('reveal', false))
             .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
 
@@ -376,8 +362,9 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
       }
 
-      if (this._hoveringType) {
-        this.setHoveringTypeHighlight(this._hoveringType)
+
+      if (this._selectedType) {
+        this.setSelectedTypeHighlight(this._selectedType)
       }
     });
   }

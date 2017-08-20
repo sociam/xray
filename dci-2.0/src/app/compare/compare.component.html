@@ -13,7 +13,7 @@
                         <div class="publisher">by {{ appInfo(original_app?.target.appid)?.developer?.name }}</div>
                         <div class="rating">{{ appInfo(original_app?.target.appid)?.storeinfo.rating }} <img src="../../assets/start.png"> </div>
                     </div>
-                    <app-refinebar [appusage]='original_app?.all' [showXAxis]='false' [showTypesLegend]='false' [showModes]='false' [highlightApp]='original_app?.target.appid' [showLegend]='false'></app-refinebar>
+                    <app-refinebar [appusage]='original_app?.all' [showXAxis]='false' [showTypesLegend]='false' [showModes]='false' [highlightApp]='original_app?.target' [showLegend]='false'></app-refinebar>
                     <div class="appdesc">
                         <div class="summary">{{ appInfo(original_app?.target.appid)?.storeinfo.summary }}</div>
                         <div class="desc">{{ appInfo(original_app?.target.appid)?.storeinfo.description?.split(' ').slice(0,50).join(' ') }}</div>

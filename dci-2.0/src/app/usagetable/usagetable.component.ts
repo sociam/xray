@@ -5,6 +5,7 @@ import { Http, HttpModule, Headers } from '@angular/http';
 import * as _ from 'lodash';
 import { UsageConnectorService } from '../usage-connector.service';
 import { FocusService } from 'app/focus.service';
+import { HoverService } from "app/hover.service";
 
 export interface AppUsage { appid: string; mins: number };
 
@@ -75,7 +76,11 @@ export class UsagetableComponent implements OnInit {
   companies: CompanyDB;
   private alternatives: { [app: string]: APIAppInfo[] } = {};
 
-  constructor(private loader: LoaderService, private connector: UsageConnectorService, private focus: FocusService) { 
+  constructor(private loader: LoaderService, 
+    private connector: UsageConnectorService, 
+    private focus: FocusService,
+    private hover: HoverService) { 
+      
   }
 
   get usages() { return this._usages; }
@@ -90,6 +95,13 @@ export class UsagetableComponent implements OnInit {
   ngOnInit() {
     this.loader.getCompanyInfo().then(companydb => this.companies = companydb);
     this.usages = this.connector.getState().map(usage => new AppUsageHHMM(usage));    
+  }
+
+  _onHover(appid :string) {
+    if (appid) { 
+      return this.hover.hoverChanged(this.loader.getCachedAppInfo(appid));
+    } 
+    this.hover.hoverChanged(undefined);    
   }
 
   appSelected(appinfo: APIAppInfo) {
