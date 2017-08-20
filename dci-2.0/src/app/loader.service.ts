@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Http, HttpModule, Headers } from '@angular/http';
+import { Http, HttpModule, Headers, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { mapValues, keys, mapKeys, values, trim, uniq, toPairs } from 'lodash';
 import { Observable } from 'rxjs/Observable';
@@ -302,8 +302,13 @@ export class LoaderService {
 
   @memoize((hosts) => hosts.join('::'))
   getHostsGeos(hosts: string[]): Promise<{[host: string]: GeoIPInfo[]}> {
-    const hostsParam = hosts.map(x => x.trim()).join(',');      
-    return this.http.get(API_ENDPOINT + `/hosts?hosts=${hostsParam}`).toPromise()
+
+    const hostsParam = hosts.map(x => x.trim()).join(','),
+      urlSP = new URLSearchParams(); 
+
+    urlSP.set('hosts', hostsParam);
+
+    return this.http.get(API_ENDPOINT + `/hosts?${urlSP.toString()}`).toPromise()
       .then(response => response.json() as ({[host:string]: GeoIPInfo[]}));
   }
 
