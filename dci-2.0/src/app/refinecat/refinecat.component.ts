@@ -5,11 +5,13 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 import { HostUtilsService } from 'app/host-utils.service';
 import { FocusService } from 'app/focus.service';
+import { HoverService, HoverTarget } from "app/hover.service";
 
-interface AppImpact {
+interface AppImpactCat {
   appid: string;
   companyid: string;
   impact: number;
+  category?: string;
 };
 
 @Component({
@@ -19,8 +21,7 @@ interface AppImpact {
   encapsulation: ViewEncapsulation.None
 })
 export class RefinecatComponent implements AfterViewInit, OnChanges {
-  // clone of refinebar but orgnaised by category
-  
+
   // still in use!
   companyid2info: CompanyDB;
 
@@ -37,7 +38,7 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
   // incoming attribute
   @Input('appusage') usage_in: AppUsage[];
   @Input() showModes = true;
-  @Input() highlightApp: string;
+  @Input() highlightApp: APIAppInfo;
   @Input() showLegend = true;
   @Input() showTypesLegend = true;
   @Input() showXAxis = true;
@@ -45,20 +46,31 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
   @Input() scale = false;
   vbox = { width: 700, height: 1024 };
   highlightColour = '#FF066A';
-  _selectedType: string;
-  _companyHovering: CompanyInfo;
 
-  constructor(private el: ElementRef, private loader: LoaderService, private hostutils: HostUtilsService, private focus: FocusService) {
+  _companyHovering: CompanyInfo;
+  _hoveringApp: APIAppInfo;
+
+  constructor(private el: ElementRef,
+    private loader: LoaderService,
+    private hostutils: HostUtilsService,
+    private focus: FocusService,
+    private hover: HoverService) {
     this.init = Promise.all([
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
     ]);
+    hover.HoverChanged$.subscribe((target) => {
+      // console.log('hover changed > ', target);
+      if (target !== this._hoveringApp) {
+        this._hoveringApp = target ? target as APIAppInfo : undefined;
+        this.render();
+      }
+    });
     (<any>window)._rb = this;
   }
   getSVGElement() {
     const nE: HTMLElement = this.el.nativeElement;
     return Array.from(nE.getElementsByTagName('svg'))[0];
   }
-
   // this gets called when this.usage_in changes
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.usage_in) { return; }
@@ -67,7 +79,6 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
         delete this.apps;
       }
       this.usage = this.usage_in;
-      console.log('>> REFINEBAR new usage ', JSON.stringify(this.usage));
       this.render();
     });
   }
@@ -79,7 +90,7 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
       || this.loader.getFullAppInfo(appid);
   }
 
-  compileImpacts(usage: AppUsage[]): Promise<AppImpact[]> {
+  compileImpacts(usage: AppUsage[]): Promise<AppImpactCat[]> {
     // folds privacy impact in simply by doing a weighted sum over hosts
     // usage has to be in a standard unit: days, minutes
     // first, normalise usage
@@ -88,17 +99,16 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
       total = _.reduce(usage, (tot, appusage): number => tot + (timebased ? appusage.mins : 1.0), 0),
       impacts = usage.map((u) => ({ ...u, impact: (timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0)) }));
 
-    return Promise.all(impacts.map((usg): Promise<AppImpact[]> => {
-
+    return Promise.all(impacts.map((usg): Promise<AppImpactCat[]> => {
       return this._getApp(usg.appid).then(app => {
         const hosts = app && app.hosts;
         if (!hosts) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
 
         return Promise.all(hosts.map(host => this.hostutils.findCompany(host, app)))
           .then((companies: CompanyInfo[]) => _.uniq(companies.filter((company) => company !== undefined && company.typetag !== 'ignore')))
-          .then((companies: CompanyInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.id, impact: usg.impact })));
+          .then((companies: CompanyInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.id, category: company.typetag, impact: usg.impact })));
       });
-    })).then((nested_impacts: AppImpact[][]): AppImpact[] => _.flatten(nested_impacts));
+    })).then((nested_impacts: AppImpactCat[][]): AppImpactCat[] => _.flatten(nested_impacts));
   }
 
 
@@ -111,24 +121,12 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
   get byTime() { return this._byTime; }
 
 
-  setSelectedTypeHighlight(ctype: string) {
-    let svg = this.getSVGElement();
-    this._selectedType = ctype;
-    d3.select(svg).selectAll('rect.back').classed('reveal', false);
-    d3.select(svg).selectAll('.ctypelegend g').classed('selected', false)
-    if (ctype) {
-      d3.select(svg).selectAll('rect.back.' + ctype).classed('reveal', true);
-      d3.select(svg).selectAll('.ctypelegend g.' + ctype).classed('selected', true)
-    };
-  }
-
-  _selectCompany(company: CompanyInfo) {
-    console.log('selectCompany >', company);
-  }
-  _companyHover(company:CompanyInfo, hovering: boolean) {
-    console.log('_companyHover', company, hovering);
+  // this is for displaying what company you're hovering on based 
+  // on back rects
+  _companyHover(company: CompanyInfo, hovering: boolean) {
     this._companyHovering = hovering ? company : undefined;
   }
+
   // 
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
@@ -161,15 +159,15 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
     this.compileImpacts(this.usage).then(impacts => {
 
       let apps = _.uniq(impacts.map((x) => x.appid)),
-        companies = _.uniq(impacts.map((x) => x.companyid)),
+        categories = _.uniq(impacts.map((x) => x.category)),
         get_impact = (cid, aid) => {
-          const t = impacts.filter((imp) => imp.companyid === cid && imp.appid === aid)[0];
+          const t = impacts.filter((imp) => imp.category === cid && imp.appid === aid)[0];
           return t !== undefined ? t.impact : 0;
         },
-        by_company = companies.map((c) => ({
-          company: c,
-          total: apps.reduce((total, aid) => total += get_impact(c, aid), 0),
-          ..._.fromPairs(apps.map((aid) => [aid, get_impact(c, aid)]))
+        by_category = categories.map((catname) => ({
+          category: catname,
+          total: apps.reduce((total, appid) => total += get_impact(catname, appid), 0),
+          ..._.fromPairs(apps.map((appid) => [appid, get_impact(catname, appid)]))
         }));
 
       if (this.apps === undefined) {
@@ -189,71 +187,37 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
           return targetc;
         };
-      },
-        catcolours = { // .interpolate(d3.interpolateHsl).
-          'advertising': satBand('adv', apps, 0.2, 0.6, 0.2, 1),
-          'app': satBand('app', apps, 80, 0.6, 0.2, 1),
-          'analytics': satBand('analytics', apps, 30, 0.4, 0.2, 1),
-          'usage': satBand('usage', apps, 30, 0.6, 0.2, 1),
-          'other': satBand('other', apps, 0.5, 0.6, 0.2, 1)
-        },
-        getColor = (app: string, company: string): string => {
-          if (app === undefined) {
-            app = apps[0]; // apps.length - 1];
-          }
-          let companyInfo = this.companyid2info.get(company);
-          if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
-            return catcolours[companyInfo.typetag](app);
-          }
-          return catcolours.other(app);
-        };
+      };
 
       (<any>window).d3 = d3;
 
-      by_company.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
+      by_category.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
 
       // re-order companies
-      companies = by_company.map((bc) => bc.company);
+      categories = by_category.map((bc) => bc.company);
 
       const stack = d3.stack(),
-        out = stack.keys(apps)(by_company);
+        out = stack.keys(apps)(by_category);
 
-      let margin = { top: 20, right: 20, bottom: this.showXAxis ? 130 : 0, left: 40 },
+      let margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
         height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
         g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
         x = d3.scaleBand()
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
-          .domain(companies),
-        d3maxx = d3.max(by_company, function (d) { return d.total; }) || 0,
+          .domain(categories),
+        d3maxx = d3.max(by_category, function (d) { return d.total; }) || 0,
         ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
 
 
-        if (d3maxx < 0.7 * ymaxx) {
-          ymaxx = 1.1 * d3maxx;
-        }  
+      if (d3maxx < 0.7 * ymaxx) {
+        ymaxx = 1.1 * d3maxx;
+      }
 
-      let  y = d3.scaleLinear()
-          .rangeRound([height, 0])
-          .domain([0, ymaxx]).nice(),
-        z = d3.scaleOrdinal(d3.schemeCategory20)
-          .domain(apps);
-      // z = d3.scaleOrdinal()
-      //   .range(['#98abc5', '#8a89a6', '#7b6888', '#6ba486b', '#a05d56', '#d0743c', '#ff8c00'])
-      //   .domain(apps);
-
-      
-      g.selectAll('rect.back')
-        .data(companies)
-        .enter().append('rect')
-        .attr('class', (company) => 'back ' + this.companyid2info.get(company).typetag)
-        .attr('x', (company) => x(company))
-        .attr('y', 0)
-        .attr('height', height)
-        .attr('width', x.bandwidth())
-        .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)))
-        .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d), true))
-        .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d), false));        
+      let y = d3.scaleLinear()
+        .rangeRound([height, 0])
+        .domain([0, ymaxx]).nice(),
+        z = d3.scaleOrdinal(d3.schemeCategory20).domain(apps);
 
       // main rects
       const f = (selection, first, last) => {
@@ -268,15 +232,18 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
           .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
           .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
-  
       };
+
       g.append('g')
         .selectAll('g')
-        .data(d3.stack().keys(apps)(by_company))
+        .data(d3.stack().keys(apps)(by_category))
         .enter().append('g')
         .attr('fill', (d) => {
-          if (this.highlightApp !== undefined) {
-            return d.key === this.highlightApp ? this.highlightColour : '#bbb';
+          // highlightApp comes in from @Input() attribute, set using compare
+          // _apphover comes in from hovering service, namely usagetable hover
+          let highApp = this.highlightApp || this._hoveringApp;
+          if (highApp) {
+            return d.key === highApp.app ? z(d.key) : 'rgba(200,200,200,0.2)';
           }
           return z(d.key);
         })
@@ -294,14 +261,14 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
         .attr('dy', '.15em')
         .attr('transform', 'rotate(-90)');
 
-        if (!this.showXAxis) {
+      if (!this.showXAxis) {
         svg.selectAll('g.axis.x text').text('');
         svg.selectAll('g.axis.x g.tick').remove();
       } else {
         svg.selectAll('g.axis.x g.tick')
-        .filter(function (d) { return d; })
-        .attr('class', (d) => this.companyid2info.get(d).typetag)
-        .on('click', (d) => this._selectCompany(this.companyid2info.get(d)));
+          .filter(function (d) { return d; })
+          .attr('class', (d) => this.companyid2info.get(d).typetag)
+          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
       }
 
       g.append('g')
@@ -315,40 +282,22 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
 
       // legend
       const leading = 26;
-      
-      if (this.showTypesLegend) {
-        const ctypes = ['advertising', 'analytics', 'app', 'other'],
-          ctypeslegend = g.append('g')
-            .attr('class', 'ctypelegend')
-            .attr('transform', 'translate(0,10)')
-            .selectAll('g')
-            .data(ctypes)
-            .enter().append('g')
-            .attr('class', (d) => d)
-            .on('mouseenter', (d) => this.setSelectedTypeHighlight(d))
-            // .on("mouseleave", (d) => d3.selectAll('rect.back.' + d).classed('reveal', false))
-            .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
-
-        ctypeslegend.append('rect')
-          .attr('x', width - 19)
-          .attr('width', 19)
-          .attr('height', 19)
-          .attr('class', (d) => 'legend ' + d);
-        ctypeslegend.append('text')
-          .attr('x', width - 24)
-          .attr('y', 9.5)
-          .attr('dy', '0.32em')
-          .text((d) => d);
-      }
       if (this.showLegend) {
         const legend = g.append('g')
           .attr('class', 'legend')
           .attr('transform', 'translate(0,10)')
           .selectAll('g')
           .data(apps.slice().reverse())
-          .enter().append('g')
-          .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; });
-
+          .enter()
+          .append('g')
+          .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
+          .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
+          .on('mouseout', (d) => this.hover.hoverChanged(undefined))
+          .on('click', (d) => {
+            console.log('click! ', d);
+            this.focus.focusChanged(this.loader.getCachedAppInfo(d));
+          });
+                  
         legend.append('rect')
           .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
           .attr('width', 19)
@@ -360,12 +309,9 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           .attr('y', 9.5)
           .attr('dy', '0.32em')
           .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
+
       }
 
-
-      if (this._selectedType) {
-        this.setSelectedTypeHighlight(this._selectedType)
-      }
     });
   }
   @HostListener('window:resize')
