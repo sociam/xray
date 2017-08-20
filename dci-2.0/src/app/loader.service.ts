@@ -6,6 +6,7 @@ import { mapValues, keys, mapKeys, values, trim, uniq, toPairs } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import * as _ from 'lodash';
 
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
@@ -18,6 +19,21 @@ export interface Host2PITypes { [host: string]: PI_TYPES[] }
 export interface String2String { [host: string]: string }
 
 export interface AppSubstitutions { [app: string]: string[] };
+
+export class GeoIPInfo {
+  host?: string;
+  ip: string;
+  country_code?: string;
+  country_name?: string;
+  region_code?: string;
+  region_name?: string;
+  city?: string;
+  zip_code?: string;
+  time_zone?: string;
+  latitude?: number;
+  longitude?: number;
+  metro_code?: number;  
+};
 
 export let cache = (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
   // console.log('@cache:: ~~ ', target, propertyKey, descriptor);
@@ -175,7 +191,8 @@ export class APIAppInfo {
     region: string; // us
     ver: string; // date string 
     screenFlags: number;
-    hosts: string[] | undefined;
+    hosts?: string[];
+    host_locations?: string[];
     storeinfo: { 
       title: string;
       summary: string;
@@ -259,15 +276,35 @@ export class LoaderService {
   _prepareAppInfo(appinfo: APIAppInfo) {
     appinfo.icon = appinfo.icon && appinfo.icon !== null && appinfo.icon.trim() !== 'null' ? this.makeIconPath(appinfo.icon) : undefined;
     console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
+
     appinfo.hosts = uniq((appinfo.hosts || [])
       .map((host: string): string => trim(host.trim(), '".%')))
-      .filter(host => host.length > 3 && host.indexOf('.') >= 0 && host.indexOf('[') < 0 && !this._host_blacklist[host]);
+      .filter(host => host.length > 3 && host.indexOf('%s') < 0 && host.indexOf('.') >= 0 && host.indexOf('[') < 0 && !this._host_blacklist[host]);
+
+    this.getHostsGeos(appinfo.hosts).then(geomap => {
+      return _.uniqBy(appinfo.hosts.map(host => {
+        var geo = geomap[host];
+        if (!geo) { console.error(' Dean didnt give me a geo for :( ', host); }
+        return host[0] && _.extend({}, geo[0], {host:host});
+      }).filter(x => x), (gip) => gip.ip)
+    }).then((hostgeos) => {
+      console.log('got all me host geos for ', appinfo.app, hostgeos);
+      appinfo.host_locations = hostgeos;
+    });
+
     if (appinfo.hosts && appinfo.hosts.length > 100) {
       console.error('WARNING: this app has too many hosts', appinfo.app);
       appinfo.hosts = appinfo.hosts.slice(0, 50);
     }
     this.apps[appinfo.app] = appinfo;
     return appinfo;
+  }
+
+  @memoize((hosts) => hosts.join('::'))
+  getHostsGeos(hosts: string[]): Promise<{[host: string]: GeoIPInfo[]}> {
+    const hostsParam = hosts.map(x => x.trim()).join(',');      
+    return this.http.get(API_ENDPOINT + `/hosts?hosts=${hostsParam}`).toPromise()
+      .then(response => response.json() as ({[host:string]: GeoIPInfo[]}));
   }
 
   findApps(query: string): Promise<APIAppInfo[]> {
