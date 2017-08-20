@@ -26,8 +26,10 @@ const createDriver = () => {
         driver.manage().timeouts().setScriptTimeout(10000);
         return driver;
     },
-    findCompany = (driver, cname) => {
+    findCompany = (cname) => {
         // var idpat = /id=([^&]*)/;
+        var driver = createDriver();
+        driver.manage().deleteAllCookies();
         return Promise.delay(1500 + 1000 * Math.random())
             .then(() => driver.get(`https://www.google.com/search?q=crunchbase%20${cname.trim().toLowerCase()}`))
             // /html/body/home/div/div/div/div/search/div/div/md-content/results/div/div/grid/div/div[2]/grid-body/md-virtual-repeat-container/div/div[2]/div/div/div[2]/field-formatter/div/span/a
@@ -39,6 +41,12 @@ const createDriver = () => {
             }).then((elements) => {
                 console.log('els > ', elements.length, elements);
                 return Promise.all(elements.map(elem => driver.executeScript("return arguments[0].innerHTML;", elem)));
+            }).then((results) => {
+                driver.quit();
+                return results;
+            }).catch(e => {
+                driver.quit();
+                return {};
             });
     },
     save_db = () => {
@@ -59,7 +67,7 @@ const createDriver = () => {
                 return;
             }
 
-            let p = hit ? Promise.resolve(hit) : findCompany(driver, name);
+            let p = hit ? Promise.resolve(hit) : findCompany(name);
             p.then((results) => {
                 res.send(results);
                 if (!hit) {
@@ -73,11 +81,10 @@ const createDriver = () => {
 
 
 if (require.main === module) {
-    var driver = createDriver();
-    driver.manage().deleteAllCookies();
+
     if (process.argv[2]) {
         console.info('manually querying for ', process.argv[2])
-        findCompany(driver, process.argv[2]).then((matches) => {
+        findCompany(process.argv[2]).then((matches) => {
             console.log('matches ', matches);
             driver.quit();
         });
@@ -87,6 +94,6 @@ if (require.main === module) {
             console.log('')
             database = JSON.parse(fs.readFileSync(cache_path));
         }
-        run_server(driver);
+        run_server();
     }
 }
