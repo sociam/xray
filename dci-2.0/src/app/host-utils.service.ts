@@ -7,17 +7,28 @@ import * as _ from 'lodash';
 
 const ipv4re = /((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$)|(^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$))/;
 
+
+interface AdHostMap {[host: string]: boolean};
+
 @Injectable()
 export class HostUtilsService {
 
   constructor(private httpM: HttpModule, private http: Http, private loader: LoaderService, private sanitiser: DomSanitizer) { }
 
+  
   @cache
   fetchccSLDs() : Promise<string[]> {
       return this.http.get('assets/data/ccsld.txt').toPromise()
         .then((x) => x.text())
         .then((ccsld) => ccsld.split('\n').filter((x) => (x && x.trim().length > 0 && x.indexOf('.') >= 0 && x.indexOf('//') < 0 && x.indexOf('!') < 0 && x.indexOf('*') < 0)));
   }
+
+  @cache
+  fetchAdHosts(): Promise<AdHostMap> {
+    return this.http.get('assets/data/ads.json').toPromise()
+        .then((x) => x.json() as AdHostMap);
+  }
+
 
   getIdByDomain(): Promise<{[id: string] : string}> {
     // reversed version of ^^ getDomainsById for O(1)
@@ -64,9 +75,10 @@ export class HostUtilsService {
       return Promise.all([
           this.loader.getCompanyInfo(),
           this.getIdByDomain(),
-          this.fetchccSLDs()          
+          this.fetchccSLDs(),
+          this.fetchAdHosts()
         ]).then(loaded => {
-          const [ companyDetails, d2id, cclds ] = loaded,
+          const [ companyDetails, d2id, cclds, adhosts ] = loaded,
             name2id = companyDetails.getCompanyInfos().reduce((a, x) => {
                 a[x.company] = x.id;
                 a[x.company.toLowerCase()] = x.id;
@@ -132,10 +144,22 @@ export class HostUtilsService {
             //     return;
             // }
 
+
+
             // maybe make a synthetic company?
             console.info('making a synthetic company > ');
-            const ld2 = this.shorten_2ld(host, cclds),
-            newInfo = new CompanyInfo(ld2, ld2, [host], 'other');
+            const ld2 = this.shorten_2ld(host, cclds);
+
+            if (adhosts[ld2]) {
+                // 
+                console.warn(`boom got an advertising host ${ld2}`);
+                let newInfo = new CompanyInfo(ld2, ld2, [host], 'advertising');                
+                newInfo.description =  `${ld2} is a mobile advertising and engagement company`;
+                companyDetails.add(newInfo);                            
+                return newInfo;
+            } 
+            
+            let newInfo = new CompanyInfo(ld2, ld2, [host], 'other');
             newInfo.lucky_url = this.sanitiser.bypassSecurityTrustResourceUrl('http://www.google.com/search?btnI=I%27m+Feeling+Lucky&ie=UTF-8&oe=UTF-8&q='+ld2);
             companyDetails.add(newInfo);            
             return newInfo;
