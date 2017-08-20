@@ -360,7 +360,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .attr('transform', 'translate(0,10)')
           .selectAll('g')
           .data(apps.slice().reverse())
-          .enter().append('g')
+          .enter()
+          .append('g')
           .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
           .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
           .on("mouseleave", (d) => {
