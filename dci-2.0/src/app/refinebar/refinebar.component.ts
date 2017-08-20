@@ -363,12 +363,26 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .enter()
           .append('g')
           .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
-          .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
-          .on("mouseleave", (d) => {
-            console.log('mouseleave -- ', d);
+          .on('mouseenter', (d) => {
+            let app = this.loader.getCachedAppInfo(d);
+            this.hover.hoverChanged(app);
+            setTimeout(() => {
+              if (this.hover.getState() === app) {
+                this.hover.hoverChanged(undefined);
+              }
+            }, 1000);
+          }).on('mouseout', (d) => {
+            console.log('mouse OUT');
             this.hover.hoverChanged(undefined);
           });
-        
+          // .on('click', (d) => {
+          //   if (!this.hover.getState() || this.hover.getState() !== this.loader.getCachedAppInfo(d)) {
+          //     this.hover.hoverChanged(this.loader.getCachedAppInfo(d));
+          //   } else {
+          //     this.hover.hoverChanged(undefined);
+          //   }
+          // });
+                  
         legend.append('rect')
           .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
           .attr('width', 19)
