@@ -9,7 +9,7 @@ import { HoverService, HoverTarget } from "app/hover.service";
 
 interface AppImpactCat {
   appid: string;
-  companyid: string;
+  companyid?: string;
   impact: number;
   category?: string;
 };
@@ -158,6 +158,19 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
     // to prepare for stack() let's
     this.compileImpacts(this.usage).then(impacts => {
 
+      console.log('cat impacts > ', impacts);
+
+      let red_impacts = impacts.reduce((perapp, impact) => {
+        let appcat = (perapp[impact.appid] || {});
+        appcat[impact.category] = (appcat[impact.category]  || 0) + impact.impact;
+        perapp[impact.appid] = appcat;
+        return perapp;
+      }, {});
+
+      impacts = _.flatten(_.map(red_impacts, (catimpacts, appid) => _.map(catimpacts, (impact, cat) => ({ appid: appid, category: cat, impact: impact } as AppImpactCat))));
+
+      console.log('cat red_impacts ', red_impacts, impacts);
+
       let apps = _.uniq(impacts.map((x) => x.appid)),
         categories = _.uniq(impacts.map((x) => x.category)),
         get_impact = (cid, aid) => {
@@ -194,7 +207,7 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
       by_category.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
 
       // re-order companies
-      categories = by_category.map((bc) => bc.company);
+      categories = by_category.map((bc) => bc.category);
 
       const stack = d3.stack(),
         out = stack.keys(apps)(by_category);
@@ -208,6 +221,8 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           .domain(categories),
         d3maxx = d3.max(by_category, function (d) { return d.total; }) || 0,
         ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
+
+        console.log('cat categories > ', categories);
 
 
       if (d3maxx < 0.7 * ymaxx) {
@@ -225,7 +240,10 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           .data((d) => d)
           .enter().append('rect')
           .attr('class', 'bar')
-          .attr('x', (d) => x(d.data.company))
+          .attr('x', (d) => {
+            console.log('cat x ', d.data.category, x(d.data.category));
+            return x(d.data.category);
+          })
           .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
           .attr('width', x.bandwidth())
@@ -267,7 +285,7 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
       } else {
         svg.selectAll('g.axis.x g.tick')
           .filter(function (d) { return d; })
-          .attr('class', (d) => this.companyid2info.get(d).typetag)
+          .attr('class', (d) => d.category)
           .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
       }
 

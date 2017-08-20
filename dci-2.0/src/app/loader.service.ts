@@ -285,7 +285,7 @@ export class LoaderService {
       return _.uniqBy(appinfo.hosts.map(host => {
         var geo = geomap[host];
         if (!geo) { console.error(' Dean didnt give me a geo for :( ', host); }
-        return host[0] && _.extend({}, geo[0], {host:host});
+        return geo[0] && _.extend({}, geo[0], {host:host});
       }).filter(x => x), (gip) => gip.ip)
     }).then((hostgeos) => {
       console.log('got all me host geos for ', appinfo.app, hostgeos);
