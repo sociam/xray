@@ -1,6 +1,6 @@
 <div class="container">
     <div class="input-field col s12">
-        <input id="appname" type="text" class="validate filter-input" [(ngModel)]="query" (keyup)="filter()">
+        <input id="appname" placeholder="Enter an App's name." type="text" class="validate filter-input" [(ngModel)]="query" (keyup)="filter()">
     </div>
     <div class="suggestions" *ngIf="filteredList.length > 0">
         <ul *ngFor="let item of filteredList">

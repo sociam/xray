@@ -9,6 +9,25 @@ button {
     }
 }
 
+div.usage-table {
+    //box-shadow: 14px 13px 47px -19px rgba(0, 0, 0, 0.75);
+    border-bottom: 0.5px solid #bbb;
+    border-right: 0.5px solid #bbb;
+    .top {
+        width: 98%;
+        border-top: 0.5px solid #bbb;
+    }
+    .search-bar {
+        float: left;
+        padding-bottom: 10px;
+        padding-left: 15px;
+    }
+    .usage-button {
+        float: left;
+        padding-bottom: 10px;
+    }
+}
+
 div.noicon {
     background-color: orange;
     border-radius: 5px;
