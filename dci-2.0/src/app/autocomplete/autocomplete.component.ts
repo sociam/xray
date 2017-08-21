@@ -44,7 +44,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   filter() {
     if (this.query.trim() !== '') {
 
-      let fetching = this.fetching = this.loader.findApps$({startsWith: this.query.trim(), fullInfo: true, onlyAnalyzed: true})
+      let fetching = this.fetching = this.loader.findApps$({startsWith: this.query.trim(), fullInfo: true, onlyAnalyzed: true}, false, false)
       .then((results) => {
         if (fetching !== this.fetching) { 
           // we are already obsolete, return;
@@ -68,13 +68,16 @@ export class AutocompleteComponent implements OnInit, OnChanges {
     }
   }
 
-  select(item) {
+  select(item) {    
     if (item) {
-      this.selectedChange.emit(item);
+      this.loader.getFullAppInfo(item.app).then((fullitem) => {
+        console.log('got full item ', fullitem);
+          this.selectedChange.emit(fullitem);
+          this.selected = item;
+          this.query = item.storeinfo.title;
+          this.filteredList = []; // hide the list      
+      });      
     }
-    this.selected = item;
-    this.query = item.storeinfo.title;
-    this.filteredList = []; // hide the list
   }
 
   handleClick(event) {

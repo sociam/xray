@@ -266,7 +266,7 @@ export class LoaderService {
       return [BASE_API + url].join('/');
     }
   }
-  _prepareAppInfo(appinfo: APIAppInfo):Promise<APIAppInfo> {
+  _prepareAppInfo(appinfo: APIAppInfo, loadGeo=true, doCache=true):Promise<APIAppInfo> {
     appinfo.icon = appinfo.icon && appinfo.icon !== null && appinfo.icon.trim() !== 'null' ? this.makeIconPath(appinfo.icon) : undefined;
     console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
 
@@ -278,8 +278,10 @@ export class LoaderService {
       // console.error('WARNING: this app has too many hosts', appinfo.app);
       appinfo.hosts = appinfo.hosts.slice(0, 100);
     }
-  
-    return this.getHostsGeos(appinfo.hosts).then(geomap => {
+
+    if (doCache) { this.apps[appinfo.app] = appinfo;  }    
+
+    return !loadGeo ? Promise.resolve(appinfo) : this.getHostsGeos(appinfo.hosts).then(geomap => {
       return _.uniqBy(appinfo.hosts.map(host => {
         var geo = geomap[host];
         if (!geo) { console.error(' Dean didnt give me a geo for :( ', host); return; }
@@ -288,11 +290,10 @@ export class LoaderService {
     }).then((hostgeos) => {
       console.log('got all me host geos for ', appinfo.app, hostgeos);
       appinfo.host_locations = hostgeos || [];
-      this.apps[appinfo.app] = appinfo;
+      // cache things 
       return appinfo;
     });
-  }
-
+  } 
   @memoize((hosts) => hosts.join('::'))
   getHostsGeos(hosts: string[]): Promise<{[host: string]: GeoIPInfo[]}> {
 
@@ -317,6 +318,7 @@ export class LoaderService {
       .then((results: string[]) => results.map(result => this.sanitiser.bypassSecurityTrustResourceUrl(result)));
   }
 
+  @memoize((company) => company.id)  
   findApps(query: string): Promise<APIAppInfo[]> {
     // var headers = new Headers();
     // headers.set('Accept', 'application/json');
@@ -328,7 +330,7 @@ export class LoaderService {
         if (!appinfos) {
           throw new Error('null returned from endpoint ' + query);
         } 
-        return Promise.all(appinfos.map(appinfo => this._prepareAppInfo(appinfo)));
+        return Promise.all(appinfos.map(appinfo => this._prepareAppInfo(appinfo, false, false)));
       });
   }
   
@@ -388,7 +390,7 @@ export class LoaderService {
       fullInfo?: boolean, 
       onlyAnalyzed?: boolean, 
       limit?: number
-    }): Promise<APIAppInfo[]> {
+    }, loadGeo=true, doCache=true): Promise<APIAppInfo[]> {
     
     let body = this.parseFetchAppParams(options);    
     let appData: APIAppInfo[];
@@ -409,8 +411,7 @@ export class LoaderService {
       if (!result || result === null) {
         return [];
       }
-
-      return Promise.all(result.map(app => this._prepareAppInfo(app)));
+      return Promise.all(result.map(app => this._prepareAppInfo(app, loadGeo, doCache)));
     });
   }  
 
