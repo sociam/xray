@@ -109,15 +109,16 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
         
         return this.loader.getHostsGeos(hosts)
           .then((geos: {[host: string]: GeoIPInfo[]}) => {
-            return hosts.map(host => {
+            return Object.keys(geos).map(host => {
               return geos[host].map(geo => {
+                console.log(host + ' -- ' + geo.country_name);
                 return { appid: usg.appid,
                          companyid: host,
                          category: geo.country_name,
                          impact: usg.impact }
               });
             });
-          });
+          }).catch((err) => {console.log('There was an Err' + err); return err;});
       });
     })).then((nested_impacts: AppImpactCat[][]): AppImpactCat[] => _.flatten(_.flatten(nested_impacts)));
   }
