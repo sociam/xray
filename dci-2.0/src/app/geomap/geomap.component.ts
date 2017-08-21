@@ -1,6 +1,6 @@
 
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, EventEmitter, Output, HostListener } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo, GeoIPInfo} from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
@@ -21,6 +21,7 @@ interface AppImpactCat {
   styleUrls: ['./geomap.component.css'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class GeomapComponent implements AfterViewInit, OnChanges {
 
   // still in use!

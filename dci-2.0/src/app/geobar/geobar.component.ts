@@ -1,6 +1,6 @@
 
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, EventEmitter, Output, HostListener } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo } from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo, GeoIPInfo} from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
@@ -21,6 +21,7 @@ interface AppImpactCat {
   styleUrls: ['./geobar.component.css'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class GeobarComponent implements AfterViewInit, OnChanges {
 
   // still in use!
@@ -104,10 +105,9 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
       return this._getApp(usg.appid).then(app => {
         const hosts = app && app.hosts;
         if (!hosts) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
-
-        return Promise.all(hosts.map(host => this.hostutils.findCompany(host, app)))
-          .then((companies: CompanyInfo[]) => _.uniq(companies.filter((company) => company !== undefined && company.typetag !== 'ignore')))
-          .then((companies: CompanyInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.id, category: company.typetag, impact: usg.impact })));
+        this.loader.getHostsGeos(hosts)
+          .then((geos: {[host: string]: GeoIPInfo[]}) => hosts.map(host => geos[host].map(geo => console.log(geo.country_name))))
+          //.then((companies: GeoIPInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.host, category: company.country_name, impact: usg.impact })));
       });
     })).then((nested_impacts: AppImpactCat[][]): AppImpactCat[] => _.flatten(nested_impacts));
   }
@@ -123,7 +123,7 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
 
 
   // this is for displaying what company you're hovering on based 
-  // on back rects
+  // on back rectshostutils
   _companyHover(company: CompanyInfo, hovering: boolean) {
     this._companyHovering = hovering ? company : undefined;
   }
