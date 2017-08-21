@@ -3,6 +3,8 @@ button {
     // box-shadow: 7px 6px 47px -19px rgba(0, 0, 0, 0.75) !important;
     box-shadow: 14px 13px 47px -19px rgba(0, 0, 0, 0.75);
     transition: all 0.2s;
+    font-size: 10pt!important;
+    min-width: 75px;
     &:hover {
         transition: all 0.2s;
         background: #eee;
@@ -19,12 +21,11 @@ div.usage-table {
     }
     .search-bar {
         float: left;
-        padding-bottom: 10px;
-        padding-left: 15px;
     }
-    .usage-button {
-        float: left;
-        padding-bottom: 10px;
+    .search-zone {
+        padding-bottom: 5px;
+        padding-top: 5px;
+        padding-left: 15px;
     }
 }
 
@@ -69,17 +70,18 @@ div.top {
                 }
             }
             td.hhmminput {
-                width: 120px;
+                min-width: 120px;
+                font-size: 10pt;
                 input {
-                    font-size: 14pt;
                     text-align: right;
-                    width: 40px;
+                    width: 30px;
                     border: none;
                     border-bottom: 1px solid #222;
                 }
             }
             td.middle {
-                padding: 0px 15px;
+                //padding: 0px 15px;
+                min-width: 50px;
                 input[type=range] {
                     width: 100%;
                     flex-grow: 1.0;
@@ -88,13 +90,11 @@ div.top {
             td.right {
                 a,
                 button {
+                    padding: 5px 6px;
                     font-size: 10pt;
                 }
-                button {
-                    padding: 5px 6px;
-                }
                 // border: 1px solid pink;
-                padding: 0px;
+                padding-left: 5px;
                 width: 145px;
                 // .tohide {
                 //     display: block;
