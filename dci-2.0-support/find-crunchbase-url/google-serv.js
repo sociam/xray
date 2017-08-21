@@ -55,7 +55,7 @@ const createDriver = () => {
     },
     run_server = (driver) => {
         app.use(cors());
-        app.get('/search_cb_url', function(req, res) {
+        app.get('/cbase', function(req, res) {
             const name = req.query && req.query.q && req.query.q.trim().toLowerCase(),
                 hit = database[name];
 

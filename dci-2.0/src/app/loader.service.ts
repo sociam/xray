@@ -317,9 +317,10 @@ export class LoaderService {
   @memoize((company) => company.id)
   getCrunchbaseURLs(company: CompanyInfo): Promise<SafeResourceUrl[]> {
     if (!company) { throw new Error('no company'); }
+    console.log('getting crunchbase url for ', company);    
     const urlSP = new URLSearchParams(); 
     urlSP.set('q', company.company);
-    return this.http.get(CB_SERVICE_ENDPOINT + `/cb?${urlSP.toString()}`).toPromise()
+    return this.http.get(CB_SERVICE_ENDPOINT + `/cbase?${urlSP.toString()}`).toPromise()
       .then(response => response.json())
       .then((results: string[]) => results.map(result => this.sanitiser.bypassSecurityTrustResourceUrl(result)));
   }
