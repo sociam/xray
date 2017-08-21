@@ -102,14 +102,20 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
       impacts = usage.map((u) => ({ ...u, impact: (timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0)) }));
 
     return Promise.all(impacts.map((usg): Promise<AppImpactCat[]> => {
+      
       return this._getApp(usg.appid).then(app => {
         const hosts = app && app.hosts;
         if (!hosts) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
-        this.loader.getHostsGeos(hosts)
-          .then((geos: {[host: string]: GeoIPInfo[]}) => hosts.map(host => geos[host].map(geo => console.log(geo.country_name))))
+        
+        return this.loader.getHostsGeos(hosts)
+          .then((geos: {[host: string]: GeoIPInfo[]}) => hosts.map(host => geos[host].map(geo => {
+            console.log('GEO: ' + host + '  -  ' + geo.country_code);
+            return ({ appid: usg.appid, companyid: host, category: geo.country_name, impact: usg.impact })
+          }
+          )))
           //.then((companies: GeoIPInfo[]) => companies.map((company) => ({ appid: usg.appid, companyid: company.host, category: company.country_name, impact: usg.impact })));
       });
-    })).then((nested_impacts: AppImpactCat[][]): AppImpactCat[] => _.flatten(nested_impacts));
+    })).then((nested_impacts: AppImpactCat[][]): AppImpactCat[] => _.flatten(_.flatten(nested_impacts)));
   }
 
 
@@ -159,7 +165,7 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
     // to prepare for stack() let's
     this.compileImpacts(this.usage).then(impacts => {
 
-      console.log('cat impacts > ', impacts);
+      console.log('country Cat impacts > ', impacts);
 
       let red_impacts = impacts.reduce((perapp, impact) => {
         let appcat = (perapp[impact.appid] || {});
@@ -170,7 +176,7 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
 
       impacts = _.flatten(_.map(red_impacts, (catimpacts, appid) => _.map(catimpacts, (impact, cat) => ({ appid: appid, category: cat, impact: impact } as AppImpactCat))));
 
-      console.log('cat red_impacts ', red_impacts, impacts);
+      console.log('country cat red_impacts ', red_impacts, impacts);
 
       let apps = _.uniq(impacts.map((x) => x.appid)),
         categories = _.uniq(impacts.map((x) => x.category)),
