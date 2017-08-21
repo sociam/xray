@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Http, HttpModule, Headers, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { mapValues, keys, mapKeys, values, trim, uniq, toPairs } from 'lodash';
-import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as _ from 'lodash';
 
@@ -59,31 +57,25 @@ export let memoize = (f: (...args: any[]) => string) => {
     descriptor.value = function (...args: any[]) {
       let cache_key = propertyKey + '_' + f.apply(null, args);
       if (retval[cache_key]) {
-        if (propertyKey.indexOf('findApps$') >= 0) { 
-          console.log('cache hit on ', propertyKey, cache_key);
-        }
         return retval[cache_key];
-      }
-      if (propertyKey.indexOf('findApps$') >= 0) { 
-        console.log('cache miss on ', propertyKey, cache_key);   
       }
       return retval[cache_key] = method.apply(this, args);
     };
   };
 }
 
-export class CachingSubscription<T> {
-  private dataSubject: ReplaySubject<T> = new ReplaySubject<T>();
-  data$: Observable<T> = this.dataSubject.asObservable();
-  resolved = false;
-  constructor(private obs: Observable<T>) {    
-    this.obs.subscribe(result => {
-      this.resolved = true;
-      this.dataSubject.next(result);
-    });    
-  }
-  getObservable() { return this.data$;  }
-}
+// export class CachingSubscription<T> {
+//   private dataSubject: ReplaySubject<T> = new ReplaySubject<T>();
+//   data$: Observable<T> = this.dataSubject.asObservable();
+//   resolved = false;
+//   constructor(private obs: Observable<T>) {    
+//     this.obs.subscribe(result => {
+//       this.resolved = true;
+//       this.dataSubject.next(result);
+//     });    
+//   }
+//   getObservable() { return this.data$;  }
+// }
 
 export class CompanyDB {
   emoji_table = {
@@ -274,7 +266,7 @@ export class LoaderService {
       return [BASE_API + url].join('/');
     }
   }
-  _prepareAppInfo(appinfo: APIAppInfo) {
+  _prepareAppInfo(appinfo: APIAppInfo):Promise<APIAppInfo> {
     appinfo.icon = appinfo.icon && appinfo.icon !== null && appinfo.icon.trim() !== 'null' ? this.makeIconPath(appinfo.icon) : undefined;
     console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
 
@@ -282,23 +274,23 @@ export class LoaderService {
       .map((host: string): string => trim(host.trim(), '".%')))
       .filter(host => host.length > 3 && host.indexOf('%s') < 0 && host.indexOf('.') >= 0 && host.indexOf('[') < 0 && !this._host_blacklist[host]);
 
-    this.getHostsGeos(appinfo.hosts).then(geomap => {
+    if (appinfo.hosts && appinfo.hosts.length > 100) {
+      // console.error('WARNING: this app has too many hosts', appinfo.app);
+      appinfo.hosts = appinfo.hosts.slice(0, 100);
+    }
+  
+    return this.getHostsGeos(appinfo.hosts).then(geomap => {
       return _.uniqBy(appinfo.hosts.map(host => {
         var geo = geomap[host];
         if (!geo) { console.error(' Dean didnt give me a geo for :( ', host); return; }
         return geo[0] && _.extend({}, geo[0], {host:host});
       }).filter(x => x), (gip) => gip.ip)
     }).then((hostgeos) => {
-      // console.log('got all me host geos for ', appinfo.app, hostgeos);
+      console.log('got all me host geos for ', appinfo.app, hostgeos);
       appinfo.host_locations = hostgeos || [];
+      this.apps[appinfo.app] = appinfo;
+      return appinfo;
     });
-
-    if (appinfo.hosts && appinfo.hosts.length > 100) {
-      // console.error('WARNING: this app has too many hosts', appinfo.app);
-      appinfo.hosts = appinfo.hosts.slice(0, 50);
-    }
-    this.apps[appinfo.app] = appinfo;
-    return appinfo;
   }
 
   @memoize((hosts) => hosts.join('::'))
@@ -336,9 +328,8 @@ export class LoaderService {
         if (!appinfos) {
           throw new Error('null returned from endpoint ' + query);
         } 
-        appinfos.map(appinfo => this._prepareAppInfo(appinfo));
-        return appinfos;
-      })
+        return Promise.all(appinfos.map(appinfo => this._prepareAppInfo(appinfo)));
+      });
   }
   
   /**
@@ -386,10 +377,8 @@ export class LoaderService {
    */
   @memoize((options) => { 
     let key = toPairs(options).map(pair => {
-      console.log('pair ', pair);
       return pair.map((x) => x.toString()).join(':');
     }).join('--');
-    console.log('key > ', key);
     return key;
   })
   findApps$(options: {
@@ -399,23 +388,31 @@ export class LoaderService {
       fullInfo?: boolean, 
       onlyAnalyzed?: boolean, 
       limit?: number
-    }): Observable<APIAppInfo[]> {
+    }): Promise<APIAppInfo[]> {
     
     let body = this.parseFetchAppParams(options);    
     let appData: APIAppInfo[];
 
-    // this makes me want to stab my eyes out -> 
-    return new CachingSubscription(this.http.get('http://localhost:8118/api/apps?' + body).map((data) => {
-      const res = data.json() as APIAppInfo[];
-      return res.map((app: APIAppInfo) => {
-        if (!app) {
-          throw new Error('null returned from endpoint ' + body);
-        } 
-        return this._prepareAppInfo(app);
-       });
-    })).getObservable();
-  }
-  
+    // // this makes me want to stab my eyes out -> 
+    // return new CachingSubscription(this.http.get('http://localhost:8118/api/apps?' + body).map((data) => {
+    //   const res = data.json() as APIAppInfo[];
+    //   return Observable.fromPromise(Promise.all(res.map((app: APIAppInfo) => {
+    //     if (!app) {
+    //       throw new Error('null returned from endpoint ' + body);
+    //     } 
+    //     return this._prepareAppInfo(app);
+    //    })));
+    // })).getObservable();
+
+    return this.http.get('http://localhost:8118/api/apps?' + body).toPromise().then((data) => {
+      const result = (data.json() as APIAppInfo[]);
+      if (!result || result === null) {
+        return [];
+      }
+
+      return Promise.all(result.map(app => this._prepareAppInfo(app)));
+    });
+  }  
 
   @memoize((appid: string): string => appid)
   getAlternatives(appid: string): Promise<APIAppInfo[]> {
@@ -438,7 +435,11 @@ export class LoaderService {
     .then(response => (response && response.json() as APIAppInfo[])[0] || undefined)
     .then(appinfo => {
       if (appinfo) { 
-        this._prepareAppInfo(appinfo);
+        return this._prepareAppInfo(appinfo);
+      }
+      return undefined;
+    }).then(appinfo => {
+      if (appinfo) {
         this.apps[appid] = appinfo;
       } else {
         console.warn('null appinfo');
