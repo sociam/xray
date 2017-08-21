@@ -1,10 +1,11 @@
+<div class="adder search-bar">
+    <!-- <ng2-completer [(ngModel)]="appToAdd" [datasource]="completer" [minSearchLength]="1" placeholder="Add app"></ng2-completer> -->
+    <app-autocomplete [(selected)]='selectedApp' (selectedChange)='appSelected(selectedApp)' [omit]='_selectedapps'></app-autocomplete>
+    <button (click)="addApp()" [disabled]='!selectedApp'>Add</button>
+    <button class="usage-button" (click)="clearState()" [disabled]='usages.length == 0'>Clear all</button>
+</div>
 <div class="top">
-    <div class="adder">
-        <!-- <ng2-completer [(ngModel)]="appToAdd" [datasource]="completer" [minSearchLength]="1" placeholder="Add app"></ng2-completer> -->
-        <app-autocomplete [(selected)]='selectedApp' (selectedChange)='appSelected(selectedApp)' [omit]='_selectedapps'></app-autocomplete>
-        <button (click)="addApp()" [disabled]='!selectedApp'>Add</button>
-        <button class="usage-button" (click)="clearState()" [disabled]='usages.length == 0'>Clear all</button>
-    </div>
+
     <table>
         <tr class="rows" *ngFor="let appusage of usages">
             <td class="left" (click)="appFocused(appusage.appid)" (mouseenter)="_onHover(appusage.appid)" (mouseleave)="_onHover()">
