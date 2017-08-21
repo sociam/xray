@@ -28,6 +28,8 @@ import { RefinecatComponent } from './refinecat/refinecat.component';
 
 import { FocusService } from "app/focus.service";
 import { HoverService } from "app/hover.service";
+import { GeomapComponent } from './geomap/geomap.component';
+import { GeobarComponent } from './geobar/geobar.component';
 
 
 const appRoutes: Routes = [
@@ -80,7 +82,9 @@ const appRoutes: Routes = [
     AppinfoComponent,
     CompanyinfoComponent,
     TiledGridComponent,
-    RefinecatComponent    
+    RefinecatComponent,
+    GeomapComponent,
+    GeobarComponent    
   ],
   imports: [
     HttpModule,
