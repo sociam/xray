@@ -113,7 +113,7 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
               return geos[host].map(geo => {
                 return { appid: usg.appid,
                          companyid: host,
-                         category: geo.country_name,
+                         category: geo.country_name !== '' ? geo.country_name : 'Unknown',
                          impact: usg.impact }
               });
             });
