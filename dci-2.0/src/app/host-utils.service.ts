@@ -122,7 +122,7 @@ export class HostUtilsService {
 
             if (host.split('.').map(x => x.toLowerCase().trim()).filter((y) => appdev.indexOf(y) >= 0).length > 0) {
                 // do we try to find a company in our company database? or do we just return it ... :| i dont know          
-                console.error('host matched with developer > ', host, app);
+                // console.error('host matched with developer > ', host, app);
                 const ld2 = this.shorten_2ld(host, cclds),
                     newInfo = new CompanyInfo(ld2, app.developer.name, [host], 'app');
                 newInfo.description = `${app.developer.name} is an app publisher that created ${app.storeinfo.title} and other apps.`;

@@ -8,7 +8,7 @@ import { UsageConnectorService } from "app/usage-connector.service";
 class Substitution {
   target: AppUsage;
   all: AppUsage[];
-  selected ?: boolean = false;
+  selected?: boolean;
 }
 
 @Component({

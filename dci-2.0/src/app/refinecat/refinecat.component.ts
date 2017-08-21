@@ -162,7 +162,7 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
 
       let red_impacts = impacts.reduce((perapp, impact) => {
         let appcat = (perapp[impact.appid] || {});
-        appcat[impact.category] = (appcat[impact.category]  || 0) + impact.impact;
+        appcat[impact.category] = (appcat[impact.category] || 0) + impact.impact;
         perapp[impact.appid] = appcat;
         return perapp;
       }, {});
@@ -240,10 +240,7 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           .data((d) => d)
           .enter().append('rect')
           .attr('class', 'bar')
-          .attr('x', (d) => {
-            console.log('cat x ', d.data.category, x(d.data.category));
-            return x(d.data.category);
-          })
+          .attr('x', (d) => x(d.data.category))
           .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
           .attr('width', x.bandwidth())

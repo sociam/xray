@@ -11,8 +11,9 @@ import * as _ from 'lodash';
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
-export let BASE_API = 'http://localhost:8118';
-export let API_ENDPOINT = 'http://localhost:8118/api';
+export const BASE_API = 'http://localhost:8118';
+export const API_ENDPOINT = 'http://localhost:8118/api';
+export const CB_SERVICE_ENDPOINT = 'http://localhost:3333';
 
 export interface App2Hosts { [app: string]: string[] }
 export interface Host2PITypes { [host: string]: PI_TYPES[] }
@@ -284,12 +285,12 @@ export class LoaderService {
     this.getHostsGeos(appinfo.hosts).then(geomap => {
       return _.uniqBy(appinfo.hosts.map(host => {
         var geo = geomap[host];
-        if (!geo) { console.error(' Dean didnt give me a geo for :( ', host); }
+        if (!geo) { console.error(' Dean didnt give me a geo for :( ', host); return; }
         return geo[0] && _.extend({}, geo[0], {host:host});
       }).filter(x => x), (gip) => gip.ip)
     }).then((hostgeos) => {
       console.log('got all me host geos for ', appinfo.app, hostgeos);
-      appinfo.host_locations = hostgeos;
+      appinfo.host_locations = hostgeos || [];
     });
 
     if (appinfo.hosts && appinfo.hosts.length > 100) {
@@ -310,6 +311,17 @@ export class LoaderService {
 
     return this.http.get(API_ENDPOINT + `/hosts?${urlSP.toString()}`).toPromise()
       .then(response => response.json() as ({[host:string]: GeoIPInfo[]}));
+  }
+
+
+  @memoize((company) => company.id)
+  getCrunchbaseURLs(company: CompanyInfo): Promise<SafeResourceUrl[]> {
+    if (!company) { throw new Error('no company'); }
+    const urlSP = new URLSearchParams(); 
+    urlSP.set('q', company.company);
+    return this.http.get(CB_SERVICE_ENDPOINT + `/cb?${urlSP.toString()}`).toPromise()
+      .then(response => response.json())
+      .then((results: string[]) => results.map(result => this.sanitiser.bypassSecurityTrustResourceUrl(result)));
   }
 
   findApps(query: string): Promise<APIAppInfo[]> {
