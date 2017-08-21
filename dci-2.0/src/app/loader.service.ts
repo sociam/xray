@@ -193,7 +193,7 @@ export class APIAppInfo {
     ver: string; // date string 
     screenFlags: number;
     hosts?: string[];
-    host_locations?: string[];
+    host_locations?: GeoIPInfo[];
     storeinfo: { 
       title: string;
       summary: string;
@@ -289,12 +289,12 @@ export class LoaderService {
         return geo[0] && _.extend({}, geo[0], {host:host});
       }).filter(x => x), (gip) => gip.ip)
     }).then((hostgeos) => {
-      console.log('got all me host geos for ', appinfo.app, hostgeos);
+      // console.log('got all me host geos for ', appinfo.app, hostgeos);
       appinfo.host_locations = hostgeos || [];
     });
 
     if (appinfo.hosts && appinfo.hosts.length > 100) {
-      console.error('WARNING: this app has too many hosts', appinfo.app);
+      // console.error('WARNING: this app has too many hosts', appinfo.app);
       appinfo.hosts = appinfo.hosts.slice(0, 50);
     }
     this.apps[appinfo.app] = appinfo;

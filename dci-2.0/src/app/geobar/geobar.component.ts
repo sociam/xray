@@ -8,11 +8,11 @@ import { HostUtilsService } from 'app/host-utils.service';
 import { FocusService } from 'app/focus.service';
 import { HoverService, HoverTarget } from "app/hover.service";
 
-interface AppImpactCat {
+interface AppImpactGeo {
   appid: string;
-  companyid?: string;
   impact: number;
-  category?: string;
+  country?: string;
+  country_code?: string;
 };
 
 @Component({
@@ -92,7 +92,7 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
       || this.loader.getFullAppInfo(appid);
   }
 
-  compileImpacts(usage: AppUsage[]): Promise<AppImpactCat[]> {
+  compileImpacts(usage: AppUsage[]): Promise<AppImpactGeo[]> {
     // folds privacy impact in simply by doing a weighted sum over hosts
     // usage has to be in a standard unit: days, minutes
     // first, normalise usage
@@ -101,25 +101,14 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
       total = _.reduce(usage, (tot, appusage): number => tot + (timebased ? appusage.mins : 1.0), 0),
       impacts = usage.map((u) => ({ ...u, impact: (timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0)) }));
 
-    return Promise.all(impacts.map((usg): Promise<AppImpactCat[]> => {
+    return Promise.all(impacts.map((usg): Promise<AppImpactGeo[]> => {
       
       return this._getApp(usg.appid).then(app => {
-        const hosts = app && app.hosts;
-        if (!hosts) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
-        
-        return this.loader.getHostsGeos(hosts)
-          .then((geos: {[host: string]: GeoIPInfo[]}) => {
-            return Object.keys(geos).map(host => {
-              return geos[host].map(geo => {
-                return { appid: usg.appid,
-                         companyid: host,
-                         category: geo.country_name !== '' ? geo.country_name : 'Unknown',
-                         impact: usg.impact }
-              });
-            });
-          }).catch((err) => {console.log('There was an Err' + err); return err;});
+        const hosts = app.hosts, geos = app.host_locations;
+        if (!hosts || !geos) { console.warn('No hosts found for app ', usg.appid); return []; }
+        return geos.map(geo => ({ appid: usg.appid,country: geo.country_name !== '' ? geo.country_name : 'Unknown', country_code: geo.country_code, impact: usg.impact }));
       });
-    })).then((nested_impacts: AppImpactCat[][]): AppImpactCat[] => _.flatten(_.flatten(nested_impacts)));
+    })).then((nested_impacts: AppImpactGeo[][]): AppImpactGeo[] => _.flatten(_.flatten(nested_impacts)));
   }
 
 
@@ -131,14 +120,6 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
   }
   get byTime() { return this._byTime; }
 
-
-  // this is for displaying what company you're hovering on based 
-  // on back rectshostutils
-  _companyHover(company: CompanyInfo, hovering: boolean) {
-    this._companyHovering = hovering ? company : undefined;
-  }
-
-  // 
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
     const svgel = this.getSVGElement();
@@ -169,29 +150,29 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
     // to prepare for stack() let's
     this.compileImpacts(this.usage).then(impacts => {
 
-      console.log('country Cat impacts > ', impacts);
+      console.log('country geo impacts > ', impacts);
 
       let red_impacts = impacts.reduce((perapp, impact) => {
         let appcat = (perapp[impact.appid] || {});
-        appcat[impact.category] = (appcat[impact.category] || 0) + impact.impact;
+        appcat[impact.country] = (appcat[impact.country] || 0) + impact.impact;
         perapp[impact.appid] = appcat;
         return perapp;
       }, {});
 
-      impacts = _.flatten(_.map(red_impacts, (catimpacts, appid) => _.map(catimpacts, (impact, cat) => ({ appid: appid, category: cat, impact: impact } as AppImpactCat))));
+      impacts = _.flatten(_.map(red_impacts, (country, appid) => _.map(country, (impact, cat) => ({ appid: appid, country: cat, impact: impact } as AppImpactGeo))));
 
-      console.log('country cat red_impacts ', red_impacts, impacts);
+      console.log('country geo impacts after comp > ', impacts);      
 
       let apps = _.uniq(impacts.map((x) => x.appid)),
-        categories = _.uniq(impacts.map((x) => x.category)),
+        countries = _.uniq(impacts.map((x) => x.country)),
         get_impact = (cid, aid) => {
-          const t = impacts.filter((imp) => imp.category === cid && imp.appid === aid)[0];
+          const t = impacts.filter((imp) => imp.country === cid && imp.appid === aid)[0];
           return t !== undefined ? t.impact : 0;
         },
-        by_category = categories.map((catname) => ({
-          category: catname,
-          total: apps.reduce((total, appid) => total += get_impact(catname, appid), 0),
-          ..._.fromPairs(apps.map((appid) => [appid, get_impact(catname, appid)]))
+        by_country = countries.map((countryname) => ({
+          country: countryname,
+          total: apps.reduce((total, appid) => total += get_impact(countryname, appid), 0),
+          ..._.fromPairs(apps.map((appid) => [appid, get_impact(countryname, appid)]))
         }));
 
       if (this.apps === undefined) {
@@ -201,27 +182,13 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
       } else {
         apps = this.apps;
       }
-
-      const satBand = (name, domain, h, l, slow, shigh) => {
-        return (appkey) => {
-          let ki = domain.indexOf(appkey),
-            bandwidth = (shigh - slow) / domain.length,
-            starget = slow + ki * bandwidth,
-            targetc = d3.hsl(h, starget, starget);
-          // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
-          return targetc;
-        };
-      };
-
-      (<any>window).d3 = d3;
-
-      by_category.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
+      by_country.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
 
       // re-order companies
-      categories = by_category.map((bc) => bc.category);
+      countries = by_country.map((bc) => bc.country);
 
       const stack = d3.stack(),
-        out = stack.keys(apps)(by_category);
+        out = stack.keys(apps)(by_country);
 
       let margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
@@ -229,17 +196,13 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
         g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
         x = d3.scaleBand()
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
-          .domain(categories),
-        d3maxx = d3.max(by_category, function (d) { return d.total; }) || 0,
+          .domain(countries),
+        d3maxx = d3.max(by_country, function (d) { return d.total; }) || 0,
         ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
-
-        console.log('cat categories > ', categories);
-
 
       if (d3maxx < 0.7 * ymaxx) {
         ymaxx = 1.1 * d3maxx;
       }
-
       let y = d3.scaleLinear()
         .rangeRound([height, 0])
         .domain([0, ymaxx]).nice(),
@@ -251,23 +214,24 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
           .data((d) => d)
           .enter().append('rect')
           .attr('class', 'bar')
-          .attr('x', (d) => x(d.data.category))
+          .attr('x', (d) => x(d.data.country))
           .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
-          .attr('width', x.bandwidth())
-          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
-          .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
-          .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
+          .attr('width', x.bandwidth());
+          // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
+          // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
+          // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
       };
 
       g.append('g')
         .selectAll('g')
-        .data(d3.stack().keys(apps)(by_category))
+        .data(d3.stack().keys(apps)(by_country))
         .enter().append('g')
         .attr('fill', (d) => {
           // highlightApp comes in from @Input() attribute, set using compare
           // _apphover comes in from hovering service, namely usagetable hover
           let highApp = this.highlightApp || this._hoveringApp;
+          console.log('geo zkey ', d.key, z(d.key));
           if (highApp) {
             return d.key === highApp.app ? z(d.key) : 'rgba(200,200,200,0.2)';
           }
@@ -293,7 +257,7 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
       } else {
         svg.selectAll('g.axis.x g.tick')
           .filter(function (d) { return d; })
-          .attr('class', (d) => d.category)
+          .attr('class', (d) => d.country)
           .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
       }
 
