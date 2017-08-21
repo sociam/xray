@@ -111,7 +111,6 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
           .then((geos: {[host: string]: GeoIPInfo[]}) => {
             return Object.keys(geos).map(host => {
               return geos[host].map(geo => {
-                console.log(host + ' -- ' + geo.country_name);
                 return { appid: usg.appid,
                          companyid: host,
                          category: geo.country_name,
