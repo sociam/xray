@@ -199,7 +199,7 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
       // // re-order companies
       // countries = by_country.map((bc) => bc.country);
 
-      let margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
+      let margin = { top: 20, right: 20, bottom: -200, left: 40 },
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
         height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
         z = d3.scaleOrdinal(d3.schemeCategory20).domain(apps);

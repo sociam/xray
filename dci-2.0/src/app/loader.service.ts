@@ -451,7 +451,8 @@ export class LoaderService {
 
   @memoize(() => 'world')
   getWorldMesh(): Promise<any> {
-    return this.http.get('assets/110m.json').toPromise().then((result) => result.json());
+    // return this.http.get('assets/110m.json').toPromise().then((result) => result.json());
+    return this.http.get('assets/110m-sans-antarctica.json').toPromise().then((result) => result.json());
   }
 
 }

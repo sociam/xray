@@ -1,0 +1,8 @@
+/* .main {
+    height: 400px !important;
+} */
+
+svg {
+    overflow: hidden;
+    border: 1px solid #eee;
+}
