@@ -26,6 +26,8 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   @Output() selectedChange = new EventEmitter<APIAppInfo>();
   private nonce = '';
   private fetching: Promise<void>;
+  private loading = false;
+  private loadingSuggestions = false;
 
   constructor(private myElement: ElementRef, private loader: LoaderService) {
   }
@@ -43,7 +45,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
 
   filter() {
     if (this.query.trim() !== '') {
-
+      this.loadingSuggestions = true;
       let fetching = this.fetching = this.loader.findApps$({startsWith: this.query.trim(), fullInfo: true, onlyAnalyzed: true}, false, false)
       .then((results) => {
         if (fetching !== this.fetching) { 
@@ -51,6 +53,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
           return; 
         }
         delete this.fetching;
+        this.loadingSuggestions = false;
 
         let qL = this.query.toLowerCase().trim(),
               newL = results.filter((x) => !this._omitIDs[x.app] && x.storeinfo.title.toLowerCase().indexOf(qL) === 0 && x.icon),
@@ -62,8 +65,13 @@ export class AutocompleteComponent implements OnInit, OnChanges {
         pullAllBy(this.filteredList, goners, by);
         Array.prototype.splice.apply(this.filteredList, [this.filteredList, 0].concat(newbies));
         this.filteredList = sortBy(this.filteredList, by);
+      }).catch((e) => {
+        this.loadingSuggestions = false;
+        delete this.fetching;
+        this.filteredList = [];
       });
     } else {
+      this.loadingSuggestions = false;
       this.filteredList = [];
     }
   }
@@ -73,7 +81,9 @@ export class AutocompleteComponent implements OnInit, OnChanges {
       this.selected = item;
       this.filteredList = []; // hide the list      
       this.query = item.storeinfo.title;          
+      this.loading = true;
       this.loader.getFullAppInfo(item.app).then((fullitem) => {
+        this.loading = false;
         console.log('got full item ', fullitem);
           this.selectedChange.emit(fullitem);          
       });      

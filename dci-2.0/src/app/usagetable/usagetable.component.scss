@@ -13,8 +13,8 @@ button {
 
 div.usage-table {
     //box-shadow: 14px 13px 47px -19px rgba(0, 0, 0, 0.75);
-    border-bottom: 0.5px solid #bbb;
-    border-right: 0.5px solid #bbb;
+    // border-bottom: 0.5px solid #bbb;
+    // border-right: 0.5px solid #bbb;
     .top {
         width: 98%;
         border-top: 0.5px solid #bbb;
@@ -71,7 +71,7 @@ div.top {
             }
             td.hhmminput {
                 min-width: 120px;
-                font-size: 10pt;
+                font-size: 12pt;
                 input {
                     text-align: right;
                     width: 30px;

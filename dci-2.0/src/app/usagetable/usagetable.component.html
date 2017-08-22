@@ -6,7 +6,6 @@
         <button class="usage-button" (click)="clearState()" [disabled]='usages.length == 0'>Clear all</button>
     </div>
     <div class="top">
-
         <table>
             <tr class="rows" *ngFor="let appusage of usages">
                 <td class="left" (click)="appFocused(appusage.appid)" (mouseenter)="_onHover(appusage.appid)" (mouseleave)="_onHover()">
