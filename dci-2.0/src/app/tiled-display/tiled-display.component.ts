@@ -40,7 +40,7 @@ export class TiledDisplayComponent implements OnInit {
 
     this.sideOpen = true;
     this.toggle = 'Close Apps'
-    this.panel_class = 'closed-panel';
+    this.panel_class = 'opened-panel';
   }
 
   toggleSideBar() {

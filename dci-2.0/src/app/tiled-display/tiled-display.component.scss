@@ -21,7 +21,21 @@ div.root {
                 max-height: 50vh;
             }
             .opened-panel {
+                border: 0.5px solid #bbb;
                 display: block;
+                background: #fff;
+                max-height: 500px;
+                overflow-y: scroll;
+                z-index: -1;
+                position: absolute;
+                -webkit-box-shadow: 0 15px 10px #777;
+                -moz-box-shadow: 0 15px 10px #777;
+                box-shadow: 0 15px 10px #777;
+                -webkit-transform: rotate(3deg);
+                -moz-transform: rotate(3deg);
+                -o-transform: rotate(3deg);
+                -ms-transform: rotate(3deg);
+                transform: rotate(3deg);
             }
             .closed-panel {
                 display: none;
@@ -29,7 +43,6 @@ div.root {
         }
         app-usagetable /deep/ div.top {
             border-bottom: 1px solid #eee;
-            overflow-y: scroll;
         }
     }
     div.right {
