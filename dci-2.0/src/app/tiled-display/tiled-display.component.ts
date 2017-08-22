@@ -11,6 +11,9 @@ export class TiledDisplayComponent implements OnInit {
 
   target : FocusTarget;
   targettype : string;
+  toggle : string; 
+  sideOpen : boolean;
+  panel_class: string;
 
   constructor(private focus: FocusService) {     
     this.focus.focusChanged$.subscribe((target: FocusTarget) => { 
@@ -34,6 +37,25 @@ export class TiledDisplayComponent implements OnInit {
       }  
       delete this.targettype;
     });
+
+    this.sideOpen = true;
+    this.toggle = 'Close Apps'
+    this.panel_class = 'closed-panel';
+  }
+
+  toggleSideBar() {
+    console.log('Side Bar!!')
+    if(this.sideOpen) {
+      this.toggle = 'Open Apps';
+      this.sideOpen = false;
+      this.panel_class = 'closed-panel';
+    }
+    else {
+      this.toggle = 'Close Apps';
+      this.sideOpen = true;
+      this.panel_class = 'opened-panel';
+    }
+
   }
 
   ngOnInit() {

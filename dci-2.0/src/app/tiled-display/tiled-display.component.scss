@@ -10,21 +10,31 @@ div.root {
     }
     div.left {
         padding-top: 50px;
-        width: 45%;
+        width: 15%;
         display: inline-block;
-        flex-direction: column;
+        //flex-direction: column;
         div.side-app {
             position: fixed;
+            .sidebar {
+                color: #fff;
+                height: 50vh;
+                max-height: 50vh;
+            }
+            .opened-panel {
+                display: block;
+            }
+            .closed-panel {
+                display: none;
+            }
         }
         app-usagetable /deep/ div.top {
-            height: 50vh;
             border-bottom: 1px solid #eee;
             overflow-y: scroll;
         }
     }
     div.right {
         padding-top: 50px;
-        width: 54%;
+        width: 75%;
     }
     // this shoud be in its own 
     .focus {
