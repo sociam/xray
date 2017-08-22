@@ -11,9 +11,12 @@ export class TiledDisplayComponent implements OnInit {
 
   target : FocusTarget;
   targettype : string;
-  toggle : string; 
+  toggle_side : string; 
+  toggle_model: string;
+  modelOpen: boolean;
   sideOpen : boolean;
   panel_class: string;
+  model_class: string;
 
   constructor(private focus: FocusService) {     
     this.focus.focusChanged$.subscribe((target: FocusTarget) => { 
@@ -27,35 +30,71 @@ export class TiledDisplayComponent implements OnInit {
       this.target = target; 
       if ((<APIAppInfo>target).app !== undefined) { 
         console.log('setting app target ', target);
-        this.targettype = 'app'; 
+        this.targettype = 'app';
+        this.showModel();
         return; 
       }
       if ((<CompanyInfo>target).company !== undefined) { 
         console.log('setting company target ', target);
         this.targettype = 'company'; 
+        this.showModel();
         return; 
       }  
       delete this.targettype;
     });
 
     this.sideOpen = true;
-    this.toggle = 'Close Apps'
+    this.toggle_side = 'Close Apps'
     this.panel_class = 'opened-panel';
+    
+    this.modelOpen = false;
+    this.toggle_model = 'Show Info';
+    this.model_class = 'closed_panel';
   }
 
   toggleSideBar() {
-    console.log('Side Bar!!')
     if(this.sideOpen) {
-      this.toggle = 'Open Apps';
-      this.sideOpen = false;
-      this.panel_class = 'closed-panel';
+      this.closeSideBar();
     }
     else {
-      this.toggle = 'Close Apps';
-      this.sideOpen = true;
-      this.panel_class = 'opened-panel';
+      this.showSideBar()
     }
+  }
 
+
+
+  showSideBar() {
+    this.closeModel()
+    this.toggle_side = 'Close Apps';
+    this.sideOpen = true;
+    this.panel_class = 'opened-panel';
+  }
+  closeSideBar() {
+    this.toggle_side = 'Open Apps';
+    this.sideOpen = false;
+    this.panel_class = 'closed-panel';
+  }
+  showModel() {
+    this.closeSideBar()
+    this.toggle_model = 'Hide Info';
+    this.modelOpen = true;
+    this.model_class = 'opened-panel';  
+  }
+
+  closeModel() {
+    this.toggle_model = 'Show Info';
+    this.modelOpen = false;
+    this.model_class = 'closed-panel';
+    this.targettype = '';
+  }
+
+  toggleModel() {
+    if(this.modelOpen) {
+      this.closeModel()
+    }
+    else {
+      this.showModel();
+    }
   }
 
   ngOnInit() {
