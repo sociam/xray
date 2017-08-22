@@ -4,15 +4,17 @@ import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIApp
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
+import * as topojson from 'topojson';
 import { HostUtilsService } from 'app/host-utils.service';
 import { FocusService } from 'app/focus.service';
 import { HoverService, HoverTarget } from "app/hover.service";
+import * as colorbrewer from 'colorbrewer';
 
-interface AppImpactCat {
+
+interface AppImpactGeo {
   appid: string;
-  companyid?: string;
   impact: number;
-  category?: string;
+  geo: GeoIPInfo
 };
 
 @Component({
@@ -92,7 +94,7 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
       || this.loader.getFullAppInfo(appid);
   }
 
-  compileImpacts(usage: AppUsage[]): Promise<AppImpactCat[]> {
+  compileImpacts(usage: AppUsage[]): Promise<AppImpactGeo[]> {
     // folds privacy impact in simply by doing a weighted sum over hosts
     // usage has to be in a standard unit: days, minutes
     // first, normalise usage
@@ -101,25 +103,18 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
       total = _.reduce(usage, (tot, appusage): number => tot + (timebased ? appusage.mins : 1.0), 0),
       impacts = usage.map((u) => ({ ...u, impact: (timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0)) }));
 
-    return Promise.all(impacts.map((usg): Promise<AppImpactCat[]> => {
+    return Promise.all(impacts.map((usg): Promise<AppImpactGeo[]> => {
       
       return this._getApp(usg.appid).then(app => {
-        const hosts = app && app.hosts;
-        if (!hosts) { console.warn('No hosts found for app ', usg.appid); return Promise.resolve([]); }
-        
-        return this.loader.getHostsGeos(hosts)
-          .then((geos: {[host: string]: GeoIPInfo[]}) => {
-            return Object.keys(geos).map(host => {
-              return geos[host].map(geo => {
-                return { appid: usg.appid,
-                         companyid: host,
-                         category: geo.country_name !== '' ? geo.country_name : 'Unknown',
-                         impact: usg.impact }
-              });
-            });
-          }).catch((err) => {console.log('There was an Err' + err); return err;});
+        const hosts = app.hosts, geos = app.host_locations;
+        if (!hosts || !geos) { console.warn('No hosts found for app ', usg.appid); return []; }
+        return geos.map(geo => ({ 
+          appid: usg.appid,
+          geo: geo,
+          impact: usg.impact,
+        }));
       });
-    })).then((nested_impacts: AppImpactCat[][]): AppImpactCat[] => _.flatten(_.flatten(nested_impacts)));
+    })).then((nested_impacts: AppImpactGeo[][]): AppImpactGeo[] => _.flatten(_.flatten(nested_impacts)));
   }
 
 
@@ -131,14 +126,6 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
   }
   get byTime() { return this._byTime; }
 
-
-  // this is for displaying what company you're hovering on based 
-  // on back rectshostutils
-  _companyHover(company: CompanyInfo, hovering: boolean) {
-    this._companyHovering = hovering ? company : undefined;
-  }
-
-  // 
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
     const svgel = this.getSVGElement();
@@ -169,30 +156,37 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
     // to prepare for stack() let's
     this.compileImpacts(this.usage).then(impacts => {
 
-      console.log('country Cat impacts > ', impacts);
-
       let red_impacts = impacts.reduce((perapp, impact) => {
-        let appcat = (perapp[impact.appid] || {});
-        appcat[impact.category] = (appcat[impact.category] || 0) + impact.impact;
-        perapp[impact.appid] = appcat;
+        let appcity = (perapp[impact.appid] || {});
+        appcity[impact.geo.city] = (appcity[impact.geo.city] || 0) + impact.impact;
+        perapp[impact.appid] = appcity;
         return perapp;
+      }, {}),
+      geobycity = impacts.reduce((obj, impact) => {
+        obj[impact.geo.city] = obj[impact.geo.city] || impact.geo;
+        return obj;
       }, {});
+      
+      impacts = _.flatten(_.map(red_impacts, (cityobj, appid) => _.map(cityobj, (impact, city) => ({ appid: appid, geo: geobycity[city], impact: impact } as AppImpactGeo))));
 
-      impacts = _.flatten(_.map(red_impacts, (catimpacts, appid) => _.map(catimpacts, (impact, cat) => ({ appid: appid, category: cat, impact: impact } as AppImpactCat))));
+      console.log('country geo impacts after comp > ', impacts.length);      
 
-      console.log('country cat red_impacts ', red_impacts, impacts);
+      impacts.filter(i => i && i.appid && i.geo && i.geo.latitude && i.geo.longitude);
 
-      let apps = _.uniq(impacts.map((x) => x.appid)),
-        categories = _.uniq(impacts.map((x) => x.category)),
-        get_impact = (cid, aid) => {
-          const t = impacts.filter((imp) => imp.category === cid && imp.appid === aid)[0];
-          return t !== undefined ? t.impact : 0;
-        },
-        by_category = categories.map((catname) => ({
-          category: catname,
-          total: apps.reduce((total, appid) => total += get_impact(catname, appid), 0),
-          ..._.fromPairs(apps.map((appid) => [appid, get_impact(catname, appid)]))
-        }));
+      console.log('after lat and lon filter> ', impacts.length, impacts);      
+
+      let apps = _.uniq(impacts.map((x) => x.appid));
+
+      //   countries = _.uniq(impacts.map((x) => x.country)),
+      //   get_impact = (cid, aid) => {
+      //     const t = impacts.filter((imp) => imp.country === cid && imp.appid === aid)[0];
+      //     return t !== undefined ? t.impact : 0;
+      //   },
+      //   by_country = countries.map((countryname) => ({
+      //     country: countryname,
+      //     total: apps.reduce((total, appid) => total += get_impact(countryname, appid), 0),
+      //     ..._.fromPairs(apps.map((appid) => [appid, get_impact(countryname, appid)]))
+      //   }));
 
       if (this.apps === undefined) {
         // sort apps
@@ -201,142 +195,80 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
       } else {
         apps = this.apps;
       }
-
-      const satBand = (name, domain, h, l, slow, shigh) => {
-        return (appkey) => {
-          let ki = domain.indexOf(appkey),
-            bandwidth = (shigh - slow) / domain.length,
-            starget = slow + ki * bandwidth,
-            targetc = d3.hsl(h, starget, starget);
-          // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
-          return targetc;
-        };
-      };
-
-      (<any>window).d3 = d3;
-
-      by_category.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
-
-      // re-order companies
-      categories = by_category.map((bc) => bc.category);
-
-      const stack = d3.stack(),
-        out = stack.keys(apps)(by_category);
+      // by_country.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
+      // // re-order companies
+      // countries = by_country.map((bc) => bc.country);
 
       let margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
         height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
-        g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
-        x = d3.scaleBand()
-          .rangeRound([0, width]).paddingInner(0.05).align(0.1)
-          .domain(categories),
-        d3maxx = d3.max(by_category, function (d) { return d.total; }) || 0,
-        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
-
-        console.log('cat categories > ', categories);
-
-
-      if (d3maxx < 0.7 * ymaxx) {
-        ymaxx = 1.1 * d3maxx;
-      }
-
-      let y = d3.scaleLinear()
-        .rangeRound([height, 0])
-        .domain([0, ymaxx]).nice(),
         z = d3.scaleOrdinal(d3.schemeCategory20).domain(apps);
+        
 
-      // main rects
-      const f = (selection, first, last) => {
-        return selection.selectAll('rect')
-          .data((d) => d)
-          .enter().append('rect')
-          .attr('class', 'bar')
-          .attr('x', (d) => x(d.data.category))
-          .attr('y', (d) => y(d[1]))
-          .attr('height', function (d) { return y(d[0]) - y(d[1]); })
-          .attr('width', x.bandwidth())
-          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
-          .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
-          .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
-      };
+      //   g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
+      //   x = d3.scaleBand()
+      //     .rangeRound([0, width]).paddingInner(0.05).align(0.1)
+      //     .domain(countries),
+      //   d3maxx = d3.max(by_country, function (d) { return d.total; }) || 0,
+      //   ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
 
-      g.append('g')
-        .selectAll('g')
-        .data(d3.stack().keys(apps)(by_category))
-        .enter().append('g')
-        .attr('fill', (d) => {
-          // highlightApp comes in from @Input() attribute, set using compare
-          // _apphover comes in from hovering service, namely usagetable hover
-          let highApp = this.highlightApp || this._hoveringApp;
-          if (highApp) {
-            return d.key === highApp.app ? z(d.key) : 'rgba(200,200,200,0.2)';
-          }
-          return z(d.key);
-        })
-        .call(f);
+      // if (d3maxx < 0.7 * ymaxx) {
+      //   ymaxx = 1.1 * d3maxx;
+      // }
 
-      // x axis
-      g.append('g')
-        .attr('class', 'axis x')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(d3.axisBottom(x))
-        .selectAll('text')
-        .style('text-anchor', 'end')
-        .attr('y', 1)
-        .attr('dx', '-.8em')
-        .attr('dy', '.15em')
-        .attr('transform', 'rotate(-90)');
+      // // const format = function (d) {
+      // //   d = d / 1000000;
+      // //   return d3.format(',.02f')(d) + 'M';
+      // // };
 
-      if (!this.showXAxis) {
-        svg.selectAll('g.axis.x text').text('');
-        svg.selectAll('g.axis.x g.tick').remove();
-      } else {
-        svg.selectAll('g.axis.x g.tick')
-          .filter(function (d) { return d; })
-          .attr('class', (d) => d.category)
-          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
-      }
+      // const a = {};
 
-      g.append('g')
-        .attr('class', 'axis y')
-        .call(d3.axisLeft(y).ticks(null, 's'))
-        .append('text')
-        .attr('x', 2)
-        .attr('y', y(y.ticks().pop()) - 8)
-        .attr('dy', '0.32em')
-        .text('Impact');
+      (<any>window)._d3 = d3;
 
-      // legend
-      const leading = 26;
-      if (this.showLegend) {
-        const legend = g.append('g')
-          .attr('class', 'legend')
-          .attr('transform', 'translate(0,10)')
-          .selectAll('g')
-          .data(apps.slice().reverse())
-          .enter()
-          .append('g')
-          .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
-          .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
-          .on('mouseout', (d) => this.hover.hoverChanged(undefined))
-          .on('click', (d) => {
-            console.log('click! ', d);
-            this.focus.focusChanged(this.loader.getCachedAppInfo(d));
+      const projection = d3.geoMercator()
+        .scale(width / 2 / Math.PI) 
+        .translate([width / 2, height / 2]),
+        path = d3.geoPath().projection(projection);
+
+        this.loader.getWorldMesh().then((mesh) => {
+          svg.append('path').attr("d", path(topojson.mesh(mesh)));
+        });
+
+        // points
+        // const aa = [-122.490402, 37.786453],       bb = [-122.389809, 37.72728];
+
+        // add circles to svg
+        svg.selectAll("circle")
+          .data(impacts).enter()
+          .append("circle")
+          .attr("cx", (d) => { 
+            const lat = projection([d.geo.longitude, d.geo.latitude])[0];
+            console.log('lat ~', lat, [d.geo.latitude,d.geo.longitude]);
+            return lat;
+          })
+          .attr("cy", (d) => { 
+            const lon = projection([d.geo.longitude,d.geo.latitude])[1];
+            console.log('lon ~', lon, [d.geo.latitude,d.geo.longitude]);
+            return lon;            
+            // return projection(d)[1]; 
+          })
+          .attr("r", (d) => {
+            console.log('impact > ', d.impact);
+            return Math.floor(d.impact/100);
+          }).attr("fill", (d) => {
+            console.log('d ', d.appid, z(d.appid));
+            return z(d.appid);
           });
-                  
-        legend.append('rect')
-          .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
-          .attr('width', 19)
-          .attr('height', 19)
-          .attr('fill', z);
 
-        legend.append('text')
-          .attr('x', this.showTypesLegend ? width - 140 - 24 : width - 24)
-          .attr('y', 9.5)
-          .attr('dy', '0.32em')
-          .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
+      // var map = d3.geo.choropleth()
+      //   .geofile('/d3-geomap/topojson/world/countries.json')
+      //   .colors(colorbrewer.YlGnBu[9])
+      //   .column((xx) => xx.impact)
+      //   .format(format)
+      //   .legend(true)
+      //   .unitId('Country Code');
 
-      }
+      // d3.select(svg).datum(by_country).call(map.draw, map);
 
     });
   }

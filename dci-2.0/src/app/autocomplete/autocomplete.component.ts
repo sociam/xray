@@ -70,12 +70,12 @@ export class AutocompleteComponent implements OnInit, OnChanges {
 
   select(item) {    
     if (item) {
+      this.selected = item;
+      this.filteredList = []; // hide the list      
+      this.query = item.storeinfo.title;          
       this.loader.getFullAppInfo(item.app).then((fullitem) => {
         console.log('got full item ', fullitem);
-          this.selectedChange.emit(fullitem);
-          this.selected = item;
-          this.query = item.storeinfo.title;
-          this.filteredList = []; // hide the list      
+          this.selectedChange.emit(fullitem);          
       });      
     }
   }
