@@ -258,7 +258,15 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
           }).attr("fill", (d) => {
             console.log('d ', d.appid, z(d.appid));
             return z(d.appid);
-          });
+          }).attr("opacity", 0.75);
+          
+        svg.append("text")
+          .attr("font-family", "sans-serif")
+          .attr("x", (width / 2))             
+          .attr("y", 25)
+          .attr("text-anchor", "middle")  
+          .style("font-size", "20px") 
+          .text("Where in the world is your personal data being sent?");
 
       // var map = d3.geo.choropleth()
       //   .geofile('/d3-geomap/topojson/world/countries.json')

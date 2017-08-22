@@ -267,6 +267,14 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
         .attr('dy', '0.32em')
         .text('Impact');
 
+      g.append("text")
+          .attr("font-family", "sans-serif")
+          .attr("x", (width / 2))             
+          .attr("y", 0)
+          .attr("text-anchor", "middle")  
+          .style("font-size", "20px") 
+          .text("Which country is recieving the most of your personal data?");
+
       // legend
       const leading = 26;
       if (this.showLegend) {

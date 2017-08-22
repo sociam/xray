@@ -263,7 +263,13 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           return z(d.key);
         })
         .call(f);
-
+      g.append("text")
+        .attr("font-family", "sans-serif")
+        .attr("x", (width / 2))             
+        .attr("y", 0)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "20px") 
+        .text("What are they using your data for?");
       // x axis
       g.append('g')
         .attr('class', 'axis x')

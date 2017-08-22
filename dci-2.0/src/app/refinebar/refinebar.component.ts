@@ -282,7 +282,14 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
           .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
       };
-
+      g.append("text")
+        .attr("font-family", "sans-serif")
+        .attr("x", (width / 2))             
+        .attr("y", 0)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "20px") 
+        .text("Who is taking your personal data?");
+        
       g.append('g')
         .selectAll('g')
         .data(d3.stack().keys(apps)(by_company))
