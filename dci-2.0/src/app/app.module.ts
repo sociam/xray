@@ -59,6 +59,10 @@ const appRoutes: Routes = [
     path: 'tiled',
     component: TiledDisplayComponent,
   },  
+  {
+    path: 'add',
+    component: UsagetableComponent,
+  },  
   { path: '', redirectTo: '/single/refinebar', pathMatch: 'full' },
   { path: '**', component: ErrorComponent, data: { message: 'page not found' } }
 ];
