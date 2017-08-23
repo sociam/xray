@@ -28,6 +28,12 @@ $borderthicc: 5px;
     color: white;
 }
 
+.companytype.unknown {
+    background-color: $other;
+    padding: 20px 20px 15px 20px;
+    color: white;
+}
+
 .companyinfo.advertising {
     // background-color: $advertising;
     border-top: $borderthicc solid $advertising;
@@ -49,11 +55,18 @@ $borderthicc: 5px;
     border-bottom: $borderthicc solid $other;
 }
 
+.companyinfo.unknown {
+    border-top: $borderthicc solid $other;
+    border-bottom: $borderthicc solid $other;
+}
+
 .companyinfo {
+    background-color: white;
     padding: 20px 20px 10px 20px;
     // max-width:200px;
-    min-height: 300px;
-    overflow: scroll-y;
+    height: 95%;
+    // height: 300px;
+    // overflow: scroll-y;
     .curated {
         max-width: 550px;
         position: relative;

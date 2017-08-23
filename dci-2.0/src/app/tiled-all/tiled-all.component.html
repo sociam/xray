@@ -4,8 +4,8 @@
     <app-focus-infobox #focus [target]='target' [targettype]='targettype'></app-focus-infobox>
     <app-refinebar class="gridleft" [appusage]="usage"></app-refinebar>
     <div class="gridright">
-        <app-refinecat [appusage]="usage"></app-refinecat>
-        <app-geomap [appusage]="usage"></app-geomap>
-        <app-geobar [appusage]="usage"></app-geobar>
+        <app-refinecat [appusage]="usage" [showLegend]='false'></app-refinecat>
+        <app-geomap [appusage]="usage" [showLegend]='false'></app-geomap>
+        <app-geobar [appusage]="usage" [showLegend]='false'></app-geobar>
     </div>
 </div>
