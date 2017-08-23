@@ -1,0 +1,47 @@
+div.focus {
+    position: relative;
+    padding: 0px;
+    background-color: white;
+    z-index: 100;
+    width: 18vw;
+    .close {
+        border: none;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 18pt;
+        z-index: 120;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+    }
+    .app {
+        padding: 30px 40px;
+        position: relative;
+        // padding: 10px 0px;
+        font-size: 12pt;
+        border-bottom: 1px solid #eee;
+        .appicon {
+            position: absolute;
+            left: 40px;
+            width: 60px;
+        }
+        .titledev {
+            padding: 0px 0px 10px 80px;
+            .title {
+                font-size: 18pt;
+                font-weight: bold;
+            }
+            .developer {
+                font-size: 16pt;
+            }
+            margin-bottom:1em;
+        }
+        .appdesc {
+            padding: 0px 0px;
+            max-width: 500px;
+            * {
+                margin-bottom: 1em;
+            }
+        }
+    }
+}
