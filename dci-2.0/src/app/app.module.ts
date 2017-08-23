@@ -30,6 +30,8 @@ import { FocusService } from "app/focus.service";
 import { HoverService } from "app/hover.service";
 import { GeomapComponent } from './geomap/geomap.component';
 import { GeobarComponent } from './geobar/geobar.component';
+import { TiledAllComponent } from './tiled-all/tiled-all.component';
+import { FocusInfoboxComponent } from './focus-infobox/focus-infobox.component';
 
 
 const appRoutes: Routes = [
@@ -55,6 +57,10 @@ const appRoutes: Routes = [
     path: 'alternatives/:app',
     component: CompareContainerComponent
   },  
+  {
+    path: 'grid',
+    component: TiledAllComponent,
+  },    
   {
     path: 'tiled',
     component: TiledDisplayComponent,
@@ -88,7 +94,9 @@ const appRoutes: Routes = [
     TiledGridComponent,
     RefinecatComponent,
     GeomapComponent,
-    GeobarComponent    
+    GeobarComponent,
+    TiledAllComponent,
+    FocusInfoboxComponent    
   ],
   imports: [
     HttpModule,
