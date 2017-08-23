@@ -10,9 +10,9 @@
                         <span *ngIf="target?.storeinfo?.rating" class="rating">- rating: {{ target?.storeinfo?.rating }} &#x2606; </span>
                     </div>
                 </div>
-                <div class="appdesc" [hidden]="!target">
-                    <div class="summary">{{ target?.storeinfo.summary }}</div>
-                    <div class="desc">{{ target?.storeinfo.description.split(' ').slice(0,50).join(' ') }}</div>
+                <div class="appdesc .dont-break-out" [hidden]="!target">
+                    <p class="summary">{{ target?.storeinfo.summary }}</p>
+                    <p class="desc">{{ target?.storeinfo.description.split(' ').slice(0,50).join(' ') }}</p>
                 </div>
                 <app-company-list [app]='target?.app'></app-company-list>
 

@@ -1,15 +1,25 @@
 div.root {
     height: 92vh;
+    max-height: 92vh;
     width: 100%;
     div.left,
     div.right {
+        display: inline-flex;
         margin: 0px;
         vertical-align: top;
-        display: inline-block;
         height: 100%;
+        width: 70%;
+        app-usage-listener /deep/ div.container {
+            display: inline-flex;
+            flex-wrap: wrap;
+        }
+        app-usage-listener /deep/ div.chart {
+            height: 50vh;
+            width: 50%;
+        }
     }
     div.left {
-        width: 45%;
+        width: 25%;
         display: inline-block;
         flex-direction: column;
         app-usagetable /deep/ div.top {
@@ -18,11 +28,9 @@ div.root {
             overflow-y: scroll;
         }
     }
-    div.right {
-        width: 54%;
-    }
     // this shoud be in its own 
     .focus {
+        width: 90%;
         height: 20vh;
         padding: 0px 30px;
         .app {
