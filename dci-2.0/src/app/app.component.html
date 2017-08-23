@@ -1,13 +1,10 @@
 <nav>
     <a routerLink="/add" routerLinkActive='active'>apps only</a>
-    <a routerLink="/grid" routerLinkActive='active'>grid</a>
-    <a routerLink="/tiled" routerLinkActive='active'>scroll</a>
-    <a routerLink="/company" routerLinkActive='active'>who</a>
-    <a routerLink="/category" routerLinkActive='active'>why</a>
-    <a routerLink="/geo" routerLinkActive='active'>where</a>
-    <!-- <a routerLink="/single/refinebar" routerLinkActive='active'>by company</a>
-    <a routerLink="/single/companybar" routerLinkActive='active'>by app</a>
-    <a routerLink="/single/foobar" routerLinkActive='active'>don't click</a> -->
+    <a routerLink="/grid" [class.active]="isActive('/grid')">grid</a>
+    <a routerLink="/scroll" routerLinkActive='active'>scroll</a>
+    <a routerLink='/grid' [queryParams]="{mode:'refine'}" [class.active]="isActive('grid?mode=refine')">who</a>
+    <a routerLink='/grid' [queryParams]="{mode:'cat'}" [class.active]="isActive('grid?mode=cat')">why</a>
+    <a routerLink='/grid' [queryParams]="{mode:'geo'}" [class.active]="isActive('grid?mode=geo')">where</a>
 </nav>
 
 <router-outlet></router-outlet>

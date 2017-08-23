@@ -18,7 +18,7 @@ interface AppImpactGeo {
 @Component({
   selector: 'app-geobar',
   templateUrl: './geobar.component.html',
-  styleUrls: ['./geobar.component.css'],
+  styleUrls: ['./geobar.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 

@@ -3,6 +3,7 @@ import { CompanyInfo, APIAppInfo } from "app/loader.service";
 import { FocusTarget, FocusService } from "app/focus.service";
 import { UsageListener } from "app/usage-listener/usage-listener.component";
 import { UsageConnectorService } from "app/usage-connector.service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 // target watcher watches for clicks on apps and companies
 export class TargetWatcher extends UsageListener {
@@ -42,9 +43,18 @@ export class TargetWatcher extends UsageListener {
 export class TiledAllComponent extends TargetWatcher implements OnInit {
 
   showUsageTable = false;
+  mode: string;
  
-  constructor(focus: FocusService, connector: UsageConnectorService) {
+  constructor(focus: FocusService, connector: UsageConnectorService, private route: ActivatedRoute) {
     super(focus, connector);
+    this.route.params.subscribe(params => { 
+      console.log("SETTING MODE", params.mode);
+      this.mode = params.mode; 
+    });
+    this.route.queryParams.subscribe(params => { 
+      console.log("SETTING QUERY PARAMS MODE", params.mode);
+      this.mode = params.mode; 
+    });
   }
 
   ngOnInit() {}

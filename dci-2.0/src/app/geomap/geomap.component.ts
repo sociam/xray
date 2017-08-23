@@ -20,7 +20,7 @@ interface AppImpactGeo {
 @Component({
   selector: 'app-geomap',
   templateUrl: './geomap.component.html',
-  styleUrls: ['./geomap.component.css'],
+  styleUrls: ['./geomap.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 

@@ -2,10 +2,23 @@
     <button [ngClass]='{toggleUsageTable:true, toggled:showUsageTable}' (click)="showUsageTable = !showUsageTable"> show apps </button>
     <app-usagetable [hidden]="!showUsageTable"></app-usagetable>
     <app-focus-infobox #focus [target]='target' [targettype]='targettype'></app-focus-infobox>
-    <app-refinebar class="gridleft" [appusage]="usage"></app-refinebar>
-    <div class="gridright">
+
+    <!-- basic configuration: full grid -->
+    <app-refinebar *ngIf="!mode" class='gridleft' [appusage]="usage"></app-refinebar>
+    <div *ngIf='!mode' class="gridright">
         <app-refinecat [appusage]="usage" [showLegend]='false'></app-refinecat>
         <app-geomap [appusage]="usage" [showLegend]='false'></app-geomap>
         <app-geobar [appusage]="usage" [showLegend]='false'></app-geobar>
     </div>
+
+    <!-- mode == refine -->
+    <app-refinebar *ngIf="mode=='refine'" class='fullwidth' [appusage]="usage"></app-refinebar>
+
+    <!-- mode == cat -->
+    <app-refinecat *ngIf="mode=='cat'" class="fullwidth" [appusage]="usage"></app-refinecat>
+
+    <!-- mode == geo -->
+    <app-geobar *ngIf="mode == 'geo'" class="gridleft" [appusage]="usage" [showLegend]='false'></app-geobar>
+    <app-geomap *ngIf="mode == 'geo'" class="gridright" [appusage]="usage" [showLegend]='false'></app-geomap>
+
 </div>

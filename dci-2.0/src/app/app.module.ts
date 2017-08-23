@@ -35,24 +35,6 @@ import { FocusInfoboxComponent } from './focus-infobox/focus-infobox.component';
 
 const appRoutes: Routes = [
   {
-    path: 'single',
-    component: SingleDisplayComponent,
-    children: [
-      {
-        path: 'refinebar', 
-        component: UsageListenerComponent
-      },
-      {
-        path: 'companybar',
-        component: CompanybarComponent
-      },
-      {
-        path: 'foobar',
-        component: FoobarComponent
-      }
-    ]    
-  },
-  {
     path: 'alternatives/:app',
     component: CompareContainerComponent
   },  
@@ -61,7 +43,7 @@ const appRoutes: Routes = [
     component: TiledAllComponent,
   },    
   {
-    path: 'tiled',
+    path: 'scroll',
     component: TiledDisplayComponent,
   },  
   {

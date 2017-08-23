@@ -48,4 +48,8 @@
             width: 100%;
         }
     }
+    .fullwidth {
+        flex-grow: 0;
+        flex-basis: 100%;
+    }
 }
