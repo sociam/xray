@@ -243,22 +243,23 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
           .append("circle")
           .attr("cx", (d) => { 
             const lat = projection([d.geo.longitude, d.geo.latitude])[0];
-            console.log('lat ~', lat, [d.geo.latitude,d.geo.longitude]);
+            //console.log('lat ~', lat, [d.geo.latitude,d.geo.longitude]);
             return lat;
           })
           .attr("cy", (d) => { 
             const lon = projection([d.geo.longitude,d.geo.latitude])[1];
-            console.log('lon ~', lon, [d.geo.latitude,d.geo.longitude]);
+            //console.log('lon ~', lon, [d.geo.latitude,d.geo.longitude]);
             return lon;            
             // return projection(d)[1]; 
           })
           .attr("r", (d) => {
-            console.log('impact > ', d.impact);
+            //console.log('impact > ', d.impact);
             return Math.floor(d.impact/100);
           }).attr("fill", (d) => {
-            console.log('d ', d.appid, z(d.appid));
+            //console.log('d ', d.appid, z(d.appid));
             return z(d.appid);
-          });
+          })
+          .attr('opacity', '0.75');
 
       // var map = d3.geo.choropleth()
       //   .geofile('/d3-geomap/topojson/world/countries.json')

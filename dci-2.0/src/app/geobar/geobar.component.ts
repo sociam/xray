@@ -210,15 +210,30 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
         return selection.selectAll('rect')
           .data((d) => d)
           .enter().append('rect')
-          .attr('class', 'bar')
-          .attr('x', (d) => x(d.data.country))
-          .attr('y', (d) => y(d[1]))
-          .attr('height', function (d) { return y(d[0]) - y(d[1]); })
-          .attr('width', x.bandwidth());
+            .attr('class', 'bar')
+            .attr('x', (d) => x(d.data.country))
+            .attr('y', (d) => y(d[1]))
+            .attr('height', function (d) { return y(d[0]) - y(d[1]); })
+            .attr('width', x.bandwidth());    
           // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
           // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
           // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
       };
+
+        const t = (selection, first, last) => {
+        return selection.selectAll('rect')
+          .data((d) => d)
+          .enter().append('image')
+          .attr("xlink:href", "https://github.com/favicon.ico")
+            .attr('x', (d) => x(d.data.country))
+            .attr('y', (d) => y(-10))
+            .attr('height', function (d) { return 20 })
+            .attr('width', 20);    
+          // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
+          // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
+          // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
+      };
+
 
       g.append('g')
         .selectAll('g')
@@ -234,7 +249,8 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
           }
           return z(d.key);
         })
-        .call(f);
+        .call(f)
+        .call(t);
 
       // x axis
       g.append('g')
@@ -247,6 +263,8 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
         .attr('dx', '-.8em')
         .attr('dy', '.15em')
         .attr('transform', 'rotate(-90)');
+      
+      
 
       if (!this.showXAxis) {
         svg.selectAll('g.axis.x text').text('');
@@ -256,6 +274,7 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
           .filter(function (d) { return d; })
           .attr('class', (d) => d.country)
           .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
+          
       }
 
       g.append('g')
@@ -266,6 +285,24 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
         .attr('y', y(y.ticks().pop()) - 8)
         .attr('dy', '0.32em')
         .text('Impact');
+
+        console.log(g);
+      g.append("image")
+        .attr("xlink:href", "https://github.com/favicon.ico")
+        .attr("x", 50)
+        .attr("y", 50)
+        .attr("width", 20)
+        .attr("height", 20);
+
+      svg.selectAll('g.axis.x text')
+        .append('image')
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("xlink:href", (d) => {
+          console.log('Tick Image.')
+          return "https://github.com/favicon.ico"})
+        .attr("width", 20)
+        .attr("height", 20);
 
       // legend
       const leading = 26;
