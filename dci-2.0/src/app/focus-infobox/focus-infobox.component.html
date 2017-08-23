@@ -1,4 +1,6 @@
-<div class="focus">
+<div [hidden]="!target" class="focus">
+    <!-- todo: add a loader -->
+    <button class="close" (click)="close()">&#x2715;</button>
     <div class="app" *ngIf="targettype == 'app'">
         <img class='appicon' *ngIf="target?.icon" [src]="target?.icon">
         <div class="titledev">

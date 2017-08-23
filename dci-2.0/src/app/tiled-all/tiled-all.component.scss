@@ -24,8 +24,9 @@
     padding: 20px 20px 20px 150px; // big left to accommodate infobox
     app-focus-infobox {
         position: absolute;
-        left: 0px;
+        left: 20px;
         bottom: 0px;
+        border: 1px solid #eee;
     }
     display:flex;
     flex-direction:row;
