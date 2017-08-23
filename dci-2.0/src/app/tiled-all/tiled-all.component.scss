@@ -2,11 +2,12 @@
     position: relative;
     app-usagetable {
         position: absolute;
-        top: 150px;
-        left: 0px;
-        z-index: 100.0;
+        top: 0px;
+        left: 150px;
+        z-index: 100;
         background-color: white;
         box-shadow: #eee 2px 2px 3px;
+        padding: 20px 10px;
     }
     .toggleUsageTable {
         position: absolute;
