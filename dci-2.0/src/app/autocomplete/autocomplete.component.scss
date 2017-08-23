@@ -15,10 +15,11 @@ input {
 
 .container {
     position: relative;
+    width: 100%;
 }
 
 .suggestions {
-    background-color: #eeeeee;
+    background-color: #fafafa; // #eeeeee;
     padding: 5px 10px;
     // border-left: 1px solid #888;
     // border-right: 1px solid #888;
@@ -43,19 +44,20 @@ input {
         }
         text-align:middle;
         &:hover {
-            background-color: white; //           #eee;
+            background-color: #eff;
         }
         .dev {
             color: #666;
         }
     }
+    // box-shadow: #ddd 2px 2px 2px 2px;
 }
 
 .spinner {
     display: inline-block;
     width: 50px;
     height: 50px;
-    background-color: white; //  #F0E; //  #333;
+    background-color: white; //  #eee; //  white; //  #F0E; //  #333;
     // margin: 100px auto;
     margin: 5px auto;
     -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;

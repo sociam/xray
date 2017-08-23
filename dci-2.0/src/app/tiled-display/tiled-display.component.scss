@@ -9,9 +9,8 @@ div.root {
         height: 100%;
     }
     div.left {
-        width: 45%;
+        width: 25%;
         display: inline-block;
-        flex-direction: column;
         app-usagetable /deep/ div.top {
             height: 50vh;
             border-bottom: 1px solid #eee;
@@ -19,11 +18,11 @@ div.root {
         }
     }
     div.right {
-        width: 54%;
+        width: 74%;
     }
     // this shoud be in its own 
     .focus {
-        height: 20vh;
+        // height: 20vh;
         padding: 0px 30px;
         .app {
             position: relative;
