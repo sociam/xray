@@ -23,7 +23,6 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { HostUtilsService } from "app/host-utils.service";
 import { AppinfoComponent } from './appinfo/appinfo.component';
 import { CompanyinfoComponent } from './companyinfo/companyinfo.component';
-import { TiledGridComponent } from './tiled-grid/tiled-grid.component';
 import { RefinecatComponent } from './refinecat/refinecat.component';
 
 import { FocusService } from "app/focus.service";
@@ -91,7 +90,6 @@ const appRoutes: Routes = [
     AutocompleteComponent,
     AppinfoComponent,
     CompanyinfoComponent,
-    TiledGridComponent,
     RefinecatComponent,
     GeomapComponent,
     GeobarComponent,
