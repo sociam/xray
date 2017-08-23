@@ -1,0 +1,11 @@
+<div class="root">
+    <button [ngClass]='{toggleUsageTable:true, toggled:showUsageTable}' (click)="showUsageTable = !showUsageTable"> show apps </button>
+    <app-usagetable [hidden]="!showUsageTable"></app-usagetable>
+    <app-focus-infobox #focus [target]='target' [targettype]='targettype'></app-focus-infobox>
+    <app-refinebar class="gridleft" [appusage]="usage"></app-refinebar>
+    <div class="gridright">
+        <app-refinecat [appusage]="usage"></app-refinecat>
+        <app-geomap [appusage]="usage"></app-geomap>
+        <app-geobar [appusage]="usage"></app-geobar>
+    </div>
+</div>
