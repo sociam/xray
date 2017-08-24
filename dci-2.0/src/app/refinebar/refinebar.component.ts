@@ -29,6 +29,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   companyid2info: CompanyDB;
 
   private usage: AppUsage[];
+  private impacts: AppImpact[];
   private init: Promise<any>;
   lastMax = 0;
   _byTime = 'yes';
@@ -75,7 +76,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     const nE: HTMLElement = this.el.nativeElement;
     return Array.from(nE.getElementsByTagName('svg'))[0];
   }
-  
+
 
   // this gets called when this.usage_in changes
   ngOnChanges(changes: SimpleChanges): void {
@@ -85,8 +86,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         delete this.apps;
       }
       this.usage = this.usage_in;
-      console.log('>> REFINEBAR new usage ', JSON.stringify(this.usage));
-      this.render();
+      this.compileImpacts(this.usage).then(impacts => {
+        this.impacts = impacts;
+        this.render();
+      });
     });
   }
 
@@ -128,7 +131,6 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   }
   get byTime() { return this._byTime; }
 
-
   setHoveringTypeHighlight(ctype: string) {
     let svg = this.getSVGElement();
     this._hoveringType = ctype;
@@ -150,8 +152,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
     const svgel = this.getSVGElement();
-    if (!svgel || this.usage === undefined || this.usage.length === 0) { return; }
-    // console.log('refinebar render! getSVGElement > ', svgel);
+    if (!svgel || this.usage === undefined || this.impacts === undefined || this.usage.length === 0) { return; }
 
     let rect = svgel.getBoundingClientRect(),
       width_svgel = Math.round(rect.width - 5),
@@ -172,235 +173,245 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     svg.selectAll('*').remove();
 
-    const usage = this.usage;
+    const usage = this.usage,
+      impacts = this.impacts;
 
-    // to prepare for stack() let's
-    this.compileImpacts(this.usage).then(impacts => {
-
-      let apps = _.uniq(impacts.map((x) => x.appid)),
-        companies = _.uniq(impacts.map((x) => x.companyid)),
-        get_impact = (cid, aid) => {
-          const t = impacts.filter((imp) => imp.companyid === cid && imp.appid === aid)[0];
-          return t !== undefined ? t.impact : 0;
-        },
-        by_company = companies.map((c) => ({
-          company: c,
-          total: apps.reduce((total, aid) => total += get_impact(c, aid), 0),
-          ..._.fromPairs(apps.map((aid) => [aid, get_impact(c, aid)]))
-        }));
-
-      if (this.apps === undefined) {
-        // sort apps
-        apps.sort((a, b) => _.filter(usage, { appid: b })[0].mins - _.filter(usage, { appid: a })[0].mins);
-        this.apps = apps;
-      } else {
-        apps = this.apps;
-      }
-
-      const satBand = (name, domain, h, l, slow, shigh) => {
-        return (appkey) => {
-          let ki = domain.indexOf(appkey),
-            bandwidth = (shigh - slow) / domain.length,
-            starget = slow + ki * bandwidth,
-            targetc = d3.hsl(h, starget, starget);
-          // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
-          return targetc;
-        };
+    let apps = _.uniq(impacts.map((x) => x.appid)),
+      companies = _.uniq(impacts.map((x) => x.companyid)),
+      get_impact = (cid, aid) => {
+        const t = impacts.filter((imp) => imp.companyid === cid && imp.appid === aid)[0];
+        return t !== undefined ? t.impact : 0;
       },
-        catcolours = { // .interpolate(d3.interpolateHsl).
-          'advertising': satBand('adv', apps, 0.2, 0.6, 0.2, 1),
-          'app': satBand('app', apps, 80, 0.6, 0.2, 1),
-          'analytics': satBand('analytics', apps, 30, 0.4, 0.2, 1),
-          'usage': satBand('usage', apps, 30, 0.6, 0.2, 1),
-          'other': satBand('other', apps, 0.5, 0.6, 0.2, 1)
-        },
-        getColor = (app: string, company: string): string => {
-          if (app === undefined) {
-            app = apps[0]; // apps.length - 1];
-          }
-          let companyInfo = this.companyid2info.get(company);
-          if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
-            return catcolours[companyInfo.typetag](app);
-          }
-          return catcolours.other(app);
-        };
+      by_company = companies.map((c) => ({
+        company: c,
+        total: apps.reduce((total, aid) => total += get_impact(c, aid), 0),
+        ..._.fromPairs(apps.map((aid) => [aid, get_impact(c, aid)]))
+      }));
 
-      (<any>window).d3 = d3;
+    if (this.apps === undefined) {
+      // sort apps
+      apps.sort((a, b) => _.filter(usage, { appid: b })[0].mins - _.filter(usage, { appid: a })[0].mins);
+      this.apps = apps;
+    } else {
+      apps = this.apps;
+    }
 
-      by_company.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
-
-      // re-order companies
-      companies = by_company.map((bc) => bc.company);
-
-      const stack = d3.stack(),
-        out = stack.keys(apps)(by_company);
-
-      let margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
-        width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
-        height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
-        g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
-        x = d3.scaleBand()
-          .rangeRound([0, width]).paddingInner(0.05).align(0.1)
-          .domain(companies),
-        d3maxx = d3.max(by_company, function (d) { return d.total; }) || 0,
-        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx), 
-        this_ = this;
-
-
-      if (d3maxx < 0.7 * ymaxx) {
-        ymaxx = 1.1 * d3maxx;
-      }
-
-      let y = d3.scaleLinear()
-        .rangeRound([height, 0])
-        .domain([0, ymaxx]).nice(),
-        z = d3.scaleOrdinal(d3.schemeCategory20)
-          .domain(apps);
-
-      g.selectAll('rect.back')
-        .data(companies)
-        .enter().append('rect')
-        .attr('class', (company) => 'back ' + this.companyid2info.get(company).typetag)
-        .attr('x', (company) => x(company))
-        .attr('y', 0)
-        .attr('height', height)
-        .attr('width', x.bandwidth())
-        .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)))
-        .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d), true))
-        .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d), false));
-
-      // main rects
-      const f = (selection, first, last) => {
-        return selection.selectAll('rect')
-          .data((d) => d)
-          .enter().append('rect')
-          .attr('class', 'bar')
-          .attr('x', (d) => x(d.data.company))
-          .attr('y', (d) => y(d[1]))
-          .attr('height', function (d) { return y(d[0]) - y(d[1]); })
-          .attr('width', x.bandwidth())
-          // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
-          .on('click', function(d) {
-            this_.focus.focusChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
-          })          
-          .on('mouseenter', function(d) {
-            this_.hover.hoverChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
-          })
-          .on('mouseleave', (d) => this_.hover.hoverChanged(undefined));
-
-          // .on('mouseout', (d) => this.hover.hoverChanged(undefined))          
-          // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
-          // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
+    const satBand = (name, domain, h, l, slow, shigh) => {
+      return (appkey) => {
+        let ki = domain.indexOf(appkey),
+          bandwidth = (shigh - slow) / domain.length,
+          starget = slow + ki * bandwidth,
+          targetc = d3.hsl(h, starget, starget);
+        // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
+        return targetc;
+      };
+    },
+      catcolours = { // .interpolate(d3.interpolateHsl).
+        'advertising': satBand('adv', apps, 0.2, 0.6, 0.2, 1),
+        'app': satBand('app', apps, 80, 0.6, 0.2, 1),
+        'analytics': satBand('analytics', apps, 30, 0.4, 0.2, 1),
+        'usage': satBand('usage', apps, 30, 0.6, 0.2, 1),
+        'other': satBand('other', apps, 0.5, 0.6, 0.2, 1)
+      },
+      getColor = (app: string, company: string): string => {
+        if (app === undefined) {
+          app = apps[0]; // apps.length - 1];
+        }
+        let companyInfo = this.companyid2info.get(company);
+        if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
+          return catcolours[companyInfo.typetag](app);
+        }
+        return catcolours.other(app);
       };
 
-      g.append('g')
-        .selectAll('g')
-        .data(d3.stack().keys(apps)(by_company))
-        .enter().append('g')
-        .attr('fill', (d) => {
-          // highlightApp comes in from @Input() attribute, set using compare
-          // _apphover comes in from hovering service, namely usagetable hover
-          let highApp = this.highlightApp || this._hoveringApp;
-          console.log('highApp > ', highApp);
-          if (highApp) {
-            return d.key === highApp.app ? z(d.key) : 'rgba(200,200,200,0.2)';
-          }
-          return z(d.key);
+    (<any>window).d3 = d3;
+
+    by_company.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
+
+    // re-order companies
+    companies = by_company.map((bc) => bc.company);
+
+    const stack = d3.stack(),
+      out = stack.keys(apps)(by_company);
+
+    let margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
+      width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
+      height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
+      g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
+      x = d3.scaleBand()
+        .rangeRound([0, width]).paddingInner(0.05).align(0.1)
+        .domain(companies),
+      d3maxx = d3.max(by_company, function (d) { return d.total; }) || 0,
+      ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx),
+      this_ = this;
+
+    if (d3maxx < 0.7 * ymaxx) {
+      ymaxx = 1.1 * d3maxx;
+    }
+
+    let y = d3.scaleLinear()
+      .rangeRound([height, 0])
+      .domain([0, ymaxx]).nice(),
+      z = d3.scaleOrdinal(d3.schemeCategory20)
+        .domain(apps);
+
+    g.selectAll('rect.back')
+      .data(companies)
+      .enter().append('rect')
+      .attr('class', (company) => 'back ' + this.companyid2info.get(company).typetag)
+      .attr('x', (company) => x(company))
+      .attr('y', 0)
+      .attr('height', height)
+      .attr('width', x.bandwidth())
+      .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)))
+      .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d), true))
+      .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d), false));
+
+    // main rects
+    const f = (selection, first, last) => {
+      console.log('selection > ', selection);
+      return selection.selectAll('rect')
+        .data((d) => d)
+        .enter().append('rect')
+        .attr('class', 'bar')
+        .attr('x', (d) => x(d.data.company))
+        .attr('y', (d) => y(d[1]))
+        .attr('height', function (d) { return y(d[0]) - y(d[1]); })
+        .attr('width', x.bandwidth())
+        // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
+        .on('click', function (d) {
+          this_.focus.focusChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
         })
-        .call(f);
+        .on('mouseenter', function (d) {
+          if (this.parentElement && this.parentElement.__data__) {
+            // unsure why this is dying
+            this_.hover.hoverChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          } 
+        })
+        .on('mouseleave', (d) => this_.hover.hoverChanged(undefined));
 
-      // x axis
-      g.append('g')
-        .attr('class', 'axis x')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(d3.axisBottom(x))
-        .selectAll('text')
-        .style('text-anchor', 'end')
-        .attr('y', 1)
-        .attr('dx', '-.8em')
-        .attr('dy', '.15em')
-        .attr('transform', 'rotate(-90)');
+      // .on('mouseout', (d) => this.hover.hoverChanged(undefined))          
+      // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
+      // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
+    };
 
-      if (!this.showXAxis) {
-        svg.selectAll('g.axis.x text').text('');
-        svg.selectAll('g.axis.x g.tick').remove();
-      } else {
-        svg.selectAll('g.axis.x g.tick')
-          .filter(function (d) { return d; })
-          .attr('class', (d) => this.companyid2info.get(d).typetag)
-          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
-      }
+    g.append('g')
+      .selectAll('g')
+      .data(d3.stack().keys(apps)(by_company))
+      .enter().append('g')
+      .attr('fill', (d) => {
+        // highlightApp comes in from @Input() attribute, set using compare
+        // _apphover comes in from hovering service, namely usagetable hover
+        let highApp = this.highlightApp || this._hoveringApp;
+        if (highApp) {
+          return d.key === highApp.app ? z(d.key) : 'rgba(200,200,200,0.2)';
+        }
+        return z(d.key);
+      })
+      .call(f);
 
-      g.append('g')
-        .attr('class', 'axis y')
-        .call(d3.axisLeft(y).ticks(null, 's'))
-        .append('text')
-        .attr('x', 2)
-        .attr('y', y(y.ticks().pop()) - 8)
-        .attr('dy', '0.32em')
-        .text('Impact');
+    // x axis
+    g.append('g')
+      .attr('class', 'axis x')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(d3.axisBottom(x))
+      .selectAll('text')
+      .style('text-anchor', 'end')
+      .attr('y', 1)
+      .attr('dx', '-.8em')
+      .attr('dy', '.15em')
+      .attr('transform', 'rotate(-90)');
 
-      // legend
-      const leading = 26;
+    if (!this.showXAxis) {
+      svg.selectAll('g.axis.x text').text('');
+      svg.selectAll('g.axis.x g.tick').remove();
+    } else {
+      svg.selectAll('g.axis.x g.tick')
+        .filter(function (d) { return d; })
+        .attr('class', (d) => this.companyid2info.get(d).typetag)
+        .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d)));
+    }
 
-      if (this.showTypesLegend) {
-        const ctypes = ['advertising', 'analytics', 'app', 'other'],
-          ctypeslegend = g.append('g')
-            .attr('class', 'ctypelegend')
-            .attr('transform', 'translate(0,10)')
-            .selectAll('g')
-            .data(ctypes)
-            .enter().append('g')
-            .attr('class', (d) => d)
-            .on('mouseenter', (d) => this.setHoveringTypeHighlight(d))
-            .on("mouseleave", (d) => this.setHoveringTypeHighlight(undefined))
-            .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
+    g.append('g')
+      .attr('class', 'axis y')
+      .call(d3.axisLeft(y).ticks(null, 's'))
+      .append('text')
+      .attr('x', 2)
+      .attr('y', y(y.ticks().pop()) - 8)
+      .attr('dy', '0.32em')
+      .text('Impact');
 
-        ctypeslegend.append('rect')
-          .attr('x', width - 19)
-          .attr('width', 19)
-          .attr('height', 19)
-          .attr('class', (d) => 'legend ' + d);
-        ctypeslegend.append('text')
-          .attr('x', width - 24)
-          .attr('y', 9.5)
-          .attr('dy', '0.32em')
-          .text((d) => d);
-      }
-      if (this.showLegend) {
-        const legend = g.append('g')
-          .attr('class', 'legend')
+    // legend
+    const leading = 26;
+
+    if (this.showTypesLegend) {
+      const ctypes = ['advertising', 'analytics', 'app', 'other'],
+        ctypeslegend = g.append('g')
+          .attr('class', 'ctypelegend')
           .attr('transform', 'translate(0,10)')
           .selectAll('g')
-          .data(apps.slice().reverse())
-          .enter()
-          .append('g')
-          .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
-          .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
-          .on('mouseout', (d) => this.hover.hoverChanged(undefined))
-          .on('click', (d) => {
-            console.log('click! ', d);
-            this.focus.focusChanged(this.loader.getCachedAppInfo(d));
-          });
-                  
-        legend.append('rect')
-          .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
-          .attr('width', 19)
-          .attr('height', 19)
-          .attr('fill', z);
+          .data(ctypes)
+          .enter().append('g')
+          .attr('class', (d) => d)
+          .on('mouseenter', (d) => this.setHoveringTypeHighlight(d))
+          .on("mouseleave", (d) => this.setHoveringTypeHighlight(undefined))
+          .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
 
-        legend.append('text')
-          .attr('x', this.showTypesLegend ? width - 140 - 24 : width - 24)
-          .attr('y', 9.5)
-          .attr('dy', '0.32em')
-          .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
+      ctypeslegend.append('rect')
+        .attr('x', width - 19)
+        .attr('width', 19)
+        .attr('height', 19)
+        .attr('class', (d) => 'legend ' + d);
+      ctypeslegend.append('text')
+        .attr('x', width - 24)
+        .attr('y', 9.5)
+        .attr('dy', '0.32em')
+        .text((d) => d);
+    }
+    if (this.showLegend) {
+      const legend = g.append('g')
+        .attr('class', 'legend')
+        .attr('transform', 'translate(0,10)')
+        .selectAll('g')
+        .data(apps.slice().reverse())
+        .enter()
+        .append('g')
+        .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
+        .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
+        .on('mouseout', (d) => this.hover.hoverChanged(undefined))
+        .on('click', (d) => this.focus.focusChanged(this.loader.getCachedAppInfo(d)));
 
-      }
+      legend.append('rect')
+        .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
+        .attr('width', 19)
+        .attr('height', 19)
+        .attr('fill', z)
+        .attr('opacity', (d) => {
+          let highApp = this.highlightApp || this._hoveringApp;
+          if (highApp) {
+            return d === highApp.app ? 1.0: 0.2; 
+          }
+          return 1.0;
+        })
 
-      if (this._hoveringType) {
-        this.setHoveringTypeHighlight(this._hoveringType)
-      }
-    });
+      legend.append('text')
+        .attr('x', this.showTypesLegend ? width - 140 - 24 : width - 24)
+        .attr('y', 9.5)
+        .attr('dy', '0.32em')
+        .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d)
+        .attr('opacity', (d) => {
+          let highApp = this.highlightApp || this._hoveringApp;
+          if (highApp) {
+            return d === highApp.app ? 1.0: 0.2; 
+          }
+          return 1.0;
+        });
+
+    }
+
+    if (this._hoveringType) {
+      this.setHoveringTypeHighlight(this._hoveringType)
+    }
   }
   @HostListener('window:resize')
   onResize() {

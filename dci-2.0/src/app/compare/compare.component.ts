@@ -77,7 +77,6 @@ export class CompareComponent implements OnInit, OnChanges {
   select(s: Substitution) {
     this.substitutions.map(srow => srow.map(_s => { 
       if (_s !== s) { delete _s.selected; return }
-      console.log('setting true ', _s);
       _s.selected = true;
     }));
   }
