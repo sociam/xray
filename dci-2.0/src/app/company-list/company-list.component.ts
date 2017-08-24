@@ -44,18 +44,23 @@ export class CompanyListComponent implements OnInit, OnChanges {
     this.loader.getFullAppInfo(this.app))
       .then((appinfo) => {
         console.log('appinfo > ', appinfo);
-        Promise.all(appinfo.hosts.map(host => this.hostutils.findCompany(host, appinfo)))
-          .then((companies: CompanyInfo[]) => {
-            companies = companies.filter(c => c);
-            let companies_count = companies.reduce((count, c) => {
-              count[c.company] = (count[c.company] || 0) + 1;
-              return count;
-            }, {});
-            companies = _.uniq(companies).filter(c => c);
-            this.by_cat = _.toPairs(_.mapValues(this.catfilter, (filterfn, cat) => _.sortBy(companies.filter(filterfn), x => -companies_count[x.company])));
-            this.categories = _.keys(this.by_cat);
-          });
+        Promise.all(appinfo.hosts.map(host => { 
+          return this.hostutils.findCompany(host, appinfo)
+        }))
+        .then((companies: CompanyInfo[]) => {
+          companies = companies.filter(c => c);
+          let companies_count = companies.reduce((count, c) => {
+            count[c.company] = (count[c.company] || 0) + 1;
+            console.log('company: ' + c);
+            return count;
+          }, {});
+          // changed to uniqBy to filter out those where company names are equal.
+          companies = _.uniqBy(companies, 'company').filter(c => c);
+          this.by_cat = _.toPairs(_.mapValues(this.catfilter, (filterfn, cat) => _.sortBy(companies.filter(filterfn), x => -companies_count[x.company])));
+          this.categories = _.keys(this.by_cat);
+        });
       });
+
 
     // this.init.then(() => {
     //   if (this.app) {
