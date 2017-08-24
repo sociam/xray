@@ -250,7 +250,6 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
           .attr("cy", (d) => { 
             const lon = projection([d.geo.longitude,d.geo.latitude])[1];
             return lon;            
-            // return projection(d)[1]; 
           })
           .attr('opacity',  (d) => {
             let highApp = this.highlightApp || this._hoveringApp;
@@ -259,18 +258,9 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
             }
             return 0.8;
           }).attr("r", (d) => Math.floor(d.impact/100))
-          .attr("fill", (d) => z(d.appid));
-
-      // var map = d3.geo.choropleth()
-      //   .geofile('/d3-geomap/topojson/world/countries.json')
-      //   .colors(colorbrewer.YlGnBu[9])
-      //   .column((xx) => xx.impact)
-      //   .format(format)
-      //   .legend(true)
-      //   .unitId('Country Code');
-
-      // d3.select(svg).datum(by_country).call(map.draw, map);
-
+          .attr("fill", (d) => z(d.appid))
+          .on('mouseenter', (d) =>  this.hover.hoverChanged(this.loader.getCachedAppInfo(d.appid)))
+          .on('mouseleave', (d) => this.hover.hoverChanged(undefined));
     });
   }
   @HostListener('window:resize')
