@@ -26,6 +26,8 @@ export class CompanyinfoComponent implements OnInit, OnChanges {
           return;
         }
         company.crunchbase_url = null;
+      }).catch(e => {
+        // it's ok!
       });
     }
   }

@@ -189,8 +189,11 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
 
       let margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
-        height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
-        g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
+        height = height_svgel - margin.top - margin.bottom; // +svg.attr('height') - margin.top - margin.bottom,
+
+      if (width < 50 || height < 50) { return; }
+
+      let  g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
         x = d3.scaleBand()
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
           .domain(countries),

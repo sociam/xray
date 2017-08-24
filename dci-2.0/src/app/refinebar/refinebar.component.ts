@@ -173,10 +173,9 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     svg.selectAll('*').remove();
 
-    const usage = this.usage,
-      impacts = this.impacts;
-
-    let apps = _.uniq(impacts.map((x) => x.appid)),
+    let usage = this.usage,
+      impacts = this.impacts,
+      apps = _.uniq(impacts.map((x) => x.appid)),
       companies = _.uniq(impacts.map((x) => x.companyid)),
       get_impact = (cid, aid) => {
         const t = impacts.filter((imp) => imp.companyid === cid && imp.appid === aid)[0];
@@ -196,48 +195,23 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       apps = this.apps;
     }
 
-    const satBand = (name, domain, h, l, slow, shigh) => {
-      return (appkey) => {
-        let ki = domain.indexOf(appkey),
-          bandwidth = (shigh - slow) / domain.length,
-          starget = slow + ki * bandwidth,
-          targetc = d3.hsl(h, starget, starget);
-        // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
-        return targetc;
-      };
-    },
-      catcolours = { // .interpolate(d3.interpolateHsl).
-        'advertising': satBand('adv', apps, 0.2, 0.6, 0.2, 1),
-        'app': satBand('app', apps, 80, 0.6, 0.2, 1),
-        'analytics': satBand('analytics', apps, 30, 0.4, 0.2, 1),
-        'usage': satBand('usage', apps, 30, 0.6, 0.2, 1),
-        'other': satBand('other', apps, 0.5, 0.6, 0.2, 1)
-      },
-      getColor = (app: string, company: string): string => {
-        if (app === undefined) {
-          app = apps[0]; // apps.length - 1];
-        }
-        let companyInfo = this.companyid2info.get(company);
-        if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
-          return catcolours[companyInfo.typetag](app);
-        }
-        return catcolours.other(app);
-      };
-
-    (<any>window).d3 = d3;
-
     by_company.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
 
     // re-order companies
     companies = by_company.map((bc) => bc.company);
 
     const stack = d3.stack(),
-      out = stack.keys(apps)(by_company);
-
-    let margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
+      out = stack.keys(apps)(by_company),
+      margin = { top: 20, right: 20, bottom: this.showXAxis ? 120 : 0, left: 40 },
       width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
-      height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
-      g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
+      height = height_svgel - margin.top - margin.bottom; // +svg.attr('height') - margin.top - margin.bottom,
+
+    if (height < 0 || width < 0) {
+      console.error('height ', height, 'width ', width, 'exiting ');
+      // return
+    }
+    
+    let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
       x = d3.scaleBand()
         .rangeRound([0, width]).paddingInner(0.05).align(0.1)
         .domain(companies),
@@ -269,7 +243,6 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     // main rects
     const f = (selection, first, last) => {
-      console.log('selection > ', selection);
       return selection.selectAll('rect')
         .data((d) => d)
         .enter().append('rect')
@@ -289,10 +262,6 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           } 
         })
         .on('mouseleave', (d) => this_.hover.hoverChanged(undefined));
-
-      // .on('mouseout', (d) => this.hover.hoverChanged(undefined))          
-      // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
-      // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
     };
 
     g.append('g')
@@ -419,3 +388,35 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     this.render();
   }
 }
+
+
+/* 
+dead ponies
+    const satBand = (name, domain, h, l, slow, shigh) => {
+      return (appkey) => {
+        let ki = domain.indexOf(appkey),
+          bandwidth = (shigh - slow) / domain.length,
+          starget = slow + ki * bandwidth,
+          targetc = d3.hsl(h, starget, starget);
+        // console.log(`satBand [${name}]:${appkey} - ki:${ki}, bw:${bandwidth}, slow:${slow}, shigh:${shigh}, ${starget}`, targetc);
+        return targetc;
+      };
+    },
+      catcolours = { // .interpolate(d3.interpolateHsl).
+        'advertising': satBand('adv', apps, 0.2, 0.6, 0.2, 1),
+        'app': satBand('app', apps, 80, 0.6, 0.2, 1),
+        'analytics': satBand('analytics', apps, 30, 0.4, 0.2, 1),
+        'usage': satBand('usage', apps, 30, 0.6, 0.2, 1),
+        'other': satBand('other', apps, 0.5, 0.6, 0.2, 1)
+      },
+      getColor = (app: string, company: string): string => {
+        if (app === undefined) {
+          app = apps[0]; // apps.length - 1];
+        }
+        let companyInfo = this.companyid2info.get(company);
+        if (companyInfo && companyInfo.typetag && catcolours[companyInfo.typetag]) {
+          return catcolours[companyInfo.typetag](app);
+        }
+        return catcolours.other(app);
+      };
+      */

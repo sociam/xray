@@ -169,11 +169,11 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
       
       impacts = _.flatten(_.map(red_impacts, (cityobj, appid) => _.map(cityobj, (impact, city) => ({ appid: appid, geo: geobycity[city], impact: impact } as AppImpactGeo))));
 
-      console.log('country geo impacts after comp > ', impacts.length);      
+      // console.log('country geo impacts after comp > ', impacts.length);      
 
       impacts.filter(i => i && i.appid && i.geo && i.geo.latitude && i.geo.longitude);
 
-      console.log('after lat and lon filter> ', impacts.length, impacts);      
+      // console.log('after lat and lon filter> ', impacts.length, impacts);      
 
       let apps = _.uniq(impacts.map((x) => x.appid));
 
@@ -203,6 +203,8 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
         height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
         z = d3.scaleOrdinal(d3.schemeCategory20).domain(apps);
+
+      if (width < 50 || height < 50) { return; }
         
 
       //   g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
@@ -243,7 +245,6 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
           .append("circle")
           .attr("cx", (d) => { 
             const lat = projection([d.geo.longitude, d.geo.latitude])[0];
-            console.log('lat ~', lat, [d.geo.latitude,d.geo.longitude]);
             return lat;
           })
           .attr("cy", (d) => { 
@@ -251,12 +252,14 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
             return lon;            
             // return projection(d)[1]; 
           })
-          .attr('opacity', '0.75')
-          .attr("r", (d) => {
-            return Math.floor(d.impact/100);
-          }).attr("fill", (d) => {
-            return z(d.appid);
-          });
+          .attr('opacity',  (d) => {
+            let highApp = this.highlightApp || this._hoveringApp;
+            if (highApp) {
+              return d.appid === highApp.app ? 1.0: 0.01; 
+            }
+            return 0.8;
+          }).attr("r", (d) => Math.floor(d.impact/100))
+          .attr("fill", (d) => z(d.appid));
 
       // var map = d3.geo.choropleth()
       //   .geofile('/d3-geomap/topojson/world/countries.json')
