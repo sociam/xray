@@ -84,6 +84,6 @@ export class CompareComponent implements OnInit, OnChanges {
 
   replaceTarget(s: Substitution) {
     this.usage.usageChanged(s.all);
-    this.router.navigate(['/tiled']);
+    this.router.navigate(['/grid']);
   }
 }

@@ -263,7 +263,7 @@ export class LoaderService {
   }
   makeIconPath(url: string): string {
     if (url) {
-      return [BASE_API + url].join('/');
+      return [API_ENDPOINT, 'icons', url.slice(1)].join('/');
     }
   }
   _prepareAppInfo(appinfo: APIAppInfo, loadGeo=true, doCache=true):Promise<APIAppInfo> {

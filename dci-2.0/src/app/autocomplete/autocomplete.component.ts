@@ -55,9 +55,13 @@ export class AutocompleteComponent implements OnInit, OnChanges {
         delete this.fetching;
         this.loadingSuggestions = false;
 
+        console.log('autocomplete results ', results, 'omitIDs', this._omitIDs);
+
         let qL = this.query.toLowerCase().trim(),
-              newL = results.filter((x) => !this._omitIDs[x.app] && x.storeinfo.title.toLowerCase().indexOf(qL) === 0 && x.icon),
-              by = (x) => x.storeinfo.title;        
+              newL = results.filter((x) => !this._omitIDs[x.app] && x.storeinfo.title.toLowerCase().indexOf(qL) === 0),
+              by = (x) => x.storeinfo.title;
+
+        console.log('newL ', newL);              
 
         let goners = differenceBy(this.filteredList, newL, by),
           newbies = differenceBy(newL, this.filteredList, by);
