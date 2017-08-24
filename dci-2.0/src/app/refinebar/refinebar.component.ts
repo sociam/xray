@@ -243,7 +243,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
           .domain(companies),
         d3maxx = d3.max(by_company, function (d) { return d.total; }) || 0,
-        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
+        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx), 
+        this_ = this;
 
 
       if (d3maxx < 0.7 * ymaxx) {
@@ -278,9 +279,18 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
           .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
           .attr('width', x.bandwidth())
-          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
-          .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
-          .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
+          // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
+          .on('click', function(d) {
+            this_.focus.focusChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          })          
+          .on('mouseenter', function(d) {
+            this_.hover.hoverChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          })
+          .on('mouseleave', (d) => this_.hover.hoverChanged(undefined));
+
+          // .on('mouseout', (d) => this.hover.hoverChanged(undefined))          
+          // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
+          // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
       };
 
       g.append('g')
@@ -343,7 +353,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
             .enter().append('g')
             .attr('class', (d) => d)
             .on('mouseenter', (d) => this.setHoveringTypeHighlight(d))
-            // .on("mouseleave", (d) => d3.selectAll('rect.back.' + d).classed('reveal', false))
+            .on("mouseleave", (d) => this.setHoveringTypeHighlight(undefined))
             .attr('transform', (d, i) => 'translate(0,' + i * leading + ')');
 
         ctypeslegend.append('rect')

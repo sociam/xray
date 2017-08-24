@@ -220,7 +220,8 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
           .domain(categories),
         d3maxx = d3.max(by_category, function (d) { return d.total; }) || 0,
-        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
+        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx),
+        this_ = this;
 
         console.log('cat categories > ', categories);
 
@@ -244,9 +245,16 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
           .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
           .attr('width', x.bandwidth())
-          .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
-          .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
-          .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
+          .on('click', function(d) {
+            this_.focus.focusChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          })          
+          .on('mouseenter', function(d) {
+            this_.hover.hoverChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          })
+          .on('mouseleave', (d) => this_.hover.hoverChanged(undefined));          
+          // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
+          // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
+          // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
       };
 
       g.append('g')

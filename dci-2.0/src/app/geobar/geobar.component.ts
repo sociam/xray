@@ -195,7 +195,8 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
           .rangeRound([0, width]).paddingInner(0.05).align(0.1)
           .domain(countries),
         d3maxx = d3.max(by_country, function (d) { return d.total; }) || 0,
-        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
+        ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx),
+        this_ = this;
 
       if (d3maxx < 0.7 * ymaxx) {
         ymaxx = 1.1 * d3maxx;
@@ -214,7 +215,14 @@ export class GeobarComponent implements AfterViewInit, OnChanges {
           .attr('x', (d) => x(d.data.country))
           .attr('y', (d) => y(d[1]))
           .attr('height', function (d) { return y(d[0]) - y(d[1]); })
-          .attr('width', x.bandwidth());
+          .attr('width', x.bandwidth())
+          .on('click', function(d) {
+            this_.focus.focusChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          })          
+          .on('mouseenter', function(d) {
+            this_.hover.hoverChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          })
+          .on('mouseleave', (d) => this_.hover.hoverChanged(undefined));
           // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))
           // .on('mouseenter', (d) => this._companyHover(this.companyid2info.get(d.data.company), true))
           // .on("mouseleave", (d) => this._companyHover(this.companyid2info.get(d.data.company), false));
