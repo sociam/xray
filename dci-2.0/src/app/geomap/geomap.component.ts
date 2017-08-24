@@ -248,15 +248,12 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
           })
           .attr("cy", (d) => { 
             const lon = projection([d.geo.longitude,d.geo.latitude])[1];
-            console.log('lon ~', lon, [d.geo.latitude,d.geo.longitude]);
             return lon;            
             // return projection(d)[1]; 
           })
           .attr("r", (d) => {
-            console.log('impact > ', d.impact);
             return Math.floor(d.impact/100);
           }).attr("fill", (d) => {
-            console.log('d ', d.appid, z(d.appid));
             return z(d.appid);
           });
 
