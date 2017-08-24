@@ -54,7 +54,7 @@ export class CompanyListComponent implements OnInit, OnChanges {
             console.log('company: ' + c);
             return count;
           }, {});
-          // changed to uniqBy to filter where company name is equal.
+          // changed to uniqBy to filter out those where company names are equal.
           companies = _.uniqBy(companies, 'company').filter(c => c);
           this.by_cat = _.toPairs(_.mapValues(this.catfilter, (filterfn, cat) => _.sortBy(companies.filter(filterfn), x => -companies_count[x.company])));
           this.categories = _.keys(this.by_cat);

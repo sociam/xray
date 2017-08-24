@@ -251,6 +251,7 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
             return lon;            
             // return projection(d)[1]; 
           })
+          .attr('opacity', '0.75')
           .attr("r", (d) => {
             return Math.floor(d.impact/100);
           }).attr("fill", (d) => {
