@@ -48,6 +48,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   @Input() showXAxis = true;
 
   @Input() scale = false;
+  linear = false;
   vbox = { width: 700, height: 1024 };
   highlightColour = '#FF066A';
 
@@ -100,6 +101,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
       || this.loader.getFullAppInfo(appid);
   }
 
+  nonLinearity(v):number {
+    return this.linear ? v : Math.max(0, 5000*Math.log(v) + 10);
+  }
+
   compileImpacts(usage: AppUsage[]): Promise<AppImpact[]> {
     // folds privacy impact in simply by doing a weighted sum over hosts
     // usage has to be in a standard unit: days, minutes
@@ -107,7 +112,9 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
 
     const timebased = this.byTime === 'yes',
       total = _.reduce(usage, (tot, appusage): number => tot + (timebased ? appusage.mins : 1.0), 0),
-      impacts = usage.map((u) => ({ ...u, impact: (timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0)) }));
+      impacts = usage.map((u) => ({ ...u, impact: 
+        this.nonLinearity((timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0)))
+      }));
 
     return Promise.all(impacts.map((usg): Promise<AppImpact[]> => {
 

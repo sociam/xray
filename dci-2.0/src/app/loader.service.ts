@@ -415,7 +415,7 @@ export class LoaderService {
 
   @memoize((appid: string): string => appid)
   getAlternatives(appid: string): Promise<APIAppInfo[]> {
-    return this.http.get(API_ENDPOINT + `/alt/${appid}`).toPromise()
+    return this.http.get(API_ENDPOINT + `/alt/${appid}?nocache=true`).toPromise()
       .then(response => {
         if (response && response.text().toString().trim() === 'null') {  console.error('ERROR - got a null coming from the endpoint ~ ' + appid);    }
         return response && response.text().toString().trim() !== 'null' ? response.json() as string[] : [];
