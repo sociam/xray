@@ -11,10 +11,10 @@
         <app-geobar [appusage]="usage" [showLegend]='false'></app-geobar>
     </div>
 
-    <!-- mode == refine -->
+    <!-- mode == who -->
     <app-refinebar *ngIf="mode=='refine'" class='fullwidth' [appusage]="usage"></app-refinebar>
 
-    <!-- mode == cat -->
+    <!-- mode == what -->
     <app-refinecat *ngIf="mode=='cat'" class="fullwidth" [appusage]="usage"></app-refinecat>
 
     <!-- mode == geo -->
