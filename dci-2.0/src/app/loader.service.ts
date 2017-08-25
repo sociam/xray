@@ -316,21 +316,21 @@ export class LoaderService {
       .then((results: string[]) => results.map(result => this.sanitiser.bypassSecurityTrustResourceUrl(result)));
   }
 
-  @memoize((company) => company.id)  
-  findApps(query: string): Promise<APIAppInfo[]> {
-    // var headers = new Headers();
-    // headers.set('Accept', 'application/json');
-    query = query && query.trim();
-    if (!query) { return Promise.resolve([]); }
-    return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&startsWith=${query.trim()}`).toPromise()
-      .then(response => response.json() as APIAppInfo[])
-      .then((appinfos: APIAppInfo[]) => {
-        if (!appinfos) {
-          throw new Error('null returned from endpoint ' + query);
-        } 
-        return Promise.all(appinfos.map(appinfo => this._prepareAppInfo(appinfo, false, false)));
-      });
-  }
+  // @memoize((company) => company.id)  
+  // findApps(query: string): Promise<APIAppInfo[]> {
+  //   // var headers = new Headers();
+  //   // headers.set('Accept', 'application/json');
+  //   query = query && query.trim();
+  //   if (!query) { return Promise.resolve([]); }
+  //   return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&startsWith=${query.trim()}`).toPromise()
+  //     .then(response => response.json() as APIAppInfo[])
+  //     .then((appinfos: APIAppInfo[]) => {
+  //       if (!appinfos) {
+  //         throw new Error('null returned from endpoint ' + query);
+  //       } 
+  //       return Promise.all(appinfos.map(appinfo => this._prepareAppInfo(appinfo, false, false)));
+  //     });
+  // }
   
   /**
    * Parses JSON Object into a URL param options object and then Turns that to a
@@ -381,7 +381,7 @@ export class LoaderService {
     }).join('--');
     return key;
   })
-  findApps$(options: {
+  findApps(options: {
       title?: string,
       startsWith?: string, 
       appID?: string, 

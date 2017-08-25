@@ -46,7 +46,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   filter() {
     if (this.query.trim() !== '') {
       this.loadingSuggestions = true;
-      let fetching = this.fetching = this.loader.findApps$({startsWith: this.query.trim(), fullInfo: true, onlyAnalyzed: true}, false, false)
+      let fetching = this.fetching = this.loader.findApps({title: this.query.trim(), fullInfo: true, onlyAnalyzed: true}, false, false)
       .then((results) => {
         if (fetching !== this.fetching) { 
           // we are already obsolete, return;
@@ -58,7 +58,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
         console.log('autocomplete results ', results, 'omitIDs', this._omitIDs);
 
         let qL = this.query.toLowerCase().trim(),
-              newL = results.filter((x) => !this._omitIDs[x.app] && x.storeinfo.title.toLowerCase().indexOf(qL) === 0),
+              newL = results.filter((x) => !this._omitIDs[x.app] && x.storeinfo.title.toLowerCase().indexOf(qL) >= 0),
               by = (x) => x.storeinfo.title;
 
         console.log('newL ', newL);              
