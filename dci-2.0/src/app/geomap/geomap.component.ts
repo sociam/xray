@@ -254,7 +254,7 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
           .attr('opacity',  (d) => {
             let highApp = this.highlightApp || this._hoveringApp;
             if (highApp) {
-              return d.appid === highApp.app ? 1.0: 0.01; 
+              return d.appid === highApp.app ? 0.75: 0.01; 
             }
             return 0.8;
           }).attr("r", (d) => Math.floor(d.impact/100))
