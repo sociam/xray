@@ -145,6 +145,25 @@ export class UsagetableComponent implements OnInit {
     return '';
   }
 
+  getHostCount(id: string): string {
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.hosts.length.toString(); }
+    return '?'
+  }
+
+  getRating(id: string): string {
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.storeinfo.rating.toString(); }
+    return '?'
+  }
+
+  // Regex from Stack Overflow. https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+  getDownloads(id: string): string {
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.storeinfo.installs.max.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+    return '?'
+  }
+
   private loadAlternatives(appid: string) {
     return this.loader.getAlternatives(appid).then(alts => this.alternatives[appid] = alts);
   }

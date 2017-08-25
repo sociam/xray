@@ -6,21 +6,28 @@
         <button class="usage-button" (click)="clearState()" [disabled]='usages.length == 0'>Clear all</button>
     </div>
     <div class="top">
-        <div class="row" *ngFor="let appusage of usages">
-            <div class="left" (click)="appFocused(appusage.appid)" (mouseenter)="_onHover(appusage.appid)" (mouseleave)="_onHover()">
-                <img *ngIf="getAppIcon(appusage.appid)" class='appicon' [src]="getAppIcon(appusage.appid)" alt="^_^">
-                <div *ngIf="!getAppIcon(appusage.appid)" class="noicon"></div>
-                <a class="title">{{ getAppName(appusage.appid).split(' ').slice(0,6).join(' ') }}</a>
-                <br><a class="dev"> by {{ getAppDev(appusage.appid )}}</a>
+        <div *ngFor="let appusage of usages">
+            <div class="row">
+                <div class="left" (click)="appFocused(appusage.appid)" (mouseenter)="_onHover(appusage.appid)" (mouseleave)="_onHover()">
+                    <img *ngIf="getAppIcon(appusage.appid)" class='appicon' [src]="getAppIcon(appusage.appid)" alt="^_^">
+                    <div *ngIf="!getAppIcon(appusage.appid)" class="noicon"></div>
+                    <a class="title">{{ getAppName(appusage.appid).split(' ').slice(0,6).join(' ') }}</a>
+                    <br><a class="dev"> by {{ getAppDev(appusage.appid )}}</a>
+                </div>
+                <div class="hhmminput">
+                    <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">hrs<br>
+                    <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mm" maxlength="2">mins
+                </div>
+                <input class="middle" type="range" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
+                <div class="right">
+                    <button class="clearButton usage-button" (click)="delete(appusage)">Uninstall</button>
+                    <a [hidden]='!hasAlternatives(appusage.appid)' [routerLink]="['/alternatives/', appusage.appid.trim()]"><button class="usage-button">Substitute</button></a>
+                </div>
             </div>
-            <div class="hhmminput">
-                <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">hrs<br>
-                <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mm" maxlength="2">mins
-            </div>
-            <input class="middle" type="range" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
-            <div class="right">
-                <button class="clearButton usage-button" (click)="delete(appusage)">Uninstall</button>
-                <a [hidden]='!hasAlternatives(appusage.appid)' [routerLink]="['/alternatives/', appusage.appid.trim()]"><button class="usage-button">Substitute</button></a>
+            <div class="summary">
+                <div class="chip"><img src="https://www.atomix.com.au/media/icon_blue_download1.png">{{ getHostCount(appusage.appid )}}</div>
+                <div class="chip"><img src="http://www.iconarchive.com/download/i87170/graphicloads/colorful-long-shadow/Star-fav.ico">{{ getRating(appusage.appid )}}</div>
+                <div class="chip"><img src="http://www.iconarchive.com/download/i99352/dtafalonso/android-lollipop/Downloads.ico">{{ getDownloads(appusage.appid )}}</div>
             </div>
         </div>
     </div>
