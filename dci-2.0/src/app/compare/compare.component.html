@@ -11,7 +11,12 @@
                         <div class="noicon" *ngIf="!appInfo(original_app?.target.appid)?.icon"></div>
                         <div class="title">{{ appInfo(original_app?.target.appid)?.storeinfo.title }}</div>
                         <div class="publisher">by {{ appInfo(original_app?.target.appid)?.developer?.name }}</div>
-                        <div class="rating">{{ appInfo(original_app?.target.appid)?.storeinfo.rating }} <img src="../../assets/start.png"> </div>
+                        <div class="summary">
+                            <!-- Icons From http://www.iconarchive.com/show/colorful-long-shadow-icons-by-graphicloads.html (Free to use) -->
+                            <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Identity-icon.png">{{ getHostCount(original_app?.target.appid)}}</div>
+                            <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Star-fav-icon.png">{{ getRating(original_app?.target.appid)}}</div>
+                            <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Arrow-download-3-icon.png">{{ getDownloads(original_app?.target.appid)}}</div>
+                        </div>
                     </div>
                     <app-refinebar [appusage]='original_app?.all' [showXAxis]='false' [showTypesLegend]='false' [showModes]='false' [highlightApp]='appInfo(original_app?.target.appid)' [showLegend]='false'></app-refinebar>
                     <div class="appdesc">
@@ -42,7 +47,12 @@
 
                                     <div class="title">{{ appInfo(sub.target.appid).storeinfo.title }}</div>
                                     <div class="publisher">by {{ appInfo(sub.target.appid).developer?.name }}</div>
-                                    <div class="rating">{{ appInfo(sub.target.appid).storeinfo.rating }} <img src="../../assets/start.png"></div>
+                                    <div class="summary">
+                                        <!-- Icons From http://www.iconarchive.com/show/colorful-long-shadow-icons-by-graphicloads.html (Free to use) -->
+                                        <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Identity-icon.png">{{ getHostCount(sub.target.appid)}}</div>
+                                        <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Star-fav-icon.png">{{ getRating(sub.target.appid)}}</div>
+                                        <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Arrow-download-3-icon.png">{{ getDownloads(sub.target.appid)}}</div>
+                                    </div>
                                 </div>
                                 <app-refinebar [appusage]='sub.all' [showXAxis]='false' [showTypesLegend]='false' [showModes]='false' [highlightApp]='appInfo(sub.target.appid)' [showLegend]='false'></app-refinebar>
 
