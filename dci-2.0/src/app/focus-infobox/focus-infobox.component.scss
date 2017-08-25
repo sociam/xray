@@ -1,49 +1,75 @@
-div.focus {
-    position: relative;
-    padding: 0px;
-    background-color: white;
-    z-index: 100;
-    width: 500px;
-    height: 520px;
-    overflow: scroll-y;
-    .close {
-        border: none;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        font-size: 18pt;
-        z-index: 120;
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
+    div.summary {
+        padding-top: 10px;
     }
-    .app {
-        padding: 30px 40px;
+    
+    //from w3 schools
+    // www.w3schools.com
+    div.chip {
+        display: inline-block;
+        padding: 0 30px;
+        height: 30px;
+        //white-space: nowrap;
+        //overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 11px;
+        line-height: 30px;
+        border-radius: 12px;
+        background-color: #f1f1f1;
+        img {
+            float: left;
+            margin: 0 10px 0 -30px;
+            height: 30px;
+            width: 30px;
+            border-radius: 25%;
+        }
+    }
+    
+    div.focus {
         position: relative;
-        // padding: 10px 0px;
-        font-size: 12pt;
-        border-bottom: 1px solid #eee;
-        .appicon {
+        padding: 0px;
+        background-color: white;
+        z-index: 100;
+        width: 500px;
+        height: 520px;
+        overflow-y: scroll;
+        .close {
+            border: none;
             position: absolute;
-            left: 40px;
-            width: 60px;
+            right: 10px;
+            top: 10px;
+            font-size: 18pt;
+            z-index: 120;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
         }
-        .titledev {
-            padding: 0px 0px 10px 80px;
-            .title {
-                font-size: 16pt;
-                font-weight: bold;
+        .app {
+            padding: 30px 40px;
+            position: relative;
+            // padding: 10px 0px;
+            font-size: 12pt;
+            border-bottom: 1px solid #eee;
+            .appicon {
+                position: absolute;
+                left: 40px;
+                width: 60px;
             }
-            .developer {
-                font-size: 12pt;
+            .titledev {
+                padding: 0px 0px 10px 80px;
+                .title {
+                    font-size: 16pt;
+                    font-weight: bold;
+                }
+                .developer {
+                    font-size: 12pt;
+                }
+                margin-bottom:1em;
             }
-            margin-bottom:1em;
-        }
-        .appdesc {
-            padding: 0px 0px;
-            max-width: 500px;
-            * {
-                margin-bottom: 1em;
+            .appdesc {
+                padding: 0px 0px;
+                max-width: 500px;
+                * {
+                    margin-bottom: 1em;
+                }
             }
         }
     }
-}

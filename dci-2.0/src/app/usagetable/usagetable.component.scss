@@ -156,32 +156,6 @@
         }
     }
     
-    div.summary {
-        padding-bottom: 20px;
-    }
-    
-    //from w3 schools
-    // www.w3schools.com
-    div.chip {
-        display: inline-block;
-        padding: 0 30px;
-        height: 30px;
-        //white-space: nowrap;
-        //overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 11px;
-        line-height: 30px;
-        border-radius: 12px;
-        background-color: #f1f1f1;
-        img {
-            float: left;
-            margin: 0 10px 0 -30px;
-            height: 30px;
-            width: 30px;
-            border-radius: 25%;
-        }
-    }
-    
     // from 
     // http://www.cssportal.com/style-input-range/
     input[type=range] {
