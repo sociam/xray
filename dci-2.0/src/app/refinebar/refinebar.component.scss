@@ -31,8 +31,8 @@ g.axis.x .tick text {
 // category colours
 $advertising: #bb0000;
 $analytics:#bb0099;
-$app: #889988;
-$other: #eee;
+$app: cyan; //  #889988;
+$other: #222;
 rect.back.advertising,
 rect.legend.advertising,
 g.axis.x .advertising text {
@@ -46,6 +46,20 @@ rect.back.analytics,
 rect.legend.usage,
 rect.legend.analytics {
     fill: $analytics;
+}
+
+g.axis.x .app text,
+rect.back.app,
+rect.legend.app {
+    fill: $app;
+}
+
+g.axis.x .other text,
+rect.back.other,
+rect.legend.other {
+    // stroke: pink;
+    // stroke-width: 2px;
+    fill: $other !important;
 }
 
 rect.back {
@@ -73,18 +87,6 @@ rect.back.analytics:hover {
 
 rect.back.app:hover {
     stroke: $app !important;
-}
-
-g.axis.x .app text,
-rect.back.app,
-rect.legend.app {
-    fill: #889988;
-}
-
-g.axis.x .other text,
-rect.back.other,
-rect.legend.other {
-    fill: #eee;
 }
 
 g.legend text,
