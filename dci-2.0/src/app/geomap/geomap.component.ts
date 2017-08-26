@@ -168,26 +168,9 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
       }, {});
       
       impacts = _.flatten(_.map(red_impacts, (cityobj, appid) => _.map(cityobj, (impact, city) => ({ appid: appid, geo: geobycity[city], impact: impact } as AppImpactGeo))));
-
-      // console.log('country geo impacts after comp > ', impacts.length);      
-
       impacts.filter(i => i && i.appid && i.geo && i.geo.latitude && i.geo.longitude);
 
-      // console.log('after lat and lon filter> ', impacts.length, impacts);      
-
       let apps = _.uniq(impacts.map((x) => x.appid));
-
-      //   countries = _.uniq(impacts.map((x) => x.country)),
-      //   get_impact = (cid, aid) => {
-      //     const t = impacts.filter((imp) => imp.country === cid && imp.appid === aid)[0];
-      //     return t !== undefined ? t.impact : 0;
-      //   },
-      //   by_country = countries.map((countryname) => ({
-      //     country: countryname,
-      //     total: apps.reduce((total, appid) => total += get_impact(countryname, appid), 0),
-      //     ..._.fromPairs(apps.map((appid) => [appid, get_impact(countryname, appid)]))
-      //   }));
-
       if (this.apps === undefined) {
         // sort apps
         apps.sort((a, b) => _.filter(usage, { appid: b })[0].mins - _.filter(usage, { appid: a })[0].mins);
@@ -195,37 +178,13 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
       } else {
         apps = this.apps;
       }
-      // by_country.sort((c1, c2) => c2.total - c1.total); // apps.reduce((total, app) => total += c2[app], 0) - apps.reduce((total, app) => total += c1[app], 0));
-      // // re-order companies
-      // countries = by_country.map((bc) => bc.country);
-
+    
       let margin = { top: 20, right: 20, bottom: -200, left: 40 },
         width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
         height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
         z = d3.scaleOrdinal(d3.schemeCategory20).domain(apps);
 
       if (width < 50 || height < 50) { return; }
-        
-
-      //   g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')'),
-      //   x = d3.scaleBand()
-      //     .rangeRound([0, width]).paddingInner(0.05).align(0.1)
-      //     .domain(countries),
-      //   d3maxx = d3.max(by_country, function (d) { return d.total; }) || 0,
-      //   ymaxx = this.lastMax = Math.max(this.lastMax, d3maxx);
-
-      // if (d3maxx < 0.7 * ymaxx) {
-      //   ymaxx = 1.1 * d3maxx;
-      // }
-
-      // // const format = function (d) {
-      // //   d = d / 1000000;
-      // //   return d3.format(',.02f')(d) + 'M';
-      // // };
-
-      // const a = {};
-
-      (<any>window)._d3 = d3;
 
       const projection = d3.geoMercator()
         .scale(width / 2 / Math.PI) 
@@ -233,15 +192,14 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
         path = d3.geoPath().projection(projection);
 
         this.loader.getWorldMesh().then((mesh) => {
-          svg.append('path').attr("d", path(topojson.mesh(mesh)));
+          svg.append('path').attr("d", path(topojson.mesh(mesh))).attr('opacity', 0.2);
         });
 
-        // points
-        // const aa = [-122.490402, 37.786453],       bb = [-122.389809, 37.72728];
-
         // add circles to svg
-        svg.selectAll("circle")
-          .data(impacts).enter()
+        var datas = svg.selectAll("circle")
+          .data(impacts);
+
+        datas.enter()
           .append("circle")
           .attr("cx", (d) => { 
             const lat = projection([d.geo.longitude, d.geo.latitude])[0];
@@ -257,10 +215,56 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
               return d.appid === highApp.app ? 0.75: 0.01; 
             }
             return 0.8;
-          }).attr("r", (d) => Math.floor(d.impact/100))
+          }).attr("r", (d) => Math.max(4, Math.floor(d.impact/100)))
           .attr("fill", (d) => z(d.appid))
           .on('mouseenter', (d) =>  this.hover.hoverChanged(this.loader.getCachedAppInfo(d.appid)))
           .on('mouseleave', (d) => this.hover.hoverChanged(undefined));
+
+        datas.enter().append('text')
+          .attr('x', (d) => projection([d.geo.longitude, d.geo.latitude])[0] + 5)          
+          .attr('y', (d) =>  projection([d.geo.longitude, d.geo.latitude])[1] + 5)
+          .attr('opacity', d => this._hoveringApp && d.appid === this._hoveringApp.app ? 1: 0)
+          .text((d) => d.geo.region_name || d.geo.country);
+
+          const leading = 26;
+          if (this.showLegend) {
+            
+            let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top/2 + ')');
+            const legend = g.append('g')
+              .attr('class', 'legend')
+              .attr('transform', 'translate(0,0)')
+              .selectAll('g')
+              .data(apps.slice().reverse())
+              .enter()
+              .append('g')
+              .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
+              .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
+              .on('mouseout', (d) => this.hover.hoverChanged(undefined))
+              .on('click', (d) => {
+                this.focus.focusChanged(this.loader.getCachedAppInfo(d));
+              }).attr('opacity', (d) => {
+                let highApp = this.highlightApp || this._hoveringApp;
+                if (highApp) {
+                  return d === highApp.app ? 1.0: 0.2; 
+                }
+                return 1.0;
+              });
+
+            console.log('maplegend ! ', legend);
+      
+            legend.append('rect')
+              .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
+              .attr('width', 19)
+              .attr('height', 19)
+              .attr('fill', z);
+
+            legend.append('text')
+              .attr('x', this.showTypesLegend ? width - 140 - 24 : width - 24)
+              .attr('y', 9.5)
+              .attr('dy', '0.32em')
+              .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
+            }
+                
     });
   }
   @HostListener('window:resize')

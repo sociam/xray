@@ -245,10 +245,14 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
         .attr('height', function (d) { return y(d[0]) - y(d[1]); })
         .attr('width', x.bandwidth())
         .on('click', function (d) {
-          this_.focus.focusChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          if (this.parentElement) {
+            this_.focus.focusChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          }
         })
         .on('mouseenter', function (d) {
-          this_.hover.hoverChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          if (this.parentElement) {
+            this_.hover.hoverChanged(this_.loader.getCachedAppInfo(this.parentElement.__data__.key));
+          }
         })
         .on('mouseleave', (d) => this_.hover.hoverChanged(undefined));
       // .on('click', (d) => this.focus.focusChanged(this.companyid2info.get(d.data.company)))

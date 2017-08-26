@@ -18,7 +18,7 @@
     <app-refinecat *ngIf="mode=='cat'" class="fullwidth" [appusage]="usage"></app-refinecat>
 
     <!-- mode == geo -->
-    <app-geobar *ngIf="mode == 'geo'" class="gridleft" [appusage]="usage"></app-geobar>
-    <app-geomap *ngIf="mode == 'geo'" class="gridright" [appusage]="usage" [showLegend]='false'></app-geomap>
+    <app-geomap *ngIf="mode == 'geo'" class="gridtop" [appusage]="usage"></app-geomap>
+    <app-geobar *ngIf="mode == 'geo'" class="gridbottom" [appusage]="usage"></app-geobar>
 
 </div>

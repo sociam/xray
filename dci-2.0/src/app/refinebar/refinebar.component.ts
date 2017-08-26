@@ -368,7 +368,7 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
             return d === highApp.app ? 1.0: 0.2; 
           }
           return 1.0;
-        })
+        });
 
       legend.append('text')
         .attr('x', this.showTypesLegend ? width - 140 - 24 : width - 24)
