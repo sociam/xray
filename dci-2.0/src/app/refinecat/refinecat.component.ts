@@ -91,7 +91,7 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
         }, {});
 
         impacts = _.flatten(_.map(red_impacts, (catimpacts, appid) => _.map(catimpacts, (impact, cat) => ({ appid: appid, category: cat, impact: impact } as AppImpactCat))));
-        console.log('cat red_impacts ', red_impacts, impacts);
+        // console.log('cat red_impacts ', red_impacts, impacts);
         this.impacts = impacts;
         this.render();
       })

@@ -152,7 +152,7 @@ export class HostUtilsService {
 
             if (adhosts[ld2]) {
                 // 
-                console.warn(`boom got an advertising host ${ld2}`);
+                // console.warn(`boom got an advertising host ${ld2}`);
                 let newInfo = new CompanyInfo(ld2, ld2, [host], 'advertising');                
                 newInfo.description =  `${ld2} is a mobile advertising and engagement company`;
                 companyDetails.add(newInfo);                            

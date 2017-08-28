@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
+import { ActivityLogService } from "app/activity-log.service";
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,15 @@ import { Router } from "@angular/router";
 })
 export class AppComponent {
   title = 'app';
-
-  constructor(private router: Router) {
-    
+  
+  constructor(private router: Router, private actlog: ActivityLogService) {
+    this.router.events.subscribe(routeEvent => {
+      // console.info('routeEvent ', routeEvent);
+      if (routeEvent instanceof NavigationEnd) {
+        console.log("nav end");
+        try { this.actlog.log('routeChange', routeEvent.url); } catch(e) { }
+      }      
+    });
   }
 
   // isActive(instruction: any[]): boolean {
@@ -22,5 +29,7 @@ export class AppComponent {
   isActive(s: string): boolean {    
     return document.location.href.endsWith(s);
   }
+
+
 
 }

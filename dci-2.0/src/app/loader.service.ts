@@ -268,7 +268,7 @@ export class LoaderService {
   }
   _prepareAppInfo(appinfo: APIAppInfo, loadGeo=true, doCache=true):Promise<APIAppInfo> {
     appinfo.icon = appinfo.icon && appinfo.icon !== null && appinfo.icon.trim() !== 'null' ? this.makeIconPath(appinfo.icon) : undefined;
-    console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
+    // console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
 
     appinfo.hosts = uniq((appinfo.hosts || [])
       .map((host: string): string => trim(host.trim(), '".%')))
@@ -284,7 +284,10 @@ export class LoaderService {
     return !loadGeo ? Promise.resolve(appinfo) : this.getHostsGeos(appinfo.hosts).then(geomap => {
       return _.uniqBy(appinfo.hosts.map(host => {
         var geo = geomap[host];
-        if (!geo) { console.warn(' No geo for ', host, appinfo.app); return; }
+        if (!geo) { 
+          // console.warn(' No geo for ', host, appinfo.app); 
+          return; 
+        }
         return geo[0] && _.extend({}, geo[0], {host:host});
       }).filter(x => x), (gip) => gip.ip)
     }).then((hostgeos) => {
