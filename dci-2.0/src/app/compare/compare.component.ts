@@ -41,6 +41,10 @@ export class CompareComponent implements OnInit, OnChanges {
       .then(() => {
         // loaded all 
         this.loader.getAlternatives(this.targetAppId).then((subs: APIAppInfo[]): undefined => {
+
+          // first filter subs for those for which we have analysed
+          subs = subs.filter(sub => sub.hosts && sub.hosts.length > 0);
+
           // others is AppUsage for everything except targetapp
           const targetUsage: AppUsage = this.using.filter(usg => usg.appid === this.targetAppId)[0],
             otherUsages: AppUsage[] = this.using.filter(usg => usg.appid !== this.targetAppId);

@@ -1,6 +1,6 @@
 
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, EventEmitter, Output, HostListener } from '@angular/core';
-import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo, GeoIPInfo} from '../loader.service';
+import { LoaderService, App2Hosts, String2String, CompanyInfo, CompanyDB, APIAppInfo, GeoIPInfo } from '../loader.service';
 import { AppUsage } from '../usagetable/usagetable.component';
 import * as d3 from 'd3';
 import * as _ from 'lodash';
@@ -30,6 +30,7 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
   companyid2info: CompanyDB;
 
   private usage: AppUsage[];
+  private impacts: AppImpactGeo[];
   private init: Promise<any>;
   lastMax = 0;
   _byTime = 'yes';
@@ -83,10 +84,24 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
         delete this.apps;
       }
       this.usage = this.usage_in;
-      this.render();
+      this.compileImpacts(this.usage_in).then(impacts => {
+        let red_impacts = impacts.reduce((perapp, impact) => {
+          let appcity = (perapp[impact.appid] || {});
+          appcity[impact.geo.city] = (appcity[impact.geo.city] || 0) + impact.impact;
+          perapp[impact.appid] = appcity;
+          return perapp;
+        }, {}),
+          geobycity = impacts.reduce((obj, impact) => {
+            obj[impact.geo.city] = obj[impact.geo.city] || impact.geo;
+            return obj;
+          }, {});
+
+        impacts = _.flatten(_.map(red_impacts, (cityobj, appid) => _.map(cityobj, (impact, city) => ({ appid: appid, geo: geobycity[city], impact: impact } as AppImpactGeo))));
+        this.impacts = impacts.filter(i => i && i.appid && i.geo && i.geo.latitude && i.geo.longitude);
+        this.render();
+      });
     });
   }
-
   ngAfterViewInit(): void { this.init.then(() => this.render()); }
 
   private _getApp(appid: string): Promise<APIAppInfo> {
@@ -104,11 +119,11 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
       impacts = usage.map((u) => ({ ...u, impact: (timebased ? u.mins : 1.0) / (1.0 * (this.normaliseImpacts ? total : 1.0)) }));
 
     return Promise.all(impacts.map((usg): Promise<AppImpactGeo[]> => {
-      
+
       return this._getApp(usg.appid).then(app => {
         const hosts = app.hosts, geos = app.host_locations;
         if (!hosts || !geos) { console.warn('No hosts found for app ', usg.appid); return []; }
-        return geos.map(geo => ({ 
+        return geos.map(geo => ({
           appid: usg.appid,
           geo: geo,
           impact: usg.impact,
@@ -129,7 +144,7 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
     const svgel = this.getSVGElement();
-    if (!svgel || this.usage === undefined || this.usage.length === 0) { return; }
+    if (!svgel || !this.usage || !this.impacts || this.usage.length === 0) { return; }
     // console.log('refinebar render! getSVGElement > ', svgel);
 
     let rect = svgel.getBoundingClientRect(),
@@ -151,121 +166,103 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
 
     svg.selectAll('*').remove();
 
-    const usage = this.usage;
+    const usage = this.usage, 
+      impacts = this.impacts;
 
-    // to prepare for stack() let's
-    this.compileImpacts(this.usage).then(impacts => {
+    let apps = _.uniq(impacts.map((x) => x.appid));
+    if (this.apps === undefined) {
+      // sort apps
+      apps.sort((a, b) => _.filter(usage, { appid: b })[0].mins - _.filter(usage, { appid: a })[0].mins);
+      this.apps = apps;
+    } else {
+      apps = this.apps;
+    }
+    let margin = { top: 20, right: 20, bottom: -200, left: 40 },
+      width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
+      height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
+      z = d3.scaleOrdinal(d3.schemeCategory20).domain(apps);
 
-      let red_impacts = impacts.reduce((perapp, impact) => {
-        let appcity = (perapp[impact.appid] || {});
-        appcity[impact.geo.city] = (appcity[impact.geo.city] || 0) + impact.impact;
-        perapp[impact.appid] = appcity;
-        return perapp;
-      }, {}),
-      geobycity = impacts.reduce((obj, impact) => {
-        obj[impact.geo.city] = obj[impact.geo.city] || impact.geo;
-        return obj;
-      }, {});
-      
-      impacts = _.flatten(_.map(red_impacts, (cityobj, appid) => _.map(cityobj, (impact, city) => ({ appid: appid, geo: geobycity[city], impact: impact } as AppImpactGeo))));
-      impacts.filter(i => i && i.appid && i.geo && i.geo.latitude && i.geo.longitude);
+    if (width < 50 || height < 50) { return; }
 
-      let apps = _.uniq(impacts.map((x) => x.appid));
-      if (this.apps === undefined) {
-        // sort apps
-        apps.sort((a, b) => _.filter(usage, { appid: b })[0].mins - _.filter(usage, { appid: a })[0].mins);
-        this.apps = apps;
-      } else {
-        apps = this.apps;
-      }
-    
-      let margin = { top: 20, right: 20, bottom: -200, left: 40 },
-        width = width_svgel - margin.left - margin.right, // +svg.attr('width') - margin.left - margin.right,
-        height = height_svgel - margin.top - margin.bottom, // +svg.attr('height') - margin.top - margin.bottom,
-        z = d3.scaleOrdinal(d3.schemeCategory20).domain(apps);
+    const projection = d3.geoMercator()
+      .scale(width / 2 / Math.PI)
+      .translate([width / 2, height / 2]),
+      path = d3.geoPath().projection(projection);
 
-      if (width < 50 || height < 50) { return; }
+    this.loader.getWorldMesh().then((mesh) => {
+      svg.append('path').attr("d", path(topojson.mesh(mesh))).attr('opacity', 0.2);
+    });
 
-      const projection = d3.geoMercator()
-        .scale(width / 2 / Math.PI) 
-        .translate([width / 2, height / 2]),
-        path = d3.geoPath().projection(projection);
+    // add circles to svg
+    var datas = svg.selectAll("circle")
+      .data(impacts);
 
-        this.loader.getWorldMesh().then((mesh) => {
-          svg.append('path').attr("d", path(topojson.mesh(mesh))).attr('opacity', 0.2);
+    datas.enter()
+      .append("circle")
+      .attr("cx", (d) => {
+        const lat = projection([d.geo.longitude, d.geo.latitude])[0];
+        return lat;
+      })
+      .attr("cy", (d) => {
+        const lon = projection([d.geo.longitude, d.geo.latitude])[1];
+        return lon;
+      })
+      .attr('opacity', (d) => {
+        let highApp = this.highlightApp || this._hoveringApp;
+        if (highApp) {
+          return d.appid === highApp.app ? 0.75 : 0.01;
+        }
+        return 0.8;
+      }).attr("r", (d) => Math.max(4, Math.floor(d.impact / 100)))
+      .attr("fill", (d) => z(d.appid))
+      .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d.appid)))
+      .on('mouseleave', (d) => this.hover.hoverChanged(undefined));
+
+    datas.enter().append('text')
+      .attr('x', (d) => projection([d.geo.longitude, d.geo.latitude])[0] + 5)
+      .attr('y', (d) => projection([d.geo.longitude, d.geo.latitude])[1] + 5)
+      .attr('opacity', d => this._hoveringApp && d.appid === this._hoveringApp.app ? 1 : 0)
+      .text((d) => d.geo.region_name || d.geo.country);
+
+    const leading = 26;
+    if (this.showLegend) {
+
+      let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top / 2 + ')');
+      const legend = g.append('g')
+        .attr('class', 'legend')
+        .attr('transform', 'translate(0,0)')
+        .selectAll('g')
+        .data(apps.slice().reverse())
+        .enter()
+        .append('g')
+        .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
+        .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
+        .on('mouseout', (d) => this.hover.hoverChanged(undefined))
+        .on('click', (d) => {
+          this.focus.focusChanged(this.loader.getCachedAppInfo(d));
+        }).attr('opacity', (d) => {
+          let highApp = this.highlightApp || this._hoveringApp;
+          if (highApp) {
+            return d === highApp.app ? 1.0 : 0.2;
+          }
+          return 1.0;
         });
 
-        // add circles to svg
-        var datas = svg.selectAll("circle")
-          .data(impacts);
+      console.log('maplegend ! ', legend);
 
-        datas.enter()
-          .append("circle")
-          .attr("cx", (d) => { 
-            const lat = projection([d.geo.longitude, d.geo.latitude])[0];
-            return lat;
-          })
-          .attr("cy", (d) => { 
-            const lon = projection([d.geo.longitude,d.geo.latitude])[1];
-            return lon;            
-          })
-          .attr('opacity',  (d) => {
-            let highApp = this.highlightApp || this._hoveringApp;
-            if (highApp) {
-              return d.appid === highApp.app ? 0.75: 0.01; 
-            }
-            return 0.8;
-          }).attr("r", (d) => Math.max(4, Math.floor(d.impact/100)))
-          .attr("fill", (d) => z(d.appid))
-          .on('mouseenter', (d) =>  this.hover.hoverChanged(this.loader.getCachedAppInfo(d.appid)))
-          .on('mouseleave', (d) => this.hover.hoverChanged(undefined));
+      legend.append('rect')
+        .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
+        .attr('width', 19)
+        .attr('height', 19)
+        .attr('fill', z);
 
-        datas.enter().append('text')
-          .attr('x', (d) => projection([d.geo.longitude, d.geo.latitude])[0] + 5)          
-          .attr('y', (d) =>  projection([d.geo.longitude, d.geo.latitude])[1] + 5)
-          .attr('opacity', d => this._hoveringApp && d.appid === this._hoveringApp.app ? 1: 0)
-          .text((d) => d.geo.region_name || d.geo.country);
+      legend.append('text')
+        .attr('x', this.showTypesLegend ? width - 140 - 24 : width - 24)
+        .attr('y', 9.5)
+        .attr('dy', '0.32em')
+        .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
+    }
 
-          const leading = 26;
-          if (this.showLegend) {
-            
-            let g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top/2 + ')');
-            const legend = g.append('g')
-              .attr('class', 'legend')
-              .attr('transform', 'translate(0,0)')
-              .selectAll('g')
-              .data(apps.slice().reverse())
-              .enter()
-              .append('g')
-              .attr('transform', function (d, i) { return 'translate(0,' + i * leading + ')'; })
-              .on('mouseenter', (d) => this.hover.hoverChanged(this.loader.getCachedAppInfo(d)))
-              .on('mouseout', (d) => this.hover.hoverChanged(undefined))
-              .on('click', (d) => {
-                this.focus.focusChanged(this.loader.getCachedAppInfo(d));
-              }).attr('opacity', (d) => {
-                let highApp = this.highlightApp || this._hoveringApp;
-                if (highApp) {
-                  return d === highApp.app ? 1.0: 0.2; 
-                }
-                return 1.0;
-              });
-
-            console.log('maplegend ! ', legend);
-      
-            legend.append('rect')
-              .attr('x', this.showTypesLegend ? width - 140 - 19 : width - 19)
-              .attr('width', 19)
-              .attr('height', 19)
-              .attr('fill', z);
-
-            legend.append('text')
-              .attr('x', this.showTypesLegend ? width - 140 - 24 : width - 24)
-              .attr('y', 9.5)
-              .attr('dy', '0.32em')
-              .text((d) => this.loader.getCachedAppInfo(d) && this.loader.getCachedAppInfo(d).storeinfo.title || d);
-            }
-                
-    });
   }
   @HostListener('window:resize')
   onResize() {

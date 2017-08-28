@@ -134,7 +134,10 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
   set byTime(val) {
     this.lastMax = 0;
     this._byTime = val;
-    this.init.then(() => this.render());
+    this.init.then(x => this.compileImpacts(this.usage).then(impacts => {
+      this.impacts = impacts;
+      this.render();
+    }));
   }
   get byTime() { return this._byTime; }
 
