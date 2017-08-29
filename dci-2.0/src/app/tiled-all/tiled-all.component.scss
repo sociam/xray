@@ -50,6 +50,20 @@
     }
     .fullwidth {
         flex-grow: 0;
-        flex-basis: 100%;
+        flex-basis: 85%;
+    }
+    .gridtop {
+        position: absolute;
+        top: 0px;
+        left: 150px;
+        right: 0px;
+        bottom: 60%;
+    }
+    .gridbottom {
+        position: absolute;
+        top: 45%;
+        bottom: 0px;
+        left: 150px;
+        right: 0px;
     }
 }

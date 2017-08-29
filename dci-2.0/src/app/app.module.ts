@@ -27,10 +27,13 @@ import { RefinecatComponent } from './refinecat/refinecat.component';
 
 import { FocusService } from "app/focus.service";
 import { HoverService } from "app/hover.service";
+import { ActivityLogService } from "app/activity-log.service";
 import { GeomapComponent } from './geomap/geomap.component';
 import { GeobarComponent } from './geobar/geobar.component';
 import { TiledAllComponent } from './tiled-all/tiled-all.component';
 import { FocusInfoboxComponent } from './focus-infobox/focus-infobox.component';
+import { UserStudySetupComponent } from './user-study-setup/user-study-setup.component';
+
 
 
 const appRoutes: Routes = [
@@ -50,7 +53,8 @@ const appRoutes: Routes = [
     path: 'add',
     component: UsagetableComponent,
   },  
-  { path: '', redirectTo: '/single/refinebar', pathMatch: 'full' },
+  { path: 'setup', component: UserStudySetupComponent },
+  { path: '', redirectTo: '/add', pathMatch: 'full' },
   { path: '**', component: ErrorComponent, data: { message: 'page not found' } }
 ];
 
@@ -76,7 +80,8 @@ const appRoutes: Routes = [
     GeomapComponent,
     GeobarComponent,
     TiledAllComponent,
-    FocusInfoboxComponent    
+    FocusInfoboxComponent,
+    UserStudySetupComponent    
   ],
   imports: [
     HttpModule,
@@ -88,7 +93,7 @@ const appRoutes: Routes = [
     ),
     Ng2CompleterModule
   ],
-  providers: [LoaderService, UsageConnectorService, HostUtilsService, FocusService, HoverService],
+  providers: [LoaderService, UsageConnectorService, HostUtilsService, FocusService, HoverService, ActivityLogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

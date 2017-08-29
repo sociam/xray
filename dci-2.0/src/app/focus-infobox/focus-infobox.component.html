@@ -8,6 +8,12 @@
             <div *ngIf="target?.developer" class="developer">by {{ target?.developer?.name }}
                 <span *ngIf="target?.storeinfo?.rating" class="rating">- rating: {{ target?.storeinfo?.rating }} &#x2606; </span>
             </div>
+            <div class="summary">
+                <!-- Icons From http://www.iconarchive.com/show/colorful-long-shadow-icons-by-graphicloads.html (Free to use) -->
+                <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Identity-icon.png">{{ getHostCount(target?.app)}}</div>
+                <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Star-fav-icon.png">{{ getRating(target?.app )}}</div>
+                <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Arrow-download-3-icon.png">{{ getDownloads(target?.app )}}</div>
+            </div>
         </div>
         <div class="appdesc" [hidden]="!target">
             <div class="summary">{{ target?.storeinfo.summary }}</div>

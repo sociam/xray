@@ -41,6 +41,10 @@ export class CompareComponent implements OnInit, OnChanges {
       .then(() => {
         // loaded all 
         this.loader.getAlternatives(this.targetAppId).then((subs: APIAppInfo[]): undefined => {
+
+          // first filter subs for those for which we have analysed
+          subs = subs.filter(sub => sub.hosts && sub.hosts.length > 0);
+
           // others is AppUsage for everything except targetapp
           const targetUsage: AppUsage = this.using.filter(usg => usg.appid === this.targetAppId)[0],
             otherUsages: AppUsage[] = this.using.filter(usg => usg.appid !== this.targetAppId);
@@ -74,16 +78,34 @@ export class CompareComponent implements OnInit, OnChanges {
 
   appInfo(appid: string): APIAppInfo { return this.loader.getCachedAppInfo(appid); }
 
+    getHostCount(id: string): string {
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.hosts.length.toString(); }
+    return '?'
+  }
+
+  getRating(id: string): string {
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.storeinfo.rating.toString(); }
+    return '?'
+  }
+
+  // Regex from Stack Overflow. https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+  getDownloads(id: string): string {
+    let cached = this.loader.getCachedAppInfo(id);
+    if (cached) { return cached.storeinfo.installs.max.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+    return '?'
+  }
+
   select(s: Substitution) {
     this.substitutions.map(srow => srow.map(_s => { 
       if (_s !== s) { delete _s.selected; return }
-      console.log('setting true ', _s);
       _s.selected = true;
     }));
   }
 
   replaceTarget(s: Substitution) {
     this.usage.usageChanged(s.all);
-    this.router.navigate(['/tiled']);
+    this.router.navigate(['/grid']);
   }
 }

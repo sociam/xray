@@ -15,3 +15,10 @@ div.main {
         height: 100%;
     }
 }
+
+g.legend text,
+g.ctypelegend text {
+    font-family: sans-serif;
+    font-size: 11pt;
+    text-anchor: end;
+}

@@ -263,12 +263,12 @@ export class LoaderService {
   }
   makeIconPath(url: string): string {
     if (url) {
-      return [BASE_API + url].join('/');
+      return [API_ENDPOINT, 'icons', url.slice(1)].join('/');
     }
   }
   _prepareAppInfo(appinfo: APIAppInfo, loadGeo=true, doCache=true):Promise<APIAppInfo> {
     appinfo.icon = appinfo.icon && appinfo.icon !== null && appinfo.icon.trim() !== 'null' ? this.makeIconPath(appinfo.icon) : undefined;
-    console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
+    // console.log('appinfo icon ', appinfo.app, ' - ', appinfo.icon, typeof appinfo.icon);
 
     appinfo.hosts = uniq((appinfo.hosts || [])
       .map((host: string): string => trim(host.trim(), '".%')))
@@ -284,13 +284,14 @@ export class LoaderService {
     return !loadGeo ? Promise.resolve(appinfo) : this.getHostsGeos(appinfo.hosts).then(geomap => {
       return _.uniqBy(appinfo.hosts.map(host => {
         var geo = geomap[host];
-        if (!geo) { console.error(' Dean didnt give me a geo for :( ', host); return; }
+        if (!geo) { 
+          // console.warn(' No geo for ', host, appinfo.app); 
+          return; 
+        }
         return geo[0] && _.extend({}, geo[0], {host:host});
       }).filter(x => x), (gip) => gip.ip)
     }).then((hostgeos) => {
-      console.log('got all me host geos for ', appinfo.app, hostgeos);
       appinfo.host_locations = hostgeos || [];
-      // cache things 
       return appinfo;
     });
   } 
@@ -318,21 +319,21 @@ export class LoaderService {
       .then((results: string[]) => results.map(result => this.sanitiser.bypassSecurityTrustResourceUrl(result)));
   }
 
-  @memoize((company) => company.id)  
-  findApps(query: string): Promise<APIAppInfo[]> {
-    // var headers = new Headers();
-    // headers.set('Accept', 'application/json');
-    query = query && query.trim();
-    if (!query) { return Promise.resolve([]); }
-    return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&startsWith=${query.trim()}`).toPromise()
-      .then(response => response.json() as APIAppInfo[])
-      .then((appinfos: APIAppInfo[]) => {
-        if (!appinfos) {
-          throw new Error('null returned from endpoint ' + query);
-        } 
-        return Promise.all(appinfos.map(appinfo => this._prepareAppInfo(appinfo, false, false)));
-      });
-  }
+  // @memoize((company) => company.id)  
+  // findApps(query: string): Promise<APIAppInfo[]> {
+  //   // var headers = new Headers();
+  //   // headers.set('Accept', 'application/json');
+  //   query = query && query.trim();
+  //   if (!query) { return Promise.resolve([]); }
+  //   return this.http.get(API_ENDPOINT + `/apps?isFull=true&limit=120&startsWith=${query.trim()}`).toPromise()
+  //     .then(response => response.json() as APIAppInfo[])
+  //     .then((appinfos: APIAppInfo[]) => {
+  //       if (!appinfos) {
+  //         throw new Error('null returned from endpoint ' + query);
+  //       } 
+  //       return Promise.all(appinfos.map(appinfo => this._prepareAppInfo(appinfo, false, false)));
+  //     });
+  // }
   
   /**
    * Parses JSON Object into a URL param options object and then Turns that to a
@@ -383,7 +384,7 @@ export class LoaderService {
     }).join('--');
     return key;
   })
-  findApps$(options: {
+  findApps(options: {
       title?: string,
       startsWith?: string, 
       appID?: string, 
@@ -417,7 +418,7 @@ export class LoaderService {
 
   @memoize((appid: string): string => appid)
   getAlternatives(appid: string): Promise<APIAppInfo[]> {
-    return this.http.get(API_ENDPOINT + `/alt/${appid}`).toPromise()
+    return this.http.get(API_ENDPOINT + `/alt/${appid}?nocache=true`).toPromise()
       .then(response => {
         if (response && response.text().toString().trim() === 'null') {  console.error('ERROR - got a null coming from the endpoint ~ ' + appid);    }
         return response && response.text().toString().trim() !== 'null' ? response.json() as string[] : [];
