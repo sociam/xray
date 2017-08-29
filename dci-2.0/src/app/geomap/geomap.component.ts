@@ -168,7 +168,7 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
 
     svg.selectAll('*').remove();
 
-    const usage = this.usage, 
+    const usage = this.usage,
       impacts = this.impacts;
 
     let apps = _.uniq(impacts.map((x) => x.appid));
@@ -279,6 +279,6 @@ export class GeomapComponent implements AfterViewInit, OnChanges {
   @HostListener('mouseleave')
   mouseLv() {
     this.actlog.log('mouseleave', 'geomap');
-  }  
+  }
 
 }
