@@ -1,0 +1,17 @@
+<div>
+    <h2>
+        participant id: {{ setpid }}
+    </h2>
+    <input type="text" [(ngModel)]='inpid'>
+    <button (click)="setParticipantID(inpid)">Set Participant ID</button>
+    <button (click)="start()">Start</button>
+
+    <div class="status"> {{ status }} </div>
+    <div class="error"> {{ error }} </div>
+
+    <ul>
+        <li *ngFor="let f of participants">{{ f }} <a (click)="dumpParticipant(f)">data</a>
+    </ul>
+
+    <textarea *ngIf="dumped" [(ngModel)]="dumped"></textarea>
+</div>

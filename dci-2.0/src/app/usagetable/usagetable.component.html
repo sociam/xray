@@ -15,10 +15,10 @@
                     <br><a class="dev"> by {{ getAppDev(appusage.appid )}}</a>
                 </div>
                 <div class="hhmminput">
-                    <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.hh" maxlength="2">hrs<br>
-                    <input type="number" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mm" maxlength="2">mins
+                    <input type="number" (ngModelChange)="appValueChanged(appusage)" [(ngModel)]="appusage.hh" maxlength="2">hrs<br>
+                    <input type="number" (ngModelChange)="appValueChanged(appusage)" [(ngModel)]="appusage.mm" maxlength="2">mins
                 </div>
-                <input class="middle" type="range" (ngModelChange)="appValueChanged()" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
+                <input class="middle" type="range" (ngModelChange)="appValueChanged(appusage)" [(ngModel)]="appusage.mins" [min]="minUsage" [max]="maxUsage" [step]="stepUsage">
                 <div class="right">
                     <button class="clearButton usage-button" (click)="delete(appusage)">Uninstall</button>
                     <a [hidden]='!hasAlternatives(appusage.appid)' [routerLink]="['/alternatives/', appusage.appid.trim()]"><button class="usage-button">Substitute</button></a>

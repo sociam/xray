@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { UsageConnectorService } from '../usage-connector.service';
 import { FocusService } from 'app/focus.service';
 import { HoverService } from "app/hover.service";
+import { ActivityLogService } from "app/activity-log.service";
 
 export interface AppUsage { appid: string; mins: number };
 
@@ -79,7 +80,8 @@ export class UsagetableComponent implements OnInit {
   constructor(private loader: LoaderService, 
     private connector: UsageConnectorService, 
     private focus: FocusService,
-    private hover: HoverService) { 
+    private hover: HoverService, 
+    private actlog: ActivityLogService) { 
       
   }
 
@@ -105,7 +107,6 @@ export class UsagetableComponent implements OnInit {
   }
 
   appSelected(appinfo: APIAppInfo) {
-    console.log('output connection is working ', appinfo);
     if (appinfo) {
       this.addApp();
     }
@@ -115,18 +116,23 @@ export class UsagetableComponent implements OnInit {
     this.focus.focusChanged(this.loader.getCachedAppInfo(appid));
   }
   
-
-  appValueChanged() {
-    // console.info('appValueChanged >> ');
+  appValueChanged(usage?: AppUsageHHMM) {
+    if (usage){
+      this.actlog.log('app-value-changed', usage.toAppUsage());
+    }
     this.connector.usageChanged(this.usages.map((x) => x.toAppUsage()));
   }
 
   delete(usage: AppUsage) {
     this.usages = this.usages.filter((x) => x.appid !== usage.appid);
     this.appValueChanged();
+    this.actlog.log('app-delete', usage.appid);
   }
   
-  clearState() { this.connector.clearState(); this.usages = []; }
+  clearState() { 
+    this.connector.clearState(); this.usages = []; 
+    this.actlog.log('app-clear');
+  }
 
   getAppName(id: string): string {
     let cached = this.loader.getCachedAppInfo(id);
@@ -171,6 +177,7 @@ export class UsagetableComponent implements OnInit {
   addApp() {
     if (this.selectedApp) {
       this.usages = this.usages.concat([new AppUsageHHMM({appid: this.selectedApp.app, mins: 15})]); 
+      this.actlog.log('app-add', this.selectedApp.app);
       this.selectedApp = undefined;
       this.appValueChanged();
     }
