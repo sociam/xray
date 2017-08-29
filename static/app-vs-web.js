@@ -27,7 +27,7 @@ var utils = require('./utils'),
 		if (url.indexOf('http') >= 0) { url = url.slice(url.indexOf('//')+2); }
 		if (url.indexOf('/') >= 0) { url = url.slice(0,url.indexOf('/')); }
 		return utils.shorten_2ld(url);
-	};
+	},lct = (x) => x.toLowerCase().trim();
 
 if (require.main === module) { 
 	if (process.argv.length < 7) { 
@@ -44,11 +44,11 @@ if (require.main === module) {
 
 		var app_pairs = utils.loadCSV(process.argv[2]).map((pair) => { pair.url = canonicalise_2ld(pair["web site"]); return pair; }),
 			app_libs = JSON.parse(fs.readFileSync(process.argv[3])),
-			lib_company = utils.loadCSV(process.argv[4]).filter((x) => x.type.indexOf('ads') >= 0).reduce((d, lib) => { d[lib.package.toLowerCase()] = lib.company.toLowerCase().trim(); return d; }, {}),
-			web_company = utils.loadCSV(process.argv[6]).filter((x) => x.type.indexOf('advert') >= 0).reduce((d, tr) => { d[tr.host.toLowerCase()] = tr.company.toLowerCase().trim(); return d; }, {}),			
+			lib_company = utils.loadCSV(process.argv[4]).filter((x) => x.type.indexOf('ads') >= 0).reduce((d, lib) => { d[lct(lib.package)] = lct(lib.company); return d; }, {}),
+			web_company = utils.loadCSV(process.argv[6]).filter((x) => x.type.indexOf('advert') >= 0).reduce((d, tr) => { d[lct(tr.host)] = lct(tr.company); return d; }, {}),			
 			web_trackers = utils.loadCSV(process.argv[5], ['company','jurisdiction','url']).reduce((d, set) => {
 				var url = canonicalise_2ld(set.url);
-				d.company = d.company.toLowerCase();
+				d.company = lct(d.company);
 				if (d.company && web_company[d.company] && web_company[d.company]) { 
 					// include only ads
 					d[url] = (d[url] || []).concat(d.company);
