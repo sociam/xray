@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { HostUtilsService } from 'app/host-utils.service';
 import { FocusService } from 'app/focus.service';
 import { HoverService, HoverTarget } from "app/hover.service";
+import { ActivityLogService } from "app/activity-log.service";
 
 interface AppImpact {
   appid: string;
@@ -17,7 +18,7 @@ interface AppImpact {
   selector: 'app-refinebar',
   templateUrl: './refinebar.component.html',
   styleUrls: ['./refinebar.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class RefinebarComponent implements AfterViewInit, OnChanges {
   // refactor to get rid of -- 
@@ -60,7 +61,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     private loader: LoaderService,
     private hostutils: HostUtilsService,
     private focus: FocusService,
-    private hover: HoverService) {
+    private hover: HoverService,
+    private actlog: ActivityLogService) {
     this.init = Promise.all([
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
     ]);
@@ -158,10 +160,21 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
     this._companyHovering = hovering ? company : undefined;
   }
 
+  @HostListener('mouseenter')
+  mouseEnter() {
+    this.actlog.log('mouseenter', 'refinebar');
+  }
+
+  @HostListener('mouseleave')
+  mouseLv() {
+    this.actlog.log('mouseleave', 'refinebar');
+  }  
+
   // 
   render() {
     // console.log(':: render usage:', this.usage && this.usage.length);
     const svgel = this.getSVGElement();
+
     if (!svgel || this.usage === undefined || this.impacts === undefined || this.usage.length === 0) { return; }
 
     let rect = svgel.getBoundingClientRect(),
@@ -387,6 +400,8 @@ export class RefinebarComponent implements AfterViewInit, OnChanges {
         });
 
     }
+
+
 
     if (this._hoveringType) {
       this.setHoveringTypeHighlight(this._hoveringType)

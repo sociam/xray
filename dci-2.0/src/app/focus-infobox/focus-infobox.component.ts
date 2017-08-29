@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener } from '@angular/core';
 import { FocusTarget, FocusService } from "app/focus.service";
 import { LoaderService } from '../loader.service';
+import { ActivityLogService } from "app/activity-log.service";
 
 @Component({
   selector: 'app-focus-infobox',
@@ -12,14 +13,16 @@ export class FocusInfoboxComponent implements OnInit {
   @Input() target: FocusTarget;
   @Input() targettype: string;
 
-  constructor(private focus: FocusService, private loader: LoaderService) { }
+  constructor(private focus: FocusService, private loader: LoaderService, private actlog: ActivityLogService) { }
 
   ngOnInit() {
   }
+
   close() {
     this.focus.focusChanged(undefined);
+    this.actlog.log('close', 'focus');
   }
-    getHostCount(id: string): string {
+  getHostCount(id: string): string {
     let cached = this.loader.getCachedAppInfo(id);
     if (cached) { return cached.hosts.length.toString(); }
     return '?'
@@ -37,5 +40,15 @@ export class FocusInfoboxComponent implements OnInit {
     if (cached) { return cached.storeinfo.installs.max.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
     return '?'
   }
+
+  @HostListener('mouseenter')
+  mouseEnter() {
+    this.actlog.log('mouseenter', 'focus', this.target);
+  }
+
+  @HostListener('mouseleave')
+  mouseLv() {
+    this.actlog.log('mouseleave', 'focus', this.target);
+  }  
   
 }

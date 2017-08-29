@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, HostListener } from '@angular/core';
 import { LoaderService, App2Hosts, String2String, Host2PITypes, APIAppInfo, CompanyDB } from '../loader.service';
 import { Http, HttpModule, Headers } from '@angular/http';
 
@@ -188,4 +188,13 @@ export class UsagetableComponent implements OnInit {
     return this.alternatives && this.alternatives[appid] && this.alternatives[appid].length > 0;
   }
 
+  @HostListener('mouseenter')
+  mouseEnter() {
+    this.actlog.log('mouseenter', 'usagetable');
+  }
+
+  @HostListener('mouseleave')
+  mouseLv() {
+    this.actlog.log('mouseleave', 'usagetable');
+  }  
 }

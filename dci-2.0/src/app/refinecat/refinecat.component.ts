@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { HostUtilsService } from 'app/host-utils.service';
 import { FocusService } from 'app/focus.service';
 import { HoverService, HoverTarget } from "app/hover.service";
+import { ActivityLogService } from "app/activity-log.service";
 
 interface AppImpactCat {
   appid: string;
@@ -55,7 +56,8 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
     private loader: LoaderService,
     private hostutils: HostUtilsService,
     private focus: FocusService,
-    private hover: HoverService) {
+    private hover: HoverService,
+    private actlog: ActivityLogService) {
     this.init = Promise.all([
       this.loader.getCompanyInfo().then((ci) => this.companyid2info = ci),
     ]);
@@ -342,6 +344,17 @@ export class RefinecatComponent implements AfterViewInit, OnChanges {
     }
 
   }
+
+  @HostListener('mouseenter')
+  mouseEnter() {
+    this.actlog.log('mouseenter', 'refinecat');
+  }
+
+  @HostListener('mouseleave')
+  mouseLv() {
+    this.actlog.log('mouseleave', 'refinecat');
+  }  
+
   @HostListener('window:resize')
   onResize() {
     // call our matchHeight function here

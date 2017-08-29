@@ -11,7 +11,7 @@ export class UserEvent {
 export class ActivityLogService {
 
   pid : string;
-  debug = false;
+  debug = true;
   startTime : number;
   prefix = 'refine_actlog_';
 
@@ -50,14 +50,14 @@ export class ActivityLogService {
   getParticipantId(): string {    
     return this.pid;
   }
-  log(type : string, info?: any): UserEvent {
+  log(type : string, info?: any, other?: any): UserEvent {
     if (!this.pid) {
       throw new Error('no participant ID set ');
     }
     if (!this.startTime) {
       throw new Error('has not called start');
     }
-    const event = { type:type , time: new Date().valueOf(), info: info };
+    const event = { type:type , time: new Date().valueOf(), info: info, other: other };
     if (this.debug) {
       console.info("[actlog]", event)
     } 
