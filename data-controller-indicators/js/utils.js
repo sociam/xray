@@ -113,7 +113,7 @@ angular.module('dci').factory('utils', () => {
                 'marketing': _.pickBy(c2pi, (pis, company) =>
                     !utils.isType(details, company, 'ignore') &&
                     !utils.isType(details, company, 'platform') &&
-                    utils.is3rdPartyType(appCompany, details, company, 'marketing')),
+                    utils.is3rdPartyType(appCompany, details, company, 'advertising')),
                 'usage tracking': _.pickBy(c2pi, (pis, company) =>
                     !utils.isType(details, company, 'ignore') &&
                     !utils.isType(details, company, 'platform') &&
@@ -130,7 +130,7 @@ angular.module('dci').factory('utils', () => {
                     !utils.cimatch(appCompany, company) &&
                     !utils.isType(details, company, 'ignore') &&
                     !utils.isType(details, company, 'app') &&
-                    !utils.isType(details, company, 'marketing') &&
+                    !utils.isType(details, company, 'advertising') &&
                     !utils.isType(details, company, 'platform') &&
                     !utils.isType(details, company, 'usage') &&
                     !utils.isType(details, company, 'payments') &&
