@@ -9,8 +9,8 @@ import * as _ from 'lodash';
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
-export const BASE_API = 'http://localhost:8118';
-export const API_ENDPOINT = 'http://localhost:8118/api';
+export const BASE_API = 'http://sociamnat.cs.ox.ac.uk:8003';
+export const API_ENDPOINT = 'http://sociamnat.cs.ox.ac.uk:8003/api';
 export const CB_SERVICE_ENDPOINT = 'http://localhost:3333';
 
 export interface App2Hosts { [app: string]: string[] }
@@ -407,7 +407,7 @@ export class LoaderService {
     //    })));
     // })).getObservable();
 
-    return this.http.get('http://localhost:8118/api/apps?' + body).toPromise().then((data) => {
+    return this.http.get(BASE_API+'/api/apps?' + body).toPromise().then((data) => {
       const result = (data.json() as APIAppInfo[]);
       if (!result || result === null) {
         return [];
