@@ -9,7 +9,6 @@ import * as _ from 'lodash';
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
-export const BASE_API = 'http://localhost:8118';
 export const API_ENDPOINT = 'http://localhost:8118/api';
 export const CB_SERVICE_ENDPOINT = 'http://localhost:3333';
 
@@ -407,7 +406,7 @@ export class LoaderService {
     //    })));
     // })).getObservable();
 
-    return this.http.get('http://localhost:8118/api/apps?' + body).toPromise().then((data) => {
+    return this.http.get(API_ENDPOINT + '/apps?' + body).toPromise().then((data) => {
       const result = (data.json() as APIAppInfo[]);
       if (!result || result === null) {
         return [];
