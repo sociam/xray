@@ -292,6 +292,8 @@ export class LoaderService {
     }).then((hostgeos) => {
       appinfo.host_locations = hostgeos || [];
       return appinfo;
+    }).catch((e) => {
+      return appinfo;
     });
   } 
   @memoize((hosts) => hosts.join('::'))
