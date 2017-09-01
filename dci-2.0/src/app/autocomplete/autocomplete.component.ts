@@ -43,6 +43,26 @@ export class AutocompleteComponent implements OnInit, OnChanges {
     this.query = ''; // this.selected === undefined ? '' : this.selected.storeinfo.title;
   }
 
+  levenshteinDistance(a, b): number {
+    var tmp;
+    if (a.length === 0) { return b.length; }
+    if (b.length === 0) { return a.length; }
+    if (a.length > b.length) { tmp = a; a = b; b = tmp; }
+  
+    var i, j, res, alen = a.length, blen = b.length, row = Array(alen);
+    for (i = 0; i <= alen; i++) { row[i] = i; }
+  
+    for (i = 1; i <= blen; i++) {
+      res = i;
+      for (j = 1; j <= alen; j++) {
+        tmp = row[j - 1];
+        row[j - 1] = res;
+        res = b[i - 1] === a[j - 1] ? tmp : Math.min(tmp + 1, Math.min(res + 1, row[j] + 1));
+      }
+    }
+    return res;
+  }
+
   filter() {
     if (this.query.trim() !== '') {
       this.loadingSuggestions = true;
@@ -55,18 +75,19 @@ export class AutocompleteComponent implements OnInit, OnChanges {
         delete this.fetching;
         this.loadingSuggestions = false;
 
-        console.log('autocomplete results ', results, 'omitIDs', this._omitIDs);
+        // console.log('autocomplete results ', results, 'omitIDs', this._omitIDs);
 
         let qL = this.query.toLowerCase().trim(),
               newL = results.filter((x) => !this._omitIDs[x.app] && x.storeinfo.title.toLowerCase().indexOf(qL) >= 0),
-              by = (x) => x.storeinfo.title;
+              byTitle = (x) => x.storeinfo.title,
+              by = (x) => this.levenshteinDistance(qL, x.storeinfo.title.toLowerCase());
 
-        console.log('newL ', newL);              
+        // console.log('newL ', newL);              
 
-        let goners = differenceBy(this.filteredList, newL, by),
-          newbies = differenceBy(newL, this.filteredList, by);
+        let goners = differenceBy(this.filteredList, newL, byTitle),
+          newbies = differenceBy(newL, this.filteredList, byTitle);
 
-        pullAllBy(this.filteredList, goners, by);
+        pullAllBy(this.filteredList, goners, byTitle);
         Array.prototype.splice.apply(this.filteredList, [this.filteredList, 0].concat(newbies));
         this.filteredList = sortBy(this.filteredList, by);
       }).catch((e) => {

@@ -51,18 +51,20 @@ export class ActivityLogService {
     return this.pid;
   }
   log(type : string, info?: any, other?: any): UserEvent {
-    if (!this.pid) {
-      throw new Error('no participant ID set ');
-    }
-    if (!this.startTime) {
-      throw new Error('has not called start');
-    }
-    const event = { type:type , time: new Date().valueOf(), info: info, other: other };
-    if (this.debug) {
-      console.info("[actlog]", event)
-    } 
-    this._save(this.pid, event);
-    return event;
+      try { 
+      if (!this.pid) {
+        throw new Error('no participant ID set ');
+      }
+      if (!this.startTime) {
+        throw new Error('has not called start');
+      }
+      const event = { type:type , time: new Date().valueOf(), info: info, other: other };
+      if (this.debug) {
+        console.info("[actlog]", event)
+      } 
+      this._save(this.pid, event);
+      return event;
+    } catch(e) { console.error('error with actlogger >> ', e.message); }
   }
   _save(pid: string, ue: UserEvent) {
     const data = localStorage[this.prefix + pid] && JSON.parse(localStorage[this.prefix + pid]) || [];
