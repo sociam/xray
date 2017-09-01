@@ -46,4 +46,9 @@ export class UserStudySetupComponent implements OnInit {
     }    
   }
 
+  stop() { 
+    this.log.endParticipant();
+    delete this.setpid;
+  }
+
 }

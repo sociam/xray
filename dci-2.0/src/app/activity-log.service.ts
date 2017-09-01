@@ -47,6 +47,14 @@ export class ActivityLogService {
     this.startTime = new Date().valueOf();
     return this.log('start', this.pid);
   }
+  endParticipant() {
+    if (this.pid) {
+      this.log('end', this.pid);
+    }
+    delete this.pid;
+    // this.usage.usageChanged([]);
+    delete this.startTime;
+  }  
   getParticipantId(): string {    
     return this.pid;
   }
