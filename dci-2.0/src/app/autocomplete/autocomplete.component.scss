@@ -1,0 +1,92 @@
+input {
+    margin: 0px 30px 0px 0px;
+    width: 300px !important;
+    font-size: 12pt !important;
+    border: none !important;
+    border-bottom: 1px solid #333 !important;
+    padding: 5px 3px;
+    &::-webkit-input-placeholder,
+    &::placeholder {
+        color: #bbb;
+        font-weight: 100;
+        padding: 0px;
+    }
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.suggestions {
+    background-color: #fafafa; // #eeeeee;
+    padding: 5px 10px;
+    // border-left: 1px solid #888;
+    // border-right: 1px solid #888;
+    // border-bottom: 1px solid #888;
+    height: 300px;
+    width: 400px;
+    z-index: 50;
+    position: absolute;
+    // background: #fefefe;
+    overflow-y: auto;
+    ul {
+        padding: 0px;
+    }
+    ul li {
+        padding: 10px 15px;
+        list-style-type: none;
+        font-size: 10pt;
+        img {
+            width: 30px;
+            vertical-align: middle;
+            margin-right: 20px;
+        }
+        text-align:middle;
+        &:hover {
+            background-color: #eff;
+        }
+        .dev {
+            color: #666;
+        }
+    }
+    // box-shadow: #ddd 2px 2px 2px 2px;
+}
+
+.spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-color: white; //  #eee; //  white; //  #F0E; //  #333;
+    // margin: 100px auto;
+    margin: 5px auto;
+    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+    animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+    0% {
+        -webkit-transform: perspective(120px)
+    }
+    50% {
+        -webkit-transform: perspective(120px) rotateY(180deg)
+    }
+    100% {
+        -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg)
+    }
+}
+
+@keyframes sk-rotateplane {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+    }
+    50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+    }
+    100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+}

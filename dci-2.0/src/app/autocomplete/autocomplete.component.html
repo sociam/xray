@@ -1,0 +1,24 @@
+<div class="container">
+    <!-- <div [hidden]="!loading" class="spinner"></div> -->
+    <div class="input-field col s12">
+        <input id="appname" placeholder="Add a new app" type="text" class="validate filter-input" [(ngModel)]="query" (keyup)="filter()">
+    </div>
+    <div class="suggestions" *ngIf="filteredList.length > 0 || loadingSuggestions">
+        <div *ngIf="loadingSuggestions" class="spinner"></div>
+        <ul *ngFor="let item of filteredList">
+            <li (click)="select(item)">
+                <table class="suggestion">
+                    <tr>
+                        <td>
+                            <img [src]='item.icon'>
+                        </td>
+                        <td>
+                            <div>{{item.storeinfo.title}}</div>
+                            <div class=" dev ">By {{item.developer?.name}}</div>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </div>
+</div>

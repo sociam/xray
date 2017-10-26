@@ -19,3 +19,5 @@ prototypes/www/lib
 static/apps
 *.DS_Store*
 *~
+**cache.json
+**/.ipynb_checkpoints/*

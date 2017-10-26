@@ -1,0 +1,102 @@
+$hpad: 0px;
+$advertising: #bb0000;
+$analytics:#bb0099;
+$app: #00eeff; //  #889988;
+$other: #444;
+$borderthicc: 5px;
+.companytype.advertising {
+    background-color: $advertising;
+    padding: 20px 20px 15px 20px;
+    color: white;
+}
+
+.companytype.analytics {
+    padding: 20px 20px 15px 20px;
+    background-color: $analytics;
+    color: white;
+}
+
+.companytype.app {
+    background-color: $app;
+    padding: 20px 20px 15px 20px;
+    color: white;
+}
+
+.companytype.other {
+    background-color: $other;
+    padding: 20px 20px 15px 20px;
+    color: white;
+}
+
+.companytype.unknown {
+    background-color: $other;
+    padding: 20px 20px 15px 20px;
+    color: white;
+}
+
+.companyinfo.advertising {
+    // background-color: $advertising;
+    border-top: $borderthicc solid $advertising;
+    border-bottom: $borderthicc solid $advertising;
+}
+
+.companyinfo.analytics {
+    border-top: $borderthicc solid $analytics;
+    border-bottom: $borderthicc solid $analytics;
+}
+
+.companyinfo.app {
+    border-top: $borderthicc solid $app;
+    border-bottom: $borderthicc solid $app;
+}
+
+.companyinfo.other {
+    border-top: $borderthicc solid $other;
+    border-bottom: $borderthicc solid $other;
+}
+
+.companyinfo.unknown {
+    border-top: $borderthicc solid $other;
+    border-bottom: $borderthicc solid $other;
+}
+
+.companyinfo {
+    background-color: white;
+    padding: 20px 20px 10px 20px;
+    // max-width:200px;
+    height: 95%;
+    // height: 300px;
+    // overflow: scroll-y;
+    .curated {
+        max-width: 550px;
+        position: relative;
+        font-size: 12pt;
+        .name {
+            margin: 10px 0px 5px 0px;
+            width: 100%;
+            font-size: 18pt;
+            // font-weight: bold;
+        }
+        .jurisdiction {
+            position: absolute;
+            right: $hpad;
+            top: 0px;
+        }
+    }
+    .companytype {
+        padding: 20px 10px;
+        width: initial;
+    }
+    .props ul {
+        list-style-type: none;
+        padding-left: 0px;
+        li {
+            margin-bottom: 1em;
+        }
+    }
+    iframe {
+        min-height: 800px;
+        width: 100%;
+        border: none;
+    }
+}

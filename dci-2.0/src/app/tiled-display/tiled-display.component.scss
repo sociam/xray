@@ -1,0 +1,46 @@
+div.root {
+    height: 92vh;
+    width: 100%;
+    div.left,
+    div.right {
+        margin: 0px;
+        vertical-align: top;
+        display: inline-block;
+        height: 100%;
+    }
+    div.left {
+        width: 25%;
+        display: inline-block;
+        app-usagetable /deep/ div.top {
+            height: 50vh;
+            border-bottom: 1px solid #eee;
+            overflow-y: scroll;
+        }
+    }
+    div.right {
+        width: 74%;
+    }
+    // this shoud be in its own 
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: none;
+    // align-content: flex-start;
+    // align-items: stretch;
+    // justify-content: center;
+}
+
+// .left {
+//     flex-basis: 700px;
+//     flex-grow: 0;
+//     display: flex;
+//     flex-direction: column;
+//     flex-wrap: none;
+//     .top,
+//     .bottom {
+//         flex-grow: 1.0;
+//     }
+// }
+// .right {
+//     flex-grow: 1.0;
+//     height: 100%;
+// }

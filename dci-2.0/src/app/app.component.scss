@@ -1,0 +1,70 @@
+/deep/ div,
+/deep/ label,
+/deep/ input,
+/deep/ * {
+    font-family: helvetica !important;
+    font-weight: 100;
+}
+
+/deep/ button {
+    border: 1px solid #888;
+    box-shadow: none;
+    padding: 5px 12px;
+    color: black;
+    // font-size: 12pt;
+    background-color: white;
+}
+
+/deep/ button:disabled {
+    background-color: #eee !important;
+    opacity: 0.2 !important;
+}
+
+/deep/ input:disabled {
+    background-color: #eee !important;
+    opacity: 0.2 !important;
+}
+
+nav {
+    margin: 0px 0px;
+    font-family: helvetica;
+    font-weight: 200;
+    font-size: 0px;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid #eee;
+    a {
+        font-size: 16px;
+        color: black;
+        padding: 10px 20px;
+        margin: 0px;
+        text-decoration: none;
+        transition: all 0.2s;
+        border-right: 0.5px solid #eee;
+    }
+    a.active {
+        background: #f0f0f0;
+    }
+    a:hover {
+        background: #f0f0f0;
+        transition: all 0.2s;
+    }
+}
+
+/deep/ div.mode-options {
+    a {
+        display: inline-block;
+        color: black;
+        padding: 5px;
+        margin: 5px;
+        text-decoration: none;
+    }
+    a.active {
+        border-bottom: 1px solid #bbb;
+    }
+}
+
+// div /deep/ {
+//     font-family: helvetica;
+//     font-weight: 200;
+// }

@@ -1,0 +1,26 @@
+<div [hidden]="!target" class="focus">
+    <!-- todo: add a loader -->
+    <button class="close" (click)="close()">&#x2715;</button>
+    <div class="app" *ngIf="targettype == 'app'">
+        <img class='appicon' *ngIf="target?.icon" [src]="target?.icon">
+        <div class="titledev">
+            <div class="title"> {{ target?.storeinfo.title }} </div>
+            <div *ngIf="target?.developer" class="developer">by {{ target?.developer?.name }}
+                <span *ngIf="target?.storeinfo?.rating" class="rating">- rating: {{ target?.storeinfo?.rating }} &#x2606; </span>
+            </div>
+            <div class="summary">
+                <!-- Icons From http://www.iconarchive.com/show/colorful-long-shadow-icons-by-graphicloads.html (Free to use) -->
+                <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Identity-icon.png">{{ getHostCount(target?.app)}}</div>
+                <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Star-fav-icon.png">{{ getRating(target?.app )}}</div>
+                <div class="chip"><img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Arrow-download-3-icon.png">{{ getDownloads(target?.app )}}</div>
+            </div>
+        </div>
+        <div class="appdesc" [hidden]="!target">
+            <div class="summary">{{ target?.storeinfo.summary }}</div>
+            <div class="desc">{{ target?.storeinfo.description.split(' ').slice(0,50).join(' ') }}</div>
+        </div>
+        <app-company-list [app]='target?.app'></app-company-list>
+
+    </div>
+    <app-companyinfo *ngIf="targettype == 'company'" [selected]="target"></app-companyinfo>
+</div>

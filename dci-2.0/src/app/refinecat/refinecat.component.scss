@@ -1,0 +1,103 @@
+div.main {
+    width: 100%;
+    height: 100%;
+    svg {
+        width: 100%;
+        height: 100%;
+        // min-height: 400px;
+    }
+}
+
+g.axis text {
+    fill: #000;
+    font-weight: 100;
+}
+
+g.axis.x text {
+    font-size: 10pt;
+}
+
+g.axis.y g.tick text {
+    text-anchor: end;
+    font-weight: normal;
+}
+
+g.axis.x .tick text {
+    font-weight: normal;
+    /* fill: red; */
+    text-anchor: end;
+}
+
+// category colours
+$advertising: #bb0000;
+$analytics:#bb0099;
+$app: #889988;
+$other: #eee;
+rect.back.advertising,
+rect.legend.advertising,
+g.axis.x .advertising text {
+    fill: $advertising;
+}
+
+g.axis.x .analytics text,
+g.axis.x .usage text,
+rect.back.usage,
+rect.back.analytics,
+rect.legend.usage,
+rect.legend.analytics {
+    fill: $analytics;
+}
+
+rect.back {
+    // -webkit-animate: 0.8s;
+    // transition: 0.15s;
+    opacity: 0;
+    &.reveal {
+        opacity: 0.12;
+    }
+    &:hover {
+        opacity: 0.2;
+        stroke: #222 !important;
+        fill: #fff !important;
+        stroke-width: 1px;
+    }
+}
+
+rect.back.advertising:hover {
+    stroke: $advertising !important;
+}
+
+rect.back.analytics:hover {
+    stroke: $analytics !important;
+}
+
+rect.back.app:hover {
+    stroke: $app !important;
+}
+
+g.axis.x .app text,
+rect.back.app,
+rect.legend.app {
+    fill: #889988;
+}
+
+g.axis.x .other text,
+rect.back.other,
+rect.legend.other {
+    fill: #eee;
+}
+
+g.legend text,
+g.ctypelegend text {
+    font-family: sans-serif;
+    font-size: 11pt;
+    text-anchor: end;
+}
+
+g.ctypelegend .selected {
+    fill: $advertising;
+}
+
+rect.bar {
+    stroke-width: 0.1px;
+}

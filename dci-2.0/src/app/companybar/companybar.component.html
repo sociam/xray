@@ -1,0 +1,7 @@
+<div>
+    <div class="mode-options">
+        <a [ngClass]="{active: countHosts=='yes'}" (click)='countHosts="yes"'> By host </a>
+        <a [ngClass]="{active: countHosts=='no'}" (click)='countHosts="no"'> Equal weighting </a>
+    </div>
+    <svg #svgbar width="1280" height="1024"></svg>
+</div>

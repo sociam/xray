@@ -1,0 +1,163 @@
+.alt-row {
+    border: 5px solid #000000!important;
+}
+
+div.noicon {
+    background-color: orange;
+    border-radius: 5px;
+    width: 60px;
+    height: 60px;
+}
+
+.header {
+    text-align: center;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+div.summary {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+//from w3 schools
+// www.w3schools.com
+div.chip {
+    display: inline-block;
+    padding: 0 30px;
+    height: 30px;
+    //white-space: nowrap;
+    //overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+    line-height: 30px;
+    border-radius: 12px;
+    background-color: #f1f1f1;
+    img {
+        float: left;
+        margin: 0 10px 0 -30px;
+        height: 30px;
+        width: 30px;
+        border-radius: 25%;
+    }
+}
+
+.container {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    flex-direction: row;
+    flex-wrap: none;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+    div.left {
+        width: 30%;
+        float: left;
+        overflow: scroll;
+        height: 100vh;
+    }
+    div.right {
+        width: 70%;
+        float: right;
+        overflow: scroll;
+        height: 100vh;
+    }
+    div.right table.comparison td .appdesc {
+        padding: 0px 0px 0px 0px;
+    }
+    div.right table.comparison tr td.top {
+        .sub-label {
+            //visibility: hidden;
+            text-align: center;
+            color: #ff22ee;
+            opacity: 0.0;
+            font-weight: bold;
+        }
+        &:hover {
+            border: 3px solid #ff22ee;
+            opacity: 1.0;
+            .sub-label {
+                //visibility: visible;
+                transition: all 0.2s;
+                opacity: 1.0;
+            }
+        }
+        opacity:0.82;
+        border: 5px solid white;
+        border-bottom: 2px solid #eee;
+        padding: 5px 10px 15px 10px;
+    }
+    div.right table.comparison tr:first-child {
+        padding-top: 5px !important;
+        margin-top: -10px !important;
+    }
+    table.comparison {
+        // warning this applies to both sides
+        width: 100%;
+        td {
+            padding: 0px;
+            vertical-align: top;
+            border: 5px solid #fff;
+            transition: all 0.2s;
+            overflow: hidden;
+            // height: initial;
+            transition: all 0.2s;
+            width: 25%;
+            app-refinebar /deep/ .main svg {
+                height: 230px;
+            }
+            // border-bottom: 10px solid #fefefe;
+            .apptitle {
+                height: 70px;
+                padding-top: 10px;
+                position: relative;
+                padding-left: 80px;
+                .noicon,
+                img.icon {
+                    position: absolute;
+                    left: 0px;
+                    top: 5px;
+                    width: 60px;
+                }
+                .rating {
+                    vertical-align: top;
+                    img {
+                        width: 16px;
+                    }
+                }
+                .title {
+                    font-weight: bold;
+                }
+                .publisher {
+                    font-size: 70%;
+                }
+            }
+            .appdesc {
+                max-width: 100%;
+                padding: 20px 0px;
+                .summmary {
+                    padding: 28px 0px 5px 0px;
+                }
+                .desc {
+                    font-style: italic;
+                    justify-content: space-around;
+                    padding: 10px 0px 0px 0px;
+                    font-size: 85%;
+                }
+            }
+            // .appswap {
+            //     text-align: center;
+            //     align-content: center;
+            //     button {
+            //         background-color: #ff22ee !important;
+            //         color: white;
+            //         font-size: 14pt !important;
+            //         border: 0px solid #000;
+            //         padding: 8px 20px;
+            //         border-radius: 3px;
+            //     }
+            // }
+        }
+    }
+}

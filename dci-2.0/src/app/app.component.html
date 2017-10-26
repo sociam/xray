@@ -1,0 +1,10 @@
+<nav>
+    <a routerLink="/add" routerLinkActive='active'>apps only</a>
+    <a routerLink="/grid" [class.active]="isActive('/grid')">grid</a>
+    <a routerLink="/scroll" routerLinkActive='active'>scroll</a>
+    <a routerLink='/grid' [queryParams]="{mode:'refine'}" [class.active]="isActive('grid?mode=refine')">who</a>
+    <a routerLink='/grid' [queryParams]="{mode:'cat'}" [class.active]="isActive('grid?mode=cat')">why</a>
+    <a routerLink='/grid' [queryParams]="{mode:'geo'}" [class.active]="isActive('grid?mode=geo')">where</a>
+</nav>
+
+<router-outlet></router-outlet>
