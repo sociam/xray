@@ -9,7 +9,8 @@ import * as _ from 'lodash';
 
 enum PI_TYPES { DEVICE_SOFT, USER_LOCATION, USER_LOCATION_COARSE, DEVICE_ID, USER_PERSONAL_DETAILS }
 
-export const API_ENDPOINT = 'http://localhost:8118/api';
+// export const API_ENDPOINT = 'http://localhost:8118/api';
+export const API_ENDPOINT = 'http://sociamnat.cs.ox.ac.uk:8080/api';
 export const CB_SERVICE_ENDPOINT = 'http://localhost:3333';
 
 export interface App2Hosts { [app: string]: string[] }
