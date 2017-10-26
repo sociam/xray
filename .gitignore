@@ -20,4 +20,4 @@ static/apps
 *.DS_Store*
 *~
 **cache.json
-**/.ipnyb_checkpoints/*
+**/.ipynb_checkpoints/*
