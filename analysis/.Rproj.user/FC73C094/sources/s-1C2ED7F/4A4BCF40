@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1512994531102.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2644619474",
+    "id" : "4A4BCF40",
+    "lastKnownWriteTime" : 1513001482,
+    "last_content_update" : 1513001482086,
+    "path" : "~/Desktop/analysis/hostsAnalysis.R",
+    "project_path" : "hostsAnalysis.R",
+    "properties" : {
+        "cursorPosition" : "35,0",
+        "scrollLine" : "20"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
