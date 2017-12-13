@@ -3,27 +3,52 @@ library(tidyverse)
 library(stringr)
 library(scales)
 
+#0 READ IN DATA AND CREATE HELPER FUNCTIONS
+#1 CALCULATE MISSING VARIABLES
+#2 ANALYSE DATA
+
+###########
+#0 READ IN DATA AND CREATE HELPER FUNCTIONS
+#set up data base driver and connection
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(drv, dbname = "final_test",
                  host = "localhost", port = 5432,
                  user = "ulyngs")
 
-#0 READ IN DATA
-#App information: titles, hosts, and genre
+#Read in app information: id, title, version, hosts and genre for apps that are analysed
 appsAndRefs <- dbGetQuery(con,
-                      "SELECT app_hosts.id, playstore_apps.title, app_hosts.hosts, playstore_apps.genre FROM app_hosts
-	JOIN playstore_apps ON app_hosts.id = playstore_apps.id") %>% #set e.g. LIMIT 1000 when testing
-  as.tibble() #there's 1,407,887 rows in full data set
+                      "SELECT apps.id, playstore_apps.title, app_versions.version, app_hosts.hosts, playstore_apps.genre 
+	FROM app_versions
+                      JOIN apps ON apps.id = app_versions.app
+                      JOIN playstore_apps ON playstore_apps.id = app_versions.id
+                      JOIN app_hosts ON app_hosts.id = app_versions.id
+                      WHERE app_versions.analyzed = TRUE") %>%
+  as.tibble() #put it in tidyverse's format
 
-#Company information: mapping of hosts to companies
+#Read in company information: mapping of hosts to companies
 hostsToCompany <- dbGetQuery(con,
-                             "SELECT hosts, company, type FROM host_domain_companies") %>%
+                             "SELECT hosts, company FROM host_domain_companies") %>%
   as.tibble()
 
-#1. HEADLINE FIGURES
-#AVERAGE NUMBER OF 'TRACKERS' PER APP
+#HELPER FUNCTIONS
+#calculate modal value
+modeFunc <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
 
-#helper function to get number of hosts referenced
+#split hosts and return unique ones in a list
+splitHosts <- function(stringOfHosts) {
+  stringOfHosts %>%
+    str_replace_all("\\{", "") %>%
+    str_replace_all("\\}", "") %>%
+    str_split(",") %>%
+    unlist() %>%
+    unique() %>%  #make sure we're not counting duplicates
+    list()
+}
+
+#split list of hosts and return count
 countHosts <- function(stringOfHosts) {
   stringOfHosts %>%
     str_replace_all("\\{", "") %>%
@@ -34,24 +59,73 @@ countHosts <- function(stringOfHosts) {
     length()
 } 
 
-#helper function to calculate modal value
-modeFunc <- function(x) {
-  ux <- unique(x)
-  ux[which.max(tabulate(match(x, ux)))]
-}
-
-#count number of external references and add to dataframe
+####################
+#1 CALCULATE MISSING VARIABLES
+#count number of external references and add to AppsAndRefs
 appsAndRefs <- appsAndRefs %>%
   rowwise() %>%
   mutate(numHosts = ifelse(test = (hosts == "{}"),
-                                  yes = 0,
+                           yes = 0,
                            no = countHosts(hosts))) %>%
   ungroup()
 
-write_rds(appsAndRefs, "saveouts_DATA/appsAndRefs.rds")
-appsAndRefs <- read_rds(path = "saveouts_DATA/appsAndRefs.rds")
+#if desired, split hosts up into neat list and add to AppsAndRefs
+appsAndRefs <- appsAndRefs %>%
+  rowwise() %>%
+  mutate(hostList = splitHosts(hosts)) %>%
+  ungroup()
 
-#calculate summary stats
+#create data frame of host names and their number of occurences
+hostsAndCompanies <- appsAndRefs$hosts %>%
+  str_replace_all("\\{", "") %>%
+  str_replace_all("\\}", "") %>%
+  str_split(",") %>%
+  unlist() %>%
+  table() %>%
+  as.data.frame() %>%
+  arrange(desc(Freq)) %>%
+  mutate(pctOfApps = round(Freq / nrow(appsAndRefs) * 100, 2)) %>%
+  as.tibble()
+
+hostsAndCompanies <- rename(hostsAndCompanies, hosts = ., count = Freq)
+
+#join company data
+hostsAndCompanies <- hostsAndCompanies %>%
+  left_join(hostsToCompany, by = "hosts")
+
+#store it
+write_rds(hostsAndCompanies, "~/Desktop/saveouts_DATA/hostsAndCompanies.rds")
+hostsAndCompanies <- read_rds("~/Desktop/saveouts_DATA/hostsAndCompanies.rds")
+
+#create data frame of just the known hosts
+knownHosts <- hostsToCompany %>%
+  filter(company != "unknown")
+
+#create new column where the host domains are replaced by company names - WARNING: THIS IMPLEMENTATION TAKES ~6 HOURS TO RUN 
+#copy hosts to replacedCompanies
+appsAndRefs$replacedCompanies <- appsAndRefs$hosts
+#sort knownHosts by the number of characters in the host domain
+knownHosts <- knownHosts %>%
+  arrange(desc(str_length(hosts)))
+#for each host, replace all entries in replacedCompanies with the company name
+for (i in 1:nrow(knownHosts)) {
+  appsAndRefs$replacedCompanies <- str_replace_all(pattern = knownHosts[i,"hosts"], replacement = knownHosts[i,"company"], appsAndRefs$replacedCompanies, fixed = TRUE)
+  print(i)
+}
+
+#if desired, put them companies in nice list of uniques for each app
+appsAndRefs <- appsAndRefs %>%
+  rowwise() %>%
+  mutate(listCompanies = splitHosts(replacedCompanies)) %>%
+  ungroup()
+
+#save it out so we can read it in in the future instead of re-computing
+write_rds(appsAndRefs, "~/Desktop/saveouts_DATA/appsAndRefs.rds")
+appsAndRefs <- read_rds(path = "~/Desktop/saveouts_DATA/appsAndRefs.rds")
+
+#2 ANALYSE
+#2.1 NUMBER OF EXTERNAL REFERENCES PER APP, ACROSS ALL GENRES
+#calculate stats
 sumStats <- appsAndRefs %>%
   summarise(numApps = n(),
             mean = round(mean(numHosts),1),
@@ -97,69 +171,11 @@ appsAndRefs %>%
        y = "count: LOG SCALE") +
   scale_y_log10() + scale_x_log10()
 
-
-#TOP 'TRACKERS' ACROSS ALL APPS
-#create data frame of host names and their number of occurences
-hostsAndCompanies <- appsAndRefs$hosts %>%
-  str_replace_all("\\{", "") %>%
-  str_replace_all("\\}", "") %>%
-  str_split(",") %>%
-  unlist() %>%
-  table() %>%
-  as.data.frame() %>%
-  arrange(desc(Freq)) %>%
-  mutate(pctOfApps = round(Freq / nrow(appsAndRefs) * 100, 2))
-
-hostsAndCompanies <- rename(hostsAndCompanies, hosts = ., count = Freq)
-
-#join company data
-hostsAndCompanies <- hostsAndCompanies %>%
-  left_join(hostsToCompany, by = "hosts")
-
-#store it
-write_rds(hostsAndCompanies, "hostsAndCompanies.rds")
-hostsAndCompanies <- read_rds("saveouts_DATA/hostsAndCompanies.rds")
-
-#have a look at the top 100
-head(hostsAndCompanies, 40)
-
-#PERCENT OF APPS W/ MORE THAN 20 'TRACKERS'
-  #see summary stats
-
-#PERCENT OF APPS W/ NO THIRD PARTY 'TRACKERS'
-  #see summary stats
-
-#TRACKERS BY JURISDICTION
-#check if hosts is a unique identifier
-hostsToCompany %>%
-  count(hosts) %>%
-  filter(n > 1)
-# in 163 cases it isn't - e.g this one
-hostsToCompany %>%
-  filter(hosts == "amos.alicdn.com" )
-
-
-#get the average number of references made to each company
-byCompany <- hostsAndCompanies %>%
-  group_by(company)
-byCompany %>%
-  summarise(count = sum(count), 
-            aveRefsPerApp = round(count / nrow(appsAndRefs),2)) %>%
-  arrange(desc(count)) %>%
-  write_csv("saveouts_RESULTS/AveCompanyRefsPerApp.csv")
-
-#TODO find way to map this to apps so you can e.g. say how many apps do NOT have any references to Google
-
-#TODO missing geographical information about the companies
-
-#TODO PERCENT OF THE PLAYSTORE COVERED BY TOP 10 'TRACKERS'
-
-
-#2. AGAIN, BUT NOW BY GENRE
+#2.2 NUMBER OF EXTERNAL REFERENCES PER APP, BY GENRE
 appsAndRefsByGenre <- appsAndRefs %>%
   group_by(genre)
 
-#2.1 get summary stats
+#calculate summary stats
 sumStatsByGenre <- appsAndRefsByGenre %>%
   summarise(numApps = n(),
             mean = round(mean(numHosts),1),
@@ -176,28 +192,49 @@ sumStatsByGenre <- appsAndRefsByGenre %>%
   arrange(desc(median))
 write_csv(sumStatsByGenre, "saveouts_RESULTS/sumStatsByGenre.csv")
 
-#TODO 2.2 find good way of comparing top references between genres
+#2.3 TOP 'TRACKERS' ACROSS ALL APPS
+#top host domains, aggregating total number of references
+hostsAndCompanies %>% 
+  filter(hosts != "") %>%
+  head(100)
 
-#2.3 PERCENT OF APPS W/ MORE THAN 20 'TRACKERS'
-  #see summary stats
+#top companies, aggregating total number of references
+byCompany <- hostsAndCompanies %>%
+  group_by(company)
+summaryByCompany <- byCompany %>%
+  summarise(refCount = sum(count), 
+            aveRefsPerApp = round(count / nrow(appsAndRefs),2)) %>%
+  arrange(desc(count))
+write_csv(summaryByCompany, "saveouts_RESULTS/AveCompanyRefsPerApp.csv")
+summaryByCompany %>%
+  filter(!is.na(company)) %>%
+  head(100) %>%
+  View()
 
-#2.4 PERCENT OF APPS W/ NO 'TRACKERS'
-  #see summary stats
+#TOP COMPANIES, IN TERMS OF NUMBER OF APPS THEY'RE PRESENT IN
+#calculate number and proportion of apps each company occurs
+for (i in 1:nrow(summaryByCompany)) {
+  summaryByCompany$numAppsPresent[[i]] <- sum(str_detect(appsAndRefs$replacedCompanies, summaryByCompany[[i,"company"]]))
+  print(i)
+}
+summaryByCompany <- summaryByCompany %>%
+  mutate(propAppsPresent = round(numAppsPresent / nrow(appsAndRefs),2))
+summaryByCompany %>%
+  filter(company != "unknown") %>%
+  write_csv("saveouts_RESULTS/CompanyPresenceInApps.csv")
 
+#TRACKERS BY JURISDICTION
+#check if hosts is a unique identifier
+hostsToCompany %>%
+  count(hosts) %>%
+  filter(n > 1)
+# in 163 cases it isn't - e.g this one
+hostsToCompany %>%
+  filter(hosts == "amos.alicdn.com" )
 
+#TODO missing geographical information about the companies
 
+#TODO PERCENT OF THE PLAYSTORE COVERED BY TOP 10 'TRACKERS'
 
+#TODO find good way of comparing top hosts/companies between genres
 
-#####################DEPRECATED###########################
-#COUNTING REFERENCES WERE BEFORE IN TWO STEPS
-#count number of external references and add to dataframe
-appsAndRefs <- appsAndRefs %>%
-  rowwise() %>% #group rowwise so our custom function gets correctly applied
-  mutate(numHosts = countHosts(hosts)) %>%
-  ungroup()
-
-#correct for the fact that "{}" is counted as 1 host
-appsAndRefs <- appsAndRefs %>%
-  mutate(numHosts = ifelse(test = (hosts == "{}"),
-                                  yes = 0,
-                                  no = numHosts))
