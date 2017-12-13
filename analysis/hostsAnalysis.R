@@ -192,26 +192,34 @@ sumStatsByGenre <- appsAndRefsByGenre %>%
   arrange(desc(median))
 write_csv(sumStatsByGenre, "saveouts_RESULTS/sumStatsByGenre.csv")
 
-#2.3 TOP 'TRACKERS' ACROSS ALL APPS
+#2.3 TOP TRACKERS ACROSS ALL APPS
 #top host domains, aggregating total number of references
 hostsAndCompanies %>% 
   filter(hosts != "") %>%
   head(100)
 
 #top companies, aggregating total number of references
+companyType <- hostsAndCompanies %>%
+  select(company, type) %>%
+  unique()
+
 byCompany <- hostsAndCompanies %>%
   group_by(company)
+
 summaryByCompany <- byCompany %>%
   summarise(refCount = sum(count), 
-            aveRefsPerApp = round(count / nrow(appsAndRefs),2)) %>%
-  arrange(desc(count))
-write_csv(summaryByCompany, "saveouts_RESULTS/AveCompanyRefsPerApp.csv")
+            aveRefsPerApp = round(refCount / nrow(appsAndRefs),2)) %>%
+  arrange(desc(refCount)) %>%
+  left_join(companyType) %>%
+  select(company, type, refCount, aveRefsPerApp)
+
 summaryByCompany %>%
   filter(!is.na(company)) %>%
   head(100) %>%
   View()
 
 #TOP COMPANIES, IN TERMS OF NUMBER OF APPS THEY'RE PRESENT IN
+
 #calculate number and proportion of apps each company occurs
 for (i in 1:nrow(summaryByCompany)) {
   summaryByCompany$numAppsPresent[[i]] <- sum(str_detect(appsAndRefs$replacedCompanies, summaryByCompany[[i,"company"]]))
@@ -222,6 +230,7 @@ summaryByCompany <- summaryByCompany %>%
 summaryByCompany %>%
   filter(company != "unknown") %>%
   write_csv("saveouts_RESULTS/CompanyPresenceInApps.csv")
+
 
 #TRACKERS BY JURISDICTION
 #check if hosts is a unique identifier
