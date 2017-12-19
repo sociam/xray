@@ -1,4 +1,5 @@
 library(tidyverse)
+library(RPostgreSQL)
 
 appsAndRefs <- read_rds(path = "~/Desktop/saveouts_DATA/appsAndRefs.rds") %>% select(-replacedCompanies)
 hostsAndCompanies <- read_rds("~/Desktop/saveouts_DATA/hostsAndCompanies.rds")
@@ -45,21 +46,27 @@ parennialMetaData <- dbGetQuery(con,
                       WHERE playstore_apps.title IN ('Cozi Family Organizer', 'Peanut - Moms, Meet', 'OurPact – Parental Control & Screen Time Manager', 'WebMD Baby')") %>% 
   as.tibble()
 
+View(parennialMetaData)
+
 #then store their tracking info
 parennialRefs <- appsAndRefs %>%
   filter(title %in% parennialsWeGot)
-
+View(parennialRefs)
 #split their hosts up into neat list and add to data frame
 parennialRefs <- parennialRefs %>%
   rowwise() %>%
   mutate(hostList = splitHosts(hosts)) %>%
   ungroup()
 
+parennialRefs$hostList
+
 #add variable where the host list is companies instead
 parennialRefs <- parennialRefs %>%
   rowwise() %>%
   mutate(companyList = lookupCompanies(unlist(hostList))) %>%
   ungroup()
+
+parennialRefs$companyList
 
 #add variable where it's just the unique companies
 parennialRefs <- parennialRefs %>%
