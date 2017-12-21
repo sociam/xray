@@ -1,0 +1,10 @@
+The Jupiter notebook shows only what's exposed in the API - the data base has more info.
+
+init_db.sql 
+	this reflects how the interns tried to set up the database
+				
+db.go 
+	is what is used in the API
+
+apiserver.go
+	when you make API call, this goes through the API file which then goes through the db.go, from where it then has a look at the types.go
