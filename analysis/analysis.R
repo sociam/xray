@@ -140,12 +140,16 @@ allHostsInfo <- appsWithHostsLong %>%
   mutate(jurisdiction = as.character(jurisdiction)) %>%
   arrange(desc(refCount))
 
+allHostsInfo
+
 #TODO: MAKE THIS WITH COMPANIES
 
 #-----1.2: SUMMARY OF HOSTS THAT ARE KNOWN TRACKERS
 #add company info to the long form hosts data frame
 appsWithHostsLong <- appsWithHostsLong %>%
   left_join(hostsToCompany, by = "hosts")
+
+appsWithHostsLong
 
 #count again, but exclude unknowns
 countKnownTrackers <- appsWithHostsLong %>%
@@ -156,12 +160,15 @@ countKnownTrackers <- appsWithHostsLong %>%
   arrange(desc(numHosts))
 
 #count how many we've dropped - set these to 0 host refs
-appsWithHostsButNoKnownTrackers <- anti_join(appsWithHostsIDs, countKnownTrackers, by="id") %>%
+appsWithHostsId <- appsWithHostsLong %>%
+  distinct(id) %>%
+  select(id)
+appsWithHostsButNoKnownTrackers <- anti_join(appsWithHostsId, countKnownTrackers, by="id") %>%
   mutate(numHosts = 0)
 
 #then add non-included apps to count properly
 countKnownTrackers <- countKnownTrackers %>%
-  rbind(subsetToAdd) %>% #add the apps with no host refs at all
+  rbind(idAndNumHostsOfAppsWithoutHosts) %>% #add the apps with no host refs at all
   rbind(appsWithHostsButNoKnownTrackers) #add the apps with no hosts that are known trackers
 
 #summarise the numbers of known trackers
@@ -225,11 +232,21 @@ knownTrackersInfo <- appsWithHostsLong %>%
   left_join(companyJurisdiction, by = "company") %>%
   mutate(jurisdiction = as.character(jurisdiction)) %>%
   arrange(desc(refCount))
-
 write_csv(knownTrackersInfo, "saveouts_RESULTS/knownTrackersInfo.csv")
 
-  #break this down by the proportion of apps that a company is in
+unknownTrackersInfo <- appsWithHostsLong %>%
+  filter(company == "unknown") %>%
+  group_by(hosts) %>%
+  summarise(refCount = n()) %>%
+  left_join(hostsToCompany, by = "hosts") %>%
+  left_join(companyJurisdiction, by = "company") %>%
+  mutate(jurisdiction = as.character(jurisdiction)) %>%
+  arrange(desc(refCount))
+write_csv(unknownTrackersInfo, "saveouts_RESULTS/unknownTrackersInfo.csv")
 
+
+
+  #break this down by the proportion of apps that a company is in
 #1. don't take into account whether a host ref is for advertising
 propAppsWithCompanyRefs <- appsWithHostsLong %>%
   group_by(id) %>%
@@ -239,6 +256,8 @@ propAppsWithCompanyRefs <- appsWithHostsLong %>%
   filter(company != "unknown") %>%
   mutate(propApps = n / nrow(allAnalysedAppIds)) %>%
   arrange(desc(n))
+
+propAppsWithCompanyRefs
 
 write_csv(propAppsWithCompanyRefs, "saveouts_RESULTS/propAppsWithCompanyRefs.csv")
 
@@ -253,7 +272,11 @@ propAppsWithKnownTrackerCompanyRefs <- appsWithHostsLong %>%
   mutate(propApps = n / nrow(allAnalysedAppIds)) %>%
   arrange(desc(n))
 
+propAppsWithKnownTrackerCompanyRefs
+
 write_csv(propAppsWithKnownTrackerCompanyRefs, "saveouts_RESULTS/propAppsWithKnownTrackerCompanyRefs.csv")
 
 #we want to also look by genre
+
+#parent level
 
