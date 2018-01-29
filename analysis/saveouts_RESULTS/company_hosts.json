@@ -1,0 +1,7379 @@
+[
+  {
+    "owner_name": "33Across",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Tynt was acquired in 2012 and now appears fully integrated",
+    "privacy_policy_url": "http://33across.com/privacy-policy/",
+    "homepage_url": "http://33across.com",
+    "domains": [
+      "33across.com",
+      "tynt.com"
+    ],
+    "id": 0,
+    "aliases": [
+      "33 Across"
+    ]
+  },
+  {
+    "owner_name": "360",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "360.cn",
+      "qhimg.com"
+    ],
+    "id": 1,
+    "aliases": []
+  },
+  {
+    "owner_name": "51yes",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": "http://count.51yes.com/",
+    "domains": [
+      "51yes.com"
+    ],
+    "id": 2,
+    "aliases": []
+  },
+  {
+    "owner_name": "About.com",
+    "parent_id": "IAC",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "about.com"
+    ],
+    "id": 3,
+    "aliases": [
+      "About"
+    ]
+  },
+  {
+    "owner_name": "Accuen",
+    "parent_id": "Omnicom Media Group",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "accuenmedia.com"
+    ],
+    "id": 4,
+    "aliases": []
+  },
+  {
+    "owner_name": "Accuweather",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.accuweather.com/en/privacy",
+    "homepage_url": "http://www.accuweather.com",
+    "domains": [
+      "accuweather.com"
+    ],
+    "id": 5,
+    "aliases": []
+  },
+  {
+    "owner_name": "Actua",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.actua.com/privacy/",
+    "homepage_url": "http://www.actua.com",
+    "domains": [
+      "actua.com"
+    ],
+    "id": 6,
+    "aliases": []
+  },
+  {
+    "owner_name": "Acxiom",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.acxiom.com/about-us/privacy/",
+    "homepage_url": "https://www.acxiom.com",
+    "domains": [
+      "acxiom-online.com",
+      "acxiom.com",
+      "acxiomapac.com"
+    ],
+    "id": 7,
+    "aliases": []
+  },
+  {
+    "owner_name": "Adality",
+    "parent_id": "Bertelsmann",
+    "country": "DE",
+    "notes": "There is a similarly named company 'Adility', this is different!  Also, Adality is 100% owned subsidiary of Bertelsmann per http://www.bertelsmann.com/media/investor-relations/sonst.-downloads/anteile-bertelsmann-31-dezember-2015.pdf",
+    "privacy_policy_url": "https://adality.de/en/privacy/",
+    "homepage_url": "https://adality.de/en/",
+    "domains": [
+      "adality.de",
+      "adrtx.net"
+    ],
+    "id": 8,
+    "aliases": []
+  },
+  {
+    "owner_name": "AdBrain",
+    "parent_id": null,
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": "http://www.adbrain.com/legals/privacy-policy",
+    "homepage_url": "http://www.adbrain.com",
+    "domains": [
+      "adbrn.com",
+      "adbrain.com"
+    ],
+    "id": 9,
+    "aliases": [
+      "Ad Brain"
+    ]
+  },
+  {
+    "owner_name": "AdChina",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "acs86.com",
+      "adchina.com",
+      "csbew.com"
+    ],
+    "id": 10,
+    "aliases": [
+      "Ad China"
+    ]
+  },
+  {
+    "owner_name": "AddThis",
+    "parent_id": "Oracle",
+    "country": "US",
+    "notes": "20160125: AddThis goes to Oracle",
+    "privacy_policy_url": "http://www.addthis.com/privacy",
+    "homepage_url": "http://www.addthis.com",
+    "domains": [
+      "addthis.com",
+      "addthisedge.com"
+    ],
+    "id": 11,
+    "aliases": [
+      "Add This"
+    ]
+  },
+  {
+    "owner_name": "AdForm",
+    "parent_id": null,
+    "country": "DK",
+    "notes": null,
+    "privacy_policy_url": "http://site.adform.com/privacy-policy/en/",
+    "homepage_url": "http://site.adform.com",
+    "domains": [
+      "adform.net",
+      "adform.com"
+    ],
+    "id": 12,
+    "aliases": [
+      "Ad Form"
+    ]
+  },
+  {
+    "owner_name": "AdGear",
+    "parent_id": "Samsung",
+    "country": "CA",
+    "notes": null,
+    "privacy_policy_url": "http://adgear.com/privacy/",
+    "homepage_url": "http://adgear.com",
+    "domains": [
+      "bloom-hq.com",
+      "adgrx.com",
+      "adgear.com"
+    ],
+    "id": 13,
+    "aliases": [
+      "Ad Gear"
+    ]
+  },
+  {
+    "owner_name": "Adition Technologies",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": "https://www.adition.com/kontakt/datenschutz/",
+    "homepage_url": "https://www.adition.com",
+    "domains": [
+      "adition.com"
+    ],
+    "id": 14,
+    "aliases": [
+      "Adition"
+    ]
+  },
+  {
+    "owner_name": "AdKarma",
+    "parent_id": "RhythmOne",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.adkarma.com/privacy-policy",
+    "homepage_url": "http://www.adkarma.com",
+    "domains": [
+      "adkarma.com"
+    ],
+    "id": 15,
+    "aliases": [
+      "Ad Karma"
+    ]
+  },
+  {
+    "owner_name": "AdLink Group",
+    "parent_id": "HiMedia Group",
+    "country": "DE",
+    "notes": "No longer has functional homepage as of 20170723",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adlinkgroup.net"
+    ],
+    "id": 16,
+    "aliases": []
+  },
+  {
+    "owner_name": "AdMaster",
+    "parent_id": null,
+    "country": "CN",
+    "notes": "Link is to English-lanuage privacy policy, Chinese-language should likely be viewed as primary but I cannot determine the link.",
+    "privacy_policy_url": "http://www.admaster.com.cn/en/about/privacy.html",
+    "homepage_url": "http://admaster.com.cn",
+    "domains": [
+      "admaster.com.cn",
+      "cdnmaster.com"
+    ],
+    "id": 17,
+    "aliases": [
+      "Ad Master"
+    ]
+  },
+  {
+    "owner_name": "Admeld",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": "Bought by Google in 2011",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "admeld.com"
+    ],
+    "id": 18,
+    "aliases": []
+  },
+  {
+    "owner_name": "AdMobius",
+    "parent_id": "Lotame",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ad-mobius.com",
+      "admobius.com",
+      "appmobi.us",
+      "appmobius.com",
+      "moebius.us"
+    ],
+    "id": 19,
+    "aliases": []
+  },
+  {
+    "owner_name": "Adobe",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.adobe.com/privacy.html",
+    "homepage_url": "http://www.adobe.com/",
+    "domains": [
+      "demdex.net",
+      "everestads.net",
+      "adobedtm.com",
+      "2o7.net",
+      "adobe.com",
+      "adobetag.com",
+      "everesttech.net",
+      "omtrdc.net",
+      "everestjs.net"
+    ],
+    "id": 20,
+    "aliases": []
+  },
+  {
+    "owner_name": "AdRoll",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.adroll.com/about/privacy",
+    "homepage_url": "https://www.adroll.com",
+    "domains": [
+      "adroll.com"
+    ],
+    "id": 21,
+    "aliases": [
+      "Ad Roll"
+    ]
+  },
+  {
+    "owner_name": "AdSame",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adsame.com"
+    ],
+    "id": 22,
+    "aliases": [
+      "Ad Same"
+    ]
+  },
+  {
+    "owner_name": "AdScale",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adscale.de"
+    ],
+    "id": 23,
+    "aliases": [
+      "Ad Scale"
+    ]
+  },
+  {
+    "owner_name": "AdSense",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adsense.com"
+    ],
+    "id": 24,
+    "aliases": []
+  },
+  {
+    "owner_name": "AdSocial",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adsocial.cn",
+      "jiathis.com"
+    ],
+    "id": 25,
+    "aliases": [
+      "Ad Social"
+    ]
+  },
+  {
+    "owner_name": "AdSpyglass",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": "https://www.adspyglass.com",
+    "domains": [
+      "adspyglass.com",
+      "o333o.com"
+    ],
+    "id": 26,
+    "aliases": []
+  },
+  {
+    "owner_name": "AdWords",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adwords.com"
+    ],
+    "id": 27,
+    "aliases": []
+  },
+  {
+    "owner_name": "AFCV Holdings",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Acquired Answers, which had previously acquired ForeSee",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "afcv.com"
+    ],
+    "id": 28,
+    "aliases": []
+  },
+  {
+    "owner_name": "Ajiang",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "51.la",
+      "ajiang.net",
+      "ajstat.com"
+    ],
+    "id": 29,
+    "aliases": []
+  },
+  {
+    "owner_name": "Akamai",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "abmr.net",
+      "akamai.com",
+      "akamai.net",
+      "akamaihd.net",
+      "akamaized.net"
+    ],
+    "id": 30,
+    "aliases": []
+  },
+  {
+    "owner_name": "Akismet",
+    "parent_id": "Automattic",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "akismet.com"
+    ],
+    "id": 31,
+    "aliases": []
+  },
+  {
+    "owner_name": "Alexa",
+    "parent_id": "Amazon",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "alexa.com"
+    ],
+    "id": 32,
+    "aliases": []
+  },
+  {
+    "owner_name": "Alibaba",
+    "parent_id": null,
+    "country": "CN",
+    "notes": "Purchased HiChina in 2009; cr-nielsen.com seems to be joint venture, but whois record goes to hichina",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "aliyuncs.com",
+      "alibaba.com:4012",
+      "ppsimg.com",
+      "atpanel.com",
+      "alibaba.com:4812",
+      "hichinaimg.com",
+      "cr-nielsen.com",
+      "alipay.com",
+      "mmcdn.cn",
+      "iqiyi.com",
+      "cnzz.net",
+      "aliyun.com",
+      "alimama.com",
+      "aliunicorn.com",
+      "xiami.net",
+      "tbcdn.cn",
+      "ykimg.com",
+      "taobao.com",
+      "aliimg.com",
+      "tanx.com",
+      "linezing.com",
+      "hichina.com",
+      "cnzz.com",
+      "mmstat.com",
+      "aliyuncdn.com",
+      "alibaba.com",
+      "taobaocdn.com",
+      "360buyimg.com",
+      "umtrack.com",
+      "aliexpress.com",
+      "alicdn.com",
+      "alipayobjects.com",
+      "alimama.cn"
+    ],
+    "id": 33,
+    "aliases": [
+      "HiChina"
+    ]
+  },
+  {
+    "owner_name": "All Yes",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "allyes.com",
+      "allyes.com.cn",
+      "qtmojo.cn",
+      "qtmojo.com"
+    ],
+    "id": 34,
+    "aliases": []
+  },
+  {
+    "owner_name": "AllMobilize",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "allmobilize.com",
+      "yunshipei.com"
+    ],
+    "id": 35,
+    "aliases": []
+  },
+  {
+    "owner_name": "Alphabet",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": "https://abc.xyz",
+    "domains": [
+      "abc.xyz"
+    ],
+    "id": 36,
+    "aliases": []
+  },
+  {
+    "owner_name": "Amazon",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "amazon.co.jp",
+      "amazon.com",
+      "images-amazon.com",
+      "ssl-images-amazon.com"
+    ],
+    "id": 37,
+    "aliases": [
+      "Alexa"
+    ]
+  },
+  {
+    "owner_name": "Amazon Marketing Services",
+    "parent_id": "Amazon",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "amazon-adsystem.com"
+    ],
+    "id": 38,
+    "aliases": [
+      "Amazon Ad System",
+      "Amazon AdSystem"
+    ]
+  },
+  {
+    "owner_name": "Amazon Web Services",
+    "parent_id": "Amazon",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "amazonaws.com",
+      "cloudfront.net"
+    ],
+    "id": 39,
+    "aliases": []
+  },
+  {
+    "owner_name": "Anquan",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "anquan.org"
+    ],
+    "id": 40,
+    "aliases": []
+  },
+  {
+    "owner_name": "Answers Corporation",
+    "parent_id": "AFCV Holdings",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "answers.com",
+      "answerscloud.com"
+    ],
+    "id": 41,
+    "aliases": [
+      "Answers.com"
+    ]
+  },
+  {
+    "owner_name": "AOL",
+    "parent_id": "Oath",
+    "country": "US",
+    "notes": "Convertro acquired 2014, also owns Gravity Insights",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adtechus.com",
+      "adtech.de",
+      "blogcdn.com",
+      "aol.com",
+      "adap.tv",
+      "advertising.com",
+      "huffpost.com",
+      "atwola.com",
+      "aolcdn.com"
+    ],
+    "id": 42,
+    "aliases": [
+      "America Online"
+    ]
+  },
+  {
+    "owner_name": "Apple",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "apple.com",
+      "mzstatic.com"
+    ],
+    "id": 43,
+    "aliases": []
+  },
+  {
+    "owner_name": "AppNexus",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.appnexus.com/en/company/platform-privacy-policy",
+    "homepage_url": null,
+    "domains": [
+      "adnxs.com",
+      "247realmedia.com",
+      "appnexus.com"
+    ],
+    "id": 44,
+    "aliases": [
+      "App Nexus"
+    ]
+  },
+  {
+    "owner_name": "Are You a Human",
+    "parent_id": "distil networks",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://areyouahuman.com/privacy",
+    "homepage_url": "https://areyouahuman.com/",
+    "domains": [
+      "areyouahuman.com"
+    ],
+    "id": 45,
+    "aliases": []
+  },
+  {
+    "owner_name": "Ask Jeeves",
+    "parent_id": "IAC",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "askjeeves.com"
+    ],
+    "id": 46,
+    "aliases": [
+      "Ask Jeeves"
+    ]
+  },
+  {
+    "owner_name": "Ask.com",
+    "parent_id": "IAC",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ask.com"
+    ],
+    "id": 47,
+    "aliases": [
+      "Ask"
+    ]
+  },
+  {
+    "owner_name": "Audience Science",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "revsci.net",
+      "audiencescience.com"
+    ],
+    "id": 48,
+    "aliases": []
+  },
+  {
+    "owner_name": "AudienceIQ",
+    "parent_id": "Experian",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "audienceiq.com"
+    ],
+    "id": 49,
+    "aliases": [
+      "Audience IQ"
+    ]
+  },
+  {
+    "owner_name": "Autohome",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "autohome.com.cn",
+      "autoimg.cn"
+    ],
+    "id": 50,
+    "aliases": [
+      "Auto Home"
+    ]
+  },
+  {
+    "owner_name": "Automattic",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "automattic.com"
+    ],
+    "id": 51,
+    "aliases": []
+  },
+  {
+    "owner_name": "avocet",
+    "parent_id": null,
+    "country": "UK",
+    "notes": "Privacy policy is a pop-up div on the homepage rather than an actual address.",
+    "privacy_policy_url": null,
+    "homepage_url": "http://avocet.io",
+    "domains": [
+      "avocet.io"
+    ],
+    "id": 52,
+    "aliases": []
+  },
+  {
+    "owner_name": "Awempire",
+    "parent_id": null,
+    "country": "LU",
+    "notes": null,
+    "privacy_policy_url": "http://www.awempire.com/privacy-policy",
+    "homepage_url": "http://www.awempire.com/",
+    "domains": [
+      "awempire.com",
+      "dditscdn.com"
+    ],
+    "id": 53,
+    "aliases": [
+      "AdultWebmasterEmpire.Com"
+    ]
+  },
+  {
+    "owner_name": "Baidu",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "baidu.com",
+      "baidustatic.com",
+      "bdimg.com",
+      "bdstatic.com",
+      "cnmo-img.com.cn",
+      "hao123.com",
+      "hao123img.com"
+    ],
+    "id": 54,
+    "aliases": []
+  },
+  {
+    "owner_name": "Baifendian",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "baifendian.com"
+    ],
+    "id": 55,
+    "aliases": []
+  },
+  {
+    "owner_name": "BEHE Adtech Solution",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "behe.com"
+    ],
+    "id": 56,
+    "aliases": []
+  },
+  {
+    "owner_name": "Beijing Cloudwise Technology",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "jiankongbao.com"
+    ],
+    "id": 57,
+    "aliases": []
+  },
+  {
+    "owner_name": "Beijing Emar Online Technology",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "emarbox.com",
+      "yigao.com"
+    ],
+    "id": 58,
+    "aliases": []
+  },
+  {
+    "owner_name": "Beijing OptAim Technology",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "optaim.com"
+    ],
+    "id": 59,
+    "aliases": []
+  },
+  {
+    "owner_name": "Bertelsmann",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bertelsmann.de"
+    ],
+    "id": 60,
+    "aliases": []
+  },
+  {
+    "owner_name": "Bidswitch",
+    "parent_id": "IPONWEB",
+    "country": "UK",
+    "notes": "http://www.bidswitch.com/privacy-policy/",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bidswitch.net"
+    ],
+    "id": 61,
+    "aliases": [
+      "Bid Switch"
+    ]
+  },
+  {
+    "owner_name": "Bing",
+    "parent_id": "Microsoft",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bing.com"
+    ],
+    "id": 62,
+    "aliases": []
+  },
+  {
+    "owner_name": "Bizo",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bizo.com",
+      "bizographics.com"
+    ],
+    "id": 63,
+    "aliases": []
+  },
+  {
+    "owner_name": "Blinkx",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Owns many properties, this could likely be greatly expanded with detective work.",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "rhythmxchange.com",
+      "1rx.io",
+      "burstnet.com",
+      "burstmedia.com",
+      "blinkx.com"
+    ],
+    "id": 64,
+    "aliases": [
+      "Blink X"
+    ]
+  },
+  {
+    "owner_name": "Blogger",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "blogblog.com",
+      "blogger.com",
+      "blogspot.com",
+      "blogspot.de"
+    ],
+    "id": 65,
+    "aliases": []
+  },
+  {
+    "owner_name": "Blue Kai",
+    "parent_id": "Oracle",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bluekai.com",
+      "bkrtx.com"
+    ],
+    "id": 66,
+    "aliases": []
+  },
+  {
+    "owner_name": "BlueLithium",
+    "parent_id": "Yahoo",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bluelithium.com"
+    ],
+    "id": 67,
+    "aliases": []
+  },
+  {
+    "owner_name": "Brightcove",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "brightcove.com"
+    ],
+    "id": 68,
+    "aliases": []
+  },
+  {
+    "owner_name": "BrightRoll",
+    "parent_id": "Yahoo",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "btrll.com",
+      "brightroll.com"
+    ],
+    "id": 69,
+    "aliases": []
+  },
+  {
+    "owner_name": "CallRail",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "callrail.com",
+      "calltrk.com"
+    ],
+    "id": 70,
+    "aliases": []
+  },
+  {
+    "owner_name": "Casale Media",
+    "parent_id": null,
+    "country": "CA",
+    "notes": null,
+    "privacy_policy_url": "http://casalemedia.com",
+    "homepage_url": null,
+    "domains": [
+      "indexww.com",
+      "casalemedia.com"
+    ],
+    "id": 71,
+    "aliases": []
+  },
+  {
+    "owner_name": "CBS Corporation",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Has Interactive division",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cbs.com",
+      "cbsi.com.cn",
+      "cbsinteractive.com",
+      "cnet.com.cn",
+      "gamespot.com.cn",
+      "ol-img.com",
+      "onlylady.com",
+      "pchome.net",
+      "xcarimg.com",
+      "zol-img.com.cn",
+      "zol.com.cn"
+    ],
+    "id": 72,
+    "aliases": []
+  },
+  {
+    "owner_name": "Centro",
+    "parent_id": null,
+    "country": "US",
+    "notes": "brand-server.com per cookiepedia, was very difficult to find info on!",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "brand-server.com",
+      "centro.net"
+    ],
+    "id": 73,
+    "aliases": []
+  },
+  {
+    "owner_name": "Chango",
+    "parent_id": null,
+    "country": "CA",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "chango.com"
+    ],
+    "id": 74,
+    "aliases": []
+  },
+  {
+    "owner_name": "Chartbeat",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "chartbeat.com",
+      "chartbeat.net"
+    ],
+    "id": 75,
+    "aliases": [
+      "Chart Beat"
+    ]
+  },
+  {
+    "owner_name": "China InterActive",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "56img.com",
+      "v-56.com"
+    ],
+    "id": 76,
+    "aliases": []
+  },
+  {
+    "owner_name": "Chitika",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "chitika.com",
+      "chitika.net"
+    ],
+    "id": 77,
+    "aliases": []
+  },
+  {
+    "owner_name": "Clarion Capital Partners",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.clarion-capital.com/privacy-policy.aspx",
+    "homepage_url": "https://www.clarion-capital.com",
+    "domains": [
+      "clarion-capital.com"
+    ],
+    "id": 78,
+    "aliases": []
+  },
+  {
+    "owner_name": "Cloudflare",
+    "parent_id": null,
+    "country": "US",
+    "notes": "CDN",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cloudflare.com"
+    ],
+    "id": 79,
+    "aliases": []
+  },
+  {
+    "owner_name": "CNIC",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "124.17.1.253",
+      "cnnic.cn"
+    ],
+    "id": 80,
+    "aliases": []
+  },
+  {
+    "owner_name": "CNISP",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cnisp.org.cn"
+    ],
+    "id": 81,
+    "aliases": []
+  },
+  {
+    "owner_name": "Collective",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "collective-media.net",
+      "collective.com"
+    ],
+    "id": 82,
+    "aliases": []
+  },
+  {
+    "owner_name": "Comcast",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "comcast.com"
+    ],
+    "id": 83,
+    "aliases": []
+  },
+  {
+    "owner_name": "Community Health Systems",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "chs.net",
+      "g2gtoolkit.com"
+    ],
+    "id": 84,
+    "aliases": []
+  },
+  {
+    "owner_name": "comScore",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.comscore.com/About-comScore/Privacy-Policy",
+    "homepage_url": null,
+    "domains": [
+      "comscore.com"
+    ],
+    "id": 85,
+    "aliases": []
+  },
+  {
+    "owner_name": "Conversant Media",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.conversantmedia.com/legal/privacy",
+    "homepage_url": "http://www.conversantmedia.com",
+    "domains": [
+      "awltovhc.com",
+      "conversantmedia.com",
+      "ftjcfx.com",
+      "lduhtrp.net",
+      "tqlkg.com"
+    ],
+    "id": 86,
+    "aliases": []
+  },
+  {
+    "owner_name": "Convertro",
+    "parent_id": "AOL",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "convertro.com"
+    ],
+    "id": 87,
+    "aliases": []
+  },
+  {
+    "owner_name": "CoxReps",
+    "parent_id": null,
+    "country": "US",
+    "notes": "As of 20161026 adify.com appears dead",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adify.com",
+      "afy11.net",
+      "coxdigitalsolutions.com",
+      "coxreps.com"
+    ],
+    "id": 88,
+    "aliases": []
+  },
+  {
+    "owner_name": "Crazy Egg",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "crazyegg.com"
+    ],
+    "id": 89,
+    "aliases": [
+      "CrazyEgg"
+    ]
+  },
+  {
+    "owner_name": "Criteo",
+    "parent_id": null,
+    "country": "FR",
+    "notes": null,
+    "privacy_policy_url": "http://www.criteo.com/privacy/",
+    "homepage_url": null,
+    "domains": [
+      "criteo.net",
+      "criteo.com"
+    ],
+    "id": 90,
+    "aliases": []
+  },
+  {
+    "owner_name": "Datalogix",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "datalogix.com",
+      "nexac.com"
+    ],
+    "id": 91,
+    "aliases": []
+  },
+  {
+    "owner_name": "DataXu",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dataxu.com",
+      "w55c.net"
+    ],
+    "id": 92,
+    "aliases": []
+  },
+  {
+    "owner_name": "Deutsche Telekom",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "telekom.com",
+      "telekom.de"
+    ],
+    "id": 93,
+    "aliases": []
+  },
+  {
+    "owner_name": "Dictionary.com",
+    "parent_id": "IAC",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dictionary.com"
+    ],
+    "id": 94,
+    "aliases": [
+      "Dictionary"
+    ]
+  },
+  {
+    "owner_name": "Disqus",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "disqus.com",
+      "disquscdn.com"
+    ],
+    "id": 95,
+    "aliases": []
+  },
+  {
+    "owner_name": "distil networks",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.distilnetworks.com/privacy/",
+    "homepage_url": "https://www.distilnetworks.com",
+    "domains": [
+      "distilnetworks.com",
+      "distiltag.com"
+    ],
+    "id": 96,
+    "aliases": []
+  },
+  {
+    "owner_name": "Dotomi",
+    "parent_id": "Conversant Media",
+    "country": "US",
+    "notes": "Dotomi appears fully merged with Conversant, not clear if this domain operates independently now.",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dotomi.com",
+      "fastclick.net",
+      "dtmpub.com"
+    ],
+    "id": 97,
+    "aliases": []
+  },
+  {
+    "owner_name": "Double Verify",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "doubleverify.com"
+    ],
+    "id": 98,
+    "aliases": []
+  },
+  {
+    "owner_name": "DoubleClick",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.google.com/intl/en/policies/privacy",
+    "homepage_url": "https://doubleclickbygoogle.com",
+    "domains": [
+      "doubleclick.net",
+      "2mdn.net",
+      "doubleclick.com",
+      "doubleclickbygoogle.com"
+    ],
+    "id": 99,
+    "aliases": [
+      "Double Click"
+    ]
+  },
+  {
+    "owner_name": "Dratio",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dratio.com",
+      "wrating.com"
+    ],
+    "id": 100,
+    "aliases": []
+  },
+  {
+    "owner_name": "Drawbridge",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "drawbrid.ge",
+      "adsymptotic.com"
+    ],
+    "id": 101,
+    "aliases": []
+  },
+  {
+    "owner_name": "Drugsite Trust",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ddccdn.com",
+      "drugs.com"
+    ],
+    "id": 102,
+    "aliases": []
+  },
+  {
+    "owner_name": "Dstillery",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "media6degrees.com",
+      "dstillery.com"
+    ],
+    "id": 103,
+    "aliases": []
+  },
+  {
+    "owner_name": "DTScout",
+    "parent_id": null,
+    "country": "IL",
+    "notes": null,
+    "privacy_policy_url": "http://www.dtscout.com/techpolicy.html",
+    "homepage_url": "http://www.dtscout.com",
+    "domains": [
+      "dtscout.com"
+    ],
+    "id": 104,
+    "aliases": []
+  },
+  {
+    "owner_name": "Dynadmic",
+    "parent_id": null,
+    "country": "FR",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dynadmic.com",
+      "dyntrk.com"
+    ],
+    "id": 105,
+    "aliases": []
+  },
+  {
+    "owner_name": "Ebix",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adam.com",
+      "ebix.com"
+    ],
+    "id": 106,
+    "aliases": []
+  },
+  {
+    "owner_name": "EdgeCast",
+    "parent_id": "Verizon",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "edgecast.com"
+    ],
+    "id": 107,
+    "aliases": [
+      "Edge Cast"
+    ]
+  },
+  {
+    "owner_name": "Emar Box",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "emarbox.com"
+    ],
+    "id": 108,
+    "aliases": []
+  },
+  {
+    "owner_name": "emetriq",
+    "parent_id": "Deutsche Telekom",
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "emetriq.de"
+    ],
+    "id": 109,
+    "aliases": []
+  },
+  {
+    "owner_name": "Ensighten",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ensighten.com"
+    ],
+    "id": 110,
+    "aliases": []
+  },
+  {
+    "owner_name": "Equifax",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Data broker",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "equifax.com"
+    ],
+    "id": 111,
+    "aliases": []
+  },
+  {
+    "owner_name": "EroAdvertising",
+    "parent_id": null,
+    "country": "NL",
+    "notes": null,
+    "privacy_policy_url": "http://ero-advertising.com/terms",
+    "homepage_url": "http://ero-advertising.com",
+    "domains": [
+      "ero-advertising.com",
+      "eroadvertising.com"
+    ],
+    "id": 112,
+    "aliases": []
+  },
+  {
+    "owner_name": "etracker",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "etracker.com",
+      "etracker.de"
+    ],
+    "id": 113,
+    "aliases": []
+  },
+  {
+    "owner_name": "Evidon",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "betrad.com",
+      "evidon.com"
+    ],
+    "id": 114,
+    "aliases": []
+  },
+  {
+    "owner_name": "exelate",
+    "parent_id": "Nielsen Online",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "nielsen.com",
+      "imrworldwide.com",
+      "exelator.com",
+      "exelate.com"
+    ],
+    "id": 115,
+    "aliases": []
+  },
+  {
+    "owner_name": "exoClick",
+    "parent_id": null,
+    "country": "ES",
+    "notes": null,
+    "privacy_policy_url": "https://www.exoclick.com/privacy/",
+    "homepage_url": "https://www.exoclick.com",
+    "domains": [
+      "exoclick.com"
+    ],
+    "id": 116,
+    "aliases": []
+  },
+  {
+    "owner_name": "Experian",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "consumerinfo.com",
+      "experian.com",
+      "experiandirect.com"
+    ],
+    "id": 117,
+    "aliases": []
+  },
+  {
+    "owner_name": "Exponential Advertising Intelligence",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tribalfusion.com",
+      "adotube.com",
+      "exponential.com"
+    ],
+    "id": 118,
+    "aliases": []
+  },
+  {
+    "owner_name": "Extreme Reach",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dgit.com",
+      "extremereach.com"
+    ],
+    "id": 119,
+    "aliases": []
+  },
+  {
+    "owner_name": "Eyeota",
+    "parent_id": null,
+    "country": "SG",
+    "notes": null,
+    "privacy_policy_url": "http://eyeota.com/privacy-policy/",
+    "homepage_url": "http://eyeota.com",
+    "domains": [
+      "eyeota.com",
+      "eyeota.net"
+    ],
+    "id": 120,
+    "aliases": []
+  },
+  {
+    "owner_name": "Facebook",
+    "parent_id": null,
+    "country": "US",
+    "notes": "liverail.com is an acquisition / 2014",
+    "privacy_policy_url": "https://www.facebook.com/privacy/explanation",
+    "homepage_url": null,
+    "domains": [
+      "facebook.com",
+      "facebook.net",
+      "fbcdn.com",
+      "fbcdn.net"
+    ],
+    "id": 121,
+    "aliases": []
+  },
+  {
+    "owner_name": "Farlex",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "farlex.com",
+      "tfd.com"
+    ],
+    "id": 122,
+    "aliases": []
+  },
+  {
+    "owner_name": "Fast Health",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "fasthealth.com",
+      "helenkeller.com"
+    ],
+    "id": 123,
+    "aliases": []
+  },
+  {
+    "owner_name": "FastClick",
+    "parent_id": "Conversant Media",
+    "country": "US",
+    "notes": "FastClick appears fully merged with Conversant, not clear if this domain operates independently now.",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dotomi.com",
+      "fastclick.net",
+      "dtmpub.com"
+    ],
+    "id": 124,
+    "aliases": [
+      "Fast Click"
+    ]
+  },
+  {
+    "owner_name": "Federated Media",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "federatedmedia.net"
+    ],
+    "id": 125,
+    "aliases": []
+  },
+  {
+    "owner_name": "Flickr",
+    "parent_id": "Yahoo",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "flickr.com"
+    ],
+    "id": 126,
+    "aliases": []
+  },
+  {
+    "owner_name": "Flipp",
+    "parent_id": null,
+    "country": "CA",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "circularhub.com",
+      "flipp.com",
+      "wishabi.com",
+      "wishabi.net"
+    ],
+    "id": 127,
+    "aliases": []
+  },
+  {
+    "owner_name": "ForeSee",
+    "parent_id": "AFCV Holdings",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "4seeresults.com",
+      "dsply.com",
+      "foresee.com"
+    ],
+    "id": 128,
+    "aliases": [
+      "Fore See"
+    ]
+  },
+  {
+    "owner_name": "FreeWheel",
+    "parent_id": "Comcast",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "freewheel.tv"
+    ],
+    "id": 129,
+    "aliases": [
+      "Free Wheel"
+    ]
+  },
+  {
+    "owner_name": "Full Circle Studies",
+    "parent_id": "comScore",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "fullcirclestudies.com"
+    ],
+    "id": 130,
+    "aliases": []
+  },
+  {
+    "owner_name": "Gannett",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "gannett.com",
+      "pointroll.com"
+    ],
+    "id": 131,
+    "aliases": []
+  },
+  {
+    "owner_name": "Gemius",
+    "parent_id": null,
+    "country": "PL",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "gemius.com",
+      "gemius.pl"
+    ],
+    "id": 132,
+    "aliases": []
+  },
+  {
+    "owner_name": "Gigya",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "gigya.com"
+    ],
+    "id": 133,
+    "aliases": []
+  },
+  {
+    "owner_name": "Google",
+    "parent_id": "Alphabet",
+    "country": "US",
+    "notes": "based off of https://en.wikipedia.org/wiki/List_of_Google_domains and manual detection",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "chromium.org",
+      "google.com.pa",
+      "google.ps",
+      "google.pt",
+      "google.mu",
+      "google.hn",
+      "google.com.do",
+      "google.co.zm",
+      "googleapps.com",
+      "google.hr",
+      "googlecommerce.com",
+      "dmtry.com",
+      "google.hu",
+      "google.pn",
+      "google.cz",
+      "google.co.ma",
+      "google.com.ly",
+      "google.com.bd",
+      "waze.com",
+      "googlesyndication.com",
+      "google.be",
+      "google.co.mz",
+      "google.com.lc",
+      "google.com.lb",
+      "google.co.zw",
+      "google.com.gi",
+      "invitemedia.com",
+      "googleratings.com",
+      "panoramio.com",
+      "google.al",
+      "google.co.za",
+      "gmail.com",
+      "google.bs",
+      "goolge.com",
+      "google.co.bw",
+      "google.cm",
+      "google.com.gt",
+      "google.com.bh",
+      "google.am",
+      "googleadsserving.cn",
+      "google.is",
+      "google.ir",
+      "google.iq",
+      "google.io",
+      "google.ae",
+      "google.ad",
+      "google.ac",
+      "google.com.mx",
+      "google.com.om",
+      "google.es",
+      "google.ie",
+      "google.co.cr",
+      "google.co.jp",
+      "igoogle.com",
+      "google.com.vn",
+      "gogle.com",
+      "google.com.vc",
+      "google.at",
+      "google.as",
+      "google.no",
+      "google.nl",
+      "google.vu",
+      "2mdn.net",
+      "google.xxx",
+      "google.ne",
+      "google.vg",
+      "google.nu",
+      "google.nr",
+      "google.com.jm",
+      "google.co.tz",
+      "adometry.com",
+      "google.com.br",
+      "google.pl",
+      "google.fm",
+      "google.fi",
+      "google.com.ua",
+      "google.co.th",
+      "google.fr",
+      "google.com.bo",
+      "google.com.bn",
+      "google.com.bz",
+      "google.az",
+      "google.co.il",
+      "google.com.ec",
+      "google.ws",
+      "google.com.eg",
+      "gstatic.com",
+      "like.com",
+      "googleusercontent.com",
+      "google.net",
+      "google.com.et",
+      "google.ca",
+      "google.com.co",
+      "google.im",
+      "google.com.tw",
+      "google.com.my",
+      "google.co.uz",
+      "google.gf",
+      "google.ga",
+      "google.com.tr",
+      "google.gm",
+      "googel.com",
+      "google.com.mt",
+      "google.co.ls",
+      "google.co.uk",
+      "google.com.mm",
+      "google.gr",
+      "google.com.tn",
+      "android.com",
+      "466453.com",
+      "google.gy",
+      "google.com.tj",
+      "google.co.ug",
+      "google.la",
+      "google.com.qa",
+      "google.li",
+      "google.lk",
+      "google.lt",
+      "google.lu",
+      "google.lv",
+      "google.com.fj",
+      "feedburner.com",
+      "ggpht.com",
+      "google.com.hk",
+      "google.com.sg",
+      "google.co.in",
+      "google.com.sb",
+      "google.dz",
+      "google.com.sa",
+      "google.co.id",
+      "google.com.sl",
+      "google.com.sv",
+      "keyhole.com",
+      "google.co.ve",
+      "google.dj",
+      "google.dk",
+      "google.co.vi",
+      "google.de",
+      "gogole.com",
+      "google.co.ao",
+      "google.ge",
+      "google.mg",
+      "google.ki",
+      "google.me",
+      "google.md",
+      "google.mk",
+      "google.gg",
+      "google.ml",
+      "google.ms",
+      "google.us",
+      "google.com.cy",
+      "google.mw",
+      "google.mv",
+      "picasa.com",
+      "google.rw",
+      "1e100.net",
+      "google.com.cu",
+      "google.cl",
+      "google.co.nz",
+      "google.com.kh",
+      "googlebot.com",
+      "goo.gl",
+      "google.cn",
+      "googlr.com",
+      "googleapis.com",
+      "google.com.pk",
+      "google.tg",
+      "google.gl",
+      "google.com.kw",
+      "google.org",
+      "google.cc",
+      "google.ee",
+      "google.com.ph",
+      "google.rs",
+      "google.com.gh",
+      "google.ru",
+      "gtempaccount.com",
+      "googleadservices.com",
+      "google.ro",
+      "googil.com",
+      "googletagservices.com",
+      "google.cat",
+      "google.com.na",
+      "google.bi",
+      "froogle.com",
+      "google.com.ng",
+      "google.com.nf",
+      "google.com.ni",
+      "google.ba",
+      "google.bf",
+      "google.bg",
+      "google.ht",
+      "google.co.ke",
+      "google.com.np",
+      "google.by",
+      "google.je",
+      "google.co.kr",
+      "google.co.ck",
+      "google.ch",
+      "google.jo",
+      "google.bt",
+      "google.gp",
+      "google.bj",
+      "gooogle.com",
+      "google.com.ai",
+      "google.com.af",
+      "google.com.ag",
+      "google.st",
+      "google.mn",
+      "google.si",
+      "google.sh",
+      "google.sk",
+      "google.sm",
+      "google.so",
+      "google.sn",
+      "google.com.au",
+      "google.sc",
+      "google.se",
+      "google.dm",
+      "google.com.ar",
+      "google.tl",
+      "google.tm",
+      "google.tn",
+      "google.to",
+      "google.com.pg",
+      "google.ci",
+      "google.com.pe",
+      "google.tk",
+      "google.td",
+      "google.com",
+      "google.kz",
+      "google.cd",
+      "google.cg",
+      "google.cf",
+      "google.com.pr",
+      "google.it",
+      "google.kg",
+      "google.com.uy",
+      "google.tt",
+      "googledrive.com",
+      "google.com.py",
+      "g.cn",
+      "g.co",
+      "google.cv"
+    ],
+    "id": 134,
+    "aliases": []
+  },
+  {
+    "owner_name": "Google Analytics",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.google.com/intl/en/policies/privacy",
+    "homepage_url": "https://www.google.com/analytics/",
+    "domains": [
+      "google-analytics.com",
+      "urchin.com"
+    ],
+    "id": 135,
+    "aliases": []
+  },
+  {
+    "owner_name": "Google Tag Manager",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.google.com/intl/en/policies/privacy",
+    "homepage_url": "https://www.google.com/analytics/tag-manager/",
+    "domains": [
+      "googletagmanager.com"
+    ],
+    "id": 136,
+    "aliases": []
+  },
+  {
+    "owner_name": "GovDelivery",
+    "parent_id": "Actua",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "govdelivery.com"
+    ],
+    "id": 137,
+    "aliases": [
+      "Gov Delivery"
+    ]
+  },
+  {
+    "owner_name": "Grade Us",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "grade.us",
+      "reviewmgr.com"
+    ],
+    "id": 138,
+    "aliases": []
+  },
+  {
+    "owner_name": "Gravatar",
+    "parent_id": "Automattic",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "gravatar.com"
+    ],
+    "id": 139,
+    "aliases": []
+  },
+  {
+    "owner_name": "Gravity Insights",
+    "parent_id": "AOL",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "gravity.com",
+      "grvcdn.com"
+    ],
+    "id": 140,
+    "aliases": []
+  },
+  {
+    "owner_name": "Gridsum",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "gridsum.com",
+      "gridsumdissector.com",
+      "webdissector.com"
+    ],
+    "id": 141,
+    "aliases": []
+  },
+  {
+    "owner_name": "GroupM",
+    "parent_id": "WPP",
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "groupm.com"
+    ],
+    "id": 142,
+    "aliases": []
+  },
+  {
+    "owner_name": "hdtMEDIA",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "hdtmedia.com",
+      "icast.cn"
+    ],
+    "id": 143,
+    "aliases": []
+  },
+  {
+    "owner_name": "Health Grades",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bettermedicine.com",
+      "healthgrades.com",
+      "hgimg.com"
+    ],
+    "id": 144,
+    "aliases": []
+  },
+  {
+    "owner_name": "Health On the Net Foundation",
+    "parent_id": null,
+    "country": "CH",
+    "notes": "CH is Switzerland",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "hon.ch",
+      "honcode.ch"
+    ],
+    "id": 145,
+    "aliases": []
+  },
+  {
+    "owner_name": "Hearst",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "hearst.com",
+      "hearst.com.cn"
+    ],
+    "id": 146,
+    "aliases": []
+  },
+  {
+    "owner_name": "HEIAS",
+    "parent_id": "Tradedoubler",
+    "country": "SE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "heias.com"
+    ],
+    "id": 147,
+    "aliases": []
+  },
+  {
+    "owner_name": "HiChina",
+    "parent_id": "Alibaba",
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cr-nielsen.com",
+      "hichina.com",
+      "hichinaimg.com"
+    ],
+    "id": 148,
+    "aliases": [
+      "Hi China"
+    ]
+  },
+  {
+    "owner_name": "HiMedia Group",
+    "parent_id": null,
+    "country": "FR",
+    "notes": "Acquired Adlinkgroup, Sedo",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "himediagroup.com"
+    ],
+    "id": 149,
+    "aliases": []
+  },
+  {
+    "owner_name": "HiStats",
+    "parent_id": "Wisecode",
+    "country": "IT",
+    "notes": null,
+    "privacy_policy_url": "http://histats.com/?act=5",
+    "homepage_url": "http://histats.com/",
+    "domains": [
+      "histats.com"
+    ],
+    "id": 150,
+    "aliases": []
+  },
+  {
+    "owner_name": "Hospital Corporation of America",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ehc.com",
+      "hcahealthcare.com",
+      "medcity.net"
+    ],
+    "id": 151,
+    "aliases": []
+  },
+  {
+    "owner_name": "Hubspot",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "hs-analytics.net",
+      "hs-scripts.com",
+      "hsforms.net",
+      "hsleadflows.net",
+      "hubspot.com"
+    ],
+    "id": 152,
+    "aliases": []
+  },
+  {
+    "owner_name": "IAC",
+    "parent_id": null,
+    "country": "US",
+    "notes": "more @ http://iac.com/brands",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "chemistry.com",
+      "citygrid.com",
+      "collegehumor.com",
+      "dailyburn.com",
+      "iac.com",
+      "match.com",
+      "sfdict.com",
+      "thedailybeast.com",
+      "tqn.com"
+    ],
+    "id": 153,
+    "aliases": [
+      "InterActiveCorp"
+    ]
+  },
+  {
+    "owner_name": "IgnitionOne",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.ignitionone.com/privacy-policy/",
+    "homepage_url": "https://www.ignitionone.com",
+    "domains": [
+      "ignitionone.com"
+    ],
+    "id": 154,
+    "aliases": [
+      "Ignition One"
+    ]
+  },
+  {
+    "owner_name": "Improve Digital",
+    "parent_id": null,
+    "country": "NL",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "360yield.com",
+      "improvedigital.com"
+    ],
+    "id": 155,
+    "aliases": []
+  },
+  {
+    "owner_name": "INFOnline",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "infonline.de",
+      "ioam.de"
+    ],
+    "id": 156,
+    "aliases": []
+  },
+  {
+    "owner_name": "Inform",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "helloreverb.com",
+      "inform.com",
+      "mochila.com",
+      "newsinc.com"
+    ],
+    "id": 157,
+    "aliases": []
+  },
+  {
+    "owner_name": "InQuicker",
+    "parent_id": "Stericycle",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "inquicker.com"
+    ],
+    "id": 158,
+    "aliases": []
+  },
+  {
+    "owner_name": "Insight Express",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "insightexpress.com"
+    ],
+    "id": 159,
+    "aliases": []
+  },
+  {
+    "owner_name": "Integral Ad Science",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "integralads.com",
+      "iasds01.com",
+      "adsafeprotected.com"
+    ],
+    "id": 160,
+    "aliases": []
+  },
+  {
+    "owner_name": "Interclick",
+    "parent_id": "Yahoo",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "interclick.com"
+    ],
+    "id": 161,
+    "aliases": []
+  },
+  {
+    "owner_name": "International Business Machines",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cmcore.com",
+      "coremetrics.com",
+      "ibm.com",
+      "unica.com"
+    ],
+    "id": 162,
+    "aliases": [
+      "IBM"
+    ]
+  },
+  {
+    "owner_name": "Invite Media",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": "http://www.invitemedia.com",
+    "domains": [
+      "invitemedia.com"
+    ],
+    "id": 163,
+    "aliases": [
+      "invitemedia"
+    ]
+  },
+  {
+    "owner_name": "iPerceptions",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "iperceptions.com"
+    ],
+    "id": 164,
+    "aliases": []
+  },
+  {
+    "owner_name": "iPinYou",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ipinyou.com"
+    ],
+    "id": 165,
+    "aliases": []
+  },
+  {
+    "owner_name": "IPONWEB",
+    "parent_id": null,
+    "country": "UK",
+    "notes": "https://www.iponweb.com/privacy-policy/",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "iponweb.com"
+    ],
+    "id": 166,
+    "aliases": []
+  },
+  {
+    "owner_name": "iResearch Consulting Group",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "iresearchchina.com",
+      "irs01.com",
+      "irs01.net",
+      "irs09.com"
+    ],
+    "id": 167,
+    "aliases": []
+  },
+  {
+    "owner_name": "iTV Media",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "china-netwave.com",
+      "uitv.com",
+      "uitv.com.cn"
+    ],
+    "id": 168,
+    "aliases": []
+  },
+  {
+    "owner_name": "IXI Corporation",
+    "parent_id": "Equifax",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ixicorp.com",
+      "ixiaa.com"
+    ],
+    "id": 169,
+    "aliases": []
+  },
+  {
+    "owner_name": "JD.com",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "3.cn",
+      "360buy.com",
+      "360buyimg.com",
+      "jd.com"
+    ],
+    "id": 170,
+    "aliases": []
+  },
+  {
+    "owner_name": "jQuery Foundation",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "jquery.com",
+      "jquery.org"
+    ],
+    "id": 171,
+    "aliases": [
+      "jQuery"
+    ]
+  },
+  {
+    "owner_name": "JuicyAds",
+    "parent_id": null,
+    "country": "NL",
+    "notes": null,
+    "privacy_policy_url": "https://www.juicyads.com/terms/",
+    "homepage_url": "https://www.juicyads.com",
+    "domains": [
+      "juicyads.com"
+    ],
+    "id": 172,
+    "aliases": []
+  },
+  {
+    "owner_name": "Kantar",
+    "parent_id": null,
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dynamiclogic.com",
+      "kantar.com",
+      "questionmarket.com"
+    ],
+    "id": 173,
+    "aliases": []
+  },
+  {
+    "owner_name": "Kindred Healthcare",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "kindred.com",
+      "kindredhealthcare.com"
+    ],
+    "id": 174,
+    "aliases": []
+  },
+  {
+    "owner_name": "Knet",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "knet.cn"
+    ],
+    "id": 175,
+    "aliases": []
+  },
+  {
+    "owner_name": "Knownsec",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "anquan.org",
+      "knownsec.com"
+    ],
+    "id": 176,
+    "aliases": []
+  },
+  {
+    "owner_name": "Krux Digital",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "krux.com",
+      "krxd.net"
+    ],
+    "id": 177,
+    "aliases": []
+  },
+  {
+    "owner_name": "Lightspeed Research",
+    "parent_id": "Kantar",
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "lightspeedresearch.com"
+    ],
+    "id": 178,
+    "aliases": []
+  },
+  {
+    "owner_name": "LinkedIn",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "linkedin.com"
+    ],
+    "id": 179,
+    "aliases": []
+  },
+  {
+    "owner_name": "LiveRail",
+    "parent_id": "Facebook",
+    "country": "US",
+    "notes": "liverail.com is an acquisition / 2014",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "lrcdn.net",
+      "liverail.com"
+    ],
+    "id": 180,
+    "aliases": [
+      "Live Rail"
+    ]
+  },
+  {
+    "owner_name": "LiveRamp",
+    "parent_id": "Acxiom",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "liveramp.com",
+      "rlcdn.com"
+    ],
+    "id": 181,
+    "aliases": [
+      "Live Ramp"
+    ]
+  },
+  {
+    "owner_name": "Lotame",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.lotame.com/about-lotame/privacy/lotames-products-services-privacy-policy/",
+    "homepage_url": null,
+    "domains": [
+      "lotame.com",
+      "crwdcntrl.net"
+    ],
+    "id": 182,
+    "aliases": []
+  },
+  {
+    "owner_name": "Madison Logic",
+    "parent_id": "Clarion Capital Partners",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.madisonlogic.com/privacy/",
+    "homepage_url": "https://www.madisonlogic.com",
+    "domains": [
+      "madisonlogic.com",
+      "ml314.com"
+    ],
+    "id": 183,
+    "aliases": []
+  },
+  {
+    "owner_name": "Magnetic Media Online",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cognitivematch.com",
+      "veruta.com",
+      "magnetic.com",
+      "domdex.com"
+    ],
+    "id": 184,
+    "aliases": [
+      "Magnetic Media Online",
+      "MyBuys"
+    ]
+  },
+  {
+    "owner_name": "Mapbox",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mapbox.com"
+    ],
+    "id": 185,
+    "aliases": []
+  },
+  {
+    "owner_name": "Market Supervision Administration of Shenzhen Municipality",
+    "parent_id": null,
+    "country": "CN",
+    "notes": "Government agency.",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ebs.gov.cn"
+    ],
+    "id": 186,
+    "aliases": []
+  },
+  {
+    "owner_name": "Marketo",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mktoresp.com",
+      "marketo.com",
+      "marketo.net"
+    ],
+    "id": 187,
+    "aliases": []
+  },
+  {
+    "owner_name": "MaxPoint Interactive",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "maxpointinteractive.com",
+      "maxusglobal.com",
+      "mxptint.net"
+    ],
+    "id": 188,
+    "aliases": []
+  },
+  {
+    "owner_name": "mbr targeting",
+    "parent_id": "Ströer",
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mbr-targeting.com"
+    ],
+    "id": 189,
+    "aliases": []
+  },
+  {
+    "owner_name": "Media Innovation Group",
+    "parent_id": "WPP",
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "themig.com",
+      "mookie1.com"
+    ],
+    "id": 190,
+    "aliases": []
+  },
+  {
+    "owner_name": "Media Math",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.mediamath.com/privacy-policy/",
+    "homepage_url": null,
+    "domains": [
+      "mathtag.com",
+      "mediamath.com"
+    ],
+    "id": 191,
+    "aliases": []
+  },
+  {
+    "owner_name": "MediaAV",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mediav.com"
+    ],
+    "id": 192,
+    "aliases": []
+  },
+  {
+    "owner_name": "Mediaplex",
+    "parent_id": "Conversant Media",
+    "country": "US",
+    "notes": "Mediaplex appears fully merged with Conversant, not clear if this domain operates independently now.",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mediaplex.com"
+    ],
+    "id": 193,
+    "aliases": []
+  },
+  {
+    "owner_name": "Medscape",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "medscape.com"
+    ],
+    "id": 194,
+    "aliases": []
+  },
+  {
+    "owner_name": "Medseek",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "influencehealth.com",
+      "medseek.com"
+    ],
+    "id": 195,
+    "aliases": []
+  },
+  {
+    "owner_name": "Meetrics",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "meetrics.com",
+      "meetrics.de",
+      "meetrics.net",
+      "mxcdn.net"
+    ],
+    "id": 196,
+    "aliases": []
+  },
+  {
+    "owner_name": "Menlo Technologies",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "menlotechnologies.cn",
+      "mlt01.com"
+    ],
+    "id": 197,
+    "aliases": []
+  },
+  {
+    "owner_name": "Miaozhen Systems",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "miaozhen.com"
+    ],
+    "id": 198,
+    "aliases": []
+  },
+  {
+    "owner_name": "Microsoft",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://privacy.microsoft.com/en-us/privacystatement",
+    "homepage_url": null,
+    "domains": [
+      "aspnetcdn.com",
+      "atdmt.com",
+      "gfx.ms",
+      "live.com",
+      "microsoft.com",
+      "msads.net",
+      "msn.com",
+      "s-microsoft.com",
+      "s-msn.com",
+      "s-msn.com"
+    ],
+    "id": 199,
+    "aliases": []
+  },
+  {
+    "owner_name": "Millward Brown Digital",
+    "parent_id": "Kantar",
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "millwardbrown.com",
+      "insightexpressai.com"
+    ],
+    "id": 200,
+    "aliases": []
+  },
+  {
+    "owner_name": "Moat",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "moatads.com",
+      "moat.com"
+    ],
+    "id": 201,
+    "aliases": []
+  },
+  {
+    "owner_name": "Mode Media",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "glam.com"
+    ],
+    "id": 202,
+    "aliases": []
+  },
+  {
+    "owner_name": "Monotype Imaging",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "fonts.com",
+      "fonts.net",
+      "monotype.com",
+      "monotypeimaging.com"
+    ],
+    "id": 203,
+    "aliases": []
+  },
+  {
+    "owner_name": "Mozilla",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mozilla.net",
+      "mozilla.org"
+    ],
+    "id": 204,
+    "aliases": []
+  },
+  {
+    "owner_name": "MyBuys",
+    "parent_id": "Magnetic Media Online",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mybuys.com"
+    ],
+    "id": 205,
+    "aliases": []
+  },
+  {
+    "owner_name": "Native Ads",
+    "parent_id": null,
+    "country": "CA",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "nativeads.com"
+    ],
+    "id": 206,
+    "aliases": []
+  },
+  {
+    "owner_name": "Nativo",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "nativo.net",
+      "postrelease.com"
+    ],
+    "id": 207,
+    "aliases": []
+  },
+  {
+    "owner_name": "Neodata Group",
+    "parent_id": null,
+    "country": "IT",
+    "notes": "There is a privacy policy for the site and the service, linking to the service policy.",
+    "privacy_policy_url": "http://www.neodatagroup.com/data-security/neodata-services-privacy-policy/",
+    "homepage_url": "http://www.neodatagroup.com",
+    "domains": [
+      "neodatagroup.com"
+    ],
+    "id": 208,
+    "aliases": [
+      "Neodata"
+    ]
+  },
+  {
+    "owner_name": "NetEase",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "126.net",
+      "127.net",
+      "163.com",
+      "lofter.com",
+      "netease.com",
+      "youdao.com"
+    ],
+    "id": 209,
+    "aliases": []
+  },
+  {
+    "owner_name": "NetIQ",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "netiq.com"
+    ],
+    "id": 210,
+    "aliases": [
+      "Net IQ"
+    ]
+  },
+  {
+    "owner_name": "Netmining",
+    "parent_id": "IgnitionOne",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.ignitionone.com/privacy-policy/",
+    "homepage_url": "http://netmining.com",
+    "domains": [
+      "netmng.com",
+      "netmining.com"
+    ],
+    "id": 211,
+    "aliases": []
+  },
+  {
+    "owner_name": "Neustar",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.neustar.biz/privacy/privacy-policy",
+    "homepage_url": null,
+    "domains": [
+      "agkn.com",
+      "adadvisor.net",
+      "neustar.biz"
+    ],
+    "id": 212,
+    "aliases": []
+  },
+  {
+    "owner_name": "New Relic",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://newrelic.com/privacy",
+    "homepage_url": null,
+    "domains": [
+      "newrelic.com",
+      "nr-data.net"
+    ],
+    "id": 213,
+    "aliases": []
+  },
+  {
+    "owner_name": "Nielsen Online",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.nielsen.com/us/en/privacy-statement/digital-measurement.html",
+    "homepage_url": null,
+    "domains": [
+      "exelator.com",
+      "imrworldwide.com",
+      "nielsen.com",
+      "nielsen-online.com"
+    ],
+    "id": 214,
+    "aliases": []
+  },
+  {
+    "owner_name": "Nomao",
+    "parent_id": "Teads",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "nomao.com"
+    ],
+    "id": 215,
+    "aliases": []
+  },
+  {
+    "owner_name": "nugg.ad",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "nuggad.net"
+    ],
+    "id": 216,
+    "aliases": []
+  },
+  {
+    "owner_name": "Oath",
+    "parent_id": "Verizon",
+    "country": "US",
+    "notes": "Privacy policy still goes to Aol, ths will likely change.",
+    "privacy_policy_url": "http://privacy.aol.com/privacy-policy/",
+    "homepage_url": "https://www.oath.com",
+    "domains": [
+      "oath.com"
+    ],
+    "id": 217,
+    "aliases": []
+  },
+  {
+    "owner_name": "Omnicom Media Group",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "omnicomgroup.com",
+      "omnicommediagroup.com",
+      "p-td.com"
+    ],
+    "id": 218,
+    "aliases": []
+  },
+  {
+    "owner_name": "OpenX",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.openx.com/legal/privacy-policy/",
+    "homepage_url": null,
+    "domains": [
+      "openx.com",
+      "openx.net"
+    ],
+    "id": 219,
+    "aliases": [
+      "Open X"
+    ]
+  },
+  {
+    "owner_name": "Optimizely",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "optimizely.com"
+    ],
+    "id": 220,
+    "aliases": []
+  },
+  {
+    "owner_name": "Oracle",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Blue Kai was acquired by Oracle; 20160125: AddThis goes to Oracle; policy link is most relevant to 3p web tracking",
+    "privacy_policy_url": "https://www.oracle.com/legal/privacy/marketing-cloud-data-cloud-privacy-policy.html",
+    "homepage_url": null,
+    "domains": [
+      "oracle.com"
+    ],
+    "id": 221,
+    "aliases": []
+  },
+  {
+    "owner_name": "Outbrain",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "verticalacuity.com",
+      "visualrevenue.com",
+      "scribit.com",
+      "outbrain.com"
+    ],
+    "id": 222,
+    "aliases": [
+      "Sphere"
+    ]
+  },
+  {
+    "owner_name": "OwnerIQ",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dijipop.com",
+      "owneriq.net",
+      "owneriq.com"
+    ],
+    "id": 223,
+    "aliases": [
+      "Owner IQ"
+    ]
+  },
+  {
+    "owner_name": "Parrable.com",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.parrable.com/privacy",
+    "homepage_url": "https://www.parrable.com",
+    "domains": [
+      "parrable.com"
+    ],
+    "id": 224,
+    "aliases": []
+  },
+  {
+    "owner_name": "PC Group",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "3conline.com",
+      "pcauto.com.cn",
+      "pcgames.com.cn",
+      "pconline.com.cn"
+    ],
+    "id": 225,
+    "aliases": []
+  },
+  {
+    "owner_name": "Perion",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Perion acquired Undertone which acquired Upfront Media 201407",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "perion.com"
+    ],
+    "id": 226,
+    "aliases": []
+  },
+  {
+    "owner_name": "Pinterest",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "pinimg.com",
+      "pinterest.com"
+    ],
+    "id": 227,
+    "aliases": []
+  },
+  {
+    "owner_name": "plista",
+    "parent_id": "GroupM",
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "plista.com"
+    ],
+    "id": 228,
+    "aliases": []
+  },
+  {
+    "owner_name": "PlugRush",
+    "parent_id": null,
+    "country": "NO",
+    "notes": null,
+    "privacy_policy_url": "https://www.plugrush.com/support/privacy-policy",
+    "homepage_url": "https://www.plugrush.com",
+    "domains": [
+      "plugrush.com"
+    ],
+    "id": 229,
+    "aliases": [
+      "Plug Rush"
+    ]
+  },
+  {
+    "owner_name": "PopAds",
+    "parent_id": null,
+    "country": "?",
+    "notes": null,
+    "privacy_policy_url": "https://www.popads.net/privacy-policy.html",
+    "homepage_url": "https://www.popads.net/",
+    "domains": [
+      "popads.net"
+    ],
+    "id": 230,
+    "aliases": []
+  },
+  {
+    "owner_name": "Progress Software",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Acquired Telerik",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "progress.com"
+    ],
+    "id": 231,
+    "aliases": []
+  },
+  {
+    "owner_name": "PromoDigital",
+    "parent_id": "Teads",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "promodigital.it"
+    ],
+    "id": 232,
+    "aliases": [
+      "Promo Digital"
+    ]
+  },
+  {
+    "owner_name": "Publicis Groupe",
+    "parent_id": null,
+    "country": "FR",
+    "notes": null,
+    "privacy_policy_url": "http://www.publicisgroupe.com/en/cookies",
+    "homepage_url": "http://www.publicisgroupe.com/",
+    "domains": [
+      "publicisgroupe.com"
+    ],
+    "id": 233,
+    "aliases": []
+  },
+  {
+    "owner_name": "PubMatic",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://pubmatic.com/legal/privacy-policy/",
+    "homepage_url": null,
+    "domains": [
+      "pubmatic.com"
+    ],
+    "id": 234,
+    "aliases": []
+  },
+  {
+    "owner_name": "PulsePoint",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "pulsepoint.com",
+      "contextweb.com",
+      "displaymarketplace.com"
+    ],
+    "id": 235,
+    "aliases": [
+      "Pulse Point"
+    ]
+  },
+  {
+    "owner_name": "Quantcast",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.quantcast.com/privacy/",
+    "homepage_url": null,
+    "domains": [
+      "quantcast.com",
+      "quantserve.com",
+      "quantcount.com"
+    ],
+    "id": 236,
+    "aliases": []
+  },
+  {
+    "owner_name": "Radium One",
+    "parent_id": "RhythmOne",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "radiumone.com",
+      "gwallet.com"
+    ],
+    "id": 237,
+    "aliases": []
+  },
+  {
+    "owner_name": "ReadSpeaker",
+    "parent_id": null,
+    "country": "NL",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "readspeaker.com"
+    ],
+    "id": 238,
+    "aliases": [
+      "Read Speaker"
+    ]
+  },
+  {
+    "owner_name": "Ren Ren",
+    "parent_id": "China InterActive",
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "renren.com"
+    ],
+    "id": 239,
+    "aliases": []
+  },
+  {
+    "owner_name": "Resonate",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "reson8.com",
+      "resonateinsights.com"
+    ],
+    "id": 240,
+    "aliases": []
+  },
+  {
+    "owner_name": "RhythmOne",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "rhythmxchange.com",
+      "rhythmone.com",
+      "1rx.io"
+    ],
+    "id": 241,
+    "aliases": [
+      "Rhythm One"
+    ]
+  },
+  {
+    "owner_name": "Rocketfuel",
+    "parent_id": null,
+    "country": "US",
+    "notes": "Acquired x+1, 2014",
+    "privacy_policy_url": "https://rocketfuel.com/privacy/",
+    "homepage_url": null,
+    "domains": [
+      "rfihub.com",
+      "rocketfuel.com",
+      "ru4.com"
+    ],
+    "id": 242,
+    "aliases": []
+  },
+  {
+    "owner_name": "Rubicon Project",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://rubiconproject.com/privacy/",
+    "homepage_url": null,
+    "domains": [
+      "rubiconproject.com"
+    ],
+    "id": 243,
+    "aliases": []
+  },
+  {
+    "owner_name": "Run",
+    "parent_id": "Starcom Worldwide",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.runads.com/privacy-policy",
+    "homepage_url": "http://www.runads.com",
+    "domains": [
+      "runads.com",
+      "rundsp.com"
+    ],
+    "id": 244,
+    "aliases": []
+  },
+  {
+    "owner_name": "Safecount",
+    "parent_id": "WPP",
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": "http://safecount.net/privacy_faq.php",
+    "homepage_url": "http://safecount.net",
+    "domains": [
+      "safecount.net"
+    ],
+    "id": 245,
+    "aliases": []
+  },
+  {
+    "owner_name": "Samsung",
+    "parent_id": null,
+    "country": "KR",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "samsung.com"
+    ],
+    "id": 246,
+    "aliases": []
+  },
+  {
+    "owner_name": "ScorecardResearch",
+    "parent_id": "comScore",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "scorecardresearch.com",
+      "scorecardresearch.com"
+    ],
+    "id": 247,
+    "aliases": [
+      "Scorecard Research"
+    ]
+  },
+  {
+    "owner_name": "Scorpion Internet Marketing",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "scorpioncms.com",
+      "scorpiondesign.com"
+    ],
+    "id": 248,
+    "aliases": []
+  },
+  {
+    "owner_name": "ScrapeSentry",
+    "parent_id": "distil networks",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": "https://www.scrapesentry.com",
+    "domains": [
+      "scrapesentry.com"
+    ],
+    "id": 249,
+    "aliases": [
+      "Scrape Sentry"
+    ]
+  },
+  {
+    "owner_name": "Sedo",
+    "parent_id": "AdLink Group",
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sedo.com",
+      "sedoparking.com"
+    ],
+    "id": 250,
+    "aliases": []
+  },
+  {
+    "owner_name": "Sellpoints",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sellpoint.net",
+      "sellpoints.com"
+    ],
+    "id": 251,
+    "aliases": []
+  },
+  {
+    "owner_name": "Semasio",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "semasio.com",
+      "semasio.net"
+    ],
+    "id": 252,
+    "aliases": []
+  },
+  {
+    "owner_name": "Shanghai 2345 Network Technology",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "2345.com",
+      "50bang.org"
+    ],
+    "id": 253,
+    "aliases": []
+  },
+  {
+    "owner_name": "Share This",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sharethis.com"
+    ],
+    "id": 254,
+    "aliases": []
+  },
+  {
+    "owner_name": "Sharethrough",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sharethrough.com",
+      "joinvan.com"
+    ],
+    "id": 255,
+    "aliases": []
+  },
+  {
+    "owner_name": "Signal Digital",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "signal.co",
+      "thebrighttag.com",
+      "btstatic.com"
+    ],
+    "id": 256,
+    "aliases": []
+  },
+  {
+    "owner_name": "simpli.fi",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "simpli.fi"
+    ],
+    "id": 257,
+    "aliases": []
+  },
+  {
+    "owner_name": "Sina",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sinacdn.com",
+      "sina.com.cn",
+      "sinajs.cn",
+      "sinaimg.cn",
+      "sina.com"
+    ],
+    "id": 258,
+    "aliases": []
+  },
+  {
+    "owner_name": "Siteimprove",
+    "parent_id": null,
+    "country": "DK",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "siteimprove.com",
+      "siteimproveanalytics.com"
+    ],
+    "id": 259,
+    "aliases": []
+  },
+  {
+    "owner_name": "SiteScout",
+    "parent_id": "Centro",
+    "country": "US",
+    "notes": "brand-server.com per cookiepedia, was very difficult to find info on!",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sitescout.com",
+      "sitescout.net"
+    ],
+    "id": 260,
+    "aliases": [
+      "Site Scout"
+    ]
+  },
+  {
+    "owner_name": "Sizmek",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mediamind.com",
+      "serving-sys.com"
+    ],
+    "id": 261,
+    "aliases": []
+  },
+  {
+    "owner_name": "SkyMotion",
+    "parent_id": "Accuweather",
+    "country": "US",
+    "notes": "Acquired by Accuweather in 2013, home page no longer active.",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "skymotion.com"
+    ],
+    "id": 262,
+    "aliases": [
+      "Sky Motion"
+    ]
+  },
+  {
+    "owner_name": "Smart Ad Server",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "smartadserver.com"
+    ],
+    "id": 263,
+    "aliases": []
+  },
+  {
+    "owner_name": "Soasta",
+    "parent_id": "Akamai",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.soasta.com/privacy-policy/",
+    "homepage_url": "https://www.soasta.com",
+    "domains": [
+      "go-mpulse.net",
+      "soasta.com"
+    ],
+    "id": 264,
+    "aliases": []
+  },
+  {
+    "owner_name": "Sogou",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sogou.com",
+      "sogoucdn.com"
+    ],
+    "id": 265,
+    "aliases": []
+  },
+  {
+    "owner_name": "Sohu",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ad-plus.cn",
+      "itc.cn",
+      "sohu.com",
+      "sohu.com.cn"
+    ],
+    "id": 266,
+    "aliases": []
+  },
+  {
+    "owner_name": "Sovrn",
+    "parent_id": null,
+    "country": "US",
+    "notes": "split off from federated media, taking lijit",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sovrn",
+      "lijit.com"
+    ],
+    "id": 267,
+    "aliases": []
+  },
+  {
+    "owner_name": "Sphere",
+    "parent_id": "Outbrain",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sphere.com"
+    ],
+    "id": 268,
+    "aliases": []
+  },
+  {
+    "owner_name": "Spot X Change",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "spotxcdn.com",
+      "spotxchange.com"
+    ],
+    "id": 269,
+    "aliases": []
+  },
+  {
+    "owner_name": "StackPath",
+    "parent_id": null,
+    "country": "US",
+    "notes": "used to be maxcdn",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bootstrapcdn.com",
+      "maxcdn.com",
+      "stackpath.com"
+    ],
+    "id": 270,
+    "aliases": [
+      "BootstrapCDN",
+      "MaxCDN"
+    ]
+  },
+  {
+    "owner_name": "Starcom Worldwide",
+    "parent_id": "Publicis Groupe",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": "http://www.starcomww.com",
+    "domains": [
+      "starcomww.com"
+    ],
+    "id": 271,
+    "aliases": []
+  },
+  {
+    "owner_name": "Statcounter",
+    "parent_id": null,
+    "country": "IE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "statcounter.com"
+    ],
+    "id": 272,
+    "aliases": []
+  },
+  {
+    "owner_name": "Stericycle",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "stericycle.com"
+    ],
+    "id": 273,
+    "aliases": []
+  },
+  {
+    "owner_name": "StickyADS.tv",
+    "parent_id": "Comcast",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "stickyadstv.com"
+    ],
+    "id": 274,
+    "aliases": [
+      "Sticky ADS",
+      "StickyAds"
+    ]
+  },
+  {
+    "owner_name": "Ströer",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "m6r.eu",
+      "stroeer.de"
+    ],
+    "id": 275,
+    "aliases": [
+      "mbr targeting"
+    ]
+  },
+  {
+    "owner_name": "Suning Corporation",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cnsuning.com",
+      "suning.cn"
+    ],
+    "id": 276,
+    "aliases": []
+  },
+  {
+    "owner_name": "Switch Concepts",
+    "parent_id": null,
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "switchads.com"
+    ],
+    "id": 277,
+    "aliases": []
+  },
+  {
+    "owner_name": "Taboola",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "perfectmarket.com",
+      "taboola.com"
+    ],
+    "id": 278,
+    "aliases": []
+  },
+  {
+    "owner_name": "TapAd",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tapad.com"
+    ],
+    "id": 279,
+    "aliases": [
+      "Tap Ad"
+    ]
+  },
+  {
+    "owner_name": "Teads",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "beead.fr",
+      "beezik.com",
+      "ebuzzing.com",
+      "teads.tv"
+    ],
+    "id": 280,
+    "aliases": []
+  },
+  {
+    "owner_name": "Telerik",
+    "parent_id": "Progress Software",
+    "country": "US",
+    "notes": "Acquired Telerik",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "telerik.com",
+      "telerikstatic.com"
+    ],
+    "id": 281,
+    "aliases": []
+  },
+  {
+    "owner_name": "Tencent",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "qq.com",
+      "qlogo.cn",
+      "idqqimg.com",
+      "tencent.com",
+      "qpic.cn",
+      "qq.com",
+      "qq.com",
+      "gtimg.com",
+      "paipai.com",
+      "paipaiimg.com",
+      "gtimg.cn",
+      "yeswan.com"
+    ],
+    "id": 282,
+    "aliases": []
+  },
+  {
+    "owner_name": "Terren Technology Development Company",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "webterren.com"
+    ],
+    "id": 283,
+    "aliases": []
+  },
+  {
+    "owner_name": "The ADEX",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "theadex.com"
+    ],
+    "id": 284,
+    "aliases": []
+  },
+  {
+    "owner_name": "The E.W. Scripps Company",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "newsy.com",
+      "cracked.com",
+      "connexity.net",
+      "uswitch.com",
+      "midroll.com",
+      "bizrate.com",
+      "weathersphere.com",
+      "shopzilla.com"
+    ],
+    "id": 285,
+    "aliases": []
+  },
+  {
+    "owner_name": "The Trade Desk",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.thetradedesk.com/general/privacy-policy",
+    "homepage_url": null,
+    "domains": [
+      "adsrvr.org",
+      "thetradedesk.com"
+    ],
+    "id": 286,
+    "aliases": []
+  },
+  {
+    "owner_name": "The Weather Company",
+    "parent_id": "International Business Machines",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "weather.com"
+    ],
+    "id": 287,
+    "aliases": []
+  },
+  {
+    "owner_name": "Tout",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tout.com"
+    ],
+    "id": 288,
+    "aliases": []
+  },
+  {
+    "owner_name": "TownNews.com",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "townnews.com",
+      "townnews365.com"
+    ],
+    "id": 289,
+    "aliases": []
+  },
+  {
+    "owner_name": "Tradedoubler",
+    "parent_id": null,
+    "country": "SE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adnologies.com",
+      "tradedoubler.com",
+      "tradedoubler.se"
+    ],
+    "id": 290,
+    "aliases": []
+  },
+  {
+    "owner_name": "Tribal Fusion",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tribalfusion.com",
+      "exponential.com"
+    ],
+    "id": 291,
+    "aliases": []
+  },
+  {
+    "owner_name": "TRUSTe",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "truste.com"
+    ],
+    "id": 292,
+    "aliases": []
+  },
+  {
+    "owner_name": "Trusted Shops",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "trustedshops.com",
+      "trustedshops.eu"
+    ],
+    "id": 293,
+    "aliases": []
+  },
+  {
+    "owner_name": "Tube Mogul",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tubemogul.com"
+    ],
+    "id": 294,
+    "aliases": []
+  },
+  {
+    "owner_name": "Tumblr",
+    "parent_id": "Yahoo",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tumblr.com"
+    ],
+    "id": 295,
+    "aliases": []
+  },
+  {
+    "owner_name": "Turn",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "turn.com"
+    ],
+    "id": 296,
+    "aliases": []
+  },
+  {
+    "owner_name": "Twitter",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://twitter.com/en/tos",
+    "homepage_url": null,
+    "domains": [
+      "ads-twitter.com",
+      "t.co",
+      "twimg.com",
+      "twitter.com"
+    ],
+    "id": 297,
+    "aliases": []
+  },
+  {
+    "owner_name": "Typekit",
+    "parent_id": "Adobe",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "everesttech.net",
+      "typekit.com",
+      "adobedtm.com",
+      "typekit.net",
+      "omtrdc.net",
+      "2o7.net",
+      "adobe.com"
+    ],
+    "id": 298,
+    "aliases": [
+      "Type Kit"
+    ]
+  },
+  {
+    "owner_name": "Undertone",
+    "parent_id": "Perion",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "undertone.com"
+    ],
+    "id": 299,
+    "aliases": []
+  },
+  {
+    "owner_name": "United Internet Media",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "1und1.de",
+      "gmx.net",
+      "tifbs.net",
+      "united-internet-media.de",
+      "web.de"
+    ],
+    "id": 300,
+    "aliases": []
+  },
+  {
+    "owner_name": "Upfront Media",
+    "parent_id": "Perion",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "thinkupfront.com",
+      "legolas-media.com"
+    ],
+    "id": 301,
+    "aliases": []
+  },
+  {
+    "owner_name": "V12 Data",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "http://www.v12data.com/v12-privacy-point-of-view/",
+    "homepage_url": "http://www.v12data.com",
+    "domains": [
+      "v12data.com",
+      "v12group.com"
+    ],
+    "id": 302,
+    "aliases": []
+  },
+  {
+    "owner_name": "Valueclick",
+    "parent_id": "Conversant Media",
+    "country": "US",
+    "notes": "Valueclick appears fully merged with Conversant, not clear if this domain operates independently now.",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "valueclick.com"
+    ],
+    "id": 303,
+    "aliases": [
+      "Value Click"
+    ]
+  },
+  {
+    "owner_name": "Ve Interactive",
+    "parent_id": null,
+    "country": "UK",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "veinteractive.com"
+    ],
+    "id": 304,
+    "aliases": []
+  },
+  {
+    "owner_name": "Verizon",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "verizon.com"
+    ],
+    "id": 305,
+    "aliases": []
+  },
+  {
+    "owner_name": "Vessel",
+    "parent_id": "Verizon",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "vessel.com"
+    ],
+    "id": 306,
+    "aliases": []
+  },
+  {
+    "owner_name": "Vibrant Media",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "intellitxt.com",
+      "vibrantmedia.com"
+    ],
+    "id": 307,
+    "aliases": []
+  },
+  {
+    "owner_name": "Videology Group",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tidaltv.com",
+      "videologygroup.com"
+    ],
+    "id": 308,
+    "aliases": []
+  },
+  {
+    "owner_name": "Vimeo",
+    "parent_id": "IAC",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "vimeo.com"
+    ],
+    "id": 309,
+    "aliases": [
+      "Vimeo"
+    ]
+  },
+  {
+    "owner_name": "Visual Website Optimizer",
+    "parent_id": "Wingify",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "wingify.com"
+    ],
+    "id": 310,
+    "aliases": []
+  },
+  {
+    "owner_name": "Vizu",
+    "parent_id": "Nielsen Online",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "vizu.com"
+    ],
+    "id": 311,
+    "aliases": []
+  },
+  {
+    "owner_name": "VoiceFive",
+    "parent_id": "comScore",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "voicefive.com"
+    ],
+    "id": 312,
+    "aliases": [
+      "Voice Five"
+    ]
+  },
+  {
+    "owner_name": "Weather Underground",
+    "parent_id": "International Business Machines",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "wunderground.com"
+    ],
+    "id": 313,
+    "aliases": []
+  },
+  {
+    "owner_name": "Weather.com.cn",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "weather.com.cn"
+    ],
+    "id": 314,
+    "aliases": []
+  },
+  {
+    "owner_name": "Webcollage",
+    "parent_id": "AFCV Holdings",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "webcollage.com"
+    ],
+    "id": 315,
+    "aliases": []
+  },
+  {
+    "owner_name": "WebMD",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "webmd.com"
+    ],
+    "id": 316,
+    "aliases": []
+  },
+  {
+    "owner_name": "Webtrekk",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "wbtrk.net",
+      "webtrekk.com"
+    ],
+    "id": 317,
+    "aliases": []
+  },
+  {
+    "owner_name": "WebTrends",
+    "parent_id": "NetIQ",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "webtrends.com",
+      "webtrendslive.com"
+    ],
+    "id": 318,
+    "aliases": [
+      "Web Trends"
+    ]
+  },
+  {
+    "owner_name": "Weibo",
+    "parent_id": "Sina",
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "weibo.com"
+    ],
+    "id": 319,
+    "aliases": []
+  },
+  {
+    "owner_name": "whos.amung.us",
+    "parent_id": null,
+    "country": "CA",
+    "notes": null,
+    "privacy_policy_url": "http://whos.amung.us/legal/privacy/",
+    "homepage_url": "http://whos.amung.us",
+    "domains": [
+      "amung.us"
+    ],
+    "id": 320,
+    "aliases": []
+  },
+  {
+    "owner_name": "Wikimedia Foundation",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "wikimedia.org"
+    ],
+    "id": 321,
+    "aliases": []
+  },
+  {
+    "owner_name": "Wingify",
+    "parent_id": null,
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "wingify.com"
+    ],
+    "id": 322,
+    "aliases": []
+  },
+  {
+    "owner_name": "Wisecode",
+    "parent_id": null,
+    "country": "IT",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": "http://wisecode.it",
+    "domains": [
+      "wisecode.it"
+    ],
+    "id": 323,
+    "aliases": []
+  },
+  {
+    "owner_name": "Wordpress",
+    "parent_id": "Automattic",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "wordpress.com",
+      "wp.com"
+    ],
+    "id": 324,
+    "aliases": [
+      "Word Press"
+    ]
+  },
+  {
+    "owner_name": "WPP",
+    "parent_id": null,
+    "country": "UK",
+    "notes": "Owns many properties, inc. XAXIS; plista aquired 2014 by groupm, which is WPP",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "wpp.com"
+    ],
+    "id": 325,
+    "aliases": []
+  },
+  {
+    "owner_name": "x+1",
+    "parent_id": "Rocketfuel",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "xplusone.net"
+    ],
+    "id": 326,
+    "aliases": []
+  },
+  {
+    "owner_name": "Xaxis",
+    "parent_id": "WPP",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "xaxis.com"
+    ],
+    "id": 327,
+    "aliases": []
+  },
+  {
+    "owner_name": "xplosion Interactive",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "xplosion.de"
+    ],
+    "id": 328,
+    "aliases": [
+      "xplosion"
+    ]
+  },
+  {
+    "owner_name": "Yadro",
+    "parent_id": null,
+    "country": "RU",
+    "notes": "Widely classified as malware",
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "yadro.ru"
+    ],
+    "id": 329,
+    "aliases": []
+  },
+  {
+    "owner_name": "Yahoo",
+    "parent_id": "Oath",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "yahoo.com",
+      "yieldmanager.com",
+      "yimg.com"
+    ],
+    "id": 330,
+    "aliases": [
+      "Yahoo!"
+    ]
+  },
+  {
+    "owner_name": "Yandex",
+    "parent_id": null,
+    "country": "RU",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "yandex.ru",
+      "yandex.net"
+    ],
+    "id": 331,
+    "aliases": []
+  },
+  {
+    "owner_name": "Yieldlab",
+    "parent_id": null,
+    "country": "DE",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "yieldlab.net",
+      "yieldlab.de"
+    ],
+    "id": 332,
+    "aliases": []
+  },
+  {
+    "owner_name": "Youku Tudou",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tdimg.com",
+      "tudou.com",
+      "tudouui.com",
+      "ykimg.com",
+      "youku.com"
+    ],
+    "id": 333,
+    "aliases": []
+  },
+  {
+    "owner_name": "YouTube",
+    "parent_id": "Google",
+    "country": "US",
+    "notes": null,
+    "privacy_policy_url": "https://www.google.com/intl/en/policies/privacy",
+    "homepage_url": "https://youtube.com",
+    "domains": [
+      "youtu.be",
+      "youtube.com",
+      "youtubeeducation.com",
+      "ytimg.com"
+    ],
+    "id": 334,
+    "aliases": [
+      "You Tube"
+    ]
+  },
+  {
+    "owner_name": "Zamplus Advertising",
+    "parent_id": null,
+    "country": "CN",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "chinauma.net",
+      "gtags.net",
+      "zamplus.com"
+    ],
+    "id": 335,
+    "aliases": []
+  },
+  {
+    "owner_name": "Medialytics",
+    "parent_id": "",
+    "country": "",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "medialytics.com"
+    ],
+    "id": 336,
+    "aliases": null
+  },
+  {
+    "owner_name": "Openx Technologies",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "servedbyopenx.com"
+    ],
+    "id": 337,
+    "aliases": null
+  },
+  {
+    "owner_name": "Urbanairship",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "urbanairship.com",
+      "urbanairship.com"
+    ],
+    "id": 338,
+    "aliases": null
+  },
+  {
+    "owner_name": "Impact Radius",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      ""
+    ],
+    "id": 339,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mocomplex",
+    "parent_id": "",
+    "country": "kr",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adlibr.com"
+    ],
+    "id": 340,
+    "aliases": null
+  },
+  {
+    "owner_name": "The Mcgraw-Hill Companies",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "korrelate.net"
+    ],
+    "id": 341,
+    "aliases": null
+  },
+  {
+    "owner_name": "Tapjoy",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tapjoyads.com"
+    ],
+    "id": 342,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adfox",
+    "parent_id": "",
+    "country": "ru",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adfox.ru"
+    ],
+    "id": 343,
+    "aliases": null
+  },
+  {
+    "owner_name": "Vungle",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "vungle.com"
+    ],
+    "id": 344,
+    "aliases": null
+  },
+  {
+    "owner_name": "Gfk",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sensic.net"
+    ],
+    "id": 345,
+    "aliases": null
+  },
+  {
+    "owner_name": "Research Now",
+    "parent_id": "e-Rewards",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "researchnow.com"
+    ],
+    "id": 346,
+    "aliases": null
+  },
+  {
+    "owner_name": "Microad",
+    "parent_id": "",
+    "country": "sg",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "microad.jp"
+    ],
+    "id": 347,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mediametrie",
+    "parent_id": "",
+    "country": "ro",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "estat.com"
+    ],
+    "id": 348,
+    "aliases": null
+  },
+  {
+    "owner_name": "Webklipper",
+    "parent_id": "",
+    "country": "in",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "webengage.com"
+    ],
+    "id": 349,
+    "aliases": null
+  },
+  {
+    "owner_name": "Bugsnag",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bugsnag.com"
+    ],
+    "id": 350,
+    "aliases": null
+  },
+  {
+    "owner_name": "Appsflyer",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "appsflyer.com"
+    ],
+    "id": 351,
+    "aliases": null
+  },
+  {
+    "owner_name": "Milkman",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "milkmangames.com",
+      "milkmanplugins.com"
+    ],
+    "id": 352,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adbuddiz",
+    "parent_id": "",
+    "country": "fr",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adbuddiz.com"
+    ],
+    "id": 353,
+    "aliases": null
+  },
+  {
+    "owner_name": "Clicktale",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "clicktale.net"
+    ],
+    "id": 354,
+    "aliases": null
+  },
+  {
+    "owner_name": "Appier Inc",
+    "parent_id": "",
+    "country": "tw",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "appier.net"
+    ],
+    "id": 355,
+    "aliases": null
+  },
+  {
+    "owner_name": "Eyeview",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "eyeviewads.com"
+    ],
+    "id": 356,
+    "aliases": null
+  },
+  {
+    "owner_name": "Steelhouse",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "steelhousemedia.com"
+    ],
+    "id": 357,
+    "aliases": null
+  },
+  {
+    "owner_name": "Datapop",
+    "parent_id": "Criteo",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      ""
+    ],
+    "id": 358,
+    "aliases": null
+  },
+  {
+    "owner_name": "Upsight / Upsight-Api\n",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "upsight-api.com"
+    ],
+    "id": 359,
+    "aliases": null
+  },
+  {
+    "owner_name": "Myspace",
+    "parent_id": "Specific Media",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "vindicosuite.com"
+    ],
+    "id": 360,
+    "aliases": null
+  },
+  {
+    "owner_name": "Tumri",
+    "parent_id": "Collective",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tumri.net"
+    ],
+    "id": 361,
+    "aliases": null
+  },
+  {
+    "owner_name": "Flurry",
+    "parent_id": "Yahoo",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "flurry.com"
+    ],
+    "id": 362,
+    "aliases": null
+  },
+  {
+    "owner_name": "Brandscreen Pty Ltd",
+    "parent_id": "",
+    "country": "au",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "rtbidder.net"
+    ],
+    "id": 363,
+    "aliases": null
+  },
+  {
+    "owner_name": "Sojern",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sojern.com"
+    ],
+    "id": 364,
+    "aliases": null
+  },
+  {
+    "owner_name": "Admaxim",
+    "parent_id": "",
+    "country": "",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "admaxim.com"
+    ],
+    "id": 365,
+    "aliases": null
+  },
+  {
+    "owner_name": "Admob",
+    "parent_id": "Google",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "admob.com"
+    ],
+    "id": 366,
+    "aliases": null
+  },
+  {
+    "owner_name": "Zoopla",
+    "parent_id": "The Property Software Group",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "zoocdn.com"
+    ],
+    "id": 367,
+    "aliases": null
+  },
+  {
+    "owner_name": "Swrve",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "swrve.com"
+    ],
+    "id": 368,
+    "aliases": null
+  },
+  {
+    "owner_name": "Visual Website Optimizer",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "visualwebsiteoptimizer.com"
+    ],
+    "id": 369,
+    "aliases": null
+  },
+  {
+    "owner_name": "Igaworks",
+    "parent_id": "",
+    "country": "kr",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "igaworks.com"
+    ],
+    "id": 370,
+    "aliases": null
+  },
+  {
+    "owner_name": "Intent Iq",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "intentiq.com"
+    ],
+    "id": 371,
+    "aliases": null
+  },
+  {
+    "owner_name": "Skimlinks",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "skimresources.com"
+    ],
+    "id": 372,
+    "aliases": null
+  },
+  {
+    "owner_name": "Daum",
+    "parent_id": "",
+    "country": "kr",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "daum.net"
+    ],
+    "id": 373,
+    "aliases": null
+  },
+  {
+    "owner_name": "Stickyads",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "stickyads.tv"
+    ],
+    "id": 374,
+    "aliases": null
+  },
+  {
+    "owner_name": "Foursquare",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "4sqi.net",
+      "foursquare.com"
+    ],
+    "id": 375,
+    "aliases": null
+  },
+  {
+    "owner_name": "Hyprmx",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "hyprmx.com"
+    ],
+    "id": 376,
+    "aliases": null
+  },
+  {
+    "owner_name": "Triplelift",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "3lift.com"
+    ],
+    "id": 377,
+    "aliases": null
+  },
+  {
+    "owner_name": "Hotjar",
+    "parent_id": "",
+    "country": "Malta",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "hotjar.com"
+    ],
+    "id": 378,
+    "aliases": null
+  },
+  {
+    "owner_name": "Hilton",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "hilton.com"
+    ],
+    "id": 379,
+    "aliases": null
+  },
+  {
+    "owner_name": "Jumptap",
+    "parent_id": "",
+    "country": "",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "jumptap.com"
+    ],
+    "id": 380,
+    "aliases": null
+  },
+  {
+    "owner_name": "Yieldoptimizer",
+    "parent_id": "",
+    "country": "",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "yieldoptimizer.com"
+    ],
+    "id": 381,
+    "aliases": null
+  },
+  {
+    "owner_name": "Cxense Asa",
+    "parent_id": "",
+    "country": "no",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cxense.com"
+    ],
+    "id": 382,
+    "aliases": null
+  },
+  {
+    "owner_name": "Pagefair",
+    "parent_id": "",
+    "country": "il",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "pagefair.com",
+      "pagefair.net"
+    ],
+    "id": 383,
+    "aliases": null
+  },
+  {
+    "owner_name": "Sailthru",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sail-horizon.com"
+    ],
+    "id": 384,
+    "aliases": null
+  },
+  {
+    "owner_name": "Visualdna",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "visualdna.com"
+    ],
+    "id": 385,
+    "aliases": null
+  },
+  {
+    "owner_name": "Digitalwindow",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "zenaps.com"
+    ],
+    "id": 386,
+    "aliases": null
+  },
+  {
+    "owner_name": "Spearhead",
+    "parent_id": "",
+    "country": "cn",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      ""
+    ],
+    "id": 387,
+    "aliases": null
+  },
+  {
+    "owner_name": "Aerserv",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "aerserv.com"
+    ],
+    "id": 388,
+    "aliases": null
+  },
+  {
+    "owner_name": "Cauley",
+    "parent_id": "",
+    "country": "kr",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cauley.net"
+    ],
+    "id": 389,
+    "aliases": null
+  },
+  {
+    "owner_name": "Applovin",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "applovin.com"
+    ],
+    "id": 390,
+    "aliases": null
+  },
+  {
+    "owner_name": "Weborama",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "weborama.fr"
+    ],
+    "id": 391,
+    "aliases": null
+  },
+  {
+    "owner_name": "Vizury",
+    "parent_id": "",
+    "country": "in",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "vizury.com"
+    ],
+    "id": 392,
+    "aliases": null
+  },
+  {
+    "owner_name": "Appnext",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "appnext.com"
+    ],
+    "id": 393,
+    "aliases": null
+  },
+  {
+    "owner_name": "Nativex",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "nativex.com"
+    ],
+    "id": 394,
+    "aliases": null
+  },
+  {
+    "owner_name": "Marin Software",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "marinsm.com",
+      "prfct.co",
+      "perfectaudience.com"
+    ],
+    "id": 395,
+    "aliases": null
+  },
+  {
+    "owner_name": "Nexage",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "nexage.com"
+    ],
+    "id": 396,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mobfox",
+    "parent_id": "",
+    "country": "at",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mobfox.com"
+    ],
+    "id": 397,
+    "aliases": null
+  },
+  {
+    "owner_name": "Convertmedia",
+    "parent_id": "Taboola",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "basebanner.com"
+    ],
+    "id": 398,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mailchimp",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mailchimp.com"
+    ],
+    "id": 399,
+    "aliases": null
+  },
+  {
+    "owner_name": "Admarvel",
+    "parent_id": "Opera ",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "admarvel.com"
+    ],
+    "id": 400,
+    "aliases": null
+  },
+  {
+    "owner_name": "Sonobi",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sonobi.com"
+    ],
+    "id": 401,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adelphic Inc",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ipredictive.com"
+    ],
+    "id": 402,
+    "aliases": null
+  },
+  {
+    "owner_name": "Yieldbot",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "yldbt.com"
+    ],
+    "id": 403,
+    "aliases": null
+  },
+  {
+    "owner_name": "Flashtalking",
+    "parent_id": "Encore Media Metrics",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "flashtalking.com"
+    ],
+    "id": 404,
+    "aliases": null
+  },
+  {
+    "owner_name": "Millenialmedia",
+    "parent_id": "AOL",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "millenialmedia.com"
+    ],
+    "id": 405,
+    "aliases": null
+  },
+  {
+    "owner_name": "Tnkfactory",
+    "parent_id": "",
+    "country": "kr",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tnkfactory.com"
+    ],
+    "id": 406,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adriver",
+    "parent_id": "",
+    "country": "ru",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adriver.ru"
+    ],
+    "id": 407,
+    "aliases": null
+  },
+  {
+    "owner_name": "Movableink",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "micpn.com"
+    ],
+    "id": 408,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adquantic",
+    "parent_id": "Criteo",
+    "country": "fr",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      ""
+    ],
+    "id": 409,
+    "aliases": null
+  },
+  {
+    "owner_name": "Chartboost",
+    "parent_id": "",
+    "country": "",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "chartboost.com"
+    ],
+    "id": 410,
+    "aliases": null
+  },
+  {
+    "owner_name": "Longtail Ad Solutions",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "jwpcdn.com"
+    ],
+    "id": 411,
+    "aliases": null
+  },
+  {
+    "owner_name": "Deep Forest Media",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "dpclk.com"
+    ],
+    "id": 412,
+    "aliases": null
+  },
+  {
+    "owner_name": "Wish",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "wish.com"
+    ],
+    "id": 413,
+    "aliases": null
+  },
+  {
+    "owner_name": "Forensiq",
+    "parent_id": "Impact Radius",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "fqtag.com"
+    ],
+    "id": 414,
+    "aliases": null
+  },
+  {
+    "owner_name": "Pixalate",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adrta.com"
+    ],
+    "id": 415,
+    "aliases": null
+  },
+  {
+    "owner_name": "Richrelevance",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "richrelevance.com"
+    ],
+    "id": 416,
+    "aliases": null
+  },
+  {
+    "owner_name": "Smart Adserver",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sascdn.com"
+    ],
+    "id": 417,
+    "aliases": null
+  },
+  {
+    "owner_name": "Opt",
+    "parent_id": "",
+    "country": "jp",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "advg.jp"
+    ],
+    "id": 418,
+    "aliases": null
+  },
+  {
+    "owner_name": "Smaato",
+    "parent_id": "Spearhead Integrated Marketing Communication ",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "smaato.net"
+    ],
+    "id": 419,
+    "aliases": null
+  },
+  {
+    "owner_name": "GetIntent Ltd",
+    "parent_id": "",
+    "country": "ru",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adhigh.net"
+    ],
+    "id": 420,
+    "aliases": null
+  },
+  {
+    "owner_name": "Appboy",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "appboy.com"
+    ],
+    "id": 421,
+    "aliases": null
+  },
+  {
+    "owner_name": "Apsalar",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "apsalar.com"
+    ],
+    "id": 422,
+    "aliases": null
+  },
+  {
+    "owner_name": "Lifestreet",
+    "parent_id": "Facebook",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "lfstmedia.com",
+      "revjet.com",
+      "lfstmedia.com"
+    ],
+    "id": 423,
+    "aliases": null
+  },
+  {
+    "owner_name": "Springserve",
+    "parent_id": "",
+    "country": "au",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "springserve.com"
+    ],
+    "id": 424,
+    "aliases": null
+  },
+  {
+    "owner_name": "Loopme",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "loopme.me"
+    ],
+    "id": 425,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mologiq",
+    "parent_id": "",
+    "country": "",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mologiq.net"
+    ],
+    "id": 426,
+    "aliases": null
+  },
+  {
+    "owner_name": "Fyber",
+    "parent_id": "RNTS Media",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sponsorpay.com"
+    ],
+    "id": 427,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mobvista",
+    "parent_id": "",
+    "country": "cn",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mobvista.com"
+    ],
+    "id": 428,
+    "aliases": null
+  },
+  {
+    "owner_name": "Eq Works",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "eqads.com"
+    ],
+    "id": 429,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adblade",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adblade.com"
+    ],
+    "id": 430,
+    "aliases": null
+  },
+  {
+    "owner_name": "Flksu",
+    "parent_id": "Noosphere",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "fiksu.com"
+    ],
+    "id": 431,
+    "aliases": null
+  },
+  {
+    "owner_name": "Bounce Exchange",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bounceexchange.com"
+    ],
+    "id": 432,
+    "aliases": null
+  },
+  {
+    "owner_name": "Appodeal",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "appodeal.com"
+    ],
+    "id": 433,
+    "aliases": null
+  },
+  {
+    "owner_name": "Meltdsp",
+    "parent_id": "",
+    "country": "br",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "meltdsp.com"
+    ],
+    "id": 434,
+    "aliases": null
+  },
+  {
+    "owner_name": "Applifier",
+    "parent_id": "Unity Technologies",
+    "country": "fi",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "applifier.com"
+    ],
+    "id": 435,
+    "aliases": null
+  },
+  {
+    "owner_name": "Nativo",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ntv.io",
+      "ntv.io"
+    ],
+    "id": 436,
+    "aliases": null
+  },
+  {
+    "owner_name": "Brandcrumb",
+    "parent_id": "Kato Capital Group",
+    "country": "es",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "brandcrumb.com"
+    ],
+    "id": 437,
+    "aliases": null
+  },
+  {
+    "owner_name": "Pingdom Ab",
+    "parent_id": "SolarWinds",
+    "country": "se",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "pingdom.net"
+    ],
+    "id": 438,
+    "aliases": null
+  },
+  {
+    "owner_name": "Fractional Media",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "fractionalmedia.com"
+    ],
+    "id": 439,
+    "aliases": null
+  },
+  {
+    "owner_name": "Groupm",
+    "parent_id": "The Exchange Lab",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "qservz.com"
+    ],
+    "id": 440,
+    "aliases": null
+  },
+  {
+    "owner_name": "Effective Measure",
+    "parent_id": "",
+    "country": "au",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "effectivemeasure.net"
+    ],
+    "id": 441,
+    "aliases": null
+  },
+  {
+    "owner_name": "Oceanfinance",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "oceanfinance.com",
+      "oceanfinance.co.uk"
+    ],
+    "id": 442,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mcro",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "segment.com",
+      "segment.io"
+    ],
+    "id": 443,
+    "aliases": null
+  },
+  {
+    "owner_name": "Qualtrics",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "qualtrics.com"
+    ],
+    "id": 444,
+    "aliases": null
+  },
+  {
+    "owner_name": "Trueffect",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adlegend.com"
+    ],
+    "id": 445,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mythings",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mythings.com"
+    ],
+    "id": 446,
+    "aliases": null
+  },
+  {
+    "owner_name": "Millennialmedia",
+    "parent_id": "",
+    "country": "",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mydas.mobi",
+      "millennialmedia.com"
+    ],
+    "id": 447,
+    "aliases": null
+  },
+  {
+    "owner_name": "Manage\n",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "manage.com"
+    ],
+    "id": 448,
+    "aliases": null
+  },
+  {
+    "owner_name": "Webtrends",
+    "parent_id": "NetIQ",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "webtrends.com"
+    ],
+    "id": 449,
+    "aliases": null
+  },
+  {
+    "owner_name": "Omniture",
+    "parent_id": "Adobe",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "207.net"
+    ],
+    "id": 450,
+    "aliases": null
+  },
+  {
+    "owner_name": "Bingads",
+    "parent_id": "Microsoft",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bing.com"
+    ],
+    "id": 451,
+    "aliases": null
+  },
+  {
+    "owner_name": "Leanplum",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "leanplum.com"
+    ],
+    "id": 452,
+    "aliases": null
+  },
+  {
+    "owner_name": "Nxt",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "nxtds.com"
+    ],
+    "id": 453,
+    "aliases": null
+  },
+  {
+    "owner_name": "Navegg S.A.",
+    "parent_id": "Dentsu Aegis Network",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "navdmp.com"
+    ],
+    "id": 454,
+    "aliases": null
+  },
+  {
+    "owner_name": "Datonics",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "pro-market.net"
+    ],
+    "id": 455,
+    "aliases": null
+  },
+  {
+    "owner_name": "Polar Mobile Group",
+    "parent_id": "",
+    "country": "ca",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "polarmobile.com"
+    ],
+    "id": 456,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adstir",
+    "parent_id": "",
+    "country": "jp",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ad-stir.com"
+    ],
+    "id": 457,
+    "aliases": null
+  },
+  {
+    "owner_name": "Primelocation",
+    "parent_id": "Zoopla",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "primelocation.com"
+    ],
+    "id": 458,
+    "aliases": null
+  },
+  {
+    "owner_name": "Awin1",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "awin1.com"
+    ],
+    "id": 459,
+    "aliases": null
+  },
+  {
+    "owner_name": "Tedemis",
+    "parent_id": "Criteo",
+    "country": "fr",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      ""
+    ],
+    "id": 460,
+    "aliases": null
+  },
+  {
+    "owner_name": "Liftoff",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "liftoff.io"
+    ],
+    "id": 461,
+    "aliases": null
+  },
+  {
+    "owner_name": "Livefyre",
+    "parent_id": "Adobe",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "livefyre.com"
+    ],
+    "id": 462,
+    "aliases": null
+  },
+  {
+    "owner_name": "Branch",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "branch.io",
+      "bnc.lt"
+    ],
+    "id": 463,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mail.Ru",
+    "parent_id": "",
+    "country": "ru",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mail.ru"
+    ],
+    "id": 464,
+    "aliases": null
+  },
+  {
+    "owner_name": "Superawesome",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "superawesome.tv"
+    ],
+    "id": 465,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mediaforge",
+    "parent_id": "Rakuten",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mediaforge.com"
+    ],
+    "id": 466,
+    "aliases": null
+  },
+  {
+    "owner_name": "Inmobi",
+    "parent_id": "",
+    "country": "sg",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "inmobi.com",
+      "inmobicdn.net"
+    ],
+    "id": 467,
+    "aliases": null
+  },
+  {
+    "owner_name": "Intowow",
+    "parent_id": "AOL",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "intowow.com"
+    ],
+    "id": 468,
+    "aliases": null
+  },
+  {
+    "owner_name": "Komoona",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "komoona.com"
+    ],
+    "id": 469,
+    "aliases": null
+  },
+  {
+    "owner_name": "Sumo Logic",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "sumologic.com"
+    ],
+    "id": 470,
+    "aliases": null
+  },
+  {
+    "owner_name": "Cheetahmobile",
+    "parent_id": "",
+    "country": "cn",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "cmcm.com",
+      "ijinshan.com",
+      "liebao.cn",
+      "ksmobile.com",
+      "adkmob.com"
+    ],
+    "id": 471,
+    "aliases": null
+  },
+  {
+    "owner_name": "Playhaven",
+    "parent_id": "Science",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "playhaven.com"
+    ],
+    "id": 472,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adcolony",
+    "parent_id": "Opera",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adcolony.com"
+    ],
+    "id": 473,
+    "aliases": null
+  },
+  {
+    "owner_name": "Pingstart",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "pingstart.com"
+    ],
+    "id": 474,
+    "aliases": null
+  },
+  {
+    "owner_name": "Revmob",
+    "parent_id": "",
+    "country": "de",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "revmob.com"
+    ],
+    "id": 475,
+    "aliases": null
+  },
+  {
+    "owner_name": "Adsnative",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "adsnative.com"
+    ],
+    "id": 476,
+    "aliases": null
+  },
+  {
+    "owner_name": "Zedo",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "zedo.com"
+    ],
+    "id": 477,
+    "aliases": null
+  },
+  {
+    "owner_name": "Viglink",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "viglink.com"
+    ],
+    "id": 478,
+    "aliases": null
+  },
+  {
+    "owner_name": "Admeta",
+    "parent_id": "WideOrbit",
+    "country": "se",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "admaym.com"
+    ],
+    "id": 479,
+    "aliases": null
+  },
+  {
+    "owner_name": "Localytics",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "localytics.com",
+      "localytics.com"
+    ],
+    "id": 480,
+    "aliases": null
+  },
+  {
+    "owner_name": "Ironsource",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "ironbeast.io",
+      "ssacdn.com",
+      "supersonicads.com",
+      "ultraadserver.com"
+    ],
+    "id": 481,
+    "aliases": null
+  },
+  {
+    "owner_name": "I-Mobile",
+    "parent_id": "",
+    "country": "jp",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "i-mobile.co.jp"
+    ],
+    "id": 482,
+    "aliases": null
+  },
+  {
+    "owner_name": "Celtra",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "celtra.com"
+    ],
+    "id": 483,
+    "aliases": null
+  },
+  {
+    "owner_name": "Statiq",
+    "parent_id": "",
+    "country": "uk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "statiqmedia.com"
+    ],
+    "id": 484,
+    "aliases": null
+  },
+  {
+    "owner_name": "Netseer",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "netseer.com"
+    ],
+    "id": 485,
+    "aliases": null
+  },
+  {
+    "owner_name": "Mopub",
+    "parent_id": "Twitter",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "mopub.com"
+    ],
+    "id": 486,
+    "aliases": null
+  },
+  {
+    "owner_name": "Demandbase",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "demandbase.com",
+      "company-target.com"
+    ],
+    "id": 487,
+    "aliases": null
+  },
+  {
+    "owner_name": "Comscore",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      ""
+    ],
+    "id": 488,
+    "aliases": null
+  },
+  {
+    "owner_name": "Tune",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "measurementapi.com",
+      "mobileapptracking.com"
+    ],
+    "id": 489,
+    "aliases": null
+  },
+  {
+    "owner_name": "Shoppinginternationalholding",
+    "parent_id": "eBay",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "shoppingshadow.com"
+    ],
+    "id": 490,
+    "aliases": null
+  },
+  {
+    "owner_name": "Tns",
+    "parent_id": "",
+    "country": "ru",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tns-counter.ru"
+    ],
+    "id": 491,
+    "aliases": null
+  },
+  {
+    "owner_name": "Taplytics",
+    "parent_id": "",
+    "country": "",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "taplytics.com"
+    ],
+    "id": 492,
+    "aliases": null
+  },
+  {
+    "owner_name": "Stickyads.Tv",
+    "parent_id": "FreeWheel",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "stickyads.tv"
+    ],
+    "id": 493,
+    "aliases": null
+  },
+  {
+    "owner_name": "Sociomantic\n",
+    "parent_id": "Dunnhumby",
+    "country": "dk",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "",
+      "sociomantic.com"
+    ],
+    "id": 494,
+    "aliases": null
+  },
+  {
+    "owner_name": "Thirdpresence",
+    "parent_id": "",
+    "country": "fi",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "thirdpresence.com"
+    ],
+    "id": 495,
+    "aliases": null
+  },
+  {
+    "owner_name": "Parsely",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "parsely.com"
+    ],
+    "id": 496,
+    "aliases": null
+  },
+  {
+    "owner_name": "Jivox",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "jivox.com"
+    ],
+    "id": 497,
+    "aliases": null
+  },
+  {
+    "owner_name": "Tapsense",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tapsense.com"
+    ],
+    "id": 498,
+    "aliases": null
+  },
+  {
+    "owner_name": "Presage",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "presage.io"
+    ],
+    "id": 499,
+    "aliases": null
+  },
+  {
+    "owner_name": "Pubnative",
+    "parent_id": "",
+    "country": "de",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "pubnative.net"
+    ],
+    "id": 500,
+    "aliases": null
+  },
+  {
+    "owner_name": "Machinezone",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "machinezone.com"
+    ],
+    "id": 501,
+    "aliases": null
+  },
+  {
+    "owner_name": "Otherlevels",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "otherlevels.com"
+    ],
+    "id": 502,
+    "aliases": null
+  },
+  {
+    "owner_name": "Tealium",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "tiqcdn.com"
+    ],
+    "id": 503,
+    "aliases": null
+  },
+  {
+    "owner_name": "Sourcepoint Technologies",
+    "parent_id": "",
+    "country": "us",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "atticwicket.com"
+    ],
+    "id": 504,
+    "aliases": null
+  },
+  {
+    "owner_name": "Bidtheatre",
+    "parent_id": "",
+    "country": "se",
+    "notes": null,
+    "privacy_policy_url": null,
+    "homepage_url": null,
+    "domains": [
+      "bidtheatre.com"
+    ],
+    "id": 505,
+    "aliases": null
+  }
+]
