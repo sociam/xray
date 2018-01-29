@@ -1,0 +1,101 @@
+hosts,refCount,propOfApps,company,country,parent_id
+plus.google.com,662186,0.6901897592935776,Google,US,Alphabet
+www.googleapis.com,636070,0.662969317070832,Google,US,Alphabet
+www.google.com,615267,0.6412865609228852,Google,US,Alphabet
+schemas.android.com,611950,0.6378292854269115,Google,US,Alphabet
+googleads.g.doubleclick.net,581795,0.6063990344226652,DoubleClick,US,Google
+play.google.com,422068,0.43991720049279465,Google,US,Alphabet
+csi.gstatic.com,421463,0.4392866151219583,Google,US,Alphabet
+goo.gl,411176,0.42856457923800273,Google,US,Alphabet
+ssl.google-analytics.com,373419,0.38921084064847106,Google Analytics,US,Google
+www.google-analytics.com,373141,0.3889210840648471,Google Analytics,US,Google
+www.googletagmanager.com,324898,0.3386378939073988,Google Tag Manager,US,Google
+www.facebook.com,318180,0.3316357905664429,Facebook,US,NA
+pagead2.googlesyndication.com,279441,0.29125852332540497,Google,US,Alphabet
+twitter.com,265043,0.2762516337893699,Twitter,US,NA
+accounts.google.com,214333,0.22339711452472624,Google,US,Alphabet
+www.linkedin.com,193198,0.20136831814022135,LinkedIn,US,NA
+login.yahoo.com,189660,0.19768069658316534,Yahoo,US,Oath
+login.live.com,189001,0.1969938275593949,Microsoft,US,NA
+graph.facebook.com,159704,0.1664578612628801,Facebook,US,NA
+developers.facebook.com,140443,0.14638231609316404,Facebook,US,NA
+facebook.com,136708,0.1424893634318853,Facebook,US,NA
+.facebook.com,135955,0.14170451916041465,Facebook,US,NA
+media.admob.com,135633,0.14136890182254808,Admob,US,Google
+market.android.com,119132,0.12417007669168857,Google,US,Alphabet
+m.facebook.com,114266,0.11909829418840015,Facebook,US,NA
+developer.android.com,90408,0.09423134249019727,Google,US,Alphabet
+support.google.com,77633,0.08091608941179414,Google,US,Alphabet
+maps.google.com,73731,0.07684907434236721,Google,US,Alphabet
+www.youtube.com,73330,0.07643111610483769,YouTube,US,Google
+sb-ssl.google.com,70438,0.0734168138032532,Google,US,Alphabet
+api.twitter.com,66469,0.06927996531259316,Twitter,US,NA
+www.amazon.com,64361,0.067082818268423,Amazon,US,NA
+graph.%s.facebook.com,64218,0.0669337708171344,Facebook,US,NA
+www.%s.facebook.com,63392,0.06607283938521574,Facebook,US,NA
+maps.googleapis.com,60910,0.06348587592998313,Google,US,Alphabet
+ssl.gstatic.com,60394,0.06294805435750125,Google,US,Alphabet
+api.facebook.com,58169,0.060628959398640436,Facebook,US,NA
+data.flurry.com,57665,0.060103645304588366,Flurry,US,Yahoo
+docs.google.com,51476,0.05365291330441326,Google,US,Alphabet
+live.chartboost.com,50597,0.0527367405094296,Chartboost,,
+code.google.com,50243,0.05236776989575017,Google,US,Alphabet
+d1byvlfiet2h9q.cloudfront.net,48453,0.05050207102997,Amazon Web Services,US,Amazon
+schemas.applovin.com,37174,0.03874608359581667,Applovin,US,
+vid.applovin.com,37115,0.03868458849353676,Applovin,US,
+d.applovin.com,37055,0.0386220511013877,Applovin,US,
+img.applovin.com,36951,0.03851365295499601,Applovin,US,
+pdn.applovin.com,36951,0.03851365295499601,Applovin,US,
+cdnjs.cloudflare.com,36930,0.03849176486774384,Cloudflare,US,NA
+assets.applovin.com,36819,0.03837607069226809,Applovin,US,
+developers.google.com,36278,0.037812191873057434,Google,US,Alphabet
+proton.flurry.com,36151,0.03767982105967527,Flurry,US,Yahoo
+support.twitter.com,36076,0.03760164931948894,Twitter,US,NA
+a.applovin.com,35553,0.03705653171792301,Applovin,US,
+s3.amazonaws.com,35235,0.036725083539533014,Amazon Web Services,US,Amazon
+www.gstatic.com,35173,0.03666046156764566,Google,US,Alphabet
+rt.applovin.com,31724,0.0330656038089441,Applovin,US,
+impact.staging.applifier.com,31458,0.03278835470374995,Applifier,FI,Unity Technologies
+mobilecrashreporting.googleapis.com,30812,0.03211503544827845,Google,US,Alphabet
+impact.applifier.com,30727,0.03202644080940062,Applifier,FI,Unity Technologies
+google.com,29401,0.030644364442906486,Google,US,Alphabet
+lh6.ggpht.com,27835,0.029012138507816133,Google,US,Alphabet
+e.admob.com,27442,0.028602518589239817,Admob,US,Google
+stream.twitter.com,25207,0.02627300073168749,Twitter,US,NA
+www.google.co.jp,24948,0.026003047655577396,Google,US,Alphabet
+dev.twitter.com,24484,0.025519425156291367,Twitter,US,NA
+userstream.twitter.com,24450,0.025483987300740234,Twitter,US,NA
+sitestream.twitter.com,23453,0.02444482430119676,Twitter,US,NA
+schemas.microsoft.com,23385,0.024373948590094494,Microsoft,US,NA
+analytics.mopub.com,20683,0.021557681363648683,Mopub,US,Twitter
+i.w.inmobi.com,18538,0.01932196959431994,Inmobi,SG,
+console.firebase.google.com,18461,0.019241713274395316,Google,US,Alphabet
+www.mopub.com,18050,0.018813332138174283,Mopub,US,Twitter
+android.revmob.com,17533,0.01827446827582325,Revmob,DE,
+m.google.com,17413,0.01814939349152514,Google,US,Alphabet
+revmob.com,17400,0.01813584372322618,Revmob,DE,
+androidads23.adcolony.com,17025,0.01774498502229458,Adcolony,US,Opera
+api.appsflyer.com,16454,0.0171498375070094,Appsflyer,US,
+upload.twitter.com,16287,0.016975775098861196,Twitter,US,NA
+amazon-adsystem.com,15960,0.01663494631164884,Amazon Marketing Services,US,Amazon
+www.chartboost.com,15733,0.01639834651135158,Chartboost,,
+dock.inmobi.com,15664,0.016326428510380166,Inmobi,SG,
+sdkm.w.inmobi.com,15622,0.016282652335875825,Inmobi,SG,
+alipay.com,15145,0.015785480068290832,Alibaba,CN,NA
+firebase.google.com,15115,0.015754211372216304,Google,US,Alphabet
+api.vungle.com,14938,0.01556972606537659,Vungle,US,
+api.map.baidu.com,14715,0.015337295424555933,Baidu,CN,NA
+www.twitter.com,14660,0.015279969481752632,Twitter,US,NA
+ads.flurry.com,14604,0.01522160124908018,Flurry,US,Yahoo
+adlog.flurry.com,14070,0.014665018458953582,Flurry,US,Yahoo
+ingest.vungle.com,13223,0.013782198939782745,Vungle,US,
+img.youtube.com,12984,0.013533091661055673,YouTube,US,Google
+events.appsflyer.com,12563,0.013094287626143132,Appsflyer,US,
+www.inmobi.com,12481,0.013008819856872755,Inmobi,SG,
+config.inmobi.com,12000,0.012507478429811158,Inmobi,SG,
+gdata.youtube.com,11981,0.01248767492229729,YouTube,US,Google
+dwxjayoxbnyrr.cloudfront.net,11809,0.012308401064803331,Amazon Web Services,US,Amazon
+inmobisdk-a.akamaihd.net,11776,0.01227400549912135,Akamai,US,NA
+stats.appsflyer.com,11721,0.012216679556318048,Appsflyer,US,
+t.appsflyer.com,11616,0.0121072391200572,Appsflyer,US,
+www.adobe.com,11577,0.012066589815160315,Adobe,US,NA
