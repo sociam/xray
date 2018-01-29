@@ -30,7 +30,7 @@ allAnalysedAppsInfo <- dbGetQuery(con,
 
 #read in the list of apps with hosts, in long format
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
-appsWithHostsLong <- read_csv("~/Desktop/data-processed/appsWithHostsLongFormat.csv")
+appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv")
 
 #read in the list of apps without hosts
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
@@ -40,14 +40,14 @@ appsWithoutHosts <- read_csv("~/Desktop/data-processed/appsWithoutHosts.csv")
 #####1 SUMMARY STATS
 #-----1.1: ALL HOSTS
 #group by id and count number of hosts
-countAllHosts <- appsWithHostsLong %>%
+countAllHosts <- appsWithHostsAndCompaniesLong %>%
   group_by(id) %>%
   summarise(numHosts = n()) %>%
   rbind(appsWithoutHosts) %>%
   arrange(desc(numHosts))
 
   #take a look at references in the top scoring app
-appsWithHostsLong %>%
+appsWithHostsAndCompaniesLong %>%
   filter(id == 762343) %>%
   View()
 
@@ -66,8 +66,6 @@ summaryAllHosts <- countAllHosts %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs)
 write_csv(summaryAllHosts, "saveouts_RESULTS/summaryAllHosts.csv")
-
-summaryAllHosts
 
 #------MAKE CHARTS
 #plot ordinary histogram
@@ -109,7 +107,6 @@ ggsave("plots/histAllHostsLOGBOTH.png",width=5, height=4, dpi=600)
 #we need host-company mapping and info about the companies
   #read in mapping from hosts to companies
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
-appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv")
 hostsToCompany <- appsWithHostsAndCompaniesLong %>%
   select(-id) %>%
   distinct(hosts, company)
@@ -122,7 +119,7 @@ companyInfo <- fromJSON("data-raw/combo_str_parents2.json") %>%
   as.tibble
 
 #create summary of hosts
-allHostsInfo <- appsWithHostsLong %>%
+allHostsInfo <- appsWithHostsAndCompaniesLong %>%
   group_by(hosts) %>%
   summarise(refCount = n()) %>%
   arrange(desc(refCount)) %>%
@@ -134,8 +131,7 @@ head(allHostsInfo, 100) %>%
   write_csv("saveouts_RESULTS/top100Hosts.csv")
 
 #create summary of parents
-hostsAndParents <- appsWithHostsLong %>%
-  left_join(hostsToCompany, by = "hosts") %>%
+hostsAndParents <- appsWithHostsAndCompaniesLong %>%
   left_join(companyInfo, by = "company") %>%
   group_by(parent_id) %>%
   summarise(refCount = n()) %>%
