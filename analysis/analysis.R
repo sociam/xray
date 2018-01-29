@@ -7,75 +7,34 @@ library(scales)
 #####0. HOUSEKEEPING#####
 options(scipen=10) #make plots more readable by increasing the number of values before scientific notation is used
 
+#function to calculate modal value
+modeFunc <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
+#####1. READ IN INFO #####
 #set up data base driver and connection
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(drv, dbname = "final_test",
                  host = "localhost", port = 5432,
                  user = "ulyngs")
 
-#calculate modal value
-modeFunc <- function(x) {
-  ux <- unique(x)
-  ux[which.max(tabulate(match(x, ux)))]
-}
-
-#####1. READ IN INFO FROM DATABASES#####
-#get ids and info about all analyzed apps
-allAnalysedAppInfo <- dbGetQuery(con,
+#get ids and general info about all analyzed apps
+allAnalysedAppsInfo <- dbGetQuery(con,
                                 "SELECT app_versions.id, playstore_apps.title, playstore_apps.genre, app_versions.version 
                                 FROM app_versions
                                 JOIN playstore_apps ON playstore_apps.id = app_versions.id                              
                                 WHERE app_versions.analyzed = TRUE") %>%
   as.tibble()
 
-##GRAB INFO FROM TABLE 'APP_HOSTS'##
-#get hosts of the analyzed apps in table app_hosts in long format
-appsWithHostsLong_app_hosts <- dbGetQuery(con,
-                          "SELECT app_hosts.id, UNNEST(hosts) AS hosts FROM app_hosts
-                          JOIN app_versions ON app_versions.id = app_hosts.id
-                          WHERE app_versions.analyzed = TRUE") %>%
-  as.tibble() %>% #put it in tidyverse's data frame format
-  group_by(id) %>%
-  distinct(hosts) %>% #remove duplicate hosts within each app
-  ungroup()
+#read in the list of apps with hosts, in long format
+  #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
+appsWithHostsLong <- read_csv("~/Desktop/data-processed/appsWithHostsLongFormat.csv")
 
-#get all of the analyzed apps in table app_hosts that didn't have any hosts
-appsWithoutHosts_app_hosts <- dbGetQuery(con,
-                                "SELECT app_hosts.id, app_hosts.hosts FROM app_hosts
-                                JOIN app_versions ON app_versions.id = app_hosts.id
-                                WHERE app_versions.analyzed = TRUE AND app_hosts.hosts = '{}'") %>%
-  as.tibble() %>% #put it in tidyverse's data frame format
-  mutate(numHosts = 0) #create numHosts variable set to 0
-
-##GRAB INFO FROM TABLE 'APP_ANALYSES'##
-#read in info
-app_analyses <- dbGetQuery(con,
-                           "SELECT app_analyses.id, app_analyses.analysis FROM app_analyses
-                           JOIN app_versions ON app_versions.id = app_analyses.id
-                           WHERE app_versions.analyzed = TRUE") %>%
-  as.tibble() %>%
-  mutate(parsedJSON = map(analysis, fromJSON)) %>% #use jsonlite to parse every entry
-  mutate(hosts = parsedJSON %>% map("hosts")) #create a variable with just the hosts array
-
-#put the apps with hosts in long format
-appsWithHostsLong_app_analyses <- app_analyses %>%
-  select(id, hosts) %>%
-  filter(!map_lgl(hosts, is.null)) %>% #they all have a list, but the list might be empty
-  unnest(hosts)
-
-#make separate table with apps without hosts
-appsWithoutHosts_app_analyses <- app_analyses %>%
-  select(id, hosts) %>%
-  filter(map_lgl(hosts, is.null)) %>% #pick the ones with an empty hosts list
-  mutate(numHosts = 0) #create numHosts variable set to 0
-
-#merge the apps with hosts into one data frame
-appsWithHostsLong <- rbind(appsWithHostsLong_app_hosts, appsWithHostsLong_app_analyses)
-write_csv(appsWithHostsLong, "~/Desktop/data-processed/appsWithHostsLong.csv")
-
-#merge the apps without hosts into one data frame
-idAndNumHostsOfAppsWithoutHosts <- rbind(appsWithoutHosts_app_hosts, appsWithoutHosts_app_analyses) %>%
-  select(id, numHosts)
+#read in the list of apps without hosts
+  #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
+appsWithoutHosts <- read_csv("~/Desktop/data-processed/appsWithoutHosts.csv")
 
 
 #####1 SUMMARY STATS
@@ -84,7 +43,7 @@ idAndNumHostsOfAppsWithoutHosts <- rbind(appsWithoutHosts_app_hosts, appsWithout
 countAllHosts <- appsWithHostsLong %>%
   group_by(id) %>%
   summarise(numHosts = n()) %>%
-  rbind(idAndNumHostsOfAppsWithoutHosts) %>%
+  rbind(appsWithoutHosts) %>%
   arrange(desc(numHosts))
 
   #take a look at references in the top scoring app
@@ -149,7 +108,9 @@ ggsave("plots/histAllHostsLOGBOTH.png",width=5, height=4, dpi=600)
 #------ MAKE SUMMARY OF MOST FREQUENT HOSTS
 #we need host-company mapping and info about the companies
   #read in mapping from hosts to companies
-hostsToCompany <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv") %>%
+  #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
+appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv")
+hostsToCompany <- appsWithHostsAndCompaniesLong %>%
   select(-id) %>%
   distinct(hosts, company)
 
@@ -188,7 +149,7 @@ hostsAndParents <- appsWithHostsLong %>%
 
 #-----1.2: SUMMARY OF HOSTS THAT ARE KNOWN TRACKERS
 #read in the join of apps with hosts and company
-appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv")
+  #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
 
 #count again, but exclude unknowns
 countKnownTrackers <- appsWithHostsAndCompaniesLong %>%
@@ -207,7 +168,7 @@ appsWithHostsButNoKnownTrackers <- anti_join(appsWithHostsIds, countKnownTracker
 
 #then add non-included apps to count properly
 countKnownTrackers <- countKnownTrackers %>%
-  rbind(idAndNumHostsOfAppsWithoutHosts) %>% #add the apps with no host refs at all
+  rbind(appsWithoutHosts) %>% #add the apps with no host refs at all
   rbind(appsWithHostsButNoKnownTrackers) #add the apps with no hosts that are known trackers
 
 #summarise the numbers of known trackers
@@ -226,6 +187,7 @@ summaryKnownTrackers <- countKnownTrackers %>%
   select(-numMoreThan20, -noRefs)
 write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
 summaryKnownTrackers
+
 #------MAKE CHARTS
 #plot ordinary histogram
 countKnownTrackers %>%
@@ -301,7 +263,7 @@ write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackin
 #######DO ANALYSES AGAIN, BY GENRE
 #summarise the numbers of known trackers, by genre
 summaryKnownTrackersByGenre <- countKnownTrackers %>%
-  left_join(allAnalysedAppInfo, by = "id") %>%
+  left_join(allAnalysedAppsInfo, by = "id") %>%
   group_by(genre) %>%
   summarise(numApps = n(),
             meanTrackers = round(mean(numHosts),1),
@@ -321,7 +283,7 @@ write_csv(summaryKnownTrackersByGenre, "saveouts_RESULTS/summaryKnownTrackersByG
 
 #plot the distributions
 numKnownTrackersByGenre <- countKnownTrackers %>%
-  left_join(allAnalysedAppInfo, by = "id")
+  left_join(allAnalysedAppsInfo, by = "id")
 
 ggplot(data = numKnownTrackersByGenre, aes(x = reorder(genre, numHosts, median, order=TRUE), y = numHosts)) + 
   geom_boxplot(varwidth = TRUE) + coord_flip() +
