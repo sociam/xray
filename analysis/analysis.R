@@ -13,7 +13,7 @@ modeFunc <- function(x) {
   ux[which.max(tabulate(match(x, ux)))]
 }
 
-#####1. READ IN INFO #####
+#####10. READ IN INFO #####
 #set up data base driver and connection
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(drv, dbname = "final_test",
@@ -21,12 +21,19 @@ con <- dbConnect(drv, dbname = "final_test",
                  user = "ulyngs")
 
 #get ids and general info about all analyzed apps
-allAnalysedAppsInfo <- dbGetQuery(con,
+appInfo <- dbGetQuery(con,
                                 "SELECT app_versions.id, playstore_apps.title, playstore_apps.genre, app_versions.version 
                                 FROM app_versions
                                 JOIN playstore_apps ON playstore_apps.id = app_versions.id                              
                                 WHERE app_versions.analyzed = TRUE") %>%
   as.tibble()
+
+#read in company info
+companyInfo <- fromJSON("data-raw/combo_str_parents2.json") %>%
+  mutate(company = owner_name) %>%
+  select(company, country, parent_id) %>%
+  mutate(country = str_to_upper(country)) %>%
+  as.tibble
 
 #read in the list of apps with hosts, in long format
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
@@ -34,19 +41,207 @@ appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHost
 
 #read in the list of apps without hosts
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
-appsWithoutHosts <- read_csv("~/Desktop/data-processed/appsWithoutHosts.csv")
+appsWithNoHosts <- read_csv("~/Desktop/data-processed/appsWithoutHosts.csv")
+
+#count how many apps we've got
+numAnalysed <- nrow(appsWithHostsAndCompaniesLong %>% distinct(id)) + nrow(appsWithNoHosts %>% distinct(id))
+
+##### 1 SUMMARY STATS #####
+#-----1.1: SUMMARY OF HOST REFERENCES THAT ARE TO KNOWN TRACKERS
+#count number of numbers of host references in apps that refer to companies on our list of trackers
+hostCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
+  filter(company != "unknown") %>%
+  group_by(id) %>%
+  summarise(numHosts = n()) %>%
+  arrange(desc(numHosts))
+
+#count how apps had hosts references but weren't on our list of trackers - set these to 0 host refs
+appsWithHostsButNoKnownTrackers <- appsWithHostsAndCompaniesLong %>%
+  distinct(id) %>%
+  anti_join(countKnownTrackers, by = "id") %>%
+  mutate(numHosts = 0)
+
+#then add non-included apps to count properly
+countKnownTrackers <- hostCountsInAppsWithKnownTrackers %>%
+  rbind(appsWithNoHosts) %>% #add the apps with no host refs at all
+  rbind(appsWithHostsButNoKnownTrackers) #add the apps with no hosts that are known trackers
+
+#summarise the numbers of known trackers
+summaryKnownTrackers <- countKnownTrackers %>%
+  summarise(numApps = n(),
+            meanTrackers = round(mean(numHosts),1),
+            median = median(numHosts),
+            mode = modeFunc(numHosts),
+            min = min(numHosts),
+            max = max(numHosts),
+            SD = round(sd(numHosts),2),
+            numMoreThan20 = sum(numHosts > 20),
+            pctMoreThan20 = round((numMoreThan20 / numApps) * 100,2),
+            noRefs = sum(numHosts == 0),
+            pctNone = round((noRefs / numApps) * 100,2)) %>%
+  select(-numMoreThan20, -noRefs)
+write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
+
+#------MAKE CHARTS
+#plot ordinary histogram
+countKnownTrackers %>%
+  ggplot() +
+  geom_histogram(aes(numHosts)) +
+  labs(x = "#known trackers in decompiled source code", y = "app count") +
+  scale_y_continuous(labels = comma)
+ggsave("plots/histKnownTrackers.png",width=5, height=4, dpi=600)
+
+#log transformed y-axis
+countKnownTrackers %>%
+  ggplot() +
+  geom_histogram(aes(numHosts)) +
+  labs(x = "#known trackers in decompiled source code",
+       y = "app count: LOG SCALE") +
+  scale_y_log10()
+ggsave("plots/histKnownTrackersLOGY.png",width=5, height=4, dpi=600)
+
+#log transformed x-axis
+countKnownTrackers %>%
+  ggplot() +
+  geom_histogram(aes(numHosts + 1)) + #adding here to avoid excluding the ones with zero trackers
+  labs(x = "#known trackers in decompiled source code: LOG SCALE", y = "app count") +
+  scale_x_log10()
+ggsave("plots/histKnownTrackersLOGX.png",width=5, height=4, dpi=600)
+
+#log transformed both axes
+countKnownTrackers %>%
+  ggplot() +
+  geom_histogram(aes(numHosts + 1)) +
+  labs(x = "#known trackers in decompiled source code: LOG SCALE",
+       y = "app count: LOG SCALE") +
+  scale_y_log10() + scale_x_log10()
+ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
 
 
-#####1 SUMMARY STATS
-#-----1.1: ALL HOSTS
+###1.2 WHAT ARE THE MOST POPULAR HOST REFERENCES?
+#create summary of known trackers and save out top 100
+knownTrackersInfo <- appsWithHostsAndCompaniesLong %>%
+  filter(company != "unknown") %>%
+  group_by(hosts) %>%
+  summarise(refCount = n(),
+            propOfApps = refCount/numAnalysed) %>%
+  left_join(hostsToCompany, by = "hosts") %>%
+  left_join(companyInfo, by = "company") %>%
+  arrange(desc(refCount))
+
+head(knownTrackersInfo,100) %>%
+  write_csv("saveouts_RESULTS/top100KnownTrackersInfo.csv")
+
+#create summary of unknown hosts and save out top 100
+unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
+  filter(company == "unknown") %>%
+  group_by(hosts) %>%
+  summarise(refCount = n(),
+            propOfApps = refCount/numAnalysed %>% round(2)) %>%
+  arrange(desc(refCount))
+
+#save out top 100
+head(unknownHostsInfo, 100) %>%
+  write_csv("saveouts_RESULTS/top100UnknownHosts.csv")
+
+
+
+###1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?
+#count number of numbers of host references in apps that refer to companies on our list of trackers
+companyCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
+  filter(company != "unknown") %>%
+  group_by(id) %>%
+  distinct(company) %>%
+  summarise(numCompanies = n()) %>%
+  arrange(desc(numCompanies))
+
+#count how apps had hosts references but weren't on our list of trackers - set these to 0 companies
+appsWithHostsButNoKnownCompanies <- appsWithHostsAndCompaniesLong %>%
+  distinct(id) %>%
+  anti_join(companyCountsInAppsWithKnownTrackers, by = "id") %>%
+  mutate(numCompanies = 0)
+
+#then add non-included apps to count properly
+countCompanyRefs <- companyCountsInAppsWithKnownTrackers %>%
+  rbind(appsWithNoHosts %>% mutate(numCompanies = 0) %>% select(id, numCompanies)) %>% #add the apps with no host refs at all
+  rbind(appsWithHostsButNoKnownCompanies) #add the apps with no hosts that are known trackers
+
+#summarise the numbers of known trackers
+summaryCompanyCount <- countCompanyRefs %>%
+  summarise(numApps = n(),
+            meanCompanies = round(mean(numCompanies),1),
+            median = median(numCompanies),
+            mode = modeFunc(numCompanies),
+            min = min(numCompanies),
+            max = max(numCompanies),
+            SD = round(sd(numCompanies),2),
+            numMoreThan20 = sum(numCompanies > 20),
+            pctMoreThan20 = round((numMoreThan20 / numApps) * 100,2),
+            noRefs = sum(numCompanies == 0),
+            pctNone = round((noRefs / numApps) * 100,2)) %>%
+  select(-numMoreThan20, -noRefs)
+write_csv(summaryCompanyCount, "saveouts_RESULTS/summaryCompanyCount.csv")
+
+#break this down by the proportion of apps that a company is in
+propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
+  group_by(id) %>%
+  distinct(company) %>% #exclude the distinct refs within each group
+  ungroup() %>%
+  filter(company != "unknown") %>%
+  count(company) %>% #then count how many times a company occurs
+  mutate(propApps = round(n / numAnalysed,2)) %>%
+  arrange(desc(n)) %>%
+  left_join(companyInfo, by = "company")
+
+write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackingCompanyRefs.csv")
+
+#######DO ANALYSES AGAIN, BY GENRE
+#summarise the numbers of known trackers, by genre
+summaryKnownTrackersByGenre <- countKnownTrackers %>%
+  left_join(appInfo, by = "id") %>%
+  group_by(genre) %>%
+  summarise(numApps = n(),
+            meanTrackers = round(mean(numHosts),1),
+            median = median(numHosts),
+            mode = modeFunc(numHosts),
+            min = min(numHosts),
+            max = max(numHosts),
+            SD = round(sd(numHosts),2),
+            numMoreThan20 = sum(numHosts > 20),
+            pctMoreThan20 = round((numMoreThan20 / numApps) * 100,2),
+            noRefs = sum(numHosts == 0),
+            pctNone = round((noRefs / numApps) * 100,2)) %>%
+  select(-numMoreThan20, -noRefs) %>%
+  arrange(desc(median))
+
+write_csv(summaryKnownTrackersByGenre, "saveouts_RESULTS/summaryKnownTrackersByGenre.csv")
+
+#plot the distributions
+numKnownTrackersByGenre <- countKnownTrackers %>%
+  left_join(appInfo, by = "id")
+
+ggplot(data = numKnownTrackersByGenre, aes(x = reorder(genre, numHosts, median, order=TRUE), y = numHosts)) + 
+  geom_boxplot(varwidth = TRUE) + coord_flip() +
+  labs(y = "Number of known trackers", x = "Genre", title = "Distribution of trackers by genre, apps w/ less than 70") + ylim(0,70)
+ggsave("plots/DistributionOfTrackersByGenre.png", width=8, height=7, dpi=400)
+
+#parent level
+
+
+
+
+
+
+#######OTHER ANALYSES#########
+##----- SUMMARY OF ALL HOSTS
 #group by id and count number of hosts
 countAllHosts <- appsWithHostsAndCompaniesLong %>%
   group_by(id) %>%
   summarise(numHosts = n()) %>%
-  rbind(appsWithoutHosts) %>%
+  rbind(appsWithNoHosts) %>%
   arrange(desc(numHosts))
 
-  #take a look at references in the top scoring app
+#take a look at references in the top scoring app
 appsWithHostsAndCompaniesLong %>%
   filter(id == 762343) %>%
   View()
@@ -104,20 +299,6 @@ ggsave("plots/histAllHostsLOGBOTH.png",width=5, height=4, dpi=600)
 
 
 #------ MAKE SUMMARY OF MOST FREQUENT HOSTS
-#we need host-company mapping and info about the companies
-  #read in mapping from hosts to companies
-  #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
-hostsToCompany <- appsWithHostsAndCompaniesLong %>%
-  select(-id) %>%
-  distinct(hosts, company)
-
-#read in company info
-companyInfo <- fromJSON("data-raw/combo_str_parents2.json") %>%
-  mutate(company = owner_name) %>%
-  select(company, country, parent_id) %>%
-  mutate(country = str_to_upper(country)) %>%
-  as.tibble
-
 #create summary of hosts
 allHostsInfo <- appsWithHostsAndCompaniesLong %>%
   group_by(hosts) %>%
@@ -140,151 +321,3 @@ hostsAndParents <- appsWithHostsAndCompaniesLong %>%
   distinct(parent_id, refCount) %>%
   left_join(companyInfo, by = "parent_id") %>%
   distinct(parent_id, refCount, country)
-
-#save out top 100
-
-#-----1.2: SUMMARY OF HOSTS THAT ARE KNOWN TRACKERS
-#read in the join of apps with hosts and company
-  #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
-
-#count again, but exclude unknowns
-countKnownTrackers <- appsWithHostsAndCompaniesLong %>%
-  filter(company != "unknown") %>%
-  group_by(id) %>%
-  summarise(numHosts = n()) %>%
-  arrange(desc(numHosts))
-
-#count how many we've dropped - set these to 0 host refs
-appsWithHostsIds <- appsWithHostsAndCompaniesLong %>%
-  distinct(id) %>%
-  select(id)
-
-appsWithHostsButNoKnownTrackers <- anti_join(appsWithHostsIds, countKnownTrackers, by = "id") %>%
-  mutate(numHosts = 0)
-
-#then add non-included apps to count properly
-countKnownTrackers <- countKnownTrackers %>%
-  rbind(appsWithoutHosts) %>% #add the apps with no host refs at all
-  rbind(appsWithHostsButNoKnownTrackers) #add the apps with no hosts that are known trackers
-
-#summarise the numbers of known trackers
-summaryKnownTrackers <- countKnownTrackers %>%
-  summarise(numApps = n(),
-            meanTrackers = round(mean(numHosts),1),
-            median = median(numHosts),
-            mode = modeFunc(numHosts),
-            min = min(numHosts),
-            max = max(numHosts),
-            SD = round(sd(numHosts),2),
-            numMoreThan20 = sum(numHosts > 20),
-            pctMoreThan20 = round((numMoreThan20 / numApps) * 100,2),
-            noRefs = sum(numHosts == 0),
-            pctNone = round((noRefs / numApps) * 100,2)) %>%
-  select(-numMoreThan20, -noRefs)
-write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
-summaryKnownTrackers
-
-#------MAKE CHARTS
-#plot ordinary histogram
-countKnownTrackers %>%
-  ggplot() +
-  geom_histogram(aes(numHosts)) +
-  labs(x = "#known trackers in decompiled source code", y = "app count") +
-  scale_y_continuous(labels = comma)
-ggsave("plots/histKnownTrackers.png",width=5, height=4, dpi=600)
-
-#log transformed y-axis
-countKnownTrackers %>%
-  ggplot() +
-  geom_histogram(aes(numHosts)) +
-  labs(x = "#known trackers in decompiled source code",
-       y = "app count: LOG SCALE") +
-  scale_y_log10()
-ggsave("plots/histKnownTrackersLOGY.png",width=5, height=4, dpi=600)
-
-#log transformed x-axis
-countKnownTrackers %>%
-  ggplot() +
-  geom_histogram(aes(numHosts + 1)) + #adding here to avoid excluding the ones with zero trackers
-  labs(x = "#known trackers in decompiled source code: LOG SCALE", y = "app count") +
-  scale_x_log10()
-ggsave("plots/histKnownTrackersLOGX.png",width=5, height=4, dpi=600)
-
-#log transformed both axes
-countKnownTrackers %>%
-  ggplot() +
-  geom_histogram(aes(numHosts + 1)) +
-  labs(x = "#known trackers in decompiled source code: LOG SCALE",
-       y = "app count: LOG SCALE") +
-  scale_y_log10() + scale_x_log10()
-ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
-
-#create summary of known trackers
-knownTrackersInfo <- appsWithHostsAndCompaniesLong %>%
-  filter(company != "unknown") %>%
-  group_by(hosts) %>%
-  summarise(refCount = n(),
-            propOfApps = refCount/nrow(countAllHosts)) %>%
-  left_join(hostsToCompany, by = "hosts") %>%
-  left_join(companyInfo, by = "company") %>%
-  arrange(desc(refCount))
-
-head(knownTrackersInfo,100) %>%
-  write_csv("saveouts_RESULTS/top100KnownTrackersInfo.csv")
-
-#create summary of unknown hosts
-unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
-  filter(company == "unknown") %>%
-  group_by(hosts) %>%
-  summarise(refCount = n(),
-            propOfApps = refCount/nrow(countAllHosts) %>% round(2)) %>%
-  arrange(desc(refCount))
-
-head(unknownHostsInfo, 100) %>%
-  write_csv("saveouts_RESULTS/top100UnknownHosts.csv")
-
-#break this down by the proportion of apps that a company is in
-propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
-  group_by(id) %>%
-  distinct(company) %>% #exclude the distinct refs within each group
-  ungroup() %>%
-  count(company) %>% #then count how many times a company occurs
-  filter(company != "unknown") %>%
-  mutate(propApps = round(n / nrow(countAllHosts),2)) %>%
-  arrange(desc(n)) %>%
-  left_join(companyInfo, by = "company")
-
-write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackingCompanyRefs.csv")
-
-#######DO ANALYSES AGAIN, BY GENRE
-#summarise the numbers of known trackers, by genre
-summaryKnownTrackersByGenre <- countKnownTrackers %>%
-  left_join(allAnalysedAppsInfo, by = "id") %>%
-  group_by(genre) %>%
-  summarise(numApps = n(),
-            meanTrackers = round(mean(numHosts),1),
-            median = median(numHosts),
-            mode = modeFunc(numHosts),
-            min = min(numHosts),
-            max = max(numHosts),
-            SD = round(sd(numHosts),2),
-            numMoreThan20 = sum(numHosts > 20),
-            pctMoreThan20 = round((numMoreThan20 / numApps) * 100,2),
-            noRefs = sum(numHosts == 0),
-            pctNone = round((noRefs / numApps) * 100,2)) %>%
-  select(-numMoreThan20, -noRefs) %>%
-  arrange(desc(median))
-
-write_csv(summaryKnownTrackersByGenre, "saveouts_RESULTS/summaryKnownTrackersByGenre.csv")
-
-#plot the distributions
-numKnownTrackersByGenre <- countKnownTrackers %>%
-  left_join(allAnalysedAppsInfo, by = "id")
-
-ggplot(data = numKnownTrackersByGenre, aes(x = reorder(genre, numHosts, median, order=TRUE), y = numHosts)) + 
-  geom_boxplot(varwidth = TRUE) + coord_flip() +
-  labs(y = "Number of known trackers", x = "Genre", title = "Distribution of trackers by genre, apps w/ less than 70") + ylim(0,70)
-ggsave("plots/DistributionOfTrackersByGenre.png", width=8, height=7, dpi=400)
-
-#parent level
-

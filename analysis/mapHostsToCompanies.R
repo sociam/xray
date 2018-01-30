@@ -7,14 +7,14 @@ library(scales)
 companyInfo <- fromJSON("data-raw/combo_str_parents2.json") %>%
   as.tibble
 
-#unnest hosts in company info and arrange by length
+#unnest hosts in company info and arrange by length, so that we start with the longest domain names when doing the mapping
 company_domains <- companyInfo %>%
   select(owner_name, domains) %>%
   unnest(domains) %>%
   filter(domains != "") %>% #exclude the ones with no domains
   arrange(desc(str_length(domains)))
 
-#now add column where domain is regular expression
+#add column where domain is its corresponding regular expression
 company_domains <- company_domains %>%
   mutate(regex = str_replace(domains, "\\.", "\\\\.")) %>% #make the dot into a regex
   mutate(regex = str_c("(^|\\.)", regex, "([^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\\.]?)")) #domain either starts here or is preceded by dot; does not end in alphabetic character or dot
@@ -40,14 +40,6 @@ for (i in 1:nrow(company_domains)) {
 }
 
 write_csv(appsWithHostsAndCompanyLong, "data-processed/appsWithHostsAndCompanyLong.csv")
-
-
-
-
-
-
-
-
 
 ###########TESTING
 #test of new regex
