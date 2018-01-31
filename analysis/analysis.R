@@ -156,8 +156,6 @@ unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
 head(unknownHostsInfo, 100) %>%
   write_csv("saveouts_RESULTS/top100UnknownHosts.csv")
 
-
-
 ###1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?
 #count number of numbers of host references in apps that refer to companies on our list of trackers
 companyCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
@@ -173,7 +171,7 @@ appsWithHostsButNoKnownCompanies <- appsWithHostsAndCompaniesLong %>%
   anti_join(companyCountsInAppsWithKnownTrackers, by = "id") %>%
   mutate(numCompanies = 0)
 
-#then add non-included apps to count properly
+#then put all of these in same dataframe to count properly
 countCompanyRefs <- companyCountsInAppsWithKnownTrackers %>%
   rbind(appsWithNoHosts %>% mutate(numCompanies = 0) %>% select(id, numCompanies)) %>% #add the apps with no host refs at all
   rbind(appsWithHostsButNoKnownCompanies) #add the apps with no hosts that are known trackers
@@ -186,13 +184,19 @@ summaryCompanyCount <- countCompanyRefs %>%
             mode = modeFunc(numCompanies),
             min = min(numCompanies),
             max = max(numCompanies),
+            IQR = IQR(numCompanies),
             SD = round(sd(numCompanies),2),
-            numMoreThan20 = sum(numCompanies > 20),
-            pctMoreThan20 = round((numMoreThan20 / numApps) * 100,2),
+            numMoreThan10 = sum(numCompanies > 10),
+            pctMoreThan10 = round((numMoreThan10 / numApps) * 100,2),
             noRefs = sum(numCompanies == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
-  select(-numMoreThan20, -noRefs)
+  select(-numMoreThan10, -noRefs)
 write_csv(summaryCompanyCount, "saveouts_RESULTS/summaryCompanyCount.csv")
+
+#draw Lorenz curve and get Gini coefficient
+plot(Lc(countCompanyRefs$numCompanies), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
+     ylab = "Cumulative proportion of company references")
+ineq(countCompanyRefs$numCompanies, type='Gini')
 
 #break this down by the proportion of apps that a company is in
 propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
