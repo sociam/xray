@@ -4,7 +4,6 @@ library(stringr)
 library(jsonlite)
 library(scales)
 library(ineq)
-library(ineq)
 
 #####0. HOUSEKEEPING#####
 options(scipen=10) #make plots more readable by increasing the number of values before scientific notation is used
@@ -127,6 +126,11 @@ ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
 
 
 ###1.2 WHAT ARE THE MOST POPULAR HOST REFERENCES?
+#creat short mapping from hostsToCompany
+hostsToCompany <- appsWithHostsAndCompaniesLong %>%
+  select(-id) %>%
+  distinct(hosts, company)
+
 #create summary of known trackers and save out top 100
 knownTrackersInfo <- appsWithHostsAndCompaniesLong %>%
   filter(company != "unknown") %>%
