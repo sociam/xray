@@ -3,6 +3,8 @@ library(tidyverse)
 library(stringr)
 library(jsonlite)
 library(scales)
+library(ineq)
+library(ineq)
 
 #####0. HOUSEKEEPING#####
 options(scipen=10) #make plots more readable by increasing the number of values before scientific notation is used
@@ -13,7 +15,7 @@ modeFunc <- function(x) {
   ux[which.max(tabulate(match(x, ux)))]
 }
 
-#####10. READ IN INFO #####
+#####0. READ IN INFO #####
 #set up data base driver and connection
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(drv, dbname = "final_test",
@@ -69,11 +71,12 @@ countKnownTrackers <- hostCountsInAppsWithKnownTrackers %>%
 #summarise the numbers of known trackers
 summaryKnownTrackers <- countKnownTrackers %>%
   summarise(numApps = n(),
-            meanTrackers = round(mean(numHosts),1),
+            mean = round(mean(numHosts),1),
             median = median(numHosts),
             mode = modeFunc(numHosts),
             min = min(numHosts),
             max = max(numHosts),
+            IQR = IQR(numHosts),
             SD = round(sd(numHosts),2),
             numMoreThan20 = sum(numHosts > 20),
             pctMoreThan20 = round((numMoreThan20 / numApps) * 100,2),
@@ -81,7 +84,12 @@ summaryKnownTrackers <- countKnownTrackers %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs)
 write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
-summaryKnownTrackers
+
+#draw Lorenz curve and get Gini coefficient
+plot(Lc(countKnownTrackers$numHosts), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
+     ylab = "Cumulative proportion of tracker references")
+ineq(countKnownTrackers$numHosts, type='Gini')
+
 #------MAKE CHARTS
 #plot ordinary histogram
 countKnownTrackers %>%
@@ -213,6 +221,27 @@ summaryKnownTrackersByGenre <- countKnownTrackers %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs) %>%
   arrange(desc(median))
+
+
+#proportions w/ all
+propsAll <- countKnownTrackers %>%
+  left_join(appInfo, by = "id") %>%
+  group_by(genre) %>%
+  summarise(numApps = n(), 
+            prop = round(numApps / nrow(countKnownTrackers), 4)) %>%
+  arrange(desc(prop))
+View(propsAll)
+
+#proportions w/ only 0 trackers
+noKnownTrackers <- countKnownTrackers %>%
+  left_join(appInfo, by = "id") %>%
+  group_by(genre) %>%
+  filter(numHosts == 0) %>%
+  summarise(numApps = n(), 
+            prop = round(numApps / nrow(noKnownTrackers), 4)) %>%
+  arrange(desc(prop))
+View(noKnownTrackers)
+
 
 write_csv(summaryKnownTrackersByGenre, "saveouts_RESULTS/summaryKnownTrackersByGenre.csv")
 
