@@ -55,10 +55,10 @@ hostCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
   summarise(numHosts = n()) %>%
   arrange(desc(numHosts))
 
-#count how apps had hosts references but weren't on our list of trackers - set these to 0 host refs
+#get apps that had hosts references but weren't on our list of trackers - set these to 0 host refs
 appsWithHostsButNoKnownTrackers <- appsWithHostsAndCompaniesLong %>%
   distinct(id) %>%
-  anti_join(countKnownTrackers, by = "id") %>%
+  anti_join(hostCountsInAppsWithKnownTrackers, by = "id") %>%
   mutate(numHosts = 0)
 
 #then add non-included apps to count properly
@@ -81,7 +81,7 @@ summaryKnownTrackers <- countKnownTrackers %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs)
 write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
-
+summaryKnownTrackers
 #------MAKE CHARTS
 #plot ordinary histogram
 countKnownTrackers %>%
