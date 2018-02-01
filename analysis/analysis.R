@@ -31,15 +31,17 @@ appInfo <- dbGetQuery(con,
   as.tibble()
 
 #read in company info
-companyInfo <- fromJSON("data-raw/combo_str_parents2.json") %>%
-  mutate(company = owner_name) %>%
-  select(company, country, parent_id) %>%
+companyInfo <- fromJSON("data-raw/combo_str_parents4.json") %>%
+  mutate(company = str_to_title(owner_name)) %>%
+  select(company, country, root_parent) %>%
   mutate(country = str_to_upper(country)) %>%
+  mutate(leaf_parent = ifelse(is.na(root_parent), company, root_parent)) %>% #a company is a leaf parent if it ain't got no root_parents
   as.tibble
 
 #read in the list of apps with hosts, in long format
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
-appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv")
+appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv") %>%
+  mutate(company = str_to_title(company))
 
 #read in the list of apps without hosts
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
@@ -106,7 +108,7 @@ ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
 #log transformed y-axis
 countKnownTrackers %>%
   ggplot() +
-  geom_histogram(aes(numHosts)) +
+  geom_histogram(aes(numHosts), bins = 100) +
   labs(x = "#known trackers in decompiled source code",
        y = "app count: LOG SCALE") +
   scale_y_log10()
@@ -123,7 +125,7 @@ ggsave("plots/histKnownTrackersLOGX.png",width=5, height=4, dpi=600)
 #log transformed both axes
 countKnownTrackers %>%
   ggplot() +
-  geom_histogram(aes(numHosts + 1)) +
+  geom_histogram(aes(numHosts + 1), bins = 50) +
   labs(x = "#known trackers in decompiled source code: LOG SCALE",
        y = "app count: LOG SCALE") +
   scale_y_log10() + scale_x_log10()
@@ -145,7 +147,7 @@ knownTrackersInfo <- appsWithHostsAndCompaniesLong %>%
   left_join(hostsToCompany, by = "hosts") %>%
   left_join(companyInfo, by = "company") %>%
   arrange(desc(numApps))
-knownTrackersInfo
+
 head(knownTrackersInfo,100) %>%
   write_csv("saveouts_RESULTS/top100KnownTrackersInfo.csv")
 
@@ -170,7 +172,7 @@ companyCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
   summarise(numCompanies = n()) %>%
   arrange(desc(numCompanies))
 
-#count how apps had hosts references but weren't on our list of trackers - set these to 0 companies
+#count how many apps had hosts references but weren't on our list of trackers - set these to 0 companies
 appsWithHostsButNoKnownCompanies <- appsWithHostsAndCompaniesLong %>%
   distinct(id) %>%
   anti_join(companyCountsInAppsWithKnownTrackers, by = "id") %>%
@@ -197,7 +199,7 @@ summaryCompanyCount <- countCompanyRefs %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
 write_csv(summaryCompanyCount, "saveouts_RESULTS/summaryCompanyCount.csv")
-summaryCompanyCount
+
 #draw Lorenz curve and get Gini coefficient
 plot(Lc(countCompanyRefs$numCompanies), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
      ylab = "Cumulative proportion of company references")
@@ -223,6 +225,32 @@ propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
   left_join(companyInfo, by = "company")
 
 write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackingCompanyRefs.csv")
+
+#create a latex table from this
+latexTablePropCompanies <- propAppsWithTrackingCompanyRefs %>%
+  select(company, country, pctOfApps) %>%
+  head(20)
+print(xtable(latexTablePropCompanies),floating=FALSE,latex.environments=NULL)
+
+#break down the coverage of companies by ultimate owners
+coverageOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
+  filter(company != "unknown") %>%
+  left_join(companyInfo, by = "company") %>%
+  group_by(id) %>%
+  distinct(leaf_parent) %>%
+  ungroup() %>%
+  count(leaf_parent) %>% #then count how many times a company occurs
+  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
+  arrange(desc(n))
+  left_join(companyInfo, by = "company") %>%
+  filter(!is.na(leaf_parent) | leaf_parent == "") %>%
+  select(leaf_parent, pctOfApps)
+  left_join(companyInfo, by = "leaf_parent")
+  
+coverageOfRootCompanies %>%
+  filter(!is.na(leaf_parent), leaf_parent != "") %>%
+  select(leaf_parent, pctOfApps) %>%
+  write_csv("saveouts_RESULTS/coverageOfRootCompanies.csv")
 
 #create a latex table from this
 latexTablePropCompanies <- propAppsWithTrackingCompanyRefs %>%
