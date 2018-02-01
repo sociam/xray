@@ -89,14 +89,18 @@ plot(Lc(countKnownTrackers$numHosts), col = 'red', lwd=2, xlab = "Cumulative pro
      ylab = "Cumulative proportion of tracker references")
 ineq(countKnownTrackers$numHosts, type='Gini')
 
+#what number of hosts captures 99.99% of the distribution?
+quantile(countKnownTrackers$numHosts, .9999)
+
 #------MAKE CHARTS
 #plot ordinary histogram
 countKnownTrackers %>%
+  filter(numHosts < 68) %>%
   ggplot() +
-  geom_histogram(aes(numHosts)) +
-  labs(x = "#known trackers in decompiled source code", y = "app count") +
+  geom_histogram(aes(numHosts), bins = 68) +
+  labs(x = "Number of references to tracker domains", y = "Number of apps") +
   scale_y_continuous(labels = comma)
-ggsave("plots/histKnownTrackers.png",width=5, height=4, dpi=600)
+ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
 
 #log transformed y-axis
 countKnownTrackers %>%
@@ -135,12 +139,12 @@ hostsToCompany <- appsWithHostsAndCompaniesLong %>%
 knownTrackersInfo <- appsWithHostsAndCompaniesLong %>%
   filter(company != "unknown") %>%
   group_by(hosts) %>%
-  summarise(refCount = n(),
-            propOfApps = refCount/numAnalysed) %>%
+  summarise(numApps = n(),
+            pctOfApps = round((numApps/numAnalysed)*100,2)) %>%
   left_join(hostsToCompany, by = "hosts") %>%
   left_join(companyInfo, by = "company") %>%
-  arrange(desc(refCount))
-
+  arrange(desc(numApps))
+knownTrackersInfo
 head(knownTrackersInfo,100) %>%
   write_csv("saveouts_RESULTS/top100KnownTrackersInfo.csv")
 
@@ -192,7 +196,7 @@ summaryCompanyCount <- countCompanyRefs %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
 write_csv(summaryCompanyCount, "saveouts_RESULTS/summaryCompanyCount.csv")
-
+summaryCompanyCount
 #draw Lorenz curve and get Gini coefficient
 plot(Lc(countCompanyRefs$numCompanies), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
      ylab = "Cumulative proportion of company references")
