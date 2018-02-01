@@ -4,6 +4,7 @@ library(stringr)
 library(jsonlite)
 library(scales)
 library(ineq)
+library(xtable)
 
 #####0. HOUSEKEEPING#####
 options(scipen=10) #make plots more readable by increasing the number of values before scientific notation is used
@@ -202,6 +203,14 @@ plot(Lc(countCompanyRefs$numCompanies), col = 'red', lwd=2, xlab = "Cumulative p
      ylab = "Cumulative proportion of company references")
 ineq(countCompanyRefs$numCompanies, type='Gini')
 
+#plot ordinary histogram
+countCompanyRefs %>%
+  ggplot() +
+  geom_histogram(aes(numCompanies), bins = 38) +
+  labs(x = "Number of companies referred to", y = "Number of apps") +
+  scale_y_continuous(labels = comma)
+ggsave("plots/histNumCompaniesReferred.png",width=5, height=4, dpi=600)
+
 #break this down by the proportion of apps that a company is in
 propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
   group_by(id) %>%
@@ -209,11 +218,17 @@ propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
   ungroup() %>%
   filter(company != "unknown") %>%
   count(company) %>% #then count how many times a company occurs
-  mutate(propApps = round(n / numAnalysed,2)) %>%
+  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
   arrange(desc(n)) %>%
   left_join(companyInfo, by = "company")
 
 write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackingCompanyRefs.csv")
+
+#create a latex table from this
+latexTablePropCompanies <- propAppsWithTrackingCompanyRefs %>%
+  select(company, country, pctOfApps) %>%
+  head(20)
+print(xtable(latexTablePropCompanies),floating=FALSE,latex.environments=NULL)
 
 #######DO ANALYSES AGAIN, BY GENRE
 #summarise the numbers of known trackers, by genre
