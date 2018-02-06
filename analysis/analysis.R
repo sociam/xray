@@ -35,7 +35,7 @@ companyInfo <- fromJSON("data-raw/combo_str_parents4.json") %>%
   mutate(company = str_to_title(owner_name)) %>%
   select(company, country, root_parent) %>%
   mutate(country = str_to_upper(country)) %>%
-  mutate(leaf_parent = ifelse(is.na(root_parent), company, root_parent)) %>% #a company is a leaf parent if it ain't got no root_parents
+  mutate(leaf_parent = ifelse(is.na(root_parent) | root_parent == "", company, root_parent)) %>% #a company is a leaf parent if it ain't got no root_parents
   as.tibble
 
 #read in the list of apps with hosts, in long format
@@ -54,7 +54,7 @@ numAnalysed <- nrow(appsWithHostsAndCompaniesLong %>% distinct(id)) + nrow(appsW
 #-----1.1: SUMMARY OF HOST REFERENCES THAT ARE TO KNOWN TRACKERS
 #count number of numbers of host references in apps that refer to companies on our list of trackers
 hostCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
-  filter(company != "unknown") %>%
+  filter(company != "Unknown") %>%
   group_by(id) %>%
   summarise(numHosts = n()) %>%
   arrange(desc(numHosts))
@@ -140,7 +140,7 @@ hostsToCompany <- appsWithHostsAndCompaniesLong %>%
 
 #create summary of known trackers and save out top 100
 knownTrackersInfo <- appsWithHostsAndCompaniesLong %>%
-  filter(company != "unknown") %>%
+  filter(company != "Unknown") %>%
   group_by(hosts) %>%
   summarise(numApps = n(),
             pctOfApps = round((numApps/numAnalysed)*100,2)) %>%
@@ -153,7 +153,7 @@ head(knownTrackersInfo,100) %>%
 
 #create summary of unknown hosts and save out top 100
 unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
-  filter(company == "unknown") %>%
+  filter(company == "Unknown") %>%
   group_by(hosts) %>%
   summarise(refCount = n(),
             propOfApps = refCount/numAnalysed %>% round(2)) %>%
@@ -166,7 +166,7 @@ head(unknownHostsInfo, 100) %>%
 ###1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?
 #count number of numbers of host references in apps that refer to companies on our list of trackers
 companyCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
-  filter(company != "unknown") %>%
+  filter(company != "Unknown") %>%
   group_by(id) %>%
   distinct(company) %>%
   summarise(numCompanies = n()) %>%
@@ -234,29 +234,21 @@ print(xtable(latexTablePropCompanies),floating=FALSE,latex.environments=NULL)
 
 #break down the coverage of companies by ultimate owners
 coverageOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
-  filter(company != "unknown") %>%
+  filter(company != "Unknown") %>%
   left_join(companyInfo, by = "company") %>%
-  group_by(id) %>%
-  distinct(leaf_parent) %>%
-  ungroup() %>%
-  count(leaf_parent) %>% #then count how many times a company occurs
+  distinct(id, leaf_parent) %>%
+  count(leaf_parent) %>%
   mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
   arrange(desc(n))
-  left_join(companyInfo, by = "company") %>%
-  filter(!is.na(leaf_parent) | leaf_parent == "") %>%
-  select(leaf_parent, pctOfApps)
-  left_join(companyInfo, by = "leaf_parent")
-  
-coverageOfRootCompanies %>%
-  filter(!is.na(leaf_parent), leaf_parent != "") %>%
-  select(leaf_parent, pctOfApps) %>%
-  write_csv("saveouts_RESULTS/coverageOfRootCompanies.csv")
+
+write_csv("saveouts_RESULTS/coverageOfRootCompanies.csv")
 
 #create a latex table from this
-latexTablePropCompanies <- propAppsWithTrackingCompanyRefs %>%
-  select(company, country, pctOfApps) %>%
+latexTableCoverageRootCompanies <- coverageOfRootCompanies %>%
+  filter(!is.na(leaf_parent), leaf_parent != "") %>%
+  select(leaf_parent, pctOfApps) %>%
   head(20)
-print(xtable(latexTablePropCompanies),floating=FALSE,latex.environments=NULL)
+print(xtable(latexTableCoverageRootCompanies),floating=FALSE,latex.environments=NULL)
 
 #######DO ANALYSES AGAIN, BY GENRE
 #summarise the numbers of known trackers, by genre

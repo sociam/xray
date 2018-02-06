@@ -1,0 +1,50 @@
+genre,numApps,super_genre
+ART_AND_DESIGN,5377,Art and Photography
+PHOTOGRAPHY,22217,Art and Photography
+COMMUNICATION,19710,Communication & Social
+SOCIAL,18890,Communication & Social
+DATING,1039,Communication & Social
+EDUCATION,79748,Education
+AUTO_AND_VEHICLES,2463,Productivity and Tools
+COMICS,1783,Games & Entertainment
+ENTERTAINMENT,82007,Games & Entertainment
+GAME_ACTION,16703,Games & Entertainment
+GAME_ADVENTURE,12098,Games & Entertainment
+GAME_ARCADE,24616,Games & Entertainment
+GAME_BOARD,3788,Games & Entertainment
+GAME_CARD,4246,Games & Entertainment
+GAME_CASINO,4206,Games & Entertainment
+GAME_CASUAL,29075,Games & Entertainment
+GAME_EDUCATIONAL,11323,Games & Entertainment
+GAME_MUSIC,1704,Games & Entertainment
+GAME_PUZZLE,24003,Games & Entertainment
+GAME_RACING,8164,Games & Entertainment
+GAME_ROLE_PLAYING,3323,Games & Entertainment
+GAME_SIMULATION,17517,Games & Entertainment
+GAME_SPORTS,5257,Games & Entertainment
+GAME_STRATEGY,3741,Games & Entertainment
+GAME_TRIVIA,6102,Games & Entertainment
+GAME_WORD,2977,Games & Entertainment
+SPORTS,18325,Games & Entertainment
+VIDEO_PLAYERS,11056,Games & Entertainment
+BEAUTY,2288,Health & Lifestyle
+FOOD_AND_DRINK,7536,Health & Lifestyle
+HEALTH_AND_FITNESS,25772,Health & Lifestyle
+HOUSE_AND_HOME,1973,Health & Lifestyle
+LIFESTYLE,59465,Health & Lifestyle
+MEDICAL,11047,Health & Lifestyle
+PERSONALIZATION,40645,Health & Lifestyle
+SHOPPING,14261,Health & Lifestyle
+MUSIC_AND_AUDIO,65101,Music
+NEWS_AND_MAGAZINES,26283,News
+PARENTING,858,Health & Lifestyle
+BOOKS_AND_REFERENCE,58202,Productivity and Tools
+BUSINESS,51723,Productivity and Tools
+EVENTS,2000,Productivity and Tools
+FINANCE,19316,Productivity and Tools
+LIBRARIES_AND_DEMO,2635,Productivity and Tools
+MAPS_AND_NAVIGATION,10962,Productivity and Tools
+PRODUCTIVITY,25474,Productivity and Tools
+TOOLS,58850,Productivity and Tools
+TRAVEL_AND_LOCAL,30079,Productivity and Tools
+WEATHER,3630,Productivity and Tools
