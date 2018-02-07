@@ -234,12 +234,6 @@ propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
 
 write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackingCompanyRefs.csv")
 
-#create a latex table from this
-latexTablePropCompanies <- propAppsWithTrackingCompanyRefs %>%
-  select(company, country, pctOfApps) %>%
-  head(20)
-print(xtable(latexTablePropCompanies),floating=FALSE,latex.environments=NULL)
-
 #break down the coverage of companies by ultimate owners
 coverageOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
@@ -251,12 +245,16 @@ coverageOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
 
 write_csv("saveouts_RESULTS/coverageOfRootCompanies.csv")
 
+#create combined table
+prevalenceOwnersAndSubsidiaries <- coverageOfRootCompanies %>%
+  select(-n) %>%
+  left_join(propAppsWithTrackingCompanyRefs, by = "leaf_parent") %>%
+  select(-(c(n, root_parent)))
+
 #create a latex table from this
-latexTableCoverageRootCompanies <- coverageOfRootCompanies %>%
-  filter(!is.na(leaf_parent), leaf_parent != "") %>%
-  select(leaf_parent, pctOfApps) %>%
-  head(20)
-print(xtable(latexTableCoverageRootCompanies),floating=FALSE,latex.environments=NULL)
+print(xtable(prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL)
+
+
 
 #######DO ANALYSES AGAIN, BY GENRE
 #summarise the numbers of known trackers, by genre
