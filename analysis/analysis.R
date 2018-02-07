@@ -94,8 +94,8 @@ plot(Lc(countKnownTrackers$numHosts), col = 'red', lwd=2, xlab = "Cumulative pro
      ylab = "Cumulative proportion of tracker references")
 ineq(countKnownTrackers$numHosts, type='Gini')
 
-#what number of hosts captures 99.99% of the distribution?
-quantile(countKnownTrackers$numHosts, .9999)
+#what number of hosts captures 99% of the distribution?
+quantile(countKnownTrackers$numHosts, .99)
 
 #------MAKE CHARTS
 #plot ordinary histogram
@@ -109,8 +109,9 @@ ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
 
 #log transformed y-axis
 countKnownTrackers %>%
+  filter(numHosts < 68) %>%
   ggplot() +
-  geom_histogram(aes(numHosts), bins = 100) +
+  geom_histogram(aes(numHosts), bins = 30) +
   labs(x = "#known trackers in decompiled source code",
        y = "app count: LOG SCALE") +
   scale_y_log10()
@@ -118,16 +119,18 @@ ggsave("plots/histKnownTrackersLOGY.png",width=5, height=4, dpi=600)
 
 #log transformed x-axis
 countKnownTrackers %>%
+  filter(numHosts < 68) %>%
   ggplot() +
-  geom_histogram(aes(numHosts + 1)) + #adding here to avoid excluding the ones with zero trackers
+  geom_histogram(aes(numHosts + .01)) + #adding here to not exclude those with zero trackers
   labs(x = "#known trackers in decompiled source code: LOG SCALE", y = "app count") +
   scale_x_log10()
 ggsave("plots/histKnownTrackersLOGX.png",width=5, height=4, dpi=600)
 
 #log transformed both axes
 countKnownTrackers %>%
+  filter(numHosts < 68) %>%
   ggplot() +
-  geom_histogram(aes(numHosts + 1), bins = 50) +
+  geom_histogram(aes(numHosts + .01), bins = 30) +
   labs(x = "#known trackers in decompiled source code: LOG SCALE",
        y = "app count: LOG SCALE") +
   scale_y_log10() + scale_x_log10()
@@ -188,18 +191,21 @@ countCompanyRefs <- companyCountsInAppsWithKnownTrackers %>%
 #summarise the numbers of known trackers
 summaryCompanyCount <- countCompanyRefs %>%
   summarise(numApps = n(),
-            meanCompanies = round(mean(numCompanies),1),
             median = median(numCompanies),
+            Q1 = quantile(numCompanies, .25),
+            Q3 = quantile(numCompanies, .75),
             mode = modeFunc(numCompanies),
             min = min(numCompanies),
             max = max(numCompanies),
             IQR = IQR(numCompanies),
+            meanCompanies = round(mean(numCompanies),1),
             SD = round(sd(numCompanies),2),
             numMoreThan10 = sum(numCompanies > 10),
             pctMoreThan10 = round((numMoreThan10 / numApps) * 100,2),
             noRefs = sum(numCompanies == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
+
 write_csv(summaryCompanyCount, "saveouts_RESULTS/summaryCompanyCount.csv")
 
 #draw Lorenz curve and get Gini coefficient
