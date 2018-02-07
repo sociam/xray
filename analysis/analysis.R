@@ -73,12 +73,14 @@ countKnownTrackers <- hostCountsInAppsWithKnownTrackers %>%
 #summarise the numbers of known trackers
 summaryKnownTrackers <- countKnownTrackers %>%
   summarise(numApps = n(),
-            mean = round(mean(numHosts),1),
             median = median(numHosts),
-            mode = modeFunc(numHosts),
+            Q1 = quantile(numHosts, .25),
+            Q3 = quantile(numHosts, .75),
+            IQR = IQR(numHosts),
             min = min(numHosts),
             max = max(numHosts),
-            IQR = IQR(numHosts),
+            mode = modeFunc(numHosts),
+            mean = round(mean(numHosts),1),
             SD = round(sd(numHosts),2),
             numMoreThan20 = sum(numHosts > 20),
             pctMoreThan20 = round((numMoreThan20 / numApps) * 100,2),

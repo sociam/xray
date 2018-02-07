@@ -1,2 +1,2 @@
-numApps,mean,median,mode,min,max,IQR,SD,pctMoreThan20,pctNone
-959426,12,10,0,0,688,12,10.06,16.1,9.89
+numApps,median,Q1,Q3,IQR,min,max,mode,mean,SD,pctMoreThan20,pctNone
+959426,10,5,17,12,0,688,0,12,10.06,16.1,9.89
