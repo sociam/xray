@@ -254,9 +254,83 @@ prevalenceOwnersAndSubsidiaries <- coverageOfRootCompanies %>%
 #create a latex table from this
 print(xtable(prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL)
 
+#######COMPANY ANALYSES BY 'SUPER GENRE' (LARGER CLUSTERING OF PLAY STORE GENRES)##############
+#read in the super genre mapping
+genreGrouping <- read_csv("other analyses/genreGrouping.csv") %>%
+  select(-numApps)
+
+summaryCompanyCountBySuperGenre <- countCompanyRefs %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre") %>%
+  group_by(super_genre) %>%
+  summarise(numApps = n(),
+            median = median(numCompanies),
+            Q1 = quantile(numCompanies, .25),
+            Q3 = quantile(numCompanies, .75),
+            mode = modeFunc(numCompanies),
+            min = min(numCompanies),
+            max = max(numCompanies),
+            IQR = IQR(numCompanies),
+            meanCompanies = round(mean(numCompanies),1),
+            SD = round(sd(numCompanies),2),
+            numMoreThan10 = sum(numCompanies > 10),
+            pctMoreThan10 = round((numMoreThan10 / numApps) * 100,2),
+            noRefs = sum(numCompanies == 0),
+            pctNone = round((noRefs / numApps) * 100,2)) %>%
+  select(-numMoreThan10, -noRefs) %>%
+  arrange(desc(median))
+
+#get this out as latex table
+forLatex <- summaryCompanyCountBySuperGenre %>%
+  select(super_genre, numApps, median, Q1, Q3, pctMoreThan10, pctNone) %>%
+  mutate(median = as.integer(median),
+         Q1 = as.integer(Q1),
+         Q3 = as.integer(Q3),
+         pctMoreThan10 = round(pctMoreThan10,1),
+         pctNone = round(pctNone,1))
+print(xtable(forLatex),floating=FALSE,latex.environments=NULL, include.rownames = FALSE)
+
+####TRY A MILLION WAYS OF VISUALISING THIS
+companyRefsByGenre %>%
+  filter(numCompanies < 30) %>%
+  ggplot(mapping = aes(x = numCompanies, y = ..density..)) +
+    geom_freqpoly(mapping = aes(colour = super_genre))
+  
+ggplot(data = companyRefsByGenre %>% filter(numCompanies < 30), mapping = aes(y = numCompanies, x = reorder(super_genre, numCompanies, FUN = median))) +
+  geom_boxplot(varwidth = TRUE) + 
+  coord_flip()
+  #geom_jitter(position = position_jitter(width = .1, height = 0.1), alpha = 1/100)
+
+#try plotting this as facet-wrapped histograms?
+ggplot(transform(companyRefsByGenre %>% filter(numCompanies < 25),
+                 super_genre = factor(super_genre,
+                                                          levels = c("Communication & Social",
+                                                                     "Education",
+                                                                     "Productivity and Tools",
+                                                                     "Art and Photography",
+                                                                     "Health & Lifestyle",
+                                                                     "Music",
+                                                                     "Games & Entertainment",
+                                                                     "News")))) +
+  geom_histogram(aes(x = numCompanies, y = ..density..), bins = 10) +
+  facet_wrap(~super_genre, nrow = 2)
+  
+  
+#just for fun, try plot boxplots + jittered outliers
+companyRefsByGenre2 <- 
+  companyRefsByGenre %>%
+  group_by(super_genre) %>%
+  mutate(outlier = numCompanies > median(numCompanies) + IQR(numCompanies) * 1.5) %>%
+  ungroup
+  
+ggplot(companyRefsByGenre2) +
+  aes(x = reorder(super_genre, numCompanies, FUN = median), y = numCompanies) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_point(data = function(x) dplyr::filter_(x, ~ outlier), position = 'jitter', alpha = 1/30) +
+  coord_flip()
 
 
-#######DO ANALYSES AGAIN, BY GENRE
+#######ANALYSE BY GOOGLE PLAY STORE GENRES ##############
 #summarise the numbers of known trackers, by genre
 summaryKnownTrackersByGenre <- countKnownTrackers %>%
   left_join(appInfo, by = "id") %>%
