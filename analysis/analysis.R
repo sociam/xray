@@ -331,49 +331,60 @@ ggplot(companyRefsByGenre2) +
   geom_point(data = function(x) dplyr::filter_(x, ~ outlier), position = 'jitter', alpha = 1/30) +
   coord_flip()
 
-
-######then for each genre, get the list of companies + root companies
-#first do this for low-level companies
-companyPrevalenceBySuperGenre
-countCompanyRefs %>%
-  left_join(appInfo, by = "id") %>%
-  left_join(genreGrouping, by = "genre") %>%
-  group_by(super_genre)
-
-companyAndRootPrevalence <- appsWithHostsAndCompaniesLong %>%
-  group_by(id) %>%
-  distinct(company) %>%
-  ungroup() %>%
-  filter(company != "Unknown") %>%
+######then for each supergenre, get the prevalence of companies + root companies
+##do this the stupid way for now - for some reason this is tricky
+#get the number of apps within each super genre
+numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
+  bind_rows(appsWithNoHosts) %>%
   left_join(appInfo, by = "id") %>%
   left_join(genreGrouping, by = "genre") %>%
   group_by(super_genre) %>%
-  count(company) %>%
-  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
-  arrange(desc(n)) %>%
+  distinct(id) %>%
+  summarise(numApps = n())
+
+#ART AND PHOTOGRAPHY
+#get lowest level of companies
+artAndPhotoCompanies <- appsWithHostsAndCompaniesLong %>%
+  bind_rows(appsWithNoHosts) %>%
   left_join(companyInfo, by = "company") %>%
-  select(-root_parent) %>%
-  arrange(super_genre)
-
-write_csv(companyAndRootPrevalence %>% filter(super_genre == "Art and Photography"), "saveouts_RESULTS/companies_by_genre/art_and_photo.csv")
-write_csv(companyAndRootPrevalence %>% filter(super_genre == "Communication & Social"), "saveouts_RESULTS/companies_by_genre/coms_and_social.csv")
-write_csv(companyAndRootPrevalence %>% filter(super_genre == "Education"), "saveouts_RESULTS/companies_by_genre/education.csv")
-write_csv(companyAndRootPrevalence %>% filter(super_genre == "Games & Entertainment"), "saveouts_RESULTS/companies_by_genre/games_and_entertainment.csv")
-write_csv(companyAndRootPrevalence %>% filter(super_genre == "Health & Lifestyle"), "saveouts_RESULTS/companies_by_genre/health_and_lifestyle.csv")
-write_csv(companyAndRootPrevalence %>% filter(super_genre == "Music"), "saveouts_RESULTS/companies_by_genre/music.csv")
-write_csv(companyAndRootPrevalence %>% filter(super_genre == "News"), "saveouts_RESULTS/companies_by_genre/news.csv")
-write_csv(companyAndRootPrevalence %>% filter(super_genre == "Productivity and Tools"), "saveouts_RESULTS/companies_by_genre/productivity_and_tools.csv")
-
-#break down the coverage of companies by ultimate owners
-prevalenceOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre") %>%
+  filter(super_genre == "Art and Photography") %>%
   filter(company != "Unknown") %>%
+  distinct(id, company) %>%
+  group_by(company) %>%
+  summarise(numAppsReferring = n()) %>%
+  mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
+           filter(super_genre == "Art and Photography") %>%
+           pull(numApps)
+  ) %>%
+  arrange(desc(pctOfApps)) %>%
+  left_join(companyInfo, by = "company")
+
+#then get the root companies within each
+artAndPhotoRootCompanies <- appsWithHostsAndCompaniesLong %>%
+  bind_rows(appsWithNoHosts) %>%
   left_join(companyInfo, by = "company") %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre") %>%
+  filter(super_genre == "Art and Photography") %>%
+  filter(company != "Unknown") %>%
   distinct(id, leaf_parent) %>%
-  count(leaf_parent) %>%
-  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
-  arrange(desc(n))
+  group_by(leaf_parent) %>%
+  summarise(numAppsReferring = n()) %>%
+  mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
+           filter(super_genre == "Art and Photography") %>%
+           pull(numApps)
+  ) %>%
+  arrange(desc(pctOfApps))
+
+#create combined table
+prevalenceCompaniesArtAndPhoto <- artAndPhotoRootCompanies %>%
+  select(-numAppsReferring) %>%
+  left_join(artAndPhotoCompanies, by = "leaf_parent") %>%
+  select(-numAppsReferring, -root_parent)
   
-#then do this for root companies
+write_csv(prevalenceCompaniesArtAndPhoto, "saveouts_RESULTS/prevalenceCompaniesArtAndPhoto.csv")
 
 #######ANALYSE BY GOOGLE PLAY STORE GENRES ##############
 #summarise the numbers of known trackers, by genre
