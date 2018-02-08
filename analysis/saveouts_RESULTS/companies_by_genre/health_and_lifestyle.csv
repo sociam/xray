@@ -1,0 +1,229 @@
+super_genre,company,n,pctOfApps,country,leaf_parent
+Health & Lifestyle,Google,145727,15.19,US,Alphabet
+Health & Lifestyle,Doubleclick,95139,9.92,US,Alphabet
+Health & Lifestyle,Facebook,71345,7.44,US,Facebook
+Health & Lifestyle,Google Analytics,63658,6.64,US,Alphabet
+Health & Lifestyle,Google Tag Manager,56878,5.93,US,Alphabet
+Health & Lifestyle,Twitter,47940,5,US,Twitter
+Health & Lifestyle,Microsoft,33417,3.48,US,Microsoft
+Health & Lifestyle,Yahoo,30168,3.14,US,Verizon
+Health & Lifestyle,Linkedin,29587,3.08,US,Linkedin
+Health & Lifestyle,Admob,23320,2.43,US,Alphabet
+Health & Lifestyle,Amazon Web Services,17866,1.86,US,Amazon
+Health & Lifestyle,Youtube,16827,1.75,US,Alphabet
+Health & Lifestyle,Flurry,10890,1.14,US,Oath
+Health & Lifestyle,Amazon,8510,0.89,US,Amazon
+Health & Lifestyle,Appsflyer,6195,0.65,US,Appsflyer
+Health & Lifestyle,Chartboost,5024,0.52,,Chartboost
+Health & Lifestyle,Adobe,4460,0.46,US,Adobe
+Health & Lifestyle,Applovin,4284,0.45,US,Applovin
+Health & Lifestyle,Mopub,4269,0.44,US,Twitter
+Health & Lifestyle,Cloudflare,4207,0.44,US,Cloudflare
+Health & Lifestyle,Cheetahmobile,3724,0.39,CN,Cheetahmobile
+Health & Lifestyle,Yandex,3515,0.37,RU,Yandex
+Health & Lifestyle,Applifier,3305,0.34,FI,Unity Technologies
+Health & Lifestyle,Revmob,3142,0.33,DE,Revmob
+Health & Lifestyle,Flickr,3083,0.32,US,Oath
+Health & Lifestyle,Appnext,3038,0.32,UK,Appnext
+Health & Lifestyle,Adcolony,2917,0.3,US,Opera
+Health & Lifestyle,Baidu,2884,0.3,CN,Baidu
+Health & Lifestyle,Akamai,2873,0.3,US,Akamai
+Health & Lifestyle,Alibaba,2870,0.3,CN,Alibaba
+Health & Lifestyle,Amazon Marketing Services,2810,0.29,US,Amazon
+Health & Lifestyle,Inmobi,2765,0.29,SG,Inmobi
+Health & Lifestyle,New Relic,2589,0.27,US,New Relic
+Health & Lifestyle,Ironsource,2278,0.24,US,Ironsource
+Health & Lifestyle,Disqus,2164,0.23,US,Disqus
+Health & Lifestyle,Apple,2161,0.23,US,Apple
+Health & Lifestyle,Appodeal,2096,0.22,US,Appodeal
+Health & Lifestyle,Pubnative,2024,0.21,DE,Pubnative
+Health & Lifestyle,Liverail,2001,0.21,US,Facebook
+Health & Lifestyle,Rubicon Project,1834,0.19,US,Rubicon Project
+Health & Lifestyle,Tumblr,1771,0.18,US,Oath
+Health & Lifestyle,Mail.ru,1626,0.17,RU,Mail.ru
+Health & Lifestyle,Smart Adserver,1560,0.16,UK,Smart Adserver
+Health & Lifestyle,Smaato,1514,0.16,US,Spearhead Integrated Marketing Communication 
+Health & Lifestyle,Tencent,1361,0.14,CN,Tencent
+Health & Lifestyle,Smart Ad Server,1343,0.14,US,Smart Ad Server
+Health & Lifestyle,Vimeo,1237,0.13,US,IAC
+Health & Lifestyle,Truste,1053,0.11,US,Truste
+Health & Lifestyle,Urbanairship,919,0.1,US,Urbanairship
+Health & Lifestyle,Localytics,750,0.08,UK,Localytics
+Health & Lifestyle,Pinterest,747,0.08,US,Pinterest
+Health & Lifestyle,Mobfox,727,0.08,AT,Mobfox
+Health & Lifestyle,Weibo,724,0.08,CN,Sina
+Health & Lifestyle,Millennialmedia,712,0.07,,Millennialmedia
+Health & Lifestyle,Foursquare,711,0.07,US,Foursquare
+Health & Lifestyle,Blogger,689,0.07,US,Alphabet
+Health & Lifestyle,Mapbox,661,0.07,US,Mapbox
+Health & Lifestyle,Oracle,607,0.06,US,Oracle
+Health & Lifestyle,Fyber,570,0.06,US,RNTS Media
+Health & Lifestyle,Drawbridge,555,0.06,US,Drawbridge
+Health & Lifestyle,Branch,535,0.06,US,Branch
+Health & Lifestyle,Wordpress,527,0.05,US,Automattic
+Health & Lifestyle,Tapjoy,430,0.04,US,Tapjoy
+Health & Lifestyle,Vungle,386,0.04,US,Vungle
+Health & Lifestyle,Sina,364,0.04,CN,Sina
+Health & Lifestyle,Daum,301,0.03,KR,Daum
+Health & Lifestyle,Wikimedia Foundation,300,0.03,US,Wikimedia Foundation
+Health & Lifestyle,360,259,0.03,CN,360
+Health & Lifestyle,Forensiq,258,0.03,US,Impact Radius
+Health & Lifestyle,Pingstart,246,0.03,US,Pingstart
+Health & Lifestyle,Moat,238,0.02,US,Moat
+Health & Lifestyle,Adbuddiz,227,0.02,FR,Adbuddiz
+Health & Lifestyle,Netease,219,0.02,CN,Netease
+Health & Lifestyle,Sohu,208,0.02,CN,Sohu
+Health & Lifestyle,Mcro,197,0.02,US,Mcro
+Health & Lifestyle,Bugsnag,178,0.02,US,Bugsnag
+Health & Lifestyle,Brightcove,174,0.02,US,Brightcove
+Health & Lifestyle,Ren Ren,162,0.02,CN,China InterActive
+Health & Lifestyle,Scorecardresearch,161,0.02,US,comScore
+Health & Lifestyle,Appboy,157,0.02,US,Appboy
+Health & Lifestyle,Sogou,146,0.02,CN,Sogou
+Health & Lifestyle,Weather Underground,141,0.01,US,International Business Machines
+Health & Lifestyle,Tune,114,0.01,US,Tune
+Health & Lifestyle,Bing,97,0.01,US,Microsoft
+Health & Lifestyle,Integral Ad Science,94,0.01,US,Integral Ad Science
+Health & Lifestyle,Igaworks,90,0.01,KR,Igaworks
+Health & Lifestyle,Apsalar,81,0.01,US,Apsalar
+Health & Lifestyle,Presage,81,0.01,US,Presage
+Health & Lifestyle,Openx,80,0.01,US,Openx
+Health & Lifestyle,I-Mobile,69,0.01,JP,I-Mobile
+Health & Lifestyle,Nexage,67,0.01,US,Nexage
+Health & Lifestyle,Gravatar,66,0.01,US,Automattic
+Health & Lifestyle,Gigya,64,0.01,US,Gigya
+Health & Lifestyle,Youku Tudou,63,0.01,CN,Youku Tudou
+Health & Lifestyle,Mocomplex,61,0.01,KR,Mocomplex
+Health & Lifestyle,Admarvel,59,0.01,US,Opera 
+Health & Lifestyle,Aol,57,0.01,US,Verizon
+Health & Lifestyle,Tnkfactory,57,0.01,KR,Tnkfactory
+Health & Lifestyle,Radium One,51,0.01,US,RhythmOne
+Health & Lifestyle,Mailchimp,49,0.01,US,Mailchimp
+Health & Lifestyle,Adstir,42,0,JP,Adstir
+Health & Lifestyle,International Business Machines,41,0,US,International Business Machines
+Health & Lifestyle,Webtrends,41,0,US,NetIQ
+Health & Lifestyle,Webtrends,41,0,US,NetIQ
+Health & Lifestyle,Mologiq,37,0,,Mologiq
+Health & Lifestyle,Samsung,34,0,KR,Samsung
+Health & Lifestyle,Accuweather,33,0,US,Accuweather
+Health & Lifestyle,Voicefive,33,0,US,comScore
+Health & Lifestyle,Quantcast,32,0,US,Quantcast
+Health & Lifestyle,Appnexus,30,0,US,Appnexus
+Health & Lifestyle,Jquery Foundation,30,0,US,Jquery Foundation
+Health & Lifestyle,Jd.com,29,0,CN,Jd.com
+Health & Lifestyle,Jumptap,29,0,,Jumptap
+Health & Lifestyle,Mozilla,28,0,US,Mozilla
+Health & Lifestyle,Stackpath,28,0,US,Stackpath
+Health & Lifestyle,Criteo,27,0,FR,Criteo
+Health & Lifestyle,Medscape,23,0,US,Medscape
+Health & Lifestyle,Aerserv,22,0,US,Aerserv
+Health & Lifestyle,Nativex,22,0,US,Nativex
+Health & Lifestyle,Hubspot,21,0,US,Hubspot
+Health & Lifestyle,Addthis,20,0,US,Oracle
+Health & Lifestyle,Mobvista,20,0,CN,Mobvista
+Health & Lifestyle,Adform,19,0,DK,Adform
+Health & Lifestyle,Webmd,19,0,US,Webmd
+Health & Lifestyle,Ask.com,17,0,US,IAC
+Health & Lifestyle,Adchina,16,0,CN,Adchina
+Health & Lifestyle,Flksu,15,0,US,Noosphere
+Health & Lifestyle,Optimizely,15,0,US,Optimizely
+Health & Lifestyle,Longtail Ad Solutions,14,0,US,Longtail Ad Solutions
+Health & Lifestyle,Iresearch Consulting Group,13,0,CN,Iresearch Consulting Group
+Health & Lifestyle,Nativo,13,0,US,Nativo
+Health & Lifestyle,Nativo,13,0,US,Nativo
+Health & Lifestyle,The Weather Company,13,0,US,International Business Machines
+Health & Lifestyle,Blinkx,12,0,US,Blinkx
+Health & Lifestyle,About.com,11,0,US,IAC
+Health & Lifestyle,Infonline,11,0,DE,Infonline
+Health & Lifestyle,Lifestreet,10,0,US,Facebook
+Health & Lifestyle,Sumo Logic,10,0,US,Sumo Logic
+Health & Lifestyle,Gemius,9,0,PL,Gemius
+Health & Lifestyle,Krux Digital,9,0,US,Krux Digital
+Health & Lifestyle,Taboola,9,0,US,Taboola
+Health & Lifestyle,Weather.com.cn,9,0,CN,Weather.com.cn
+Health & Lifestyle,Webklipper,9,0,IN,Webklipper
+Health & Lifestyle,Drugsite Trust,8,0,US,Drugsite Trust
+Health & Lifestyle,Viglink,8,0,US,Viglink
+Health & Lifestyle,Adgear,7,0,CA,Samsung
+Health & Lifestyle,Flipp,7,0,CA,Flipp
+Health & Lifestyle,Outbrain,7,0,US,Outbrain
+Health & Lifestyle,Foresee,6,0,US,AFCV Holdings
+Health & Lifestyle,Pc Group,6,0,CN,Pc Group
+Health & Lifestyle,Hearst,5,0,US,Hearst
+Health & Lifestyle,Intowow,5,0,US,AOL
+Health & Lifestyle,Swrve,5,0,US,Swrve
+Health & Lifestyle,Blue Kai,4,0,US,Oracle
+Health & Lifestyle,Cbs Corporation,4,0,US,Cbs Corporation
+Health & Lifestyle,Dataxu,4,0,US,Dataxu
+Health & Lifestyle,Etracker,4,0,DE,Etracker
+Health & Lifestyle,Hyprmx,4,0,US,Hyprmx
+Health & Lifestyle,Media Math,4,0,US,Media Math
+Health & Lifestyle,Medialytics,4,0,,Medialytics
+Health & Lifestyle,Qualtrics,4,0,US,Qualtrics
+Health & Lifestyle,Statcounter,4,0,IE,Statcounter
+Health & Lifestyle,Tealium,4,0,US,Tealium
+Health & Lifestyle,Adriver,3,0,RU,Adriver
+Health & Lifestyle,Audience Science,3,0,US,Audience Science
+Health & Lifestyle,Awin1,3,0,UK,Awin1
+Health & Lifestyle,Eyeview,3,0,US,Eyeview
+Health & Lifestyle,Hilton,3,0,US,Hilton
+Health & Lifestyle,Loopme,3,0,UK,Loopme
+Health & Lifestyle,Mode Media,3,0,US,Mode Media
+Health & Lifestyle,Teads,3,0,US,Teads
+Health & Lifestyle,The Trade Desk,3,0,US,The Trade Desk
+Health & Lifestyle,Tradedoubler,3,0,SE,Tradedoubler
+Health & Lifestyle,Tube Mogul,3,0,US,Tube Mogul
+Health & Lifestyle,Videology Group,3,0,US,Videology Group
+Health & Lifestyle,Wish,3,0,US,Wish
+Health & Lifestyle,Adfox,2,0,RU,Adfox
+Health & Lifestyle,Alphabet,2,0,US,Alphabet
+Health & Lifestyle,Baifendian,2,0,CN,Baifendian
+Health & Lifestyle,Dictionary.com,2,0,US,IAC
+Health & Lifestyle,Ebix,2,0,US,Ebix
+Health & Lifestyle,Gfk,2,0,US,Gfk
+Health & Lifestyle,Govdelivery,2,0,US,Actua
+Health & Lifestyle,Iac,2,0,US,Iac
+Health & Lifestyle,Neodata Group,2,0,IT,Neodata Group
+Health & Lifestyle,Otherlevels,2,0,US,Otherlevels
+Health & Lifestyle,Richrelevance,2,0,US,Richrelevance
+Health & Lifestyle,Shanghai 2345 Network Technology,2,0,CN,Shanghai 2345 Network Technology
+Health & Lifestyle,Sharethrough,2,0,US,Sharethrough
+Health & Lifestyle,Soasta,2,0,US,Akamai
+Health & Lifestyle,Spot X Change,2,0,US,Spot X Change
+Health & Lifestyle,Stickyads.tv,2,0,US,Comcast
+Health & Lifestyle,Stickyads.tv,2,0,US,Comcast
+Health & Lifestyle,Vizury,2,0,IN,Vizury
+Health & Lifestyle,Zedo,2,0,US,Zedo
+Health & Lifestyle,Zoopla,2,0,UK,The Property Software Group
+Health & Lifestyle,Adsame,1,0,CN,Adsame
+Health & Lifestyle,Adsnative,1,0,US,Adsnative
+Health & Lifestyle,Answers Corporation,1,0,US,AFCV Holdings
+Health & Lifestyle,Appier Inc,1,0,TW,Appier Inc
+Health & Lifestyle,Chitika,1,0,US,Chitika
+Health & Lifestyle,Cxense Asa,1,0,NO,Cxense Asa
+Health & Lifestyle,Ensighten,1,0,US,Ensighten
+Health & Lifestyle,Exelate,1,0,US,Nielsen Online
+Health & Lifestyle,Flashtalking,1,0,US,Encore Media Metrics
+Health & Lifestyle,Improve Digital,1,0,NL,Improve Digital
+Health & Lifestyle,Ipinyou,1,0,CN,Ipinyou
+Health & Lifestyle,Leanplum,1,0,US,Leanplum
+Health & Lifestyle,Liftoff,1,0,US,Liftoff
+Health & Lifestyle,"Manage
+",1,0,US,"Manage
+"
+Health & Lifestyle,Mediaav,1,0,CN,Mediaav
+Health & Lifestyle,Mediametrie,1,0,RO,Mediametrie
+Health & Lifestyle,Monotype Imaging,1,0,US,Monotype Imaging
+Health & Lifestyle,Opt,1,0,JP,Opt
+Health & Lifestyle,Primelocation,1,0,UK,Zoopla
+Health & Lifestyle,Readspeaker,1,0,NL,Readspeaker
+Health & Lifestyle,Rocketfuel,1,0,US,Rocketfuel
+Health & Lifestyle,Share This,1,0,US,Share This
+Health & Lifestyle,"Sociomantic
+",1,0,DK,Dunnhumby
+Health & Lifestyle,Tapsense,1,0,US,Tapsense
+Health & Lifestyle,The E.w. Scripps Company,1,0,US,The E.w. Scripps Company
+Health & Lifestyle,Tns,1,0,RU,Tns
+Health & Lifestyle,Triplelift,1,0,US,Triplelift
+Health & Lifestyle,Turn,1,0,US,Turn
+Health & Lifestyle,Verizon,1,0,US,Verizon

@@ -1,0 +1,298 @@
+leaf_parent,pctOfApps.x,company,pctOfApps.y,country
+Alphabet,88.43,Google,87.84,US
+Alphabet,88.43,Doubleclick,60.85,US
+Alphabet,88.43,Google Analytics,39.42,US
+Alphabet,88.43,Google Tag Manager,33.88,US
+Alphabet,88.43,Admob,14.67,US
+Alphabet,88.43,Youtube,9.51,US
+Alphabet,88.43,Blogger,0.46,US
+Alphabet,88.43,Alphabet,0,US
+Facebook,42.55,Facebook,42.54,US
+Facebook,42.55,Liverail,1.03,US
+Facebook,42.55,Lifestreet,0.01,US
+Twitter,31.12,Twitter,30.94,US
+Twitter,31.12,Mopub,2.51,US
+Microsoft,22.19,Microsoft,22.11,US
+Microsoft,22.19,Bing,0.12,US
+Verizon,20.83,Yahoo,20.82,US
+Verizon,20.83,Aol,0.06,US
+Verizon,20.83,Verizon,0,US
+Linkedin,20.62,Linkedin,20.62,US
+Amazon,17.91,Amazon Web Services,11.57,US
+Amazon,17.91,Amazon,7.72,US
+Amazon,17.91,Amazon Marketing Services,1.73,US
+Amazon,17.91,Alexa,0,US
+Oath,7.65,Flurry,6.28,US
+Oath,7.65,Flickr,1.37,US
+Oath,7.65,Tumblr,1.22,US
+Oath,7.65,Brightroll,0,US
+Oath,7.65,Gravity Insights,0,US
+Chartboost,5.45,Chartboost,5.45,
+Applovin,3.95,Applovin,3.95,US
+Cloudflare,3.85,Cloudflare,3.85,US
+Unity Technologies,3.32,Applifier,3.32,FI
+Opera,3.12,Adcolony,3.12,US
+Adobe,2.99,Adobe,2.99,US
+Adobe,2.99,Livefyre,0,US
+Adobe,2.99,Typekit,0,US
+Yandex,2.25,Yandex,2.25,RU
+Inmobi,2.01,Inmobi,2.01,SG
+Baidu,2,Baidu,2,CN
+Revmob,1.89,Revmob,1.89,DE
+Alibaba,1.86,Alibaba,1.86,CN
+Appsflyer,1.76,Appsflyer,1.76,US
+Akamai,1.64,Akamai,1.64,US
+Akamai,1.64,Soasta,0,US
+Vungle,1.59,Vungle,1.59,US
+Apple,1.07,Apple,1.07,US
+Appnext,1.03,Appnext,1.03,UK
+IAC,1.01,Vimeo,0.97,US
+IAC,1.01,Ask.com,0.04,US
+IAC,1.01,Dictionary.com,0.01,US
+IAC,1.01,About.com,0,US
+Disqus,0.99,Disqus,0.99,US
+Ironsource,0.94,Ironsource,0.94,US
+Tencent,0.91,Tencent,0.91,CN
+Appodeal,0.88,Appodeal,0.88,US
+Oracle,0.86,Oracle,0.83,US
+Oracle,0.86,Addthis,0.01,US
+Oracle,0.86,Blue Kai,0.01,US
+Pubnative,0.82,Pubnative,0.82,DE
+New Relic,0.81,New Relic,0.81,US
+Cheetahmobile,0.8,Cheetahmobile,0.8,CN
+Tapjoy,0.79,Tapjoy,0.79,US
+Mapbox,0.74,Mapbox,0.74,US
+Rubicon Project,0.71,Rubicon Project,0.71,US
+Millennialmedia,0.71,Millennialmedia,0.71,
+Mail.ru,0.68,Mail.ru,0.68,RU
+Urbanairship,0.59,Urbanairship,0.59,US
+Foursquare,0.58,Foursquare,0.58,US
+Moat,0.55,Moat,0.55,US
+Sina,0.54,Sina,0.34,CN
+Sina,0.54,Weibo,0.32,CN
+Spearhead Integrated Marketing Communication ,0.51,Smaato,0.51,US
+Mobfox,0.5,Mobfox,0.5,AT
+Smart Adserver,0.48,Smart Adserver,0.48,UK
+Adbuddiz,0.43,Adbuddiz,0.43,FR
+Smart Ad Server,0.41,Smart Ad Server,0.41,US
+Localytics,0.41,Localytics,0.41,UK
+comScore,0.36,Scorecardresearch,0.36,US
+comScore,0.36,Voicefive,0.07,US
+Automattic,0.35,Wordpress,0.31,US
+Automattic,0.35,Gravatar,0.04,US
+Automattic,0.35,Automattic,0,US
+Pinterest,0.34,Pinterest,0.34,US
+RNTS Media,0.32,Fyber,0.32,US
+Netease,0.32,Netease,0.32,CN
+Sohu,0.29,Sohu,0.29,CN
+Drawbridge,0.29,Drawbridge,0.29,US
+Branch,0.23,Branch,0.23,US
+Daum,0.21,Daum,0.21,KR
+Nexage,0.18,Nexage,0.18,US
+Integral Ad Science,0.15,Integral Ad Science,0.15,US
+I-Mobile,0.15,I-Mobile,0.15,JP
+Quantcast,0.12,Quantcast,0.12,US
+China InterActive,0.12,Ren Ren,0.12,CN
+Truste,0.11,Truste,0.11,US
+Brightcove,0.11,Brightcove,0.11,US
+International Business Machines,0.11,Weather Underground,0.05,US
+International Business Machines,0.11,International Business Machines,0.04,US
+International Business Machines,0.11,The Weather Company,0.03,US
+Tune,0.11,Tune,0.11,US
+Bugsnag,0.1,Bugsnag,0.1,US
+Presage,0.1,Presage,0.1,US
+Wikimedia Foundation,0.1,Wikimedia Foundation,0.1,US
+Impact Radius,0.1,Forensiq,0.1,US
+Opera ,0.09,Admarvel,0.09,US
+Igaworks,0.08,Igaworks,0.08,KR
+Mcro,0.08,Mcro,0.08,US
+Openx,0.07,Openx,0.07,US
+Appboy,0.06,Appboy,0.06,US
+Tnkfactory,0.06,Tnkfactory,0.06,KR
+Adstir,0.06,Adstir,0.06,JP
+Pingstart,0.06,Pingstart,0.06,US
+Gigya,0.06,Gigya,0.06,US
+Hyprmx,0.05,Hyprmx,0.05,US
+360,0.05,360,0.05,CN
+Double Verify,0.05,Double Verify,0.05,US
+Samsung,0.05,Samsung,0.05,KR
+Samsung,0.05,Adgear,0,CA
+Apsalar,0.05,Apsalar,0.05,US
+Mocomplex,0.05,Mocomplex,0.05,KR
+NetIQ,0.05,Webtrends,0.05,US
+NetIQ,0.05,Webtrends,0.05,US
+Aerserv,0.04,Aerserv,0.04,US
+Longtail Ad Solutions,0.04,Longtail Ad Solutions,0.04,US
+Appnexus,0.04,Appnexus,0.04,US
+Superawesome,0.04,Superawesome,0.04,UK
+Youku Tudou,0.04,Youku Tudou,0.04,CN
+Sumo Logic,0.03,Sumo Logic,0.03,US
+Sogou,0.03,Sogou,0.03,CN
+Mozilla,0.03,Mozilla,0.03,US
+Krux Digital,0.03,Krux Digital,0.03,US
+Science,0.03,Playhaven,0.03,US
+Accuweather,0.03,Accuweather,0.03,US
+Optimizely,0.03,Optimizely,0.03,US
+Swrve,0.02,Swrve,0.02,US
+Jumptap,0.02,Jumptap,0.02,
+Mologiq,0.02,Mologiq,0.02,
+Infonline,0.02,Infonline,0.02,DE
+Noosphere,0.02,Flksu,0.02,US
+Mailchimp,0.02,Mailchimp,0.02,US
+Outbrain,0.02,Outbrain,0.02,US
+Outbrain,0.02,Sphere,0,US
+Tapsense,0.02,Tapsense,0.02,US
+Jquery Foundation,0.02,Jquery Foundation,0.02,US
+Nativo,0.02,Nativo,0.02,US
+Nativo,0.02,Nativo,0.02,US
+Adchina,0.01,Adchina,0.01,CN
+Gemius,0.01,Gemius,0.01,PL
+Nativex,0.01,Nativex,0.01,US
+RhythmOne,0.01,Radium One,0.01,US
+Taboola,0.01,Taboola,0.01,US
+Loopme,0.01,Loopme,0.01,UK
+Teads,0.01,Teads,0.01,US
+Viglink,0.01,Viglink,0.01,US
+Sharethrough,0.01,Sharethrough,0.01,US
+Jd.com,0.01,Jd.com,0.01,CN
+Adfox,0.01,Adfox,0.01,RU
+Blinkx,0.01,Blinkx,0.01,US
+Adition Technologies,0.01,Adition Technologies,0.01,DE
+Adform,0.01,Adform,0.01,DK
+Hubspot,0.01,Hubspot,0.01,US
+Stackpath,0.01,Stackpath,0.01,US
+Iresearch Consulting Group,0.01,Iresearch Consulting Group,0.01,CN
+Cxense Asa,0.01,Cxense Asa,0.01,NO
+"Manage
+",0.01,"Manage
+",0.01,US
+Mobvista,0,Mobvista,0,CN
+Weather.com.cn,0,Weather.com.cn,0,CN
+Iac,0,Iac,0,US
+Criteo,0,Criteo,0,FR
+Chartbeat,0,Chartbeat,0,US
+Webmd,0,Webmd,0,US
+Qualtrics,0,Qualtrics,0,US
+AFCV Holdings,0,Foresee,0,US
+AFCV Holdings,0,Answers Corporation,0,US
+Miaozhen Systems,0,Miaozhen Systems,0,CN
+Parsely,0,Parsely,0,US
+Adsame,0,Adsame,0,CN
+Otherlevels,0,Otherlevels,0,US
+Mediaav,0,Mediaav,0,CN
+Medscape,0,Medscape,0,US
+Tradedoubler,0,Tradedoubler,0,SE
+United Internet Media,0,United Internet Media,0,DE
+The E.w. Scripps Company,0,The E.w. Scripps Company,0,US
+Nielsen Online,0,Exelate,0,US
+Cbs Corporation,0,Cbs Corporation,0,US
+Gannett,0,Gannett,0,US
+Deutsche Telekom,0,Deutsche Telekom,0,DE
+Mediametrie,0,Mediametrie,0,RO
+Webklipper,0,Webklipper,0,IN
+Comcast,0,Comcast,0,US
+Comcast,0,Stickyads.tv,0,US
+Comcast,0,Stickyads.tv,0,US
+Comcast,0,Freewheel,0,US
+Statcounter,0,Statcounter,0,IE
+Etracker,0,Etracker,0,DE
+Polar Mobile Group,0,Polar Mobile Group,0,CA
+Tealium,0,Tealium,0,US
+Ensighten,0,Ensighten,0,US
+Medialytics,0,Medialytics,0,
+Neodata Group,0,Neodata Group,0,IT
+Drugsite Trust,0,Drugsite Trust,0,US
+Gfk,0,Gfk,0,US
+Spot X Change,0,Spot X Change,0,US
+Dataxu,0,Dataxu,0,US
+Improve Digital,0,Improve Digital,0,NL
+Pc Group,0,Pc Group,0,CN
+Shanghai 2345 Network Technology,0,Shanghai 2345 Network Technology,0,CN
+Hilton,0,Hilton,0,US
+Zedo,0,Zedo,0,US
+AOL,0,Intowow,0,US
+Rhythmone,0,Rhythmone,0,US
+Readspeaker,0,Readspeaker,0,NL
+Vizury,0,Vizury,0,IN
+Flipp,0,Flipp,0,CA
+Media Math,0,Media Math,0,US
+Microad,0,Microad,0,SG
+Exoclick,0,Exoclick,0,ES
+Hearst,0,Hearst,0,US
+Sizmek,0,Sizmek,0,US
+Tns,0,Tns,0,RU
+Whos.amung.us,0,Whos.amung.us,0,CA
+Adriver,0,Adriver,0,RU
+Adsnative,0,Adsnative,0,US
+Awin1,0,Awin1,0,UK
+Dunnhumby,0,"Sociomantic
+",0,DK
+Turn,0,Turn,0,US
+Actua,0,Govdelivery,0,US
+Audience Science,0,Audience Science,0,US
+Ebix,0,Ebix,0,US
+Eyeview,0,Eyeview,0,US
+Leanplum,0,Leanplum,0,US
+Mode Media,0,Mode Media,0,US
+Progress Software,0,Telerik,0,US
+Rocketfuel,0,Rocketfuel,0,US
+Share This,0,Share This,0,US
+Specific Media,0,Myspace,0,US
+Taplytics,0,Taplytics,0,
+The Trade Desk,0,The Trade Desk,0,US
+Tube Mogul,0,Tube Mogul,0,US
+Videology Group,0,Videology Group,0,US
+Appier Inc,0,Appier Inc,0,TW
+Autohome,0,Autohome,0,CN
+Baifendian,0,Baifendian,0,CN
+Chitika,0,Chitika,0,US
+Effective Measure,0,Effective Measure,0,AU
+Encore Media Metrics,0,Flashtalking,0,US
+Experian,0,Experian,0,US
+Farlex,0,Farlex,0,US
+Inform,0,Inform,0,US
+Liftoff,0,Liftoff,0,US
+Opt,0,Opt,0,JP
+Popads,0,Popads,0,?
+Wish,0,Wish,0,US
+Admaster,0,Admaster,0,CN
+Beijing Emar Online Technology,0,Beijing Emar Online Technology,0,CN
+Conversant Media,0,Mediaplex,0,US
+Equifax,0,Equifax,0,US
+Evidon,0,Evidon,0,US
+Iperceptions,0,Iperceptions,0,US
+Neustar,0,Neustar,0,US
+Richrelevance,0,Richrelevance,0,US
+The Property Software Group,0,Zoopla,0,UK
+Wisecode,0,Histats,0,IT
+Zoopla,0,Primelocation,0,UK
+33Across,0,33Across,0,US
+Adelphic Inc,0,Adelphic Inc,0,US
+Admaxim,0,Admaxim,0,
+Adsocial,0,Adsocial,0,CN
+All Yes,0,All Yes,0,CN
+Chango,0,Chango,0,CA
+China Interactive,0,China Interactive,0,CN
+Deep Forest Media,0,Deep Forest Media,0,US
+Health Grades,0,Health Grades,0,US
+HiMedia Group,0,Sedo,0,DE
+Ipinyou,0,Ipinyou,0,CN
+Kantar,0,Kantar,0,UK
+Lotame,0,Lotame,0,US
+Monotype Imaging,0,Monotype Imaging,0,US
+Netseer,0,Netseer,0,US
+Nugg.ad,0,Nugg.ad,0,DE
+Perion,0,Perion,0,US
+Publicis Groupe,0,Publicis Groupe,0,FR
+Pubmatic,0,Pubmatic,0,US
+Signal Digital,0,Signal Digital,0,US
+Skimlinks,0,Skimlinks,0,UK
+Sovrn,0,Sovrn,0,US
+Suning Corporation,0,Suning Corporation,0,CN
+Tapad,0,Tapad,0,US
+Tout,0,Tout,0,US
+Triplelift,0,Triplelift,0,US
+Trusted Shops,0,Trusted Shops,0,DE
+Webtrekk,0,Webtrekk,0,DE
+WPP,0,Plista,0,DE
+Yieldoptimizer,0,Yieldoptimizer,0,

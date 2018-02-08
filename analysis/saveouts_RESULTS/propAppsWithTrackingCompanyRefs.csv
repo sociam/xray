@@ -1,295 +1,298 @@
-company,n,propApps,country,parent_id
-Google,842771,0.88,US,Alphabet
-DoubleClick,583805,0.61,US,Google
-Facebook,408166,0.43,US,NA
-Google Analytics,378201,0.39,US,Google
-Google Tag Manager,325087,0.34,US,Google
-Twitter,296837,0.31,US,NA
-Microsoft,212126,0.22,US,NA
-Yahoo,199782,0.21,US,Oath
-LinkedIn,197848,0.21,US,NA
-Admob,140776,0.15,US,Google
-Amazon Web Services,111046,0.12,US,Amazon
-YouTube,91203,0.1,US,Google
-Amazon,74041,0.08,US,NA
-Flurry,60219,0.06,US,Yahoo
-Chartboost,52288,0.05,,
-Applovin,37931,0.04,US,
-Cloudflare,36933,0.04,US,NA
-Applifier,31814,0.03,FI,Unity Technologies
-Adcolony,29945,0.03,US,Opera
-Adobe,28667,0.03,US,NA
-Mopub,24075,0.03,US,Twitter
-Yandex,21570,0.02,RU,NA
-Inmobi,19277,0.02,SG,
-Baidu,19224,0.02,CN,NA
-Revmob,18118,0.02,DE,
-Alibaba,17865,0.02,CN,NA
-Appsflyer,16848,0.02,US,
-Amazon Marketing Services,16588,0.02,US,Amazon
-Akamai,15737,0.02,US,NA
-Vungle,15213,0.02,US,
-Flickr,13132,0.01,US,Yahoo
-Tumblr,11696,0.01,US,Yahoo
-Apple,10267,0.01,US,NA
-Appnext,9913,0.01,UK,
-LiveRail,9891,0.01,US,Facebook
-Disqus,9500,0.01,US,NA
-Vimeo,9280,0.01,US,IAC
-Ironsource,9031,0.01,US,
-Tencent,8755,0.01,CN,NA
-Appodeal,8482,0.01,US,
-Oracle,8009,0.01,US,NA
-Pubnative,7908,0.01,DE,
-New Relic,7726,0.01,US,NA
-Cheetahmobile,7638,0.01,CN,
-Tapjoy,7621,0.01,US,
-Mapbox,7068,0.01,US,NA
-Rubicon Project,6856,0.01,US,NA
-Millennialmedia,6832,0.01,,
-Mail.Ru,6492,0.01,RU,
-Urbanairship,5622,0.01,US,
-Foursquare,5572,0.01,US,
-Moat,5275,0.01,US,NA
-Smaato,4860,0.01,US,Spearhead Integrated Marketing Communication 
-Mobfox,4754,0,AT,
-Smart Adserver,4605,0,UK,
-Blogger,4454,0,US,Google
-Adbuddiz,4158,0,FR,
-Smart Ad Server,3959,0,US,NA
-Localytics,3944,0,UK,
-ScorecardResearch,3441,0,US,comScore
-Sina,3301,0,CN,NA
-Pinterest,3272,0,US,NA
-Weibo,3074,0,CN,Sina
-Fyber,3069,0,US,RNTS Media
-NetEase,3038,0,CN,NA
-Wordpress,2960,0,US,Automattic
-Sohu,2824,0,CN,NA
-Drawbridge,2776,0,US,NA
-Branch,2192,0,US,
-Daum,1994,0,KR,
-Nexage,1772,0,US,
-Integral Ad Science,1456,0,US,NA
-I-Mobile,1450,0,JP,
-Quantcast,1174,0,US,NA
-Bing,1162,0,US,Microsoft
-Ren Ren,1125,0,CN,China InterActive
-TRUSTe,1094,0,US,NA
-Brightcove,1080,0,US,NA
-Tune,1028,0,US,
-Bugsnag,976,0,US,
-Presage,954,0,US,
-Wikimedia Foundation,936,0,US,NA
-Forensiq,931,0,US,Impact Radius
-Admarvel,875,0,US,Opera 
-Igaworks,811,0,KR,
-Mcro,811,0,US,
-OpenX,703,0,US,NA
-VoiceFive,677,0,US,comScore
-Appboy,583,0,US,
-Tnkfactory,580,0,KR,
-Adstir,559,0,JP,
-AOL,558,0,US,Oath
-Pingstart,548,0,US,
-Gigya,545,0,US,NA
-Hyprmx,517,0,US,
-360,504,0,CN,NA
-Double Verify,472,0,US,NA
-Apsalar,466,0,US,
-Mocomplex,463,0,KR,
-WebTrends,459,0,US,NetIQ
-Samsung,453,0,KR,NA
-Weather Underground,438,0,US,International Business Machines
-Ask.com,424,0,US,IAC
-Gravatar,418,0,US,Automattic
-Aerserv,403,0,US,
-Longtail Ad Solutions,356,0,US,
-AppNexus,355,0,US,NA
-International Business Machines,355,0,US,NA
-Superawesome,351,0,UK,
-Youku Tudou,339,0,CN,NA
-Sumo Logic,327,0,US,
-Sogou,309,0,CN,NA
-Mozilla,293,0,US,NA
-Krux Digital,277,0,US,NA
-Playhaven,277,0,US,Science
-The Weather Company,274,0,US,International Business Machines
-Accuweather,256,0,US,NA
-Optimizely,255,0,US,NA
-Swrve,223,0,US,
-Jumptap,207,0,,
-Mologiq,203,0,,
-INFOnline,183,0,DE,NA
-Flksu,172,0,US,Noosphere
-Mailchimp,166,0,US,
-Outbrain,162,0,US,NA
-Tapsense,159,0,US,
-jQuery Foundation,156,0,US,NA
-Nativo,146,0,US,NA
-Nativo,146,0,US,
-Dictionary.com,143,0,US,IAC
-AdChina,132,0,CN,NA
-Gemius,132,0,PL,NA
-Nativex,130,0,US,
-AddThis,128,0,US,Oracle
-Radium One,128,0,US,RhythmOne
-Taboola,123,0,US,NA
-Blue Kai,102,0,US,Oracle
-Loopme,95,0,UK,
-Teads,88,0,US,NA
-Viglink,81,0,US,
-Sharethrough,79,0,US,NA
-JD.com,78,0,CN,NA
-Adfox,76,0,RU,
-Blinkx,76,0,US,NA
-Adition Technologies,73,0,DE,NA
-AdForm,72,0,DK,NA
-Hubspot,70,0,US,NA
-StackPath,69,0,US,NA
-iResearch Consulting Group,56,0,CN,NA
-Cxense Asa,53,0,NO,
+company,n,pctOfApps,country,root_parent,leaf_parent
+Google,842771,87.84,US,Alphabet,Alphabet
+Doubleclick,583805,60.85,US,Alphabet,Alphabet
+Facebook,408166,42.54,US,NA,Facebook
+Google Analytics,378201,39.42,US,Alphabet,Alphabet
+Google Tag Manager,325087,33.88,US,Alphabet,Alphabet
+Twitter,296837,30.94,US,NA,Twitter
+Microsoft,212126,22.11,US,NA,Microsoft
+Yahoo,199782,20.82,US,Verizon,Verizon
+Linkedin,197848,20.62,US,NA,Linkedin
+Admob,140776,14.67,US,Alphabet,Alphabet
+Amazon Web Services,111046,11.57,US,Amazon,Amazon
+Youtube,91203,9.51,US,Alphabet,Alphabet
+Amazon,74041,7.72,US,NA,Amazon
+Flurry,60219,6.28,US,Oath,Oath
+Chartboost,52288,5.45,,,Chartboost
+Applovin,37931,3.95,US,,Applovin
+Cloudflare,36933,3.85,US,NA,Cloudflare
+Applifier,31814,3.32,FI,Unity Technologies,Unity Technologies
+Adcolony,29945,3.12,US,Opera,Opera
+Adobe,28667,2.99,US,NA,Adobe
+Mopub,24075,2.51,US,Twitter,Twitter
+Yandex,21570,2.25,RU,NA,Yandex
+Inmobi,19277,2.01,SG,,Inmobi
+Baidu,19224,2,CN,NA,Baidu
+Revmob,18118,1.89,DE,,Revmob
+Alibaba,17865,1.86,CN,NA,Alibaba
+Appsflyer,16848,1.76,US,,Appsflyer
+Amazon Marketing Services,16588,1.73,US,Amazon,Amazon
+Akamai,15737,1.64,US,NA,Akamai
+Vungle,15213,1.59,US,,Vungle
+Flickr,13132,1.37,US,Oath,Oath
+Tumblr,11696,1.22,US,Oath,Oath
+Apple,10267,1.07,US,NA,Apple
+Appnext,9913,1.03,UK,,Appnext
+Liverail,9891,1.03,US,Facebook,Facebook
+Disqus,9500,0.99,US,NA,Disqus
+Vimeo,9280,0.97,US,IAC,IAC
+Ironsource,9031,0.94,US,,Ironsource
+Tencent,8755,0.91,CN,NA,Tencent
+Appodeal,8482,0.88,US,,Appodeal
+Oracle,8009,0.83,US,NA,Oracle
+Pubnative,7908,0.82,DE,,Pubnative
+New Relic,7726,0.81,US,NA,New Relic
+Cheetahmobile,7638,0.8,CN,,Cheetahmobile
+Tapjoy,7621,0.79,US,,Tapjoy
+Mapbox,7068,0.74,US,NA,Mapbox
+Rubicon Project,6856,0.71,US,NA,Rubicon Project
+Millennialmedia,6832,0.71,,,Millennialmedia
+Mail.ru,6492,0.68,RU,,Mail.ru
+Urbanairship,5622,0.59,US,,Urbanairship
+Foursquare,5572,0.58,US,,Foursquare
+Moat,5275,0.55,US,NA,Moat
+Smaato,4860,0.51,US,Spearhead Integrated Marketing Communication ,Spearhead Integrated Marketing Communication 
+Mobfox,4754,0.5,AT,,Mobfox
+Smart Adserver,4605,0.48,UK,,Smart Adserver
+Blogger,4454,0.46,US,Alphabet,Alphabet
+Adbuddiz,4158,0.43,FR,,Adbuddiz
+Smart Ad Server,3959,0.41,US,NA,Smart Ad Server
+Localytics,3944,0.41,UK,,Localytics
+Scorecardresearch,3441,0.36,US,comScore,comScore
+Sina,3301,0.34,CN,NA,Sina
+Pinterest,3272,0.34,US,NA,Pinterest
+Weibo,3074,0.32,CN,Sina,Sina
+Fyber,3069,0.32,US,RNTS Media,RNTS Media
+Netease,3038,0.32,CN,NA,Netease
+Wordpress,2960,0.31,US,Automattic,Automattic
+Sohu,2824,0.29,CN,NA,Sohu
+Drawbridge,2776,0.29,US,NA,Drawbridge
+Branch,2192,0.23,US,,Branch
+Daum,1994,0.21,KR,,Daum
+Nexage,1772,0.18,US,,Nexage
+Integral Ad Science,1456,0.15,US,NA,Integral Ad Science
+I-Mobile,1450,0.15,JP,,I-Mobile
+Quantcast,1174,0.12,US,NA,Quantcast
+Bing,1162,0.12,US,Microsoft,Microsoft
+Ren Ren,1125,0.12,CN,China InterActive,China InterActive
+Truste,1094,0.11,US,NA,Truste
+Brightcove,1080,0.11,US,NA,Brightcove
+Tune,1028,0.11,US,,Tune
+Bugsnag,976,0.1,US,,Bugsnag
+Presage,954,0.1,US,,Presage
+Wikimedia Foundation,936,0.1,US,NA,Wikimedia Foundation
+Forensiq,931,0.1,US,Impact Radius,Impact Radius
+Admarvel,875,0.09,US,Opera ,Opera 
+Igaworks,811,0.08,KR,,Igaworks
+Mcro,811,0.08,US,,Mcro
+Openx,703,0.07,US,NA,Openx
+Voicefive,677,0.07,US,comScore,comScore
+Appboy,583,0.06,US,,Appboy
+Tnkfactory,580,0.06,KR,,Tnkfactory
+Adstir,559,0.06,JP,,Adstir
+Aol,558,0.06,US,Verizon,Verizon
+Pingstart,548,0.06,US,,Pingstart
+Gigya,545,0.06,US,NA,Gigya
+Hyprmx,517,0.05,US,,Hyprmx
+360,504,0.05,CN,NA,360
+Double Verify,472,0.05,US,NA,Double Verify
+Apsalar,466,0.05,US,,Apsalar
+Mocomplex,463,0.05,KR,,Mocomplex
+Webtrends,459,0.05,US,NetIQ,NetIQ
+Webtrends,459,0.05,US,NetIQ,NetIQ
+Samsung,453,0.05,KR,NA,Samsung
+Weather Underground,438,0.05,US,International Business Machines,International Business Machines
+Ask.com,424,0.04,US,IAC,IAC
+Gravatar,418,0.04,US,Automattic,Automattic
+Aerserv,403,0.04,US,,Aerserv
+Longtail Ad Solutions,356,0.04,US,,Longtail Ad Solutions
+Appnexus,355,0.04,US,NA,Appnexus
+International Business Machines,355,0.04,US,NA,International Business Machines
+Superawesome,351,0.04,UK,,Superawesome
+Youku Tudou,339,0.04,CN,NA,Youku Tudou
+Sumo Logic,327,0.03,US,,Sumo Logic
+Sogou,309,0.03,CN,NA,Sogou
+Mozilla,293,0.03,US,NA,Mozilla
+Krux Digital,277,0.03,US,NA,Krux Digital
+Playhaven,277,0.03,US,Science,Science
+The Weather Company,274,0.03,US,International Business Machines,International Business Machines
+Accuweather,256,0.03,US,NA,Accuweather
+Optimizely,255,0.03,US,NA,Optimizely
+Swrve,223,0.02,US,,Swrve
+Jumptap,207,0.02,,,Jumptap
+Mologiq,203,0.02,,,Mologiq
+Infonline,183,0.02,DE,NA,Infonline
+Flksu,172,0.02,US,Noosphere,Noosphere
+Mailchimp,166,0.02,US,,Mailchimp
+Outbrain,162,0.02,US,NA,Outbrain
+Tapsense,159,0.02,US,,Tapsense
+Jquery Foundation,156,0.02,US,NA,Jquery Foundation
+Nativo,146,0.02,US,NA,Nativo
+Nativo,146,0.02,US,,Nativo
+Dictionary.com,143,0.01,US,IAC,IAC
+Adchina,132,0.01,CN,NA,Adchina
+Gemius,132,0.01,PL,NA,Gemius
+Nativex,130,0.01,US,,Nativex
+Addthis,128,0.01,US,Oracle,Oracle
+Radium One,128,0.01,US,RhythmOne,RhythmOne
+Taboola,123,0.01,US,NA,Taboola
+Blue Kai,102,0.01,US,Oracle,Oracle
+Loopme,95,0.01,UK,,Loopme
+Teads,88,0.01,US,NA,Teads
+Viglink,81,0.01,US,,Viglink
+Sharethrough,79,0.01,US,NA,Sharethrough
+Jd.com,78,0.01,CN,NA,Jd.com
+Adfox,76,0.01,RU,,Adfox
+Blinkx,76,0.01,US,NA,Blinkx
+Adition Technologies,73,0.01,DE,NA,Adition Technologies
+Adform,72,0.01,DK,NA,Adform
+Hubspot,70,0.01,US,NA,Hubspot
+Stackpath,69,0.01,US,NA,Stackpath
+Iresearch Consulting Group,56,0.01,CN,NA,Iresearch Consulting Group
+Cxense Asa,53,0.01,NO,,Cxense Asa
 "Manage
-",52,0,US,
-Lifestreet,48,0,US,Facebook
-About.com,45,0,US,IAC
-Mobvista,45,0,CN,
-Weather.com.cn,45,0,CN,NA
-IAC,41,0,US,NA
-Criteo,40,0,FR,NA
-Chartbeat,37,0,US,NA
-WebMD,37,0,US,NA
-Qualtrics,35,0,US,
-Miaozhen Systems,34,0,CN,NA
-Parsely,34,0,US,
-AdSame,33,0,CN,NA
-Otherlevels,33,0,US,
-MediaAV,29,0,CN,NA
-Medscape,29,0,US,NA
-Tradedoubler,29,0,SE,NA
-United Internet Media,28,0,DE,NA
-The E.W. Scripps Company,26,0,US,NA
-exelate,25,0,US,Nielsen Online
-CBS Corporation,24,0,US,NA
-Gannett,24,0,US,NA
-Deutsche Telekom,22,0,DE,NA
-Mediametrie,21,0,RO,
-Webklipper,20,0,IN,
-ForeSee,18,0,US,AFCV Holdings
-Statcounter,18,0,IE,NA
-AdGear,17,0,CA,Samsung
-etracker,17,0,DE,NA
-Polar Mobile Group,17,0,CA,
-Tealium,17,0,US,
-Alexa,16,0,US,Amazon
-Answers Corporation,16,0,US,AFCV Holdings
-Ensighten,16,0,US,NA
-Medialytics,16,0,,
-Neodata Group,16,0,IT,NA
-Soasta,16,0,US,Akamai
-Drugsite Trust,15,0,US,NA
-Gfk,15,0,US,
-Spot X Change,15,0,US,NA
-Comcast,14,0,US,NA
-DataXu,14,0,US,NA
-Verizon,14,0,US,NA
-Improve Digital,13,0,NL,NA
-PC Group,13,0,CN,NA
-Shanghai 2345 Network Technology,13,0,CN,NA
-Hilton,12,0,US,
-Zedo,12,0,US,
-Alphabet,11,0,US,NA
-Intowow,11,0,US,AOL
-RhythmOne,10,0,US,NA
-ReadSpeaker,9,0,NL,NA
-Vizury,9,0,IN,
-Flipp,8,0,CA,NA
-Automattic,7,0,US,NA
-Media Math,7,0,US,NA
-Microad,7,0,SG,
-exoClick,6,0,ES,NA
-Hearst,6,0,US,NA
-Sizmek,6,0,US,NA
-Tns,6,0,RU,
-whos.amung.us,6,0,CA,NA
-Adriver,5,0,RU,
-Adsnative,5,0,US,
-Awin1,5,0,UK,
-Livefyre,5,0,US,Adobe
+",52,0.01,US,,"Manage
+"
+Lifestreet,48,0.01,US,Facebook,Facebook
+About.com,45,0,US,IAC,IAC
+Mobvista,45,0,CN,,Mobvista
+Weather.com.cn,45,0,CN,NA,Weather.com.cn
+Iac,41,0,US,NA,Iac
+Criteo,40,0,FR,NA,Criteo
+Chartbeat,37,0,US,NA,Chartbeat
+Webmd,37,0,US,NA,Webmd
+Qualtrics,35,0,US,,Qualtrics
+Miaozhen Systems,34,0,CN,NA,Miaozhen Systems
+Parsely,34,0,US,,Parsely
+Adsame,33,0,CN,NA,Adsame
+Otherlevels,33,0,US,,Otherlevels
+Mediaav,29,0,CN,NA,Mediaav
+Medscape,29,0,US,NA,Medscape
+Tradedoubler,29,0,SE,NA,Tradedoubler
+United Internet Media,28,0,DE,NA,United Internet Media
+The E.w. Scripps Company,26,0,US,NA,The E.w. Scripps Company
+Exelate,25,0,US,Nielsen Online,Nielsen Online
+Cbs Corporation,24,0,US,NA,Cbs Corporation
+Gannett,24,0,US,NA,Gannett
+Deutsche Telekom,22,0,DE,NA,Deutsche Telekom
+Mediametrie,21,0,RO,,Mediametrie
+Webklipper,20,0,IN,,Webklipper
+Foresee,18,0,US,AFCV Holdings,AFCV Holdings
+Statcounter,18,0,IE,NA,Statcounter
+Adgear,17,0,CA,Samsung,Samsung
+Etracker,17,0,DE,NA,Etracker
+Polar Mobile Group,17,0,CA,,Polar Mobile Group
+Tealium,17,0,US,,Tealium
+Alexa,16,0,US,Amazon,Amazon
+Answers Corporation,16,0,US,AFCV Holdings,AFCV Holdings
+Ensighten,16,0,US,NA,Ensighten
+Medialytics,16,0,,,Medialytics
+Neodata Group,16,0,IT,NA,Neodata Group
+Soasta,16,0,US,Akamai,Akamai
+Drugsite Trust,15,0,US,NA,Drugsite Trust
+Gfk,15,0,US,,Gfk
+Spot X Change,15,0,US,NA,Spot X Change
+Comcast,14,0,US,NA,Comcast
+Dataxu,14,0,US,NA,Dataxu
+Verizon,14,0,US,NA,Verizon
+Improve Digital,13,0,NL,NA,Improve Digital
+Pc Group,13,0,CN,NA,Pc Group
+Shanghai 2345 Network Technology,13,0,CN,NA,Shanghai 2345 Network Technology
+Hilton,12,0,US,,Hilton
+Zedo,12,0,US,,Zedo
+Alphabet,11,0,US,NA,Alphabet
+Intowow,11,0,US,AOL,AOL
+Rhythmone,10,0,US,NA,Rhythmone
+Readspeaker,9,0,NL,NA,Readspeaker
+Vizury,9,0,IN,,Vizury
+Flipp,8,0,CA,NA,Flipp
+Automattic,7,0,US,NA,Automattic
+Media Math,7,0,US,NA,Media Math
+Microad,7,0,SG,,Microad
+Exoclick,6,0,ES,NA,Exoclick
+Hearst,6,0,US,NA,Hearst
+Sizmek,6,0,US,NA,Sizmek
+Tns,6,0,RU,,Tns
+Whos.amung.us,6,0,CA,NA,Whos.amung.us
+Adriver,5,0,RU,,Adriver
+Adsnative,5,0,US,,Adsnative
+Awin1,5,0,UK,,Awin1
+Livefyre,5,0,US,Adobe,Adobe
 "Sociomantic
-",5,0,DK,Dunnhumby
-Turn,5,0,US,NA
-Audience Science,4,0,US,NA
-Ebix,4,0,US,NA
-Eyeview,4,0,US,
-GovDelivery,4,0,US,Actua
-Leanplum,4,0,US,
-Mode Media,4,0,US,NA
-Myspace,4,0,US,Specific Media
-Rocketfuel,4,0,US,NA
-Share This,4,0,US,NA
-Taplytics,4,0,,
-Telerik,4,0,US,Progress Software
-The Trade Desk,4,0,US,NA
-Tube Mogul,4,0,US,NA
-Videology Group,4,0,US,NA
-Appier Inc,3,0,TW,
-Autohome,3,0,CN,NA
-Baifendian,3,0,CN,NA
-Chitika,3,0,US,NA
-Effective Measure,3,0,AU,
-Experian,3,0,US,NA
-Farlex,3,0,US,NA
-Flashtalking,3,0,US,Encore Media Metrics
-Inform,3,0,US,NA
-Liftoff,3,0,US,
-Opt,3,0,JP,
-PopAds,3,0,?,NA
-StickyADS.tv,3,0,US,Comcast
-Wish,3,0,US,
-AdMaster,2,0,CN,NA
-Beijing Emar Online Technology,2,0,CN,NA
-BrightRoll,2,0,US,Yahoo
-Equifax,2,0,US,NA
-Evidon,2,0,US,NA
-Gravity Insights,2,0,US,AOL
-HiStats,2,0,IT,Wisecode
-iPerceptions,2,0,US,NA
-Mediaplex,2,0,US,Conversant Media
-Neustar,2,0,US,NA
-Primelocation,2,0,UK,Zoopla
-Richrelevance,2,0,US,
-Sphere,2,0,US,Outbrain
-Typekit,2,0,US,Adobe
-Zoopla,2,0,UK,The Property Software Group
-33Across,1,0,US,NA
-Adelphic Inc,1,0,US,
-Admaxim,1,0,,
-AdSocial,1,0,CN,NA
-All Yes,1,0,CN,NA
-Chango,1,0,CA,NA
-China InterActive,1,0,CN,NA
-Deep Forest Media,1,0,US,
-FreeWheel,1,0,US,Comcast
-Health Grades,1,0,US,NA
-iPinYou,1,0,CN,NA
-Kantar,1,0,UK,NA
-Lotame,1,0,US,NA
-Monotype Imaging,1,0,US,NA
-Netseer,1,0,US,
-nugg.ad,1,0,DE,NA
-Perion,1,0,US,NA
-plista,1,0,DE,GroupM
-Publicis Groupe,1,0,FR,NA
-PubMatic,1,0,US,NA
-Sedo,1,0,DE,AdLink Group
-Signal Digital,1,0,US,NA
-Skimlinks,1,0,UK,
-Sovrn,1,0,US,NA
-Suning Corporation,1,0,CN,NA
-TapAd,1,0,US,NA
-Tout,1,0,US,NA
-Triplelift,1,0,US,
-Trusted Shops,1,0,DE,NA
-Webtrekk,1,0,DE,NA
-Yieldoptimizer,1,0,,
+",5,0,DK,Dunnhumby,Dunnhumby
+Turn,5,0,US,NA,Turn
+Audience Science,4,0,US,NA,Audience Science
+Ebix,4,0,US,NA,Ebix
+Eyeview,4,0,US,,Eyeview
+Govdelivery,4,0,US,Actua,Actua
+Leanplum,4,0,US,,Leanplum
+Mode Media,4,0,US,NA,Mode Media
+Myspace,4,0,US,Specific Media,Specific Media
+Rocketfuel,4,0,US,NA,Rocketfuel
+Share This,4,0,US,NA,Share This
+Taplytics,4,0,,,Taplytics
+Telerik,4,0,US,Progress Software,Progress Software
+The Trade Desk,4,0,US,NA,The Trade Desk
+Tube Mogul,4,0,US,NA,Tube Mogul
+Videology Group,4,0,US,NA,Videology Group
+Appier Inc,3,0,TW,,Appier Inc
+Autohome,3,0,CN,NA,Autohome
+Baifendian,3,0,CN,NA,Baifendian
+Chitika,3,0,US,NA,Chitika
+Effective Measure,3,0,AU,,Effective Measure
+Experian,3,0,US,NA,Experian
+Farlex,3,0,US,NA,Farlex
+Flashtalking,3,0,US,Encore Media Metrics,Encore Media Metrics
+Inform,3,0,US,NA,Inform
+Liftoff,3,0,US,,Liftoff
+Opt,3,0,JP,,Opt
+Popads,3,0,?,NA,Popads
+Stickyads.tv,3,0,US,Comcast,Comcast
+Stickyads.tv,3,0,US,Comcast,Comcast
+Wish,3,0,US,,Wish
+Admaster,2,0,CN,NA,Admaster
+Beijing Emar Online Technology,2,0,CN,NA,Beijing Emar Online Technology
+Brightroll,2,0,US,Oath,Oath
+Equifax,2,0,US,NA,Equifax
+Evidon,2,0,US,NA,Evidon
+Gravity Insights,2,0,US,Oath,Oath
+Histats,2,0,IT,Wisecode,Wisecode
+Iperceptions,2,0,US,NA,Iperceptions
+Mediaplex,2,0,US,Conversant Media,Conversant Media
+Neustar,2,0,US,NA,Neustar
+Primelocation,2,0,UK,Zoopla,Zoopla
+Richrelevance,2,0,US,,Richrelevance
+Sphere,2,0,US,Outbrain,Outbrain
+Typekit,2,0,US,Adobe,Adobe
+Zoopla,2,0,UK,The Property Software Group,The Property Software Group
+33Across,1,0,US,NA,33Across
+Adelphic Inc,1,0,US,,Adelphic Inc
+Admaxim,1,0,,,Admaxim
+Adsocial,1,0,CN,NA,Adsocial
+All Yes,1,0,CN,NA,All Yes
+Chango,1,0,CA,NA,Chango
+China Interactive,1,0,CN,NA,China Interactive
+Deep Forest Media,1,0,US,,Deep Forest Media
+Freewheel,1,0,US,Comcast,Comcast
+Health Grades,1,0,US,NA,Health Grades
+Ipinyou,1,0,CN,NA,Ipinyou
+Kantar,1,0,UK,NA,Kantar
+Lotame,1,0,US,NA,Lotame
+Monotype Imaging,1,0,US,NA,Monotype Imaging
+Netseer,1,0,US,,Netseer
+Nugg.ad,1,0,DE,NA,Nugg.ad
+Perion,1,0,US,NA,Perion
+Plista,1,0,DE,WPP,WPP
+Publicis Groupe,1,0,FR,NA,Publicis Groupe
+Pubmatic,1,0,US,NA,Pubmatic
+Sedo,1,0,DE,HiMedia Group,HiMedia Group
+Signal Digital,1,0,US,NA,Signal Digital
+Skimlinks,1,0,UK,,Skimlinks
+Sovrn,1,0,US,NA,Sovrn
+Suning Corporation,1,0,CN,NA,Suning Corporation
+Tapad,1,0,US,NA,Tapad
+Tout,1,0,US,NA,Tout
+Triplelift,1,0,US,,Triplelift
+Trusted Shops,1,0,DE,NA,Trusted Shops
+Webtrekk,1,0,DE,NA,Webtrekk
+Yieldoptimizer,1,0,,,Yieldoptimizer

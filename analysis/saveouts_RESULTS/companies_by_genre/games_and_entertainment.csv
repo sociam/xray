@@ -1,0 +1,226 @@
+super_genre,company,n,pctOfApps,country,leaf_parent
+Games & Entertainment,Google,262051,27.31,US,Alphabet
+Games & Entertainment,Doubleclick,210004,21.89,US,Alphabet
+Games & Entertainment,Google Analytics,133760,13.94,US,Alphabet
+Games & Entertainment,Facebook,133757,13.94,US,Facebook
+Games & Entertainment,Google Tag Manager,116302,12.12,US,Alphabet
+Games & Entertainment,Twitter,99181,10.34,US,Twitter
+Games & Entertainment,Microsoft,75949,7.92,US,Microsoft
+Games & Entertainment,Yahoo,72125,7.52,US,Verizon
+Games & Entertainment,Linkedin,71039,7.4,US,Linkedin
+Games & Entertainment,Admob,55233,5.76,US,Alphabet
+Games & Entertainment,Amazon Web Services,46815,4.88,US,Amazon
+Games & Entertainment,Chartboost,40292,4.2,,Chartboost
+Games & Entertainment,Amazon,32180,3.35,US,Amazon
+Games & Entertainment,Applovin,26800,2.79,US,Applovin
+Games & Entertainment,Cloudflare,26067,2.72,US,Cloudflare
+Games & Entertainment,Applifier,25800,2.69,FI,Unity Technologies
+Games & Entertainment,Flurry,25565,2.66,US,Oath
+Games & Entertainment,Youtube,22032,2.3,US,Alphabet
+Games & Entertainment,Adcolony,21104,2.2,US,Opera
+Games & Entertainment,Vungle,13836,1.44,US,Vungle
+Games & Entertainment,Mopub,11753,1.23,US,Twitter
+Games & Entertainment,Adobe,11229,1.17,US,Adobe
+Games & Entertainment,Inmobi,9931,1.04,SG,Inmobi
+Games & Entertainment,Amazon Marketing Services,9471,0.99,US,Amazon
+Games & Entertainment,Revmob,8375,0.87,DE,Revmob
+Games & Entertainment,Akamai,7220,0.75,US,Akamai
+Games & Entertainment,Tapjoy,6577,0.69,US,Tapjoy
+Games & Entertainment,Yandex,6557,0.68,RU,Yandex
+Games & Entertainment,Alibaba,5921,0.62,CN,Alibaba
+Games & Entertainment,Baidu,5895,0.61,CN,Baidu
+Games & Entertainment,Appsflyer,5482,0.57,US,Appsflyer
+Games & Entertainment,Appodeal,4949,0.52,US,Appodeal
+Games & Entertainment,Ironsource,4815,0.5,US,Ironsource
+Games & Entertainment,Pubnative,4588,0.48,DE,Pubnative
+Games & Entertainment,Liverail,4149,0.43,US,Facebook
+Games & Entertainment,Moat,3936,0.41,US,Moat
+Games & Entertainment,Rubicon Project,3923,0.41,US,Rubicon Project
+Games & Entertainment,Millennialmedia,3761,0.39,,Millennialmedia
+Games & Entertainment,Tencent,3747,0.39,CN,Tencent
+Games & Entertainment,Mail.ru,3563,0.37,RU,Mail.ru
+Games & Entertainment,Appnext,3207,0.33,UK,Appnext
+Games & Entertainment,Tumblr,3154,0.33,US,Oath
+Games & Entertainment,Apple,2955,0.31,US,Apple
+Games & Entertainment,Cheetahmobile,2725,0.28,CN,Cheetahmobile
+Games & Entertainment,Adbuddiz,2642,0.28,FR,Adbuddiz
+Games & Entertainment,Vimeo,2635,0.27,US,IAC
+Games & Entertainment,Foursquare,1942,0.2,US,Foursquare
+Games & Entertainment,Flickr,1850,0.19,US,Oath
+Games & Entertainment,Fyber,1802,0.19,US,RNTS Media
+Games & Entertainment,Disqus,1704,0.18,US,Disqus
+Games & Entertainment,Sina,1641,0.17,CN,Sina
+Games & Entertainment,Netease,1633,0.17,CN,Netease
+Games & Entertainment,Sohu,1611,0.17,CN,Sohu
+Games & Entertainment,Scorecardresearch,1209,0.13,US,comScore
+Games & Entertainment,Oracle,1192,0.12,US,Oracle
+Games & Entertainment,Smaato,1104,0.12,US,Spearhead Integrated Marketing Communication 
+Games & Entertainment,Mobfox,1097,0.11,AT,Mobfox
+Games & Entertainment,Drawbridge,1017,0.11,US,Drawbridge
+Games & Entertainment,Mapbox,1014,0.11,US,Mapbox
+Games & Entertainment,I-Mobile,981,0.1,JP,I-Mobile
+Games & Entertainment,Urbanairship,975,0.1,US,Urbanairship
+Games & Entertainment,Integral Ad Science,891,0.09,US,Integral Ad Science
+Games & Entertainment,Quantcast,866,0.09,US,Quantcast
+Games & Entertainment,Nexage,809,0.08,US,Nexage
+Games & Entertainment,Blogger,777,0.08,US,Alphabet
+Games & Entertainment,Smart Adserver,754,0.08,UK,Smart Adserver
+Games & Entertainment,Weibo,642,0.07,CN,Sina
+Games & Entertainment,New Relic,626,0.07,US,New Relic
+Games & Entertainment,Smart Ad Server,609,0.06,US,Smart Ad Server
+Games & Entertainment,Pinterest,568,0.06,US,Pinterest
+Games & Entertainment,Igaworks,561,0.06,KR,Igaworks
+Games & Entertainment,Daum,556,0.06,KR,Daum
+Games & Entertainment,Wordpress,553,0.06,US,Automattic
+Games & Entertainment,Presage,548,0.06,US,Presage
+Games & Entertainment,Localytics,532,0.06,UK,Localytics
+Games & Entertainment,Hyprmx,459,0.05,US,Hyprmx
+Games & Entertainment,Tune,440,0.05,US,Tune
+Games & Entertainment,Branch,420,0.04,US,Branch
+Games & Entertainment,Adstir,388,0.04,JP,Adstir
+Games & Entertainment,Tnkfactory,340,0.04,KR,Tnkfactory
+Games & Entertainment,Openx,331,0.03,US,Openx
+Games & Entertainment,Superawesome,329,0.03,UK,Superawesome
+Games & Entertainment,Forensiq,328,0.03,US,Impact Radius
+Games & Entertainment,Aerserv,301,0.03,US,Aerserv
+Games & Entertainment,Playhaven,268,0.03,US,Science
+Games & Entertainment,Samsung,245,0.03,KR,Samsung
+Games & Entertainment,Brightcove,223,0.02,US,Brightcove
+Games & Entertainment,Ren Ren,223,0.02,CN,China InterActive
+Games & Entertainment,Admarvel,221,0.02,US,Opera 
+Games & Entertainment,Bugsnag,206,0.02,US,Bugsnag
+Games & Entertainment,Appnexus,198,0.02,US,Appnexus
+Games & Entertainment,Swrve,175,0.02,US,Swrve
+Games & Entertainment,Apsalar,167,0.02,US,Apsalar
+Games & Entertainment,Gigya,165,0.02,US,Gigya
+Games & Entertainment,360,162,0.02,CN,360
+Games & Entertainment,Wikimedia Foundation,157,0.02,US,Wikimedia Foundation
+Games & Entertainment,Mocomplex,148,0.02,KR,Mocomplex
+Games & Entertainment,Flksu,135,0.01,US,Noosphere
+Games & Entertainment,Bing,129,0.01,US,Microsoft
+Games & Entertainment,Voicefive,129,0.01,US,comScore
+Games & Entertainment,Tapsense,127,0.01,US,Tapsense
+Games & Entertainment,Mologiq,120,0.01,,Mologiq
+Games & Entertainment,Appboy,111,0.01,US,Appboy
+Games & Entertainment,Sumo Logic,109,0.01,US,Sumo Logic
+Games & Entertainment,Mcro,99,0.01,US,Mcro
+Games & Entertainment,Youku Tudou,95,0.01,CN,Youku Tudou
+Games & Entertainment,Krux Digital,92,0.01,US,Krux Digital
+Games & Entertainment,Nativex,79,0.01,US,Nativex
+Games & Entertainment,Loopme,77,0.01,UK,Loopme
+Games & Entertainment,Jumptap,73,0.01,,Jumptap
+Games & Entertainment,Gravatar,70,0.01,US,Automattic
+Games & Entertainment,Sharethrough,68,0.01,US,Sharethrough
+Games & Entertainment,Adfox,66,0.01,RU,Adfox
+Games & Entertainment,International Business Machines,64,0.01,US,International Business Machines
+Games & Entertainment,Longtail Ad Solutions,63,0.01,US,Longtail Ad Solutions
+Games & Entertainment,Adition Technologies,60,0.01,DE,Adition Technologies
+Games & Entertainment,"Manage
+",51,0.01,US,"Manage
+"
+Games & Entertainment,Adchina,49,0.01,CN,Adchina
+Games & Entertainment,Aol,49,0.01,US,Verizon
+Games & Entertainment,Blue Kai,47,0,US,Oracle
+Games & Entertainment,Infonline,45,0,DE,Infonline
+Games & Entertainment,Gemius,43,0,PL,Gemius
+Games & Entertainment,Sogou,38,0,CN,Sogou
+Games & Entertainment,Blinkx,32,0,US,Blinkx
+Games & Entertainment,Accuweather,31,0,US,Accuweather
+Games & Entertainment,Nativo,31,0,US,Nativo
+Games & Entertainment,Nativo,31,0,US,Nativo
+Games & Entertainment,Pingstart,31,0,US,Pingstart
+Games & Entertainment,Radium One,31,0,US,RhythmOne
+Games & Entertainment,Webtrends,31,0,US,NetIQ
+Games & Entertainment,Webtrends,31,0,US,NetIQ
+Games & Entertainment,Weather Underground,30,0,US,International Business Machines
+Games & Entertainment,Taboola,27,0,US,Taboola
+Games & Entertainment,Mozilla,26,0,US,Mozilla
+Games & Entertainment,Otherlevels,26,0,US,Otherlevels
+Games & Entertainment,Double Verify,24,0,US,Double Verify
+Games & Entertainment,Miaozhen Systems,24,0,CN,Miaozhen Systems
+Games & Entertainment,Teads,24,0,US,Teads
+Games & Entertainment,Ask.com,22,0,US,IAC
+Games & Entertainment,Lifestreet,22,0,US,Facebook
+Games & Entertainment,Mailchimp,22,0,US,Mailchimp
+Games & Entertainment,Mobvista,19,0,CN,Mobvista
+Games & Entertainment,Outbrain,19,0,US,Outbrain
+Games & Entertainment,Parsely,19,0,US,Parsely
+Games & Entertainment,Adform,18,0,DK,Adform
+Games & Entertainment,Adsame,18,0,CN,Adsame
+Games & Entertainment,Jquery Foundation,16,0,US,Jquery Foundation
+Games & Entertainment,Optimizely,15,0,US,Optimizely
+Games & Entertainment,Truste,13,0,US,Truste
+Games & Entertainment,Viglink,13,0,US,Viglink
+Games & Entertainment,Exelate,12,0,US,Nielsen Online
+Games & Entertainment,Mediaav,12,0,CN,Mediaav
+Games & Entertainment,The Weather Company,11,0,US,International Business Machines
+Games & Entertainment,Addthis,10,0,US,Oracle
+Games & Entertainment,Iresearch Consulting Group,10,0,CN,Iresearch Consulting Group
+Games & Entertainment,Rhythmone,10,0,US,Rhythmone
+Games & Entertainment,Dictionary.com,9,0,US,IAC
+Games & Entertainment,Jd.com,9,0,CN,Jd.com
+Games & Entertainment,Medialytics,8,0,,Medialytics
+Games & Entertainment,Mediametrie,8,0,RO,Mediametrie
+Games & Entertainment,Cxense Asa,7,0,NO,Cxense Asa
+Games & Entertainment,Hubspot,7,0,US,Hubspot
+Games & Entertainment,Spot X Change,7,0,US,Spot X Change
+Games & Entertainment,Stackpath,7,0,US,Stackpath
+Games & Entertainment,About.com,6,0,US,IAC
+Games & Entertainment,Microad,6,0,SG,Microad
+Games & Entertainment,Iac,5,0,US,Iac
+Games & Entertainment,Improve Digital,5,0,NL,Improve Digital
+Games & Entertainment,Statcounter,5,0,IE,Statcounter
+Games & Entertainment,Vizury,5,0,IN,Vizury
+Games & Entertainment,Cbs Corporation,4,0,US,Cbs Corporation
+Games & Entertainment,Ensighten,4,0,US,Ensighten
+Games & Entertainment,Exoclick,4,0,ES,Exoclick
+Games & Entertainment,Gfk,4,0,US,Gfk
+Games & Entertainment,Tealium,4,0,US,Tealium
+Games & Entertainment,Answers Corporation,3,0,US,AFCV Holdings
+Games & Entertainment,Chartbeat,3,0,US,Chartbeat
+Games & Entertainment,Criteo,3,0,FR,Criteo
+Games & Entertainment,Tradedoubler,3,0,SE,Tradedoubler
+Games & Entertainment,Admaster,2,0,CN,Admaster
+Games & Entertainment,Effective Measure,2,0,AU,Effective Measure
+Games & Entertainment,Sizmek,2,0,US,Sizmek
+Games & Entertainment,Telerik,2,0,US,Progress Software
+Games & Entertainment,The E.w. Scripps Company,2,0,US,The E.w. Scripps Company
+Games & Entertainment,Tns,2,0,RU,Tns
+Games & Entertainment,United Internet Media,2,0,DE,United Internet Media
+Games & Entertainment,Weather.com.cn,2,0,CN,Weather.com.cn
+Games & Entertainment,33Across,1,0,US,33Across
+Games & Entertainment,Adelphic Inc,1,0,US,Adelphic Inc
+Games & Entertainment,All Yes,1,0,CN,All Yes
+Games & Entertainment,Awin1,1,0,UK,Awin1
+Games & Entertainment,Beijing Emar Online Technology,1,0,CN,Beijing Emar Online Technology
+Games & Entertainment,China Interactive,1,0,CN,China Interactive
+Games & Entertainment,Deep Forest Media,1,0,US,Deep Forest Media
+Games & Entertainment,Etracker,1,0,DE,Etracker
+Games & Entertainment,Flashtalking,1,0,US,Encore Media Metrics
+Games & Entertainment,Freewheel,1,0,US,Comcast
+Games & Entertainment,Gravity Insights,1,0,US,Oath
+Games & Entertainment,Hilton,1,0,US,Hilton
+Games & Entertainment,Inform,1,0,US,Inform
+Games & Entertainment,Intowow,1,0,US,AOL
+Games & Entertainment,Iperceptions,1,0,US,Iperceptions
+Games & Entertainment,Media Math,1,0,US,Media Math
+Games & Entertainment,Medscape,1,0,US,Medscape
+Games & Entertainment,Myspace,1,0,US,Specific Media
+Games & Entertainment,Neustar,1,0,US,Neustar
+Games & Entertainment,Nugg.ad,1,0,DE,Nugg.ad
+Games & Entertainment,Pc Group,1,0,CN,Pc Group
+Games & Entertainment,Pubmatic,1,0,US,Pubmatic
+Games & Entertainment,Qualtrics,1,0,US,Qualtrics
+Games & Entertainment,Readspeaker,1,0,NL,Readspeaker
+Games & Entertainment,Rocketfuel,1,0,US,Rocketfuel
+Games & Entertainment,Shanghai 2345 Network Technology,1,0,CN,Shanghai 2345 Network Technology
+Games & Entertainment,Share This,1,0,US,Share This
+Games & Entertainment,Soasta,1,0,US,Akamai
+Games & Entertainment,Stickyads.tv,1,0,US,Comcast
+Games & Entertainment,Stickyads.tv,1,0,US,Comcast
+Games & Entertainment,Taplytics,1,0,,Taplytics
+Games & Entertainment,Turn,1,0,US,Turn
+Games & Entertainment,Verizon,1,0,US,Verizon
+Games & Entertainment,Webklipper,1,0,IN,Webklipper
+Games & Entertainment,Whos.amung.us,1,0,CA,Whos.amung.us
+Games & Entertainment,Zedo,1,0,US,Zedo

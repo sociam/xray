@@ -1,0 +1,133 @@
+super_genre,company,n,pctOfApps,country,leaf_parent
+Art and Photography,Google,26328,2.74,US,Alphabet
+Art and Photography,Doubleclick,23260,2.42,US,Alphabet
+Art and Photography,Facebook,12879,1.34,US,Facebook
+Art and Photography,Google Analytics,12013,1.25,US,Alphabet
+Art and Photography,Google Tag Manager,10695,1.11,US,Alphabet
+Art and Photography,Twitter,7546,0.79,US,Twitter
+Art and Photography,Microsoft,7435,0.77,US,Microsoft
+Art and Photography,Yahoo,6190,0.65,US,Verizon
+Art and Photography,Linkedin,6126,0.64,US,Linkedin
+Art and Photography,Amazon Web Services,5186,0.54,US,Amazon
+Art and Photography,Admob,3816,0.4,US,Alphabet
+Art and Photography,Applovin,1357,0.14,US,Applovin
+Art and Photography,Localytics,1357,0.14,UK,Localytics
+Art and Photography,Cloudflare,1290,0.13,US,Cloudflare
+Art and Photography,Ironsource,1196,0.12,US,Ironsource
+Art and Photography,Chartboost,1183,0.12,,Chartboost
+Art and Photography,Flurry,937,0.1,US,Oath
+Art and Photography,Youtube,903,0.09,US,Alphabet
+Art and Photography,Applifier,851,0.09,FI,Unity Technologies
+Art and Photography,Adcolony,849,0.09,US,Opera
+Art and Photography,Liverail,648,0.07,US,Facebook
+Art and Photography,Adobe,608,0.06,US,Adobe
+Art and Photography,Alibaba,605,0.06,CN,Alibaba
+Art and Photography,Baidu,570,0.06,CN,Baidu
+Art and Photography,Amazon,557,0.06,US,Amazon
+Art and Photography,Revmob,546,0.06,DE,Revmob
+Art and Photography,Wordpress,456,0.05,US,Automattic
+Art and Photography,Blogger,398,0.04,US,Alphabet
+Art and Photography,Appnext,321,0.03,UK,Appnext
+Art and Photography,Mopub,306,0.03,US,Twitter
+Art and Photography,Flickr,298,0.03,US,Oath
+Art and Photography,Appsflyer,290,0.03,US,Appsflyer
+Art and Photography,Yandex,242,0.03,RU,Yandex
+Art and Photography,Akamai,208,0.02,US,Akamai
+Art and Photography,Tencent,187,0.02,CN,Tencent
+Art and Photography,Amazon Marketing Services,186,0.02,US,Amazon
+Art and Photography,Inmobi,186,0.02,SG,Inmobi
+Art and Photography,Tumblr,160,0.02,US,Oath
+Art and Photography,Weibo,136,0.01,CN,Sina
+Art and Photography,Cheetahmobile,119,0.01,CN,Cheetahmobile
+Art and Photography,Pubnative,114,0.01,DE,Pubnative
+Art and Photography,Appodeal,111,0.01,US,Appodeal
+Art and Photography,Vimeo,104,0.01,US,IAC
+Art and Photography,Rubicon Project,101,0.01,US,Rubicon Project
+Art and Photography,Apple,99,0.01,US,Apple
+Art and Photography,Mail.ru,96,0.01,RU,Mail.ru
+Art and Photography,Vungle,83,0.01,US,Vungle
+Art and Photography,Smaato,79,0.01,US,Spearhead Integrated Marketing Communication 
+Art and Photography,Tapjoy,78,0.01,US,Tapjoy
+Art and Photography,Mobfox,75,0.01,AT,Mobfox
+Art and Photography,Millennialmedia,65,0.01,,Millennialmedia
+Art and Photography,Moat,65,0.01,US,Moat
+Art and Photography,Oracle,61,0.01,US,Oracle
+Art and Photography,Drawbridge,59,0.01,US,Drawbridge
+Art and Photography,Foursquare,54,0.01,US,Foursquare
+Art and Photography,Sina,49,0.01,CN,Sina
+Art and Photography,Sogou,42,0,CN,Sogou
+Art and Photography,Disqus,40,0,US,Disqus
+Art and Photography,Mapbox,40,0,US,Mapbox
+Art and Photography,Pinterest,37,0,US,Pinterest
+Art and Photography,Bugsnag,34,0,US,Bugsnag
+Art and Photography,Daum,33,0,KR,Daum
+Art and Photography,Ren Ren,33,0,CN,China InterActive
+Art and Photography,Wikimedia Foundation,32,0,US,Wikimedia Foundation
+Art and Photography,I-Mobile,29,0,JP,I-Mobile
+Art and Photography,Aerserv,26,0,US,Aerserv
+Art and Photography,Netease,25,0,CN,Netease
+Art and Photography,Openx,23,0,US,Openx
+Art and Photography,Adbuddiz,22,0,FR,Adbuddiz
+Art and Photography,Fyber,22,0,US,RNTS Media
+Art and Photography,Branch,20,0,US,Branch
+Art and Photography,Sohu,20,0,CN,Sohu
+Art and Photography,Pingstart,16,0,US,Pingstart
+Art and Photography,Adstir,15,0,JP,Adstir
+Art and Photography,Bing,15,0,US,Microsoft
+Art and Photography,Hyprmx,15,0,US,Hyprmx
+Art and Photography,Integral Ad Science,15,0,US,Integral Ad Science
+Art and Photography,Presage,15,0,US,Presage
+Art and Photography,New Relic,14,0,US,New Relic
+Art and Photography,Nexage,13,0,US,Nexage
+Art and Photography,Adchina,12,0,CN,Adchina
+Art and Photography,Smart Adserver,12,0,UK,Smart Adserver
+Art and Photography,Tune,11,0,US,Tune
+Art and Photography,Aol,10,0,US,Verizon
+Art and Photography,Ask.com,10,0,US,IAC
+Art and Photography,360,9,0,CN,360
+Art and Photography,Appboy,8,0,US,Appboy
+Art and Photography,International Business Machines,8,0,US,International Business Machines
+Art and Photography,Urbanairship,8,0,US,Urbanairship
+Art and Photography,Weather Underground,8,0,US,International Business Machines
+Art and Photography,Forensiq,7,0,US,Impact Radius
+Art and Photography,Youku Tudou,7,0,CN,Youku Tudou
+Art and Photography,Gravatar,6,0,US,Automattic
+Art and Photography,Smart Ad Server,6,0,US,Smart Ad Server
+Art and Photography,Admarvel,5,0,US,Opera 
+Art and Photography,Apsalar,5,0,US,Apsalar
+Art and Photography,Mozilla,5,0,US,Mozilla
+Art and Photography,Igaworks,4,0,KR,Igaworks
+Art and Photography,Mcro,4,0,US,Mcro
+Art and Photography,Mologiq,4,0,,Mologiq
+Art and Photography,Webtrends,4,0,US,NetIQ
+Art and Photography,Webtrends,4,0,US,NetIQ
+Art and Photography,Accuweather,3,0,US,Accuweather
+Art and Photography,Addthis,3,0,US,Oracle
+Art and Photography,Appnexus,3,0,US,Appnexus
+Art and Photography,Jquery Foundation,3,0,US,Jquery Foundation
+Art and Photography,Mocomplex,3,0,KR,Mocomplex
+Art and Photography,Brightcove,2,0,US,Brightcove
+Art and Photography,Dataxu,2,0,US,Dataxu
+Art and Photography,Foresee,2,0,US,AFCV Holdings
+Art and Photography,Iresearch Consulting Group,2,0,CN,Iresearch Consulting Group
+Art and Photography,Nativo,2,0,US,Nativo
+Art and Photography,Nativo,2,0,US,Nativo
+Art and Photography,Radium One,2,0,US,RhythmOne
+Art and Photography,Samsung,2,0,KR,Samsung
+Art and Photography,Sumo Logic,2,0,US,Sumo Logic
+Art and Photography,Taplytics,2,0,,Taplytics
+Art and Photography,Answers Corporation,1,0,US,AFCV Holdings
+Art and Photography,Blinkx,1,0,US,Blinkx
+Art and Photography,Hubspot,1,0,US,Hubspot
+Art and Photography,Intowow,1,0,US,AOL
+Art and Photography,Jd.com,1,0,CN,Jd.com
+Art and Photography,Jumptap,1,0,,Jumptap
+Art and Photography,Miaozhen Systems,1,0,CN,Miaozhen Systems
+Art and Photography,Quantcast,1,0,US,Quantcast
+Art and Photography,Scorecardresearch,1,0,US,comScore
+Art and Photography,Swrve,1,0,US,Swrve
+Art and Photography,Taboola,1,0,US,Taboola
+Art and Photography,The Weather Company,1,0,US,International Business Machines
+Art and Photography,Truste,1,0,US,Truste
+Art and Photography,Typekit,1,0,US,Adobe
+Art and Photography,United Internet Media,1,0,DE,United Internet Media

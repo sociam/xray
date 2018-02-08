@@ -1,0 +1,180 @@
+super_genre,company,n,pctOfApps,country,leaf_parent
+Communication & Social,Google,33305,3.47,US,Alphabet
+Communication & Social,Facebook,17763,1.85,US,Facebook
+Communication & Social,Doubleclick,17566,1.83,US,Alphabet
+Communication & Social,Twitter,13246,1.38,US,Twitter
+Communication & Social,Google Analytics,12858,1.34,US,Alphabet
+Communication & Social,Google Tag Manager,10829,1.13,US,Alphabet
+Communication & Social,Microsoft,8177,0.85,US,Microsoft
+Communication & Social,Yahoo,7986,0.83,US,Verizon
+Communication & Social,Linkedin,7881,0.82,US,Linkedin
+Communication & Social,Youtube,5246,0.55,US,Alphabet
+Communication & Social,Admob,4059,0.42,US,Alphabet
+Communication & Social,Amazon Web Services,3732,0.39,US,Amazon
+Communication & Social,Flurry,2242,0.23,US,Oath
+Communication & Social,Amazon,1244,0.13,US,Amazon
+Communication & Social,Baidu,1103,0.11,CN,Baidu
+Communication & Social,Yandex,941,0.1,RU,Yandex
+Communication & Social,Applovin,881,0.09,US,Applovin
+Communication & Social,Inmobi,880,0.09,SG,Inmobi
+Communication & Social,Cloudflare,854,0.09,US,Cloudflare
+Communication & Social,Adobe,847,0.09,US,Adobe
+Communication & Social,Tumblr,814,0.08,US,Oath
+Communication & Social,Chartboost,798,0.08,,Chartboost
+Communication & Social,Tencent,785,0.08,CN,Tencent
+Communication & Social,Adcolony,751,0.08,US,Opera
+Communication & Social,Akamai,717,0.07,US,Akamai
+Communication & Social,Mopub,665,0.07,US,Twitter
+Communication & Social,Amazon Marketing Services,633,0.07,US,Amazon
+Communication & Social,Appsflyer,627,0.07,US,Appsflyer
+Communication & Social,Appnext,595,0.06,UK,Appnext
+Communication & Social,Foursquare,589,0.06,US,Foursquare
+Communication & Social,Flickr,569,0.06,US,Oath
+Communication & Social,Vimeo,555,0.06,US,IAC
+Communication & Social,Disqus,427,0.04,US,Disqus
+Communication & Social,Alibaba,386,0.04,CN,Alibaba
+Communication & Social,Pinterest,358,0.04,US,Pinterest
+Communication & Social,Apple,326,0.03,US,Apple
+Communication & Social,Bing,325,0.03,US,Microsoft
+Communication & Social,Oracle,305,0.03,US,Oracle
+Communication & Social,Mapbox,273,0.03,US,Mapbox
+Communication & Social,Liverail,247,0.03,US,Facebook
+Communication & Social,Drawbridge,230,0.02,US,Drawbridge
+Communication & Social,Weibo,220,0.02,CN,Sina
+Communication & Social,Ask.com,219,0.02,US,IAC
+Communication & Social,Blogger,211,0.02,US,Alphabet
+Communication & Social,Smaato,201,0.02,US,Spearhead Integrated Marketing Communication 
+Communication & Social,Smart Adserver,200,0.02,UK,Smart Adserver
+Communication & Social,New Relic,191,0.02,US,New Relic
+Communication & Social,Applifier,187,0.02,FI,Unity Technologies
+Communication & Social,Millennialmedia,182,0.02,,Millennialmedia
+Communication & Social,Branch,179,0.02,US,Branch
+Communication & Social,Smart Ad Server,178,0.02,US,Smart Ad Server
+Communication & Social,Revmob,173,0.02,DE,Revmob
+Communication & Social,Mobfox,170,0.02,AT,Mobfox
+Communication & Social,Pubnative,163,0.02,DE,Pubnative
+Communication & Social,Appodeal,159,0.02,US,Appodeal
+Communication & Social,Sina,144,0.02,CN,Sina
+Communication & Social,Daum,143,0.01,KR,Daum
+Communication & Social,Wordpress,134,0.01,US,Automattic
+Communication & Social,Localytics,130,0.01,UK,Localytics
+Communication & Social,Urbanairship,130,0.01,US,Urbanairship
+Communication & Social,Mail.ru,127,0.01,RU,Mail.ru
+Communication & Social,Tapjoy,125,0.01,US,Tapjoy
+Communication & Social,Netease,116,0.01,CN,Netease
+Communication & Social,Rubicon Project,115,0.01,US,Rubicon Project
+Communication & Social,Tnkfactory,105,0.01,KR,Tnkfactory
+Communication & Social,Adbuddiz,103,0.01,FR,Adbuddiz
+Communication & Social,Fyber,103,0.01,US,RNTS Media
+Communication & Social,Ren Ren,98,0.01,CN,China InterActive
+Communication & Social,Moat,91,0.01,US,Moat
+Communication & Social,Sohu,91,0.01,CN,Sohu
+Communication & Social,Cheetahmobile,83,0.01,CN,Cheetahmobile
+Communication & Social,Vungle,83,0.01,US,Vungle
+Communication & Social,Forensiq,80,0.01,US,Impact Radius
+Communication & Social,Aol,66,0.01,US,Verizon
+Communication & Social,Ironsource,63,0.01,US,Ironsource
+Communication & Social,Igaworks,55,0.01,KR,Igaworks
+Communication & Social,Gravatar,54,0.01,US,Automattic
+Communication & Social,Mozilla,54,0.01,US,Mozilla
+Communication & Social,Nativo,49,0.01,US,Nativo
+Communication & Social,Nativo,49,0.01,US,Nativo
+Communication & Social,Scorecardresearch,48,0.01,US,comScore
+Communication & Social,Bugsnag,46,0,US,Bugsnag
+Communication & Social,Viglink,45,0,US,Viglink
+Communication & Social,Tune,41,0,US,Tune
+Communication & Social,Jumptap,38,0,,Jumptap
+Communication & Social,Mocomplex,38,0,KR,Mocomplex
+Communication & Social,Integral Ad Science,35,0,US,Integral Ad Science
+Communication & Social,Wikimedia Foundation,33,0,US,Wikimedia Foundation
+Communication & Social,Appboy,31,0,US,Appboy
+Communication & Social,Pingstart,30,0,US,Pingstart
+Communication & Social,Quantcast,30,0,US,Quantcast
+Communication & Social,International Business Machines,27,0,US,International Business Machines
+Communication & Social,Mcro,26,0,US,Mcro
+Communication & Social,Youku Tudou,25,0,CN,Youku Tudou
+Communication & Social,Sogou,24,0,CN,Sogou
+Communication & Social,Admarvel,18,0,US,Opera 
+Communication & Social,Openx,17,0,US,Openx
+Communication & Social,Brightcove,16,0,US,Brightcove
+Communication & Social,Nexage,16,0,US,Nexage
+Communication & Social,Apsalar,15,0,US,Apsalar
+Communication & Social,Flksu,15,0,US,Noosphere
+Communication & Social,I-Mobile,15,0,JP,I-Mobile
+Communication & Social,Aerserv,13,0,US,Aerserv
+Communication & Social,United Internet Media,11,0,DE,United Internet Media
+Communication & Social,360,10,0,CN,360
+Communication & Social,Iac,10,0,US,Iac
+Communication & Social,Jd.com,10,0,CN,Jd.com
+Communication & Social,Weather Underground,9,0,US,International Business Machines
+Communication & Social,Accuweather,8,0,US,Accuweather
+Communication & Social,Adstir,8,0,JP,Adstir
+Communication & Social,Gemius,8,0,PL,Gemius
+Communication & Social,Presage,8,0,US,Presage
+Communication & Social,Deutsche Telekom,7,0,DE,Deutsche Telekom
+Communication & Social,Samsung,7,0,KR,Samsung
+Communication & Social,Adchina,6,0,CN,Adchina
+Communication & Social,Addthis,6,0,US,Oracle
+Communication & Social,Adsame,6,0,CN,Adsame
+Communication & Social,Double Verify,6,0,US,Double Verify
+Communication & Social,Radium One,6,0,US,RhythmOne
+Communication & Social,Stackpath,6,0,US,Stackpath
+Communication & Social,Verizon,6,0,US,Verizon
+Communication & Social,Cbs Corporation,5,0,US,Cbs Corporation
+Communication & Social,Hubspot,5,0,US,Hubspot
+Communication & Social,Hyprmx,5,0,US,Hyprmx
+Communication & Social,Jquery Foundation,5,0,US,Jquery Foundation
+Communication & Social,Mologiq,5,0,,Mologiq
+Communication & Social,Qualtrics,5,0,US,Qualtrics
+Communication & Social,The Weather Company,5,0,US,International Business Machines
+Communication & Social,Adition Technologies,4,0,DE,Adition Technologies
+Communication & Social,Appnexus,4,0,US,Appnexus
+Communication & Social,Sumo Logic,4,0,US,Sumo Logic
+Communication & Social,Swrve,4,0,US,Swrve
+Communication & Social,Voicefive,4,0,US,comScore
+Communication & Social,Answers Corporation,3,0,US,AFCV Holdings
+Communication & Social,Gigya,3,0,US,Gigya
+Communication & Social,Iresearch Consulting Group,3,0,CN,Iresearch Consulting Group
+Communication & Social,Lifestreet,3,0,US,Facebook
+Communication & Social,Mobvista,3,0,CN,Mobvista
+Communication & Social,Outbrain,3,0,US,Outbrain
+Communication & Social,About.com,2,0,US,IAC
+Communication & Social,Adform,2,0,DK,Adform
+Communication & Social,Adsnative,2,0,US,Adsnative
+Communication & Social,Alexa,2,0,US,Amazon
+Communication & Social,Automattic,2,0,US,Automattic
+Communication & Social,Blinkx,2,0,US,Blinkx
+Communication & Social,Criteo,2,0,FR,Criteo
+Communication & Social,Infonline,2,0,DE,Infonline
+Communication & Social,Longtail Ad Solutions,2,0,US,Longtail Ad Solutions
+Communication & Social,Mailchimp,2,0,US,Mailchimp
+Communication & Social,Nativex,2,0,US,Nativex
+Communication & Social,Shanghai 2345 Network Technology,2,0,CN,Shanghai 2345 Network Technology
+Communication & Social,Sharethrough,2,0,US,Sharethrough
+Communication & Social,Soasta,2,0,US,Akamai
+Communication & Social,Sphere,2,0,US,Outbrain
+Communication & Social,Superawesome,2,0,UK,Superawesome
+Communication & Social,Tapsense,2,0,US,Tapsense
+Communication & Social,The E.w. Scripps Company,2,0,US,The E.w. Scripps Company
+Communication & Social,Truste,2,0,US,Truste
+Communication & Social,Adfox,1,0,RU,Adfox
+Communication & Social,Baifendian,1,0,CN,Baifendian
+Communication & Social,Dataxu,1,0,US,Dataxu
+Communication & Social,Drugsite Trust,1,0,US,Drugsite Trust
+Communication & Social,Ebix,1,0,US,Ebix
+Communication & Social,Evidon,1,0,US,Evidon
+Communication & Social,Krux Digital,1,0,US,Krux Digital
+Communication & Social,Loopme,1,0,UK,Loopme
+Communication & Social,Medscape,1,0,US,Medscape
+Communication & Social,Microad,1,0,SG,Microad
+Communication & Social,Neustar,1,0,US,Neustar
+Communication & Social,Optimizely,1,0,US,Optimizely
+Communication & Social,Pc Group,1,0,CN,Pc Group
+Communication & Social,Perion,1,0,US,Perion
+Communication & Social,Popads,1,0,?,Popads
+Communication & Social,Tealium,1,0,US,Tealium
+Communication & Social,Weather.com.cn,1,0,CN,Weather.com.cn
+Communication & Social,Webmd,1,0,US,Webmd
+Communication & Social,Webtrends,1,0,US,NetIQ
+Communication & Social,Webtrends,1,0,US,NetIQ
+Communication & Social,Zedo,1,0,US,Zedo

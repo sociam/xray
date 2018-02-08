@@ -226,7 +226,7 @@ propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
   group_by(id) %>%
   distinct(company) %>% #exclude the distinct refs within each group
   ungroup() %>%
-  filter(company != "unknown") %>%
+  filter(company != "Unknown") %>%
   count(company) %>% #then count how many times a company occurs
   mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
   arrange(desc(n)) %>%
@@ -235,7 +235,7 @@ propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
 write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackingCompanyRefs.csv")
 
 #break down the coverage of companies by ultimate owners
-coverageOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
+prevalenceOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
   left_join(companyInfo, by = "company") %>%
   distinct(id, leaf_parent) %>%
@@ -246,10 +246,12 @@ coverageOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
 write_csv("saveouts_RESULTS/coverageOfRootCompanies.csv")
 
 #create combined table
-prevalenceOwnersAndSubsidiaries <- coverageOfRootCompanies %>%
+prevalenceOwnersAndSubsidiaries <- prevalenceOfRootCompanies %>%
   select(-n) %>%
   left_join(propAppsWithTrackingCompanyRefs, by = "leaf_parent") %>%
   select(-(c(n, root_parent)))
+
+write_csv(prevalenceOwnersAndSubsidiaries, "saveouts_RESULTS/prevalenceOwnersAndSubsidiaries.csv")
 
 #create a latex table from this
 print(xtable(prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL)
@@ -329,6 +331,49 @@ ggplot(companyRefsByGenre2) +
   geom_point(data = function(x) dplyr::filter_(x, ~ outlier), position = 'jitter', alpha = 1/30) +
   coord_flip()
 
+
+######then for each genre, get the list of companies + root companies
+#first do this for low-level companies
+companyPrevalenceBySuperGenre
+countCompanyRefs %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre") %>%
+  group_by(super_genre)
+
+companyAndRootPrevalence <- appsWithHostsAndCompaniesLong %>%
+  group_by(id) %>%
+  distinct(company) %>%
+  ungroup() %>%
+  filter(company != "Unknown") %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre") %>%
+  group_by(super_genre) %>%
+  count(company) %>%
+  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
+  arrange(desc(n)) %>%
+  left_join(companyInfo, by = "company") %>%
+  select(-root_parent) %>%
+  arrange(super_genre)
+
+write_csv(companyAndRootPrevalence %>% filter(super_genre == "Art and Photography"), "saveouts_RESULTS/companies_by_genre/art_and_photo.csv")
+write_csv(companyAndRootPrevalence %>% filter(super_genre == "Communication & Social"), "saveouts_RESULTS/companies_by_genre/coms_and_social.csv")
+write_csv(companyAndRootPrevalence %>% filter(super_genre == "Education"), "saveouts_RESULTS/companies_by_genre/education.csv")
+write_csv(companyAndRootPrevalence %>% filter(super_genre == "Games & Entertainment"), "saveouts_RESULTS/companies_by_genre/games_and_entertainment.csv")
+write_csv(companyAndRootPrevalence %>% filter(super_genre == "Health & Lifestyle"), "saveouts_RESULTS/companies_by_genre/health_and_lifestyle.csv")
+write_csv(companyAndRootPrevalence %>% filter(super_genre == "Music"), "saveouts_RESULTS/companies_by_genre/music.csv")
+write_csv(companyAndRootPrevalence %>% filter(super_genre == "News"), "saveouts_RESULTS/companies_by_genre/news.csv")
+write_csv(companyAndRootPrevalence %>% filter(super_genre == "Productivity and Tools"), "saveouts_RESULTS/companies_by_genre/productivity_and_tools.csv")
+
+#break down the coverage of companies by ultimate owners
+prevalenceOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
+  filter(company != "Unknown") %>%
+  left_join(companyInfo, by = "company") %>%
+  distinct(id, leaf_parent) %>%
+  count(leaf_parent) %>%
+  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
+  arrange(desc(n))
+  
+#then do this for root companies
 
 #######ANALYSE BY GOOGLE PLAY STORE GENRES ##############
 #summarise the numbers of known trackers, by genre

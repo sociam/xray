@@ -1,0 +1,154 @@
+super_genre,company,n,pctOfApps,country,leaf_parent
+Music,Google,61463,6.41,US,Alphabet
+Music,Doubleclick,51392,5.36,US,Alphabet
+Music,Facebook,33913,3.53,US,Facebook
+Music,Google Analytics,25974,2.71,US,Alphabet
+Music,Google Tag Manager,20903,2.18,US,Alphabet
+Music,Twitter,19529,2.04,US,Twitter
+Music,Amazon,13109,1.37,US,Amazon
+Music,Microsoft,12568,1.31,US,Microsoft
+Music,Yahoo,10430,1.09,US,Verizon
+Music,Linkedin,10156,1.06,US,Linkedin
+Music,Admob,8784,0.92,US,Alphabet
+Music,Amazon Web Services,7131,0.74,US,Amazon
+Music,Youtube,5848,0.61,US,Alphabet
+Music,Yandex,3565,0.37,RU,Yandex
+Music,Oracle,3268,0.34,US,Oracle
+Music,Alibaba,3176,0.33,CN,Alibaba
+Music,Baidu,3119,0.33,CN,Baidu
+Music,Revmob,2083,0.22,DE,Revmob
+Music,Flurry,1821,0.19,US,Oath
+Music,Liverail,1430,0.15,US,Facebook
+Music,Apple,1323,0.14,US,Apple
+Music,Mobfox,1197,0.12,AT,Mobfox
+Music,Chartboost,1192,0.12,,Chartboost
+Music,Applovin,849,0.09,US,Applovin
+Music,Cloudflare,833,0.09,US,Cloudflare
+Music,Akamai,636,0.07,US,Akamai
+Music,Inmobi,620,0.06,SG,Inmobi
+Music,Mopub,592,0.06,US,Twitter
+Music,Adcolony,570,0.06,US,Opera
+Music,Adobe,545,0.06,US,Adobe
+Music,Amazon Marketing Services,443,0.05,US,Amazon
+Music,Vimeo,438,0.05,US,IAC
+Music,Appnext,420,0.04,UK,Appnext
+Music,Flickr,408,0.04,US,Oath
+Music,Ironsource,377,0.04,US,Ironsource
+Music,Tumblr,366,0.04,US,Oath
+Music,Appsflyer,355,0.04,US,Appsflyer
+Music,Blogger,330,0.03,US,Alphabet
+Music,Applifier,325,0.03,FI,Unity Technologies
+Music,Disqus,320,0.03,US,Disqus
+Music,Urbanairship,301,0.03,US,Urbanairship
+Music,Moat,286,0.03,US,Moat
+Music,Millennialmedia,282,0.03,,Millennialmedia
+Music,Smart Adserver,274,0.03,UK,Smart Adserver
+Music,Scorecardresearch,260,0.03,US,comScore
+Music,Smaato,210,0.02,US,Spearhead Integrated Marketing Communication 
+Music,Smart Ad Server,198,0.02,US,Smart Ad Server
+Music,Admarvel,188,0.02,US,Opera 
+Music,Appodeal,155,0.02,US,Appodeal
+Music,Vungle,155,0.02,US,Vungle
+Music,Presage,150,0.02,US,Presage
+Music,New Relic,142,0.01,US,New Relic
+Music,Foursquare,130,0.01,US,Foursquare
+Music,Wordpress,127,0.01,US,Automattic
+Music,Tencent,119,0.01,CN,Tencent
+Music,Nexage,117,0.01,US,Nexage
+Music,Brightcove,116,0.01,US,Brightcove
+Music,Drawbridge,116,0.01,US,Drawbridge
+Music,Rubicon Project,116,0.01,US,Rubicon Project
+Music,Pubnative,111,0.01,DE,Pubnative
+Music,Sumo Logic,105,0.01,US,Sumo Logic
+Music,Adbuddiz,103,0.01,FR,Adbuddiz
+Music,Mail.ru,102,0.01,RU,Mail.ru
+Music,Quantcast,94,0.01,US,Quantcast
+Music,Localytics,92,0.01,UK,Localytics
+Music,Pinterest,83,0.01,US,Pinterest
+Music,Mapbox,80,0.01,US,Mapbox
+Music,Mcro,78,0.01,US,Mcro
+Music,Gigya,70,0.01,US,Gigya
+Music,Webtrends,69,0.01,US,NetIQ
+Music,Webtrends,69,0.01,US,NetIQ
+Music,Branch,65,0.01,US,Branch
+Music,Daum,51,0.01,KR,Daum
+Music,Fyber,49,0.01,US,RNTS Media
+Music,Weibo,46,0,CN,Sina
+Music,Sina,45,0,CN,Sina
+Music,Krux Digital,40,0,US,Krux Digital
+Music,Bing,39,0,US,Microsoft
+Music,Bugsnag,38,0,US,Bugsnag
+Music,Tapjoy,38,0,US,Tapjoy
+Music,Netease,36,0,CN,Netease
+Music,Integral Ad Science,34,0,US,Integral Ad Science
+Music,Cheetahmobile,32,0,CN,Cheetahmobile
+Music,Mocomplex,32,0,KR,Mocomplex
+Music,Tune,32,0,US,Tune
+Music,Forensiq,28,0,US,Impact Radius
+Music,Sohu,26,0,CN,Sohu
+Music,Wikimedia Foundation,25,0,US,Wikimedia Foundation
+Music,Hyprmx,24,0,US,Hyprmx
+Music,Mozilla,24,0,US,Mozilla
+Music,Weather Underground,24,0,US,International Business Machines
+Music,Ren Ren,23,0,CN,China InterActive
+Music,Blue Kai,22,0,US,Oracle
+Music,Openx,20,0,US,Openx
+Music,Aol,19,0,US,Verizon
+Music,Infonline,18,0,DE,Infonline
+Music,Sogou,13,0,CN,Sogou
+Music,Adgear,10,0,CA,Samsung
+Music,Jumptap,10,0,,Jumptap
+Music,Mediametrie,9,0,RO,Mediametrie
+Music,Mologiq,9,0,,Mologiq
+Music,Voicefive,9,0,US,comScore
+Music,Aerserv,8,0,US,Aerserv
+Music,Appboy,8,0,US,Appboy
+Music,Longtail Ad Solutions,8,0,US,Longtail Ad Solutions
+Music,Youku Tudou,8,0,CN,Youku Tudou
+Music,Gemius,7,0,PL,Gemius
+Music,Swrve,7,0,US,Swrve
+Music,Tapsense,7,0,US,Tapsense
+Music,International Business Machines,6,0,US,International Business Machines
+Music,Tnkfactory,6,0,KR,Tnkfactory
+Music,Adform,5,0,DK,Adform
+Music,Ask.com,5,0,US,IAC
+Music,Mailchimp,5,0,US,Mailchimp
+Music,Samsung,5,0,KR,Samsung
+Music,Appnexus,4,0,US,Appnexus
+Music,Iresearch Consulting Group,4,0,CN,Iresearch Consulting Group
+Music,Radium One,4,0,US,RhythmOne
+Music,Apsalar,3,0,US,Apsalar
+Music,Lifestreet,3,0,US,Facebook
+Music,Accuweather,2,0,US,Accuweather
+Music,Adstir,2,0,JP,Adstir
+Music,Cbs Corporation,2,0,US,Cbs Corporation
+Music,Chartbeat,2,0,US,Chartbeat
+Music,Cxense Asa,2,0,NO,Cxense Asa
+Music,Dictionary.com,2,0,US,IAC
+Music,Exelate,2,0,US,Nielsen Online
+Music,Gfk,2,0,US,Gfk
+Music,Gravatar,2,0,US,Automattic
+Music,I-Mobile,2,0,JP,I-Mobile
+Music,Igaworks,2,0,KR,Igaworks
+Music,Jd.com,2,0,CN,Jd.com
+Music,Jquery Foundation,2,0,US,Jquery Foundation
+Music,Pingstart,2,0,US,Pingstart
+Music,Tradedoubler,2,0,SE,Tradedoubler
+Music,Whos.amung.us,2,0,CA,Whos.amung.us
+Music,360,1,0,CN,360
+Music,Adchina,1,0,CN,Adchina
+Music,Adition Technologies,1,0,DE,Adition Technologies
+Music,Alphabet,1,0,US,Alphabet
+Music,Blinkx,1,0,US,Blinkx
+Music,Ensighten,1,0,US,Ensighten
+Music,Hubspot,1,0,US,Hubspot
+Music,Loopme,1,0,UK,Loopme
+Music,Mediaav,1,0,CN,Mediaav
+Music,Medialytics,1,0,,Medialytics
+Music,Myspace,1,0,US,Specific Media
+Music,Optimizely,1,0,US,Optimizely
+Music,Otherlevels,1,0,US,Otherlevels
+Music,Share This,1,0,US,Share This
+Music,Spot X Change,1,0,US,Spot X Change
+Music,The E.w. Scripps Company,1,0,US,The E.w. Scripps Company
+Music,Truste,1,0,US,Truste
