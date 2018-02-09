@@ -24,7 +24,7 @@ con <- dbConnect(drv, dbname = "final_test",
 
 #get ids and general info about all analyzed apps
 appInfo <- dbGetQuery(con,
-                                "SELECT app_versions.id, playstore_apps.title, playstore_apps.genre, app_versions.version 
+                                "SELECT app_versions.id, playstore_apps.title, playstore_apps.genre, playstore_apps.family_genre, app_versions.version 
                                 FROM app_versions
                                 JOIN playstore_apps ON playstore_apps.id = app_versions.id                              
                                 WHERE app_versions.analyzed = TRUE") %>%
@@ -97,7 +97,7 @@ ineq(countKnownTrackers$numHosts, type='Gini')
 #what number of hosts captures 99% of the distribution?
 quantile(countKnownTrackers$numHosts, .99)
 
-#------MAKE CHARTS
+#------MAKE CHARTS-----
 #plot ordinary histogram
 countKnownTrackers %>%
   filter(numHosts < 68) %>%
@@ -137,7 +137,7 @@ countKnownTrackers %>%
 ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
 
 
-###1.2 WHAT ARE THE MOST POPULAR HOST REFERENCES?
+####1.2 WHAT ARE THE MOST POPULAR HOST REFERENCES?####
 #creat short mapping from hostsToCompany
 hostsToCompany <- appsWithHostsAndCompaniesLong %>%
   select(-id) %>%
@@ -168,7 +168,7 @@ unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
 head(unknownHostsInfo, 100) %>%
   write_csv("saveouts_RESULTS/top100UnknownHosts.csv")
 
-###1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?
+####1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?####
 #count number of numbers of host references in apps that refer to companies on our list of trackers
 companyCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
@@ -256,7 +256,7 @@ write_csv(prevalenceOwnersAndSubsidiaries, "saveouts_RESULTS/prevalenceOwnersAnd
 #create a latex table from this
 print(xtable(prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL)
 
-#######COMPANY ANALYSES BY 'SUPER GENRE' (LARGER CLUSTERING OF PLAY STORE GENRES)##############
+#######COMPANY ANALYSES BY 'SUPER GENRE'##############
 #read in the super genre mapping
 genreGrouping <- read_csv("other analyses/genreGrouping.csv") %>%
   select(-numApps)
@@ -292,7 +292,7 @@ forLatex <- summaryCompanyCountBySuperGenre %>%
          pctNone = round(pctNone,1))
 print(xtable(forLatex),floating=FALSE,latex.environments=NULL, include.rownames = FALSE)
 
-####TRY A MILLION WAYS OF VISUALISING THIS
+####TRY A MILLION WAYS OF VISUALISING THIS####
 companyRefsByGenre %>%
   filter(numCompanies < 30) %>%
   ggplot(mapping = aes(x = numCompanies, y = ..density..)) +
@@ -324,7 +324,7 @@ ggplot(companyRefsByGenre2) +
   geom_point(data = function(x) dplyr::filter_(x, ~ outlier), position = 'jitter', alpha = 1/30) +
   coord_flip()
 
-######then for each supergenre, get the prevalence of companies + root companies#######
+######get prevalence of companies + root companies by super genre#######
 #get all the apps we've analysed, including the ones with zero trackers
 allAppsWithHostsAndGenre <- appsWithHostsAndCompaniesLong %>%
   bind_rows(appsWithNoHosts) %>%
@@ -473,7 +473,7 @@ summaryAllHosts <- countAllHosts %>%
   select(-numMoreThan20, -noRefs)
 write_csv(summaryAllHosts, "saveouts_RESULTS/summaryAllHosts.csv")
 
-#------MAKE CHARTS
+#------MAKE CHARTS----------
 #plot ordinary histogram
 countAllHosts %>%
   ggplot() +
@@ -509,7 +509,7 @@ countAllHosts %>%
 ggsave("plots/histAllHostsLOGBOTH.png",width=5, height=4, dpi=600)
 
 
-#------ MAKE SUMMARY OF MOST FREQUENT HOSTS
+#------ MAKE SUMMARY OF MOST FREQUENT HOSTS-------
 #create summary of hosts
 allHostsInfo <- appsWithHostsAndCompaniesLong %>%
   group_by(hosts) %>%
