@@ -6,7 +6,7 @@ library(scales)
 library(ineq)
 library(xtable)
 
-#####0. HOUSEKEEPING#####
+#####HOUSEKEEPING#####
 options(scipen=10) #make plots more readable by increasing the number of values before scientific notation is used
 
 #function to calculate modal value
@@ -50,7 +50,7 @@ appsWithNoHosts <- read_csv("~/Desktop/data-processed/appsWithoutHosts.csv")
 #count how many apps we've got
 numAnalysed <- nrow(appsWithHostsAndCompaniesLong %>% distinct(id)) + nrow(appsWithNoHosts %>% distinct(id))
 
-##### 1 SUMMARY STATS #####
+##### 1 SUMMARY STATS ACROSS GENRES #####
 #-----1.1: SUMMARY OF HOST REFERENCES THAT ARE TO KNOWN TRACKERS
 #count number of numbers of host references in apps that refer to companies on our list of trackers
 hostCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
@@ -306,14 +306,7 @@ ggplot(data = companyRefsByGenre %>% filter(numCompanies < 30), mapping = aes(y 
 #try plotting this as facet-wrapped histograms?
 ggplot(transform(companyRefsByGenre %>% filter(numCompanies < 25),
                  super_genre = factor(super_genre,
-                                                          levels = c("Communication & Social",
-                                                                     "Education",
-                                                                     "Productivity and Tools",
-                                                                     "Art and Photography",
-                                                                     "Health & Lifestyle",
-                                                                     "Music",
-                                                                     "Games & Entertainment",
-                                                                     "News")))) +
+                                                          levels = c("Communication & Social", "Education","Productivity and Tools","Art and Photography","Health & Lifestyle","Music","Games & Entertainment","News")))) +
   geom_histogram(aes(x = numCompanies, y = ..density..), bins = 10) +
   facet_wrap(~super_genre, nrow = 2)
   
@@ -331,8 +324,14 @@ ggplot(companyRefsByGenre2) +
   geom_point(data = function(x) dplyr::filter_(x, ~ outlier), position = 'jitter', alpha = 1/30) +
   coord_flip()
 
-######then for each supergenre, get the prevalence of companies + root companies
-##do this the stupid way for now - for some reason this is tricky
+######then for each supergenre, get the prevalence of companies + root companies#######
+#get all the apps we've analysed, including the ones with zero trackers
+allAppsWithHostsAndGenre <- appsWithHostsAndCompaniesLong %>%
+  bind_rows(appsWithNoHosts) %>%
+  left_join(companyInfo, by = "company") %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre")
+
 #get the number of apps within each super genre
 numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
   bind_rows(appsWithNoHosts) %>%
@@ -342,49 +341,49 @@ numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
   distinct(id) %>%
   summarise(numApps = n())
 
-#ART AND PHOTOGRAPHY
-#get lowest level of companies
-artAndPhotoCompanies <- appsWithHostsAndCompaniesLong %>%
-  bind_rows(appsWithNoHosts) %>%
-  left_join(companyInfo, by = "company") %>%
-  left_join(appInfo, by = "id") %>%
-  left_join(genreGrouping, by = "genre") %>%
-  filter(super_genre == "Art and Photography") %>%
-  filter(company != "Unknown") %>%
-  distinct(id, company) %>%
-  group_by(company) %>%
-  summarise(numAppsReferring = n()) %>%
-  mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
-           filter(super_genre == "Art and Photography") %>%
-           pull(numApps)
-  ) %>%
-  arrange(desc(pctOfApps)) %>%
-  left_join(companyInfo, by = "company")
-
-#then get the root companies within each
-artAndPhotoRootCompanies <- appsWithHostsAndCompaniesLong %>%
-  bind_rows(appsWithNoHosts) %>%
-  left_join(companyInfo, by = "company") %>%
-  left_join(appInfo, by = "id") %>%
-  left_join(genreGrouping, by = "genre") %>%
-  filter(super_genre == "Art and Photography") %>%
-  filter(company != "Unknown") %>%
-  distinct(id, leaf_parent) %>%
-  group_by(leaf_parent) %>%
-  summarise(numAppsReferring = n()) %>%
-  mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
-           filter(super_genre == "Art and Photography") %>%
-           pull(numApps)
-  ) %>%
-  arrange(desc(pctOfApps))
-
-#create combined table
-prevalenceCompaniesArtAndPhoto <- artAndPhotoRootCompanies %>%
-  select(-numAppsReferring) %>%
-  left_join(artAndPhotoCompanies, by = "leaf_parent") %>%
-  select(-numAppsReferring, -root_parent)
+#create and save out prevalence of companies + root companies for each super genre
+for (curGenre in unique(genreGrouping$super_genre)) {
+  #prevalence for low-lev companies
+  companyPrev <- allAppsWithHostsAndGenre %>%
+    filter(super_genre == curGenre) %>%
+    filter(company != "Unknown") %>%
+    distinct(id, company) %>%
+    group_by(company) %>%
+    summarise(numAppsReferring = n()) %>%
+    mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
+             filter(super_genre == curGenre) %>%
+             pull(numApps)
+    ) %>%
+    arrange(desc(pctOfApps)) %>%
+    left_join(companyInfo, by = "company")
   
-write_csv(prevalenceCompaniesArtAndPhoto, "saveouts_RESULTS/prevalenceCompaniesArtAndPhoto.csv")
+  #prevalence for root companies 
+  rootCompanyPrev <- allAppsWithHostsAndGenre %>%
+    filter(super_genre == curGenre) %>%
+    filter(company != "Unknown") %>%
+    distinct(id, leaf_parent) %>%
+    group_by(leaf_parent) %>%
+    summarise(numAppsReferring = n()) %>%
+    mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
+             filter(super_genre == curGenre) %>%
+             pull(numApps)
+    ) %>%
+    arrange(desc(pctOfApps))
+  
+  #create combined table
+  combinedPrevalence <- rootCompanyPrev %>%
+    select(-numAppsReferring) %>%
+    left_join(companyPrev, by = "leaf_parent") %>%
+    select(-numAppsReferring, -root_parent)
+  
+  saveName <- str_to_title(curGenre) %>%
+    str_replace_all(" ", "") %>%
+    str_replace_all("&", "And")
+  
+  write_csv(combinedPrevalence, str_c("saveouts_RESULTS/companies_by_genre/prevalence", saveName, ".csv"))
+}
+
+
 
 #######ANALYSE BY GOOGLE PLAY STORE GENRES ##############
 #summarise the numbers of known trackers, by genre
