@@ -6,7 +6,7 @@ library(scales)
 library(ineq)
 library(xtable)
 
-#####0. HOUSEKEEPING#####
+#####HOUSEKEEPING#####
 options(scipen=10) #make plots more readable by increasing the number of values before scientific notation is used
 
 #function to calculate modal value
@@ -24,7 +24,7 @@ con <- dbConnect(drv, dbname = "final_test",
 
 #get ids and general info about all analyzed apps
 appInfo <- dbGetQuery(con,
-                                "SELECT app_versions.id, playstore_apps.title, playstore_apps.genre, app_versions.version 
+                                "SELECT app_versions.id, playstore_apps.title, playstore_apps.genre, playstore_apps.family_genre, app_versions.version 
                                 FROM app_versions
                                 JOIN playstore_apps ON playstore_apps.id = app_versions.id                              
                                 WHERE app_versions.analyzed = TRUE") %>%
@@ -50,7 +50,7 @@ appsWithNoHosts <- read_csv("~/Desktop/data-processed/appsWithoutHosts.csv")
 #count how many apps we've got
 numAnalysed <- nrow(appsWithHostsAndCompaniesLong %>% distinct(id)) + nrow(appsWithNoHosts %>% distinct(id))
 
-##### 1 SUMMARY STATS #####
+##### 1 SUMMARY STATS ACROSS GENRES #####
 #-----1.1: SUMMARY OF HOST REFERENCES THAT ARE TO KNOWN TRACKERS
 #count number of numbers of host references in apps that refer to companies on our list of trackers
 hostCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
@@ -97,7 +97,7 @@ ineq(countKnownTrackers$numHosts, type='Gini')
 #what number of hosts captures 99% of the distribution?
 quantile(countKnownTrackers$numHosts, .99)
 
-#------MAKE CHARTS
+#------MAKE CHARTS-----
 #plot ordinary histogram
 countKnownTrackers %>%
   filter(numHosts < 68) %>%
@@ -137,7 +137,7 @@ countKnownTrackers %>%
 ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
 
 
-###1.2 WHAT ARE THE MOST POPULAR HOST REFERENCES?
+####1.2 WHAT ARE THE MOST POPULAR HOST REFERENCES?####
 #creat short mapping from hostsToCompany
 hostsToCompany <- appsWithHostsAndCompaniesLong %>%
   select(-id) %>%
@@ -168,7 +168,7 @@ unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
 head(unknownHostsInfo, 100) %>%
   write_csv("saveouts_RESULTS/top100UnknownHosts.csv")
 
-###1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?
+####1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?####
 #count number of numbers of host references in apps that refer to companies on our list of trackers
 companyCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
@@ -256,7 +256,7 @@ write_csv(prevalenceOwnersAndSubsidiaries, "saveouts_RESULTS/prevalenceOwnersAnd
 #create a latex table from this
 print(xtable(prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL)
 
-#######COMPANY ANALYSES BY 'SUPER GENRE' (LARGER CLUSTERING OF PLAY STORE GENRES)##############
+#######COMPANY ANALYSES BY 'SUPER GENRE'##############
 #read in the super genre mapping
 genreGrouping <- read_csv("other analyses/genreGrouping.csv") %>%
   select(-numApps)
@@ -292,7 +292,7 @@ forLatex <- summaryCompanyCountBySuperGenre %>%
          pctNone = round(pctNone,1))
 print(xtable(forLatex),floating=FALSE,latex.environments=NULL, include.rownames = FALSE)
 
-####TRY A MILLION WAYS OF VISUALISING THIS
+####TRY A MILLION WAYS OF VISUALISING THIS####
 companyRefsByGenre %>%
   filter(numCompanies < 30) %>%
   ggplot(mapping = aes(x = numCompanies, y = ..density..)) +
@@ -306,14 +306,7 @@ ggplot(data = companyRefsByGenre %>% filter(numCompanies < 30), mapping = aes(y 
 #try plotting this as facet-wrapped histograms?
 ggplot(transform(companyRefsByGenre %>% filter(numCompanies < 25),
                  super_genre = factor(super_genre,
-                                                          levels = c("Communication & Social",
-                                                                     "Education",
-                                                                     "Productivity and Tools",
-                                                                     "Art and Photography",
-                                                                     "Health & Lifestyle",
-                                                                     "Music",
-                                                                     "Games & Entertainment",
-                                                                     "News")))) +
+                                                          levels = c("Communication & Social", "Education","Productivity and Tools","Art and Photography","Health & Lifestyle","Music","Games & Entertainment","News")))) +
   geom_histogram(aes(x = numCompanies, y = ..density..), bins = 10) +
   facet_wrap(~super_genre, nrow = 2)
   
@@ -331,8 +324,14 @@ ggplot(companyRefsByGenre2) +
   geom_point(data = function(x) dplyr::filter_(x, ~ outlier), position = 'jitter', alpha = 1/30) +
   coord_flip()
 
-######then for each supergenre, get the prevalence of companies + root companies
-##do this the stupid way for now - for some reason this is tricky
+######get prevalence of companies + root companies by super genre#######
+#get all the apps we've analysed, including the ones with zero trackers
+allAppsWithHostsAndGenre <- appsWithHostsAndCompaniesLong %>%
+  bind_rows(appsWithNoHosts) %>%
+  left_join(companyInfo, by = "company") %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre")
+
 #get the number of apps within each super genre
 numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
   bind_rows(appsWithNoHosts) %>%
@@ -342,49 +341,49 @@ numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
   distinct(id) %>%
   summarise(numApps = n())
 
-#ART AND PHOTOGRAPHY
-#get lowest level of companies
-artAndPhotoCompanies <- appsWithHostsAndCompaniesLong %>%
-  bind_rows(appsWithNoHosts) %>%
-  left_join(companyInfo, by = "company") %>%
-  left_join(appInfo, by = "id") %>%
-  left_join(genreGrouping, by = "genre") %>%
-  filter(super_genre == "Art and Photography") %>%
-  filter(company != "Unknown") %>%
-  distinct(id, company) %>%
-  group_by(company) %>%
-  summarise(numAppsReferring = n()) %>%
-  mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
-           filter(super_genre == "Art and Photography") %>%
-           pull(numApps)
-  ) %>%
-  arrange(desc(pctOfApps)) %>%
-  left_join(companyInfo, by = "company")
-
-#then get the root companies within each
-artAndPhotoRootCompanies <- appsWithHostsAndCompaniesLong %>%
-  bind_rows(appsWithNoHosts) %>%
-  left_join(companyInfo, by = "company") %>%
-  left_join(appInfo, by = "id") %>%
-  left_join(genreGrouping, by = "genre") %>%
-  filter(super_genre == "Art and Photography") %>%
-  filter(company != "Unknown") %>%
-  distinct(id, leaf_parent) %>%
-  group_by(leaf_parent) %>%
-  summarise(numAppsReferring = n()) %>%
-  mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
-           filter(super_genre == "Art and Photography") %>%
-           pull(numApps)
-  ) %>%
-  arrange(desc(pctOfApps))
-
-#create combined table
-prevalenceCompaniesArtAndPhoto <- artAndPhotoRootCompanies %>%
-  select(-numAppsReferring) %>%
-  left_join(artAndPhotoCompanies, by = "leaf_parent") %>%
-  select(-numAppsReferring, -root_parent)
+#create and save out prevalence of companies + root companies for each super genre
+for (curGenre in unique(genreGrouping$super_genre)) {
+  #prevalence for low-lev companies
+  companyPrev <- allAppsWithHostsAndGenre %>%
+    filter(super_genre == curGenre) %>%
+    filter(company != "Unknown") %>%
+    distinct(id, company) %>%
+    group_by(company) %>%
+    summarise(numAppsReferring = n()) %>%
+    mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
+             filter(super_genre == curGenre) %>%
+             pull(numApps)
+    ) %>%
+    arrange(desc(pctOfApps)) %>%
+    left_join(companyInfo, by = "company")
   
-write_csv(prevalenceCompaniesArtAndPhoto, "saveouts_RESULTS/prevalenceCompaniesArtAndPhoto.csv")
+  #prevalence for root companies 
+  rootCompanyPrev <- allAppsWithHostsAndGenre %>%
+    filter(super_genre == curGenre) %>%
+    filter(company != "Unknown") %>%
+    distinct(id, leaf_parent) %>%
+    group_by(leaf_parent) %>%
+    summarise(numAppsReferring = n()) %>%
+    mutate(pctOfApps = numAppsReferring / numAppsBySuperGenre %>%
+             filter(super_genre == curGenre) %>%
+             pull(numApps)
+    ) %>%
+    arrange(desc(pctOfApps))
+  
+  #create combined table
+  combinedPrevalence <- rootCompanyPrev %>%
+    select(-numAppsReferring) %>%
+    left_join(companyPrev, by = "leaf_parent") %>%
+    select(-numAppsReferring, -root_parent)
+  
+  saveName <- str_to_title(curGenre) %>%
+    str_replace_all(" ", "") %>%
+    str_replace_all("&", "And")
+  
+  write_csv(combinedPrevalence, str_c("saveouts_RESULTS/companies_by_genre/prevalence", saveName, ".csv"))
+}
+
+
 
 #######ANALYSE BY GOOGLE PLAY STORE GENRES ##############
 #summarise the numbers of known trackers, by genre
@@ -474,7 +473,7 @@ summaryAllHosts <- countAllHosts %>%
   select(-numMoreThan20, -noRefs)
 write_csv(summaryAllHosts, "saveouts_RESULTS/summaryAllHosts.csv")
 
-#------MAKE CHARTS
+#------MAKE CHARTS----------
 #plot ordinary histogram
 countAllHosts %>%
   ggplot() +
@@ -510,7 +509,7 @@ countAllHosts %>%
 ggsave("plots/histAllHostsLOGBOTH.png",width=5, height=4, dpi=600)
 
 
-#------ MAKE SUMMARY OF MOST FREQUENT HOSTS
+#------ MAKE SUMMARY OF MOST FREQUENT HOSTS-------
 #create summary of hosts
 allHostsInfo <- appsWithHostsAndCompaniesLong %>%
   group_by(hosts) %>%
