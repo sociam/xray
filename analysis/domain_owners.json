@@ -1252,7 +1252,9 @@
 			"conversantmedia.com",
 			"ftjcfx.com",
 			"lduhtrp.net",
-			"tqlkg.com"
+			"tqlkg.com",
+			"mediaplex.com",
+			"dtmpub.com"
 		]
 	},
 	{
@@ -1432,7 +1434,8 @@
 		"domains"			 : [
 			"doubleclick.com",
 			"doubleclick.net",
-			"doubleclickbygoogle.com"
+			"doubleclickbygoogle.com",
+			"2mdn.net"
 		]
 	},
 	{
@@ -2266,7 +2269,8 @@
 		"notes"				 : null,
 		"country"			 : "UK",
 		"domains"			 : [
-			"groupm.com"
+			"groupm.com",
+			"qservz.com"
 		]
 	},
 	{
@@ -2793,7 +2797,9 @@
 		"notes"				 : null,
 		"country"			 : "US",
 		"domains"			 : [
-			"linkedin.com"
+			"linkedin.com",
+			"licdn.com",
+			"bizographics.com"
 		]
 	},
 	{
@@ -3361,7 +3367,8 @@
 		"country"			 : "US",
 		"domains"			 : [
 			"openx.com",
-			"openx.net"
+			"openx.net",
+			"servedbyopenx.com"
 		]
 	},
 	{
@@ -3967,7 +3974,8 @@
 		"notes"				 : null,
 		"country"			 : "US",
 		"domains"			 : [
-			"smartadserver.com"
+			"smartadserver.com",
+			"sascdn.com"
 		]
 	},
 	{
@@ -4953,7 +4961,8 @@
 			"youtu.be",
 			"youtube.com",
 			"youtubeeducation.com",
-			"ytimg.com"
+			"ytimg.com",
+			"youtube-nocookie.com"
 		]
 	},
 	{

@@ -114,7 +114,6 @@ for co in allcos:
 	info['doms'] = mergeDoms(co)
 	superdict[co] = info
 # 	country = getCountry(co)
-# 	domains = getDomains(co)
 # 	aliases = getAliases(co)
 # 	priv = getPriv(co)
 # 	homepage_url = getHome(co)
@@ -136,3 +135,15 @@ def getRootParent(co):
 
 for co in superdict:
 	superdict[co]['root_parent'] = getRootParent(co)
+
+for co in superdict:
+	for co2 in company_tl:
+		if co2['owner_name'] == superdict[co]['owner_name']:
+			superdict[co]['country'] = co2['country']
+			superdict[co]['aliases'] = co2['aliases']
+			superdict[co]['homepage_url'] = co2['homepage_url']
+			superdict[co]['privacy_policy_url'] = co2['privacy_policy_url']
+			superdict[co]['notes'] = co2['notes']
+
+with open('company_data_12_2_2018.json', 'w') as fp:
+	json.dump(superdict, fp)
