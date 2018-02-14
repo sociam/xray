@@ -145,5 +145,13 @@ for co in superdict:
 			superdict[co]['privacy_policy_url'] = co2['privacy_policy_url']
 			superdict[co]['notes'] = co2['notes']
 
+list_version = []
+
+for co in superdict:
+	list_version.append(superdict[co])
+
 with open('company_data_12_2_2018.json', 'w') as fp:
 	json.dump(superdict, fp)
+
+with open('company_data_list_14_2_2018.json', 'w') as fp:
+	json.dump(list_version, fp)

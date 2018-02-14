@@ -19,6 +19,22 @@ ProductivityAndTools = csv.reader((open("saveouts_RESULTS/companies_by_genre/Pro
 
 genre_csvs = {"ArtAndPhotography":ArtAndPhotography, "CommunicationAndSocial":CommunicationAndSocial, "Education":Education, "GamesAndEntertainment":GamesAndEntertainment, "HealthAndLifestyle":HealthAndLifestyle, "Music":Music, "News":News, "ProductivityAndTools":ProductivityAndTools}
 
+# order all apps (different csv format to genres)
+
+allcos = {}
+
+allapps.next()
+
+for row in allapps:
+	company = row[2]
+	prev = row[1]
+	allcos[company] = prev
+
+allco_rank = {key[0]:1 + value for value, key in enumerate(
+                       sorted(allcos.iteritems(),
+                              key=lambda x: x[1],
+                              reverse=True))}
+
 # aggregate figures by parent
 
 def reshape(genre):
@@ -65,9 +81,29 @@ def kt_dis(genre1, genre2):
 
 combos = list(combinations(genre_ranks,2))
 
-distances = []
+# for each genre, what is the distance from the rank of all apps?
+
+distance_all = {}
+
+for key, value in genre_ranks.iteritems():
+	distance = kt_dis(allco_rank,value)
+	distance_all[key] = distance
+
+# pairwise distances: what is the distance between each pair of genres?
+
+pairwise_distances = {}
 
 for combo in combos:
 	combo_name = combo
 	distance = kt_dis(genre_ranks[combo[0]], genre_ranks[combo[1]])
 	print combo_name, distance
+	pairwise_distances[combo_name] = distance
+
+# remoteness: for each genre, what is the total combined distance from every other genre?
+
+remoteness = {}
+for genre in genre_titles:
+	remoteness[genre] = 0
+	for pair in pairwise_distances:
+		if ((pair[0] == genre) or (pair[1] == genre)):
+			remoteness[genre] = remoteness[genre] + pairwise_distances[pair]
