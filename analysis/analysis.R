@@ -6,6 +6,7 @@ library(jsonlite)
 library(scales)
 library(ineq)
 library(xtable)
+library(ggthemes)
 
 options(scipen=10) #make plots more readable by increasing the number of values before scientific notation is used
 
@@ -213,10 +214,15 @@ plot(Lc(countCompanyRefs$numCompanies), col = 'red', lwd=2, xlab = "Cumulative p
      ylab = "Cumulative proportion of company references")
 ineq(countCompanyRefs$numCompanies, type='Gini')
 
+#what number of hosts captures 99% of the distribution?
+quantile(countCompanyRefs$numCompanies, .9999)
+
+
 #plot ordinary histogram
 countCompanyRefs %>%
+  filter(numCompanies < 26) %>%
   ggplot() +
-  geom_histogram(aes(numCompanies), bins = 38) +
+  geom_histogram(aes(numCompanies), bins = 26) +
   labs(x = "Number of companies referred to", y = "Number of apps") +
   scale_y_continuous(labels = comma)
 ggsave("plots/histNumCompaniesReferred.png",width=5, height=4, dpi=600)
@@ -293,15 +299,22 @@ forLatex <- summaryCompanyCountBySuperGenre %>%
 print(xtable(forLatex),floating=FALSE,latex.environments=NULL, include.rownames = FALSE)
 
 ####TRY A MILLION WAYS OF VISUALISING THIS####
+companyRefsByGenre <- countCompanyRefs %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre") %>%
+  group_by(super_genre)
+
 companyRefsByGenre %>%
   filter(numCompanies < 30) %>%
   ggplot(mapping = aes(x = numCompanies, y = ..density..)) +
     geom_freqpoly(mapping = aes(colour = super_genre))
   
-ggplot(data = companyRefsByGenre %>% filter(numCompanies < 30), mapping = aes(y = numCompanies, x = reorder(super_genre, numCompanies, FUN = median))) +
-  geom_boxplot(varwidth = TRUE) + 
+ggplot(data = companyRefsByGenre %>% filter(numCompanies < 21), mapping = aes(y = numCompanies, x = reorder(super_genre, numCompanies, FUN = median))) +
+  geom_boxplot(varwidth = TRUE, outlier.shape = NA) + 
+  labs(x = "Super genre", y = "Number of companies referred to") +
   coord_flip()
   #geom_jitter(position = position_jitter(width = .1, height = 0.1), alpha = 1/100)
+ggsave("plots/by_super_genre/boxNumCompaniesReferred.png",width=5, height=4, dpi=600)
 
 #try plotting this as facet-wrapped histograms?
 ggplot(transform(companyRefsByGenre %>% filter(numCompanies < 25),
@@ -323,6 +336,21 @@ ggplot(companyRefsByGenre2) +
   geom_boxplot(outlier.shape = NA) +
   geom_point(data = function(x) dplyr::filter_(x, ~ outlier), position = 'jitter', alpha = 1/30) +
   coord_flip()
+
+
+#########WITH FAMILY APPS###########
+#if you want, then add family apps to the boxplot
+companyRefsByGenreWithFamily <- companyRefsByGenre %>%
+  mutate(is_family = 0) %>%
+  bind_rows(fam_countCompanyRefs)
+
+ggplot(data = companyRefsByGenreWithFamily %>% filter(numCompanies < 21), mapping = aes(y = numCompanies, x = reorder(super_genre, numCompanies, FUN = quantile, prob = 0.75))) +
+  geom_boxplot(varwidth = TRUE, outlier.shape = NA) + 
+  labs(x = "Super genre", y = "Number of companies referred to") +
+  coord_flip()
+
+ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
+
 
 ######get prevalence of companies + root companies by super genre#######
 #get all the apps we've analysed, including the ones with zero trackers

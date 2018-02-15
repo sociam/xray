@@ -101,12 +101,12 @@ ggsave("plots/family/fam_histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=60
 
 ####1.2 WHAT ARE THE MOST POPULAR HOST REFERENCES?####
 #creat short mapping from hostsToCompany
-hostsToCompany <- fam_appsWithHostsAndCompaniesLong %>%
+fam_hostsToCompany <- fam_appsWithHostsAndCompaniesLong %>%
   select(-id) %>%
   distinct(hosts, company)
 
 #create summary of known trackers and save out top 100
-knownTrackersInfo <- fam_appsWithHostsAndCompaniesLong %>%
+fam_knownTrackersInfo <- fam_appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
   group_by(hosts) %>%
   summarise(numApps = n(),
@@ -115,11 +115,11 @@ knownTrackersInfo <- fam_appsWithHostsAndCompaniesLong %>%
   left_join(companyInfo, by = "company") %>%
   arrange(desc(numApps))
 
-head(knownTrackersInfo,100) %>%
+head(fam_knownTrackersInfo,100) %>%
   write_csv("saveoutputs_family_RESULTS/top100KnownTrackersInfo.csv")
 
 #create summary of unknown hosts and save out top 100
-unknownHostsInfo <- fam_appsWithHostsAndCompaniesLong %>%
+fam_unknownHostsInfo <- fam_appsWithHostsAndCompaniesLong %>%
   filter(company == "Unknown") %>%
   group_by(hosts) %>%
   summarise(refCount = n(),
@@ -132,7 +132,7 @@ head(unknownHostsInfo, 100) %>%
 
 ####1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?####
 #count number of numbers of host references in apps that refer to companies on our list of trackers
-companyCountsInAppsWithKnownTrackers <- fam_appsWithHostsAndCompaniesLong %>%
+fam_companyCountsInAppsWithKnownTrackers <- fam_appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
   group_by(id) %>%
   distinct(company) %>%
@@ -140,18 +140,25 @@ companyCountsInAppsWithKnownTrackers <- fam_appsWithHostsAndCompaniesLong %>%
   arrange(desc(numCompanies))
 
 #count how many apps had hosts references but weren't on our list of trackers - set these to 0 companies
-appsWithHostsButNoKnownCompanies <- fam_appsWithHostsAndCompaniesLong %>%
+fam_appsWithHostsButNoKnownCompanies <- fam_appsWithHostsAndCompaniesLong %>%
   distinct(id) %>%
-  anti_join(companyCountsInAppsWithKnownTrackers, by = "id") %>%
+  anti_join(fam_companyCountsInAppsWithKnownTrackers, by = "id") %>%
   mutate(numCompanies = 0)
 
 #then put all of these in same dataframe to count properly
-countCompanyRefs <- companyCountsInAppsWithKnownTrackers %>%
+fam_countCompanyRefs <- fam_companyCountsInAppsWithKnownTrackers %>%
   rbind(fam_appsWithNoHosts %>% mutate(numCompanies = 0) %>% select(id, numCompanies)) %>% #add the apps with no host refs at all
-  rbind(appsWithHostsButNoKnownCompanies) #add the apps with no hosts that are known trackers
+  rbind(fam_appsWithHostsButNoKnownCompanies) #add the apps with no hosts that are known trackers
+
+fam_countCompanyRefs <- fam_countCompanyRefs %>%
+  mutate(is_family = 1, 
+         super_genre = "Family")
+
+write_csv(fam_countCompanyRefs, "saveouts_RESULTS/fam_countCompanyRefs")
+
 
 #summarise the numbers of known trackers
-summaryCompanyCount <- countCompanyRefs %>%
+fam_summaryCompanyCount <- fam_countCompanyRefs %>%
   summarise(numApps = n(),
             median = median(numCompanies),
             Q1 = quantile(numCompanies, .25),
@@ -167,7 +174,7 @@ summaryCompanyCount <- countCompanyRefs %>%
             noRefs = sum(numCompanies == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
-
+fam_summaryCompanyCount
 write_csv(summaryCompanyCount, "saveoutputs_family_RESULTS/summaryCompanyCount.csv")
 
 #draw Lorenz curve and get Gini coefficient
