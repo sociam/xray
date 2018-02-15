@@ -1,0 +1,109 @@
+company,n,pctOfApps,country,root_parent,leaf_parent
+Google,7794,87.28,US,Alphabet,Alphabet
+Doubleclick,5998,67.17,US,Alphabet,Alphabet
+Google Analytics,3746,41.95,US,Alphabet,Alphabet
+Facebook,3721,41.67,US,NA,Facebook
+Google Tag Manager,3240,36.28,US,Alphabet,Alphabet
+Twitter,2576,28.85,US,NA,Twitter
+Microsoft,2037,22.81,US,NA,Microsoft
+Amazon,1880,21.05,US,NA,Amazon
+Yahoo,1794,20.09,US,Verizon,Verizon
+Linkedin,1786,20,US,NA,Linkedin
+Chartboost,1692,18.95,,,Chartboost
+Amazon Web Services,1617,18.11,US,Amazon,Amazon
+Applovin,1194,13.37,US,,Applovin
+Flurry,1167,13.07,US,Oath,Oath
+Cloudflare,1162,13.01,US,NA,Cloudflare
+Vungle,1043,11.68,US,,Vungle
+Adcolony,911,10.2,US,Opera,Opera
+Admob,885,9.91,US,Alphabet,Alphabet
+Applifier,882,9.88,FI,Unity Technologies,Unity Technologies
+Adobe,706,7.91,US,NA,Adobe
+Inmobi,468,5.24,SG,,Inmobi
+Appsflyer,406,4.55,US,,Appsflyer
+Ironsource,373,4.18,US,,Ironsource
+Amazon Marketing Services,326,3.65,US,Amazon,Amazon
+Superawesome,323,3.62,UK,,Superawesome
+Youtube,280,3.14,US,Alphabet,Alphabet
+Akamai,239,2.68,US,NA,Akamai
+Mopub,219,2.45,US,Twitter,Twitter
+Appnext,218,2.44,UK,,Appnext
+Apple,186,2.08,US,NA,Apple
+Drawbridge,179,2,US,NA,Drawbridge
+Moat,164,1.84,US,NA,Moat
+Tencent,150,1.68,CN,NA,Tencent
+Yandex,140,1.57,RU,NA,Yandex
+Pubnative,136,1.52,DE,,Pubnative
+Revmob,131,1.47,DE,,Revmob
+Appodeal,128,1.43,US,,Appodeal
+Alibaba,113,1.27,CN,NA,Alibaba
+Forensiq,113,1.27,US,Impact Radius,Impact Radius
+Liverail,111,1.24,US,Facebook,Facebook
+Samsung,105,1.18,KR,NA,Samsung
+Tapjoy,94,1.05,US,,Tapjoy
+Smaato,90,1.01,US,Spearhead Integrated Marketing Communication ,Spearhead Integrated Marketing Communication 
+360,87,0.97,CN,NA,360
+Rubicon Project,75,0.84,US,NA,Rubicon Project
+Tumblr,75,0.84,US,Oath,Oath
+Fyber,69,0.77,US,RNTS Media,RNTS Media
+Millennialmedia,68,0.76,,,Millennialmedia
+Mail.ru,63,0.71,RU,,Mail.ru
+Aerserv,59,0.66,US,,Aerserv
+Cheetahmobile,59,0.66,CN,,Cheetahmobile
+Flickr,49,0.55,US,Oath,Oath
+Mobfox,49,0.55,AT,,Mobfox
+Localytics,45,0.5,UK,,Localytics
+Adbuddiz,44,0.49,FR,,Adbuddiz
+Integral Ad Science,42,0.47,US,NA,Integral Ad Science
+Wikimedia Foundation,41,0.46,US,NA,Wikimedia Foundation
+Scorecardresearch,40,0.45,US,comScore,comScore
+Baidu,35,0.39,CN,NA,Baidu
+Weibo,34,0.38,CN,Sina,Sina
+Nexage,32,0.36,US,,Nexage
+Vimeo,31,0.35,US,IAC,IAC
+Foursquare,29,0.32,US,,Foursquare
+Openx,26,0.29,US,NA,Openx
+Netease,25,0.28,CN,NA,Netease
+Sina,25,0.28,CN,NA,Sina
+Sohu,25,0.28,CN,NA,Sohu
+Mocomplex,21,0.24,KR,,Mocomplex
+Branch,20,0.22,US,,Branch
+Hyprmx,18,0.2,US,,Hyprmx
+Oracle,17,0.19,US,NA,Oracle
+Tune,16,0.18,US,,Tune
+Presage,14,0.16,US,,Presage
+Swrve,14,0.16,US,,Swrve
+Blogger,12,0.13,US,Alphabet,Alphabet
+Appnexus,11,0.12,US,NA,Appnexus
+Urbanairship,9,0.1,US,,Urbanairship
+Flksu,8,0.09,US,Noosphere,Noosphere
+Voicefive,8,0.09,US,comScore,comScore
+Blue Kai,7,0.08,US,Oracle,Oracle
+I-Mobile,7,0.08,JP,,I-Mobile
+Appboy,6,0.07,US,,Appboy
+New Relic,5,0.06,US,NA,New Relic
+Brightcove,4,0.04,US,NA,Brightcove
+Daum,4,0.04,KR,,Daum
+Pinterest,4,0.04,US,NA,Pinterest
+Adstir,3,0.03,JP,,Adstir
+Apsalar,3,0.03,US,,Apsalar
+Bing,3,0.03,US,Microsoft,Microsoft
+Bugsnag,3,0.03,US,,Bugsnag
+Igaworks,3,0.03,KR,,Igaworks
+Mailchimp,3,0.03,US,,Mailchimp
+Mapbox,3,0.03,US,NA,Mapbox
+Mcro,3,0.03,US,,Mcro
+Ren Ren,3,0.03,CN,China InterActive,China InterActive
+Infonline,2,0.02,DE,NA,Infonline
+Jumptap,2,0.02,,,Jumptap
+Loopme,2,0.02,UK,,Loopme
+Youku Tudou,2,0.02,CN,NA,Youku Tudou
+Aol,1,0.01,US,Verizon,Verizon
+Dictionary.com,1,0.01,US,IAC,IAC
+Disqus,1,0.01,US,NA,Disqus
+Farlex,1,0.01,US,NA,Farlex
+Iperceptions,1,0.01,US,NA,Iperceptions
+Krux Digital,1,0.01,US,NA,Krux Digital
+Mediametrie,1,0.01,RO,,Mediametrie
+Playhaven,1,0.01,US,Science,Science
+Smart Adserver,1,0.01,UK,,Smart Adserver

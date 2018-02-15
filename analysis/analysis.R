@@ -1,3 +1,4 @@
+#####HOUSEKEEPING#####
 library(RPostgreSQL)
 library(tidyverse)
 library(stringr)
@@ -6,7 +7,6 @@ library(scales)
 library(ineq)
 library(xtable)
 
-#####HOUSEKEEPING#####
 options(scipen=10) #make plots more readable by increasing the number of values before scientific notation is used
 
 #function to calculate modal value
@@ -383,7 +383,129 @@ for (curGenre in unique(genreGrouping$super_genre)) {
   write_csv(combinedPrevalence, str_c("saveouts_RESULTS/companies_by_genre/prevalence", saveName, ".csv"))
 }
 
+#######ANALYSE COUNTRY PREVALENCE##############
+##########ACROSS GENRES
+countryCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
+  filter(company != "Unknown") %>%
+  left_join(companyInfo, by = "company") %>%
+  group_by(id) %>%
+  distinct(country) %>%
+  summarise(numCountries = n()) %>%
+  arrange(desc(numCountries))
+  
+#count how many apps had hosts references but weren't on our list of trackers - set these to 0 countries
+country_appsWithHostsButNoKnownCompanies <- appsWithHostsAndCompaniesLong %>%
+  distinct(id) %>%
+  anti_join(countryCountsInAppsWithKnownTrackers, by = "id") %>%
+  mutate(numCountries = 0)
 
+#then put all of these in same dataframe to count properly
+countCountryRefs <- countryCountsInAppsWithKnownTrackers %>%
+  rbind(appsWithNoHosts %>% rename(numCountries = numHosts)) #add the apps with no host refs at all
+  rbind(country_appsWithHostsButNoKnownCompanies) #add the apps with no hosts that are known trackers
+
+#summarise the numbers of countries
+summaryCountryCount <- countCountryRefs %>%
+  summarise(numApps = n(),
+            median = median(numCountries),
+            Q1 = quantile(numCountries, .25),
+            Q3 = quantile(numCountries, .75),
+            mode = modeFunc(numCountries),
+            min = min(numCountries),
+            max = max(numCountries),
+            IQR = IQR(numCountries),
+            meanCompanies = round(mean(numCountries),1),
+            SD = round(sd(numCountries),2),
+            numMoreThan10 = sum(numCountries > 10),
+            pctMoreThan10 = round((numMoreThan10 / numApps) * 100,2),
+            noRefs = sum(numCountries == 0),
+            pctNone = round((noRefs / numApps) * 100,2)) %>%
+  select(-numMoreThan10, -noRefs)
+
+write_csv(summaryCountryCount,"saveouts_RESULTS/country_num_summary.csv")
+
+countCountryRefs %>%
+  ggplot() +
+  geom_histogram(aes(numCountries)) +
+  labs(x = "Number of countries referred to", y = "Number of apps") +
+  scale_y_continuous(labels = comma)
+ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
+
+#break this down by the proportion of apps that a country is in
+country_propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
+  filter(company != "Unknown") %>%
+  left_join(companyInfo, by = "company") %>%
+  group_by(id) %>%
+  distinct(country) %>% #exclude the distinct countries within each app
+  ungroup() %>%
+  count(country) %>% #then count how many times a company occurs
+  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
+  arrange(desc(n))
+
+write_csv(country_propAppsWithTrackingCompanyRefs,"saveouts_RESULTS/prevalenceOfCountries.csv")
+
+#########BY SUPER GENRES
+summaryCountryCountBySuperGenre <- countCountryRefs %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre") %>%
+  group_by(super_genre) %>%
+  summarise(numApps = n(),
+            median = median(numCountries),
+            Q1 = quantile(numCountries, .25),
+            Q3 = quantile(numCountries, .75),
+            mode = modeFunc(numCountries),
+            min = min(numCountries),
+            max = max(numCountries),
+            IQR = IQR(numCountries),
+            meanCompanies = round(mean(numCountries),1),
+            SD = round(sd(numCountries),2),
+            numMoreThan10 = sum(numCountries > 10),
+            pctMoreThan10 = round((numMoreThan10 / numApps) * 100,2),
+            noRefs = sum(numCountries == 0),
+            pctNone = round((noRefs / numApps) * 100,2)) %>%
+  select(-numMoreThan10, -noRefs) %>%
+  arrange(desc(median))
+
+write_csv(summaryCountryCountBySuperGenre, "saveouts_RESULTS/countries_by_genre/summaryCountryCountBySuperGenre.csv")
+
+#get all the apps we've analysed, including the ones with zero trackers
+allAppsWithHostsAndGenre <- appsWithHostsAndCompaniesLong %>%
+  bind_rows(appsWithNoHosts) %>%
+  left_join(companyInfo, by = "company") %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre")
+
+#get the number of apps within each super genre
+numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
+  bind_rows(appsWithNoHosts) %>%
+  left_join(appInfo, by = "id") %>%
+  left_join(genreGrouping, by = "genre") %>%
+  group_by(super_genre) %>%
+  distinct(id) %>%
+  summarise(numApps = n())
+
+#create and save out prevalence of countries for each super genre
+for (curGenre in unique(genreGrouping$super_genre)) {
+  #prevalence for low-lev companies
+  countryPrev <- allAppsWithHostsAndGenre %>%
+    filter(super_genre == curGenre) %>%
+    filter(company != "Unknown") %>%
+    distinct(id, country) %>%
+    group_by(country) %>%
+    summarise(numAppsReferring = n()) %>%
+    mutate(pctOfApps = round((numAppsReferring / numAppsBySuperGenre %>%
+             filter(super_genre == curGenre) %>%
+             pull(numApps))*100,2)
+    ) %>%
+    arrange(desc(pctOfApps)) %>%
+    filter(country != "")
+  
+  saveName <- str_to_title(curGenre) %>%
+    str_replace_all(" ", "") %>%
+    str_replace_all("&", "And")
+  
+  write_csv(countryPrev, str_c("saveouts_RESULTS/countries_by_genre/prevalence", saveName, ".csv"))
+}
 
 #######ANALYSE BY GOOGLE PLAY STORE GENRES ##############
 #summarise the numbers of known trackers, by genre
@@ -444,7 +566,7 @@ ggsave("plots/DistributionOfTrackersByGenre.png", width=8, height=7, dpi=400)
 
 
 #######OTHER ANALYSES#########
-##----- SUMMARY OF ALL HOSTS
+##----- SUMMARY OF ALL HOSTS-----####
 #group by id and count number of hosts
 countAllHosts <- appsWithHostsAndCompaniesLong %>%
   group_by(id) %>%
@@ -473,7 +595,7 @@ summaryAllHosts <- countAllHosts %>%
   select(-numMoreThan20, -noRefs)
 write_csv(summaryAllHosts, "saveouts_RESULTS/summaryAllHosts.csv")
 
-#------MAKE CHARTS----------
+#------MAKE CHARTS
 #plot ordinary histogram
 countAllHosts %>%
   ggplot() +
