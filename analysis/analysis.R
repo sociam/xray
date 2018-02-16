@@ -44,6 +44,11 @@ companyInfo <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
 appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv") %>%
   mutate(company = str_to_title(company))
 
+appsWithHostsAndCompaniesLong %>%
+  filter(id == 244497) %>%
+  write_csv("little_mermaid.csv") %>%
+  View()
+
 #read in the list of apps without hosts
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
 appsWithNoHosts <- read_csv("~/Desktop/data-processed/appsWithoutHosts.csv")
@@ -218,6 +223,12 @@ ineq(countCompanyRefs$numCompanies, type='Gini')
 
 #what number of hosts captures 99% of the distribution?
 quantile(countCompanyRefs$numCompanies, .9999)
+
+#explore the extreme outliers
+countCompanyRefs %>%
+  filter(numCompanies > 27) %>%
+  left_join(appInfo) %>%
+  write_csv("saveouts_RESULTS/extreme_outliers_NumCompanies.csv")
 
 
 #plot ordinary histogram
