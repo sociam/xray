@@ -89,9 +89,8 @@ summaryKnownTrackers <- countKnownTrackers %>%
             noRefs = sum(numHosts == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs)
-summaryKnownTrackers
 
-write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
+#write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
 
 #draw Lorenz curve and get Gini coefficient
 plot(Lc(countKnownTrackers$numHosts), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
@@ -109,7 +108,7 @@ countKnownTrackers %>%
   geom_histogram(aes(numHosts), bins = 68) +
   labs(x = "Number of references to tracker domains", y = "Number of apps") +
   scale_y_continuous(labels = comma)
-ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
+#ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
 
 #log transformed y-axis
 countKnownTrackers %>%
@@ -119,7 +118,7 @@ countKnownTrackers %>%
   labs(x = "#known trackers in decompiled source code",
        y = "app count: LOG SCALE") +
   scale_y_log10()
-ggsave("plots/histKnownTrackersLOGY.png",width=5, height=4, dpi=600)
+#ggsave("plots/histKnownTrackersLOGY.png",width=5, height=4, dpi=600)
 
 #log transformed x-axis
 countKnownTrackers %>%
@@ -128,7 +127,7 @@ countKnownTrackers %>%
   geom_histogram(aes(numHosts + .01)) + #adding here to not exclude those with zero trackers
   labs(x = "#known trackers in decompiled source code: LOG SCALE", y = "app count") +
   scale_x_log10()
-ggsave("plots/histKnownTrackersLOGX.png",width=5, height=4, dpi=600)
+#ggsave("plots/histKnownTrackersLOGX.png",width=5, height=4, dpi=600)
 
 #log transformed both axes
 countKnownTrackers %>%
@@ -138,7 +137,7 @@ countKnownTrackers %>%
   labs(x = "#known trackers in decompiled source code: LOG SCALE",
        y = "app count: LOG SCALE") +
   scale_y_log10() + scale_x_log10()
-ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
+#ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
 
 
 ####1.2 WHAT ARE THE MOST POPULAR HOST REFERENCES?####
@@ -157,8 +156,8 @@ knownTrackersInfo <- appsWithHostsAndCompaniesLong %>%
   left_join(companyInfo, by = "company") %>%
   arrange(desc(numApps))
 
-head(knownTrackersInfo,100) %>%
-  write_csv("saveouts_RESULTS/top100KnownTrackersInfo.csv")
+#head(knownTrackersInfo,100) %>%
+#  write_csv("saveouts_RESULTS/top100KnownTrackersInfo.csv")
 
 #create summary of unknown hosts and save out top 100
 unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
@@ -169,8 +168,8 @@ unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
   arrange(desc(refCount))
 
 #save out top 100
-head(unknownHostsInfo, 100) %>%
-  write_csv("saveouts_RESULTS/top100UnknownHosts.csv")
+#head(unknownHostsInfo, 100) %>%
+#  write_csv("saveouts_RESULTS/top100UnknownHosts.csv")
 
 ####1.3 HOW MANY DIFFERENT COMPANIES (AT THE LOWEST LEVEL) DO APPS REFER TO?####
 #count number of numbers of host references in apps that refer to companies on our list of trackers
@@ -210,7 +209,7 @@ summaryCompanyCount <- countCompanyRefs %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
 
-write_csv(summaryCompanyCount, "saveouts_RESULTS/summaryCompanyCount.csv")
+#write_csv(summaryCompanyCount, "saveouts_RESULTS/summaryCompanyCount.csv")
 
 #draw Lorenz curve and get Gini coefficient
 plot(Lc(countCompanyRefs$numCompanies), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
@@ -228,7 +227,7 @@ countCompanyRefs %>%
   geom_histogram(aes(numCompanies), bins = 26) +
   labs(x = "Number of companies referred to", y = "Number of apps") +
   scale_y_continuous(labels = comma)
-ggsave("plots/histNumCompaniesReferred.png",width=5, height=4, dpi=600)
+#ggsave("plots/histNumCompaniesReferred.png",width=5, height=4, dpi=600)
 
 #break this down by the proportion of apps that a company is in
 propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
@@ -241,7 +240,7 @@ propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
   arrange(desc(n)) %>%
   left_join(companyInfo, by = "company")
 
-write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackingCompanyRefs.csv")
+#write_csv(propAppsWithTrackingCompanyRefs, "saveouts_RESULTS/propAppsWithTrackingCompanyRefs.csv")
 
 #break down the coverage of companies by ultimate owners
 prevalenceOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
@@ -252,7 +251,7 @@ prevalenceOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
   mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
   arrange(desc(n))
 
-write_csv("saveouts_RESULTS/coverageOfRootCompanies.csv")
+#write_csv("saveouts_RESULTS/coverageOfRootCompanies.csv")
 
 #create combined table
 prevalenceOwnersAndSubsidiaries <- prevalenceOfRootCompanies %>%
@@ -260,7 +259,7 @@ prevalenceOwnersAndSubsidiaries <- prevalenceOfRootCompanies %>%
   left_join(propAppsWithTrackingCompanyRefs, by = "leaf_parent") %>%
   select(-(c(n, root_parent)))
 
-write_csv(prevalenceOwnersAndSubsidiaries, "saveouts_RESULTS/prevalenceOwnersAndSubsidiaries.csv")
+#write_csv(prevalenceOwnersAndSubsidiaries, "saveouts_RESULTS/prevalenceOwnersAndSubsidiaries.csv")
 
 #create a latex table from this
 print(xtable(prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL, include.rownames = FALSE)
@@ -317,7 +316,7 @@ ggplot(data = companyRefsByGenre %>% filter(numCompanies < 21), mapping = aes(y 
   labs(x = "Super genre", y = "Number of companies referred to") +
   coord_flip()
   #geom_jitter(position = position_jitter(width = .1, height = 0.1), alpha = 1/100)
-ggsave("plots/by_super_genre/boxNumCompaniesReferred.png",width=5, height=4, dpi=600)
+#ggsave("plots/by_super_genre/boxNumCompaniesReferred.png",width=5, height=4, dpi=600)
 
 #try plotting this as facet-wrapped histograms?
 ggplot(transform(companyRefsByGenre %>% filter(numCompanies < 25),
@@ -343,6 +342,8 @@ ggplot(companyRefsByGenre2) +
 
 #########WITH FAMILY APPS###########
 #if you want, then add family apps to the boxplot
+fam_countCompanyRefs <- read_csv("saveouts_RESULTS/fam_countCompanyRefs")
+
 companyRefsByGenreWithFamily <- companyRefsByGenre %>%
   mutate(is_family = 0) %>%
   bind_rows(fam_countCompanyRefs)
@@ -352,7 +353,7 @@ ggplot(data = companyRefsByGenreWithFamily %>% filter(numCompanies < 21), mappin
   labs(x = "Super genre", y = "Number of companies referred to") +
   coord_flip()
 
-ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
+#ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
 
 
 ######get prevalence of companies + root companies by super genre#######
@@ -373,7 +374,7 @@ numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
   summarise(numApps = n())
 
 #create and save out prevalence of companies + root companies for each super genre
-for (curGenre in unique(genreGrouping$super_genre)) {
+#for (curGenre in unique(genreGrouping$super_genre)) {
   #prevalence for low-lev companies
   companyPrev <- allAppsWithHostsAndGenre %>%
     filter(super_genre == curGenre) %>%
@@ -432,7 +433,7 @@ country_appsWithHostsButNoKnownCompanies <- appsWithHostsAndCompaniesLong %>%
 
 #then put all of these in same dataframe to count properly
 countCountryRefs <- countryCountsInAppsWithKnownTrackers %>%
-  rbind(appsWithNoHosts %>% rename(numCountries = numHosts)) #add the apps with no host refs at all
+  rbind(appsWithNoHosts %>% rename(numCountries = numHosts)) %>% #add the apps with no host refs at all
   rbind(country_appsWithHostsButNoKnownCompanies) #add the apps with no hosts that are known trackers
 
 #summarise the numbers of countries
@@ -452,15 +453,15 @@ summaryCountryCount <- countCountryRefs %>%
             noRefs = sum(numCountries == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
-
-write_csv(summaryCountryCount,"saveouts_RESULTS/country_num_summary.csv")
+summaryCountryCount
+#write_csv(summaryCountryCount,"saveouts_RESULTS/country_num_summary.csv")
 
 countCountryRefs %>%
   ggplot() +
   geom_histogram(aes(numCountries)) +
   labs(x = "Number of countries referred to", y = "Number of apps") +
   scale_y_continuous(labels = comma)
-ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
+#ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
 
 #break this down by the proportion of apps that a country is in
 country_propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
@@ -497,7 +498,7 @@ summaryCountryCountBySuperGenre <- countCountryRefs %>%
   select(-numMoreThan10, -noRefs) %>%
   arrange(desc(median))
 
-write_csv(summaryCountryCountBySuperGenre, "saveouts_RESULTS/countries_by_genre/summaryCountryCountBySuperGenre.csv")
+#write_csv(summaryCountryCountBySuperGenre, "saveouts_RESULTS/countries_by_genre/summaryCountryCountBySuperGenre.csv")
 
 #get all the apps we've analysed, including the ones with zero trackers
 allAppsWithHostsAndGenre <- appsWithHostsAndCompaniesLong %>%
@@ -537,6 +538,11 @@ for (curGenre in unique(genreGrouping$super_genre)) {
   
   write_csv(countryPrev, str_c("saveouts_RESULTS/countries_by_genre/prevalence", saveName, ".csv"))
 }
+
+########################END#######################
+
+
+
 
 #######ANALYSE BY GOOGLE PLAY STORE GENRES ##############
 #summarise the numbers of known trackers, by genre

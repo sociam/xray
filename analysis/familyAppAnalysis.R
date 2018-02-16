@@ -175,7 +175,7 @@ fam_summaryCompanyCount <- fam_countCompanyRefs %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
 fam_summaryCompanyCount
-write_csv(summaryCompanyCount, "saveoutputs_family_RESULTS/summaryCompanyCount.csv")
+write_csv(fam_summaryCompanyCount, "saveoutputs_family_RESULTS/summaryCompanyCount.csv")
 
 #draw Lorenz curve and get Gini coefficient
 plot(Lc(countCompanyRefs$numCompanies), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
