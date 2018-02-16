@@ -32,7 +32,7 @@ appInfo <- dbGetQuery(con,
   as.tibble()
 
 #read in company info
-companyInfo <- fromJSON("data-raw/combo_str_parents4.json") %>%
+companyInfo <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
   mutate(company = str_to_title(owner_name)) %>%
   select(company, country, root_parent) %>%
   mutate(country = str_to_upper(country)) %>%
@@ -70,6 +70,7 @@ appsWithHostsButNoKnownTrackers <- appsWithHostsAndCompaniesLong %>%
 countKnownTrackers <- hostCountsInAppsWithKnownTrackers %>%
   rbind(appsWithNoHosts) %>% #add the apps with no host refs at all
   rbind(appsWithHostsButNoKnownTrackers) #add the apps with no hosts that are known trackers
+appsWithHostsAndCompaniesLong %>% head(100) %>% View()
 
 #summarise the numbers of known trackers
 summaryKnownTrackers <- countKnownTrackers %>%
@@ -88,6 +89,8 @@ summaryKnownTrackers <- countKnownTrackers %>%
             noRefs = sum(numHosts == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs)
+summaryKnownTrackers
+
 write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
 
 #draw Lorenz curve and get Gini coefficient
@@ -96,7 +99,7 @@ plot(Lc(countKnownTrackers$numHosts), col = 'red', lwd=2, xlab = "Cumulative pro
 ineq(countKnownTrackers$numHosts, type='Gini')
 
 #what number of hosts captures 99% of the distribution?
-quantile(countKnownTrackers$numHosts, .99)
+quantile(countKnownTrackers$numHosts, .9999)
 
 #------MAKE CHARTS-----
 #plot ordinary histogram
@@ -260,7 +263,7 @@ prevalenceOwnersAndSubsidiaries <- prevalenceOfRootCompanies %>%
 write_csv(prevalenceOwnersAndSubsidiaries, "saveouts_RESULTS/prevalenceOwnersAndSubsidiaries.csv")
 
 #create a latex table from this
-print(xtable(prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL)
+print(xtable(prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL, include.rownames = FALSE)
 
 #######COMPANY ANALYSES BY 'SUPER GENRE'##############
 #read in the super genre mapping

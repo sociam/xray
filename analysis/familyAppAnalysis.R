@@ -50,7 +50,7 @@ fam_summaryKnownTrackers <- fam_countKnownTrackers %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs)
 write_csv(summaryKnownTrackers, "saveoutputs_family_RESULTS/fam_summaryKnownTrackers.csv")
-
+fam_summaryKnownTrackers
 #draw Lorenz curve and get Gini coefficient
 plot(Lc(fam_countKnownTrackers$numHosts), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
      ylab = "Cumulative proportion of tracker references")
