@@ -1,0 +1,7 @@
+KT distance of each genre from all apps
+
+'HealthAndLifestyle': 0.76050591595267236, 'Family': 0.61765660499837727, 'CommunicationAndSocial': 0.73510226644555021, 'GamesAndEntertainment': 0.81245270037839645, 'ArtAndPhotography': 0.72866620910546831, 'ProductivityAndTools': 0.73924922784509339, 'Music': 0.7332712311752837, 'News': 0.62746071133167958, 'Education': 0.76789929189614503
+
+Combined KT distances of each genre from every other genre
+
+'HealthAndLifestyle': 5.5122145076377871, 'Family': 4.2399408553490279, 'CommunicationAndSocial': 5.2745704445995809, 'GamesAndEntertainment': 5.4310529421615765, 'ArtAndPhotography': 5.0842358324469012, 'ProductivityAndTools': 5.5208226113854355, 'Music': 5.1328819865879911, 'News': 4.4297938442581675, 'Education': 5.4323731819751977

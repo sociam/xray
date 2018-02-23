@@ -133,6 +133,12 @@ def getRootParent(co):
 		branch = getNewParent(branch)
 	return branch
 
+def getCountry_pdpl(co):
+	for co2 in co_pdpl:
+		if co2[1] == co:
+			return co2[10]
+			print co2[10]
+
 for co in superdict:
 	superdict[co]['root_parent'] = getRootParent(co)
 
@@ -144,14 +150,21 @@ for co in superdict:
 			superdict[co]['homepage_url'] = co2['homepage_url']
 			superdict[co]['privacy_policy_url'] = co2['privacy_policy_url']
 			superdict[co]['notes'] = co2['notes']
+		else:
+			superdict[co]['country'] = getCountry_pdpl(co)
+			superdict[co]['aliases'] = None
+			superdict[co]['homepage_url'] = None
+			superdict[co]['privacy_policy_url'] = None
+			superdict[co]['notes'] = None
+
 
 list_version = []
 
 for co in superdict:
 	list_version.append(superdict[co])
 
-with open('company_data_12_2_2018.json', 'w') as fp:
-	json.dump(superdict, fp)
+# with open('company_data_12_2_2018.json', 'w') as fp:
+# 	json.dump(superdict, fp)
 
-with open('company_data_list_14_2_2018.json', 'w') as fp:
+with open('company_data_list_23_2_2018.json', 'w') as fp:
 	json.dump(list_version, fp)

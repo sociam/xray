@@ -6,7 +6,7 @@ from itertools import combinations
 
 allapps = csv.reader((open("saveouts_RESULTS/prevalenceOwnersAndSubsidiaries.csv")), delimiter=',')
 
-genre_titles = ['ArtAndPhotography', 'CommunicationAndSocial','Education','GamesAndEntertainment','HealthAndLifestyle','Music','News','ProductivityAndTools']
+genre_titles = ['Family','ArtAndPhotography', 'CommunicationAndSocial','Education','GamesAndEntertainment','HealthAndLifestyle','Music','News','ProductivityAndTools']
 
 ArtAndPhotography = csv.reader((open("saveouts_RESULTS/companies_by_genre/ArtAndPhotography.csv")), delimiter=',')
 CommunicationAndSocial = csv.reader((open("saveouts_RESULTS/companies_by_genre/CommunicationAndSocial.csv")), delimiter=',')
@@ -16,8 +16,9 @@ HealthAndLifestyle = csv.reader((open("saveouts_RESULTS/companies_by_genre/Healt
 Music = csv.reader((open("saveouts_RESULTS/companies_by_genre/Music.csv")), delimiter=',')
 News = csv.reader((open("saveouts_RESULTS/companies_by_genre/News.csv")), delimiter=',')
 ProductivityAndTools = csv.reader((open("saveouts_RESULTS/companies_by_genre/ProductivityAndTools.csv")), delimiter=',')
+Family = csv.reader((open("saveouts_RESULTS/companies_by_genre/Family.csv")), delimiter=',')
 
-genre_csvs = {"ArtAndPhotography":ArtAndPhotography, "CommunicationAndSocial":CommunicationAndSocial, "Education":Education, "GamesAndEntertainment":GamesAndEntertainment, "HealthAndLifestyle":HealthAndLifestyle, "Music":Music, "News":News, "ProductivityAndTools":ProductivityAndTools}
+genre_csvs = {"Family":Family,"ArtAndPhotography":ArtAndPhotography, "CommunicationAndSocial":CommunicationAndSocial, "Education":Education, "GamesAndEntertainment":GamesAndEntertainment, "HealthAndLifestyle":HealthAndLifestyle, "Music":Music, "News":News, "ProductivityAndTools":ProductivityAndTools}
 
 # order all apps (different csv format to genres)
 
