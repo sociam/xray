@@ -1,9 +1,9 @@
 super_genre,numApps,median,Q1,Q3,mode,min,max,IQR,meanCompanies,SD,pctMoreThan10,pctNone
-Art and Photography,27593,2,1,2,2,0,4,1,1.7,0.6,0,3.55
-Communication & Social,39637,2,1,2,2,0,5,1,1.5,0.78,0,13.28
-Education,79730,2,1,2,2,0,4,1,1.4,0.72,0,11.79
-Games & Entertainment,291952,2,1,2,2,0,5,1,1.7,0.68,0,7.27
-Health & Lifestyle,163837,2,1,2,2,0,5,1,1.6,0.7,0,8.91
-Music,65099,2,1,2,2,0,4,1,1.6,0.69,0,4.08
-News,26281,2,1,2,2,0,4,1,1.7,0.64,0,6.43
-Productivity and Tools,265297,2,1,2,2,0,4,1,1.4,0.76,0,13.42
+Art and Photography,27593,1,1,1,1,0,3,0,1,0.28,0,3.68
+Communication & Social,39637,1,1,1,1,0,4,0,0.9,0.45,0,13.79
+Education,79730,1,1,1,1,0,3,0,0.9,0.39,0,12.21
+Games & Entertainment,291952,1,1,1,1,0,4,0,1,0.38,0,8.37
+Health & Lifestyle,163837,1,1,1,1,0,4,0,1,0.38,0,9.27
+Music,65099,1,1,1,1,0,3,0,1.1,0.38,0,4.25
+News,26281,1,1,1,1,0,3,0,1,0.33,0,6.84
+Productivity and Tools,265297,1,1,1,1,0,3,0,0.9,0.42,0,13.93
