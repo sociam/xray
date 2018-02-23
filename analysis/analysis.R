@@ -385,7 +385,7 @@ numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
   summarise(numApps = n())
 
 #create and save out prevalence of companies + root companies for each super genre
-#for (curGenre in unique(genreGrouping$super_genre)) {
+for (curGenre in unique(genreGrouping$super_genre)) {
   #prevalence for low-lev companies
   companyPrev <- allAppsWithHostsAndGenre %>%
     filter(super_genre == curGenre) %>%
@@ -428,16 +428,17 @@ numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
 
 #######ANALYSE COUNTRY PREVALENCE##############
 ##########ACROSS GENRES
-countryCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
+countryCountsInAppsWithKnownTrackers <- old_appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
-  left_join(companyInfo, by = "company") %>%
+  left_join(old_companyInfo, by = "company") %>%
+  filter(!is.na(country), country != "?") %>% #exclude where we don't know what country is
   group_by(id) %>%
   distinct(country) %>%
   summarise(numCountries = n()) %>%
   arrange(desc(numCountries))
-  
+
 #count how many apps had hosts references but weren't on our list of trackers - set these to 0 countries
-country_appsWithHostsButNoKnownCompanies <- appsWithHostsAndCompaniesLong %>%
+country_appsWithHostsButNoKnownCompanies <- old_appsWithHostsAndCompaniesLong %>%
   distinct(id) %>%
   anti_join(countryCountsInAppsWithKnownTrackers, by = "id") %>%
   mutate(numCountries = 0)
@@ -475,17 +476,30 @@ countCountryRefs %>%
 #ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
 
 #break this down by the proportion of apps that a country is in
-country_propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
+country_propAppsWithTrackingCompanyRefs <- old_appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
-  left_join(companyInfo, by = "company") %>%
+  left_join(old_companyInfo, by = "company") %>%
   group_by(id) %>%
   distinct(country) %>% #exclude the distinct countries within each app
   ungroup() %>%
-  count(country) %>% #then count how many times a company occurs
+  count(country) %>% #then count how many times a country occurs
   mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
-  arrange(desc(n))
+  arrange(desc(n)) %>%
+  filter(!is.na(country), country != "?") #exclude where we don't know what country is
+country_propAppsWithTrackingCompanyRefs
+write_csv(country_propAppsWithTrackingCompanyRefs,"saveouts_RESULTS/countries/prevalenceOfCountries.csv")
 
-write_csv(country_propAppsWithTrackingCompanyRefs,"saveouts_RESULTS/prevalenceOfCountries.csv")
+companyInfo %>%
+  filter(company == "Adbrain") %>%
+  View
+companyInfo %>%
+  arrange(company) %>%
+  View()
+
+appsWithHostsAndCompaniesLong %>%
+  left_join(companyInfo) %>%
+  filter(company != "Unknown") %>%
+  filter(country == "UK")
 
 #########BY SUPER GENRES
 summaryCountryCountBySuperGenre <- countCountryRefs %>%
@@ -547,7 +561,7 @@ for (curGenre in unique(genreGrouping$super_genre)) {
     str_replace_all(" ", "") %>%
     str_replace_all("&", "And")
   
-  write_csv(countryPrev, str_c("saveouts_RESULTS/countries_by_genre/prevalence", saveName, ".csv"))
+  write_csv(countryPrev, str_c("saveouts_RESULTS/countries/by_genre/prevalence", saveName, ".csv"))
 }
 
 ########################END#######################
