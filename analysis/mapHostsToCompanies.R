@@ -4,11 +4,15 @@ library(jsonlite)
 library(scales)
 
 #read in company info
-companyInfoOld <- fromJSON("data-raw/combo_str_parents2.json") %>%
+companyInfo_vOld <- fromJSON("data-raw/combo_str_parents2.json") %>%
   as.tibble
 
-companyInfo <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
+companyInfo_old <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
   as.tibble %>%
+  rename(domains = doms)
+
+companyInfo <- fromJSON("data-raw/company_data_list_23_2_2018_MAN_CHECKED.json") %>%
+  as.tibble() %>%
   rename(domains = doms)
 
 #unnest hosts in company info and arrange by length, so that we start with the longest domain names when doing the mapping

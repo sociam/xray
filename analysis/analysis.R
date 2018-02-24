@@ -32,7 +32,7 @@ appInfo <- dbGetQuery(con,
   as.tibble()
 
 #read in company info
-companyInfo <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
+companyInfo <- fromJSON("data-raw/company_data_list_23_2_2018_MAN_CHECKED.json") %>%
   mutate(company = str_to_title(owner_name)) %>%
   select(company, country, root_parent) %>%
   mutate(country = str_to_upper(country)) %>%
@@ -43,11 +43,6 @@ companyInfo <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
 appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv") %>%
   mutate(company = str_to_title(company))
-
-appsWithHostsAndCompaniesLong %>%
-  filter(id == 244497) %>%
-  write_csv("little_mermaid.csv") %>%
-  View()
 
 #read in the list of apps without hosts
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
@@ -75,7 +70,6 @@ appsWithHostsButNoKnownTrackers <- appsWithHostsAndCompaniesLong %>%
 countKnownTrackers <- hostCountsInAppsWithKnownTrackers %>%
   rbind(appsWithNoHosts) %>% #add the apps with no host refs at all
   rbind(appsWithHostsButNoKnownTrackers) #add the apps with no hosts that are known trackers
-appsWithHostsAndCompaniesLong %>% head(100) %>% View()
 
 #summarise the numbers of known trackers
 summaryKnownTrackers <- countKnownTrackers %>%
@@ -95,7 +89,7 @@ summaryKnownTrackers <- countKnownTrackers %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs)
 
-#write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
+write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
 
 #draw Lorenz curve and get Gini coefficient
 plot(Lc(countKnownTrackers$numHosts), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
@@ -111,7 +105,7 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts), bins = 68) +
-  labs(x = "Number of references to tracker domains", y = "Number of apps") +
+  labs(x = "Number of references to tracker hosts", y = "Number of apps") +
   scale_y_continuous(labels = comma)
 #ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
 
@@ -120,8 +114,8 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts), bins = 30) +
-  labs(x = "#known trackers in decompiled source code",
-       y = "app count: LOG SCALE") +
+  labs(x = "Number of references to tracker hosts",
+       y = "Number of apps (LOG SCALE)") +
   scale_y_log10()
 #ggsave("plots/histKnownTrackersLOGY.png",width=5, height=4, dpi=600)
 
@@ -130,7 +124,7 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts + .01)) + #adding here to not exclude those with zero trackers
-  labs(x = "#known trackers in decompiled source code: LOG SCALE", y = "app count") +
+  labs(x = "Number of references to tracker hosts (LOG SCALE)", y = "Number of apps") +
   scale_x_log10()
 #ggsave("plots/histKnownTrackersLOGX.png",width=5, height=4, dpi=600)
 
@@ -139,8 +133,8 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts + .01), bins = 30) +
-  labs(x = "#known trackers in decompiled source code: LOG SCALE",
-       y = "app count: LOG SCALE") +
+  labs(x = "Number of references to tracker hosts (LOG SCALE)",
+       y = "Number of apps (LOG SCALE)") +
   scale_y_log10() + scale_x_log10()
 #ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
 
