@@ -89,7 +89,7 @@ summaryKnownTrackers <- countKnownTrackers %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan20, -noRefs)
 
-write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
+#write_csv(summaryKnownTrackers, "saveouts_RESULTS/summaryKnownTrackers.csv")
 
 #draw Lorenz curve and get Gini coefficient
 plot(Lc(countKnownTrackers$numHosts), col = 'red', lwd=2, xlab = "Cumulative proportion of apps",
@@ -220,10 +220,10 @@ ineq(countCompanyRefs$numCompanies, type='Gini')
 quantile(countCompanyRefs$numCompanies, .9999)
 
 #explore the extreme outliers
-countCompanyRefs %>%
-  filter(numCompanies > 27) %>%
-  left_join(appInfo) %>%
-  write_csv("saveouts_RESULTS/extreme_outliers_NumCompanies.csv")
+#countCompanyRefs %>%
+#  filter(numCompanies > 27) %>%
+#  left_join(appInfo) %>%
+#  write_csv("saveouts_RESULTS/extreme_outliers_NumCompanies.csv")
 
 
 #plot ordinary histogram
@@ -362,7 +362,7 @@ ggplot(data = companyRefsByGenreWithFamily %>% filter(numCompanies < 21), mappin
   labs(x = "Super genre", y = "Number of companies behind hosts") +
   coord_flip() + theme_minimal()
 
-ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
+#ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
 
 
 ######get prevalence of companies + root companies by super genre#######
@@ -467,16 +467,16 @@ summaryCountryCount <- countCountryRefs %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
 
-write_csv(summaryCountryCount,"saveouts_RESULTS/country_num_summary.csv")
+#write_csv(summaryCountryCount,"saveouts_RESULTS/country_num_summary.csv")
 
 countCountryRefs %>%
   filter(numCountries < 6) %>%
   ggplot() +
   geom_histogram(aes(numCountries)) +
-  labs(x = "Number of countries referred to", y = "Number of apps") +
+  labs(x = "Number of countries", y = "Number of apps") +
   scale_y_continuous(labels = comma) +
   theme_minimal()
-ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
+#ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
 
 #break this down by the proportion of apps that a country is in
 country_propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
