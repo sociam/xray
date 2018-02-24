@@ -106,7 +106,8 @@ countKnownTrackers %>%
   ggplot() +
   geom_histogram(aes(numHosts), bins = 68) +
   labs(x = "Number of references to tracker hosts", y = "Number of apps") +
-  scale_y_continuous(labels = comma)
+  scale_y_continuous(labels = comma) + 
+  theme_minimal()
 #ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
 
 #log transformed y-axis
@@ -230,8 +231,11 @@ countCompanyRefs %>%
   filter(numCompanies < 26) %>%
   ggplot() +
   geom_histogram(aes(numCompanies), bins = 26) +
-  labs(x = "Number of companies referred to", y = "Number of apps") +
-  scale_y_continuous(labels = comma)
+  labs(x = "Number of companies behind hosts", y = "Number of apps") +
+  scale_y_continuous(labels = comma) +
+  scale_x_continuous(breaks = c(0,5,10,15,20)) +
+  theme_minimal()
+
 #ggsave("plots/histNumCompaniesReferred.png",width=5, height=4, dpi=600)
 
 #break this down by the proportion of apps that a company is in
@@ -355,10 +359,10 @@ companyRefsByGenreWithFamily <- companyRefsByGenre %>%
 
 ggplot(data = companyRefsByGenreWithFamily %>% filter(numCompanies < 21), mapping = aes(y = numCompanies, x = reorder(super_genre, numCompanies, FUN = quantile, prob = 0.75))) +
   geom_boxplot(varwidth = TRUE, outlier.shape = NA) + 
-  labs(x = "Super genre", y = "Number of companies referred to") +
-  coord_flip()
+  labs(x = "Super genre", y = "Number of companies behind hosts") +
+  coord_flip() + theme_minimal()
 
-#ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
+ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
 
 
 ######get prevalence of companies + root companies by super genre#######
@@ -422,17 +426,20 @@ for (curGenre in unique(genreGrouping$super_genre)) {
 
 #######ANALYSE COUNTRY PREVALENCE##############
 ##########ACROSS GENRES
-countryCountsInAppsWithKnownTrackers <- old_appsWithHostsAndCompaniesLong %>%
+countryCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
-  left_join(old_companyInfo, by = "company") %>%
-  filter(!is.na(country), country != "?") %>% #exclude where we don't know what country is
+  left_join(companyInfo, by = "company") %>%
+  select(-c(country, root_parent)) %>%
+  gather(key = subsidiary_level, value = company, -c(id, hosts)) %>%
+  left_join(companyInfo %>% select(-c(root_parent, leaf_parent)), by = "company") %>%
+  filter(!is.na(country), country != "", country != "N/A") %>% #exclude where we don't know what country is
   group_by(id) %>%
   distinct(country) %>%
   summarise(numCountries = n()) %>%
   arrange(desc(numCountries))
 
 #count how many apps had hosts references but weren't on our list of trackers - set these to 0 countries
-country_appsWithHostsButNoKnownCompanies <- old_appsWithHostsAndCompaniesLong %>%
+country_appsWithHostsButNoKnownCompanies <- appsWithHostsAndCompaniesLong %>%
   distinct(id) %>%
   anti_join(countryCountsInAppsWithKnownTrackers, by = "id") %>%
   mutate(numCountries = 0)
@@ -459,41 +466,34 @@ summaryCountryCount <- countCountryRefs %>%
             noRefs = sum(numCountries == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
-summaryCountryCount
-#write_csv(summaryCountryCount,"saveouts_RESULTS/country_num_summary.csv")
+
+write_csv(summaryCountryCount,"saveouts_RESULTS/country_num_summary.csv")
 
 countCountryRefs %>%
+  filter(numCountries < 6) %>%
   ggplot() +
   geom_histogram(aes(numCountries)) +
   labs(x = "Number of countries referred to", y = "Number of apps") +
-  scale_y_continuous(labels = comma)
-#ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
+  scale_y_continuous(labels = comma) +
+  theme_minimal()
+ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
 
 #break this down by the proportion of apps that a country is in
-country_propAppsWithTrackingCompanyRefs <- old_appsWithHostsAndCompaniesLong %>%
+country_propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
-  left_join(old_companyInfo, by = "company") %>%
+  left_join(companyInfo, by = "company") %>%
+  select(-c(country, root_parent)) %>%
+  gather(key = subsidiary_level, value = company, -c(id, hosts)) %>%
+  left_join(companyInfo %>% select(-c(root_parent, leaf_parent)), by = "company") %>%
+  filter(!is.na(country), country != "", country != "N/A") %>% #exclude where we don't know what country is
   group_by(id) %>%
   distinct(country) %>% #exclude the distinct countries within each app
   ungroup() %>%
   count(country) %>% #then count how many times a country occurs
   mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
-  arrange(desc(n)) %>%
-  filter(!is.na(country), country != "?") #exclude where we don't know what country is
-country_propAppsWithTrackingCompanyRefs
+  arrange(desc(n))
+
 write_csv(country_propAppsWithTrackingCompanyRefs,"saveouts_RESULTS/countries/prevalenceOfCountries.csv")
-
-companyInfo %>%
-  filter(company == "Adbrain") %>%
-  View
-companyInfo %>%
-  arrange(company) %>%
-  View()
-
-appsWithHostsAndCompaniesLong %>%
-  left_join(companyInfo) %>%
-  filter(company != "Unknown") %>%
-  filter(country == "UK")
 
 #########BY SUPER GENRES
 summaryCountryCountBySuperGenre <- countCountryRefs %>%
@@ -541,12 +541,16 @@ for (curGenre in unique(genreGrouping$super_genre)) {
   countryPrev <- allAppsWithHostsAndGenre %>%
     filter(super_genre == curGenre) %>%
     filter(company != "Unknown") %>%
+    select(id, hosts, company, leaf_parent) %>%
+    gather(key = subsidiary_level, value = company, -c(id, hosts)) %>%
+    left_join(companyInfo %>% select(-c(root_parent, leaf_parent)), by = "company") %>%
+    filter(!is.na(country), country != "", country != "N/A") %>% #exclude where we don't know what country is 
     distinct(id, country) %>%
     group_by(country) %>%
     summarise(numAppsReferring = n()) %>%
     mutate(pctOfApps = round((numAppsReferring / numAppsBySuperGenre %>%
-             filter(super_genre == curGenre) %>%
-             pull(numApps))*100,2)
+                                filter(super_genre == curGenre) %>%
+                                pull(numApps))*100,2)
     ) %>%
     arrange(desc(pctOfApps)) %>%
     filter(country != "")
@@ -557,6 +561,7 @@ for (curGenre in unique(genreGrouping$super_genre)) {
   
   write_csv(countryPrev, str_c("saveouts_RESULTS/countries/by_genre/prevalence", saveName, ".csv"))
 }
+
 
 ########################END#######################
 
