@@ -19,7 +19,7 @@ modeFunc <- function(x) {
 #####0. READ IN INFO #####
 #set up data base driver and connection
 drv <- dbDriver("PostgreSQL")
-con <- dbConnect(drv, dbname = "final_test",
+con <- dbConnect(drv, dbname = "xray",
                  host = "localhost", port = 5432,
                  user = "ulyngs")
 
@@ -105,9 +105,10 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts), bins = 68) +
-  labs(x = "Number of references to tracker hosts", y = "Number of apps") +
-  scale_y_continuous(labels = comma) + 
-  theme_minimal()
+  labs(x = "Number of tracker hosts per app", y = "Number of apps") +
+  scale_y_continuous(labels = comma, breaks = seq(0,100000, 20000)) + 
+  theme_minimal() + theme(axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+                          axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
 #ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
 
 #log transformed y-axis
@@ -231,10 +232,11 @@ countCompanyRefs %>%
   filter(numCompanies < 26) %>%
   ggplot() +
   geom_histogram(aes(numCompanies), bins = 26) +
-  labs(x = "Number of companies behind hosts", y = "Number of apps") +
-  scale_y_continuous(labels = comma) +
+  labs(x = "Number of distinct companies per app", y = "Number of apps") +
+  scale_y_continuous(labels = comma, breaks = seq(0, 140000, 40000)) +
   scale_x_continuous(breaks = c(0,5,10,15,20)) +
-  theme_minimal()
+  theme_minimal() + theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)),
+                          axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
 
 #ggsave("plots/histNumCompaniesReferred.png",width=5, height=4, dpi=600)
 
