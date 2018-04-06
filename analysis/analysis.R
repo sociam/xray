@@ -19,7 +19,7 @@ modeFunc <- function(x) {
 #####0. READ IN INFO #####
 #set up data base driver and connection
 drv <- dbDriver("PostgreSQL")
-con <- dbConnect(drv, dbname = "final_test",
+con <- dbConnect(drv, dbname = "xray",
                  host = "localhost", port = 5432,
                  user = "ulyngs")
 
@@ -32,7 +32,7 @@ appInfo <- dbGetQuery(con,
   as.tibble()
 
 #read in company info
-companyInfo <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
+companyInfo <- fromJSON("data-raw/company_data_list_23_2_2018_MAN_CHECKED.json") %>%
   mutate(company = str_to_title(owner_name)) %>%
   select(company, country, root_parent) %>%
   mutate(country = str_to_upper(country)) %>%
@@ -43,11 +43,6 @@ companyInfo <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
 appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv") %>%
   mutate(company = str_to_title(company))
-
-appsWithHostsAndCompaniesLong %>%
-  filter(id == 244497) %>%
-  write_csv("little_mermaid.csv") %>%
-  View()
 
 #read in the list of apps without hosts
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
@@ -75,7 +70,6 @@ appsWithHostsButNoKnownTrackers <- appsWithHostsAndCompaniesLong %>%
 countKnownTrackers <- hostCountsInAppsWithKnownTrackers %>%
   rbind(appsWithNoHosts) %>% #add the apps with no host refs at all
   rbind(appsWithHostsButNoKnownTrackers) #add the apps with no hosts that are known trackers
-appsWithHostsAndCompaniesLong %>% head(100) %>% View()
 
 #summarise the numbers of known trackers
 summaryKnownTrackers <- countKnownTrackers %>%
@@ -111,8 +105,10 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts), bins = 68) +
-  labs(x = "Number of references to tracker domains", y = "Number of apps") +
-  scale_y_continuous(labels = comma)
+  labs(x = "Number of tracker hosts per app", y = "Number of apps") +
+  scale_y_continuous(labels = comma, breaks = seq(0,100000, 20000)) + 
+  theme_minimal() + theme(axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+                          axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
 #ggsave("plots/histRefsTrackerDomains.png",width=5, height=4, dpi=600)
 
 #log transformed y-axis
@@ -120,8 +116,8 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts), bins = 30) +
-  labs(x = "#known trackers in decompiled source code",
-       y = "app count: LOG SCALE") +
+  labs(x = "Number of references to tracker hosts",
+       y = "Number of apps (LOG SCALE)") +
   scale_y_log10()
 #ggsave("plots/histKnownTrackersLOGY.png",width=5, height=4, dpi=600)
 
@@ -130,7 +126,7 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts + .01)) + #adding here to not exclude those with zero trackers
-  labs(x = "#known trackers in decompiled source code: LOG SCALE", y = "app count") +
+  labs(x = "Number of references to tracker hosts (LOG SCALE)", y = "Number of apps") +
   scale_x_log10()
 #ggsave("plots/histKnownTrackersLOGX.png",width=5, height=4, dpi=600)
 
@@ -139,8 +135,8 @@ countKnownTrackers %>%
   filter(numHosts < 68) %>%
   ggplot() +
   geom_histogram(aes(numHosts + .01), bins = 30) +
-  labs(x = "#known trackers in decompiled source code: LOG SCALE",
-       y = "app count: LOG SCALE") +
+  labs(x = "Number of references to tracker hosts (LOG SCALE)",
+       y = "Number of apps (LOG SCALE)") +
   scale_y_log10() + scale_x_log10()
 #ggsave("plots/histKnownTrackersLOGBOTH.png",width=5, height=4, dpi=600)
 
@@ -225,10 +221,10 @@ ineq(countCompanyRefs$numCompanies, type='Gini')
 quantile(countCompanyRefs$numCompanies, .9999)
 
 #explore the extreme outliers
-countCompanyRefs %>%
-  filter(numCompanies > 27) %>%
-  left_join(appInfo) %>%
-  write_csv("saveouts_RESULTS/extreme_outliers_NumCompanies.csv")
+#countCompanyRefs %>%
+#  filter(numCompanies > 27) %>%
+#  left_join(appInfo) %>%
+#  write_csv("saveouts_RESULTS/extreme_outliers_NumCompanies.csv")
 
 
 #plot ordinary histogram
@@ -236,8 +232,12 @@ countCompanyRefs %>%
   filter(numCompanies < 26) %>%
   ggplot() +
   geom_histogram(aes(numCompanies), bins = 26) +
-  labs(x = "Number of companies referred to", y = "Number of apps") +
-  scale_y_continuous(labels = comma)
+  labs(x = "Number of distinct companies per app", y = "Number of apps") +
+  scale_y_continuous(labels = comma, breaks = seq(0, 140000, 40000)) +
+  scale_x_continuous(breaks = c(0,5,10,15,20)) +
+  theme_minimal() + theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)),
+                          axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
+
 #ggsave("plots/histNumCompaniesReferred.png",width=5, height=4, dpi=600)
 
 #break this down by the proportion of apps that a company is in
@@ -361,8 +361,8 @@ companyRefsByGenreWithFamily <- companyRefsByGenre %>%
 
 ggplot(data = companyRefsByGenreWithFamily %>% filter(numCompanies < 21), mapping = aes(y = numCompanies, x = reorder(super_genre, numCompanies, FUN = quantile, prob = 0.75))) +
   geom_boxplot(varwidth = TRUE, outlier.shape = NA) + 
-  labs(x = "Super genre", y = "Number of companies referred to") +
-  coord_flip()
+  labs(x = "Super genre", y = "Number of companies behind hosts") +
+  coord_flip() + theme_minimal()
 
 #ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
 
@@ -385,7 +385,7 @@ numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
   summarise(numApps = n())
 
 #create and save out prevalence of companies + root companies for each super genre
-#for (curGenre in unique(genreGrouping$super_genre)) {
+for (curGenre in unique(genreGrouping$super_genre)) {
   #prevalence for low-lev companies
   companyPrev <- allAppsWithHostsAndGenre %>%
     filter(super_genre == curGenre) %>%
@@ -431,11 +431,15 @@ numAppsBySuperGenre <- appsWithHostsAndCompaniesLong %>%
 countryCountsInAppsWithKnownTrackers <- appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
   left_join(companyInfo, by = "company") %>%
+  select(-c(country, root_parent)) %>%
+  gather(key = subsidiary_level, value = company, -c(id, hosts)) %>%
+  left_join(companyInfo %>% select(-c(root_parent, leaf_parent)), by = "company") %>%
+  filter(!is.na(country), country != "", country != "N/A") %>% #exclude where we don't know what country is
   group_by(id) %>%
   distinct(country) %>%
   summarise(numCountries = n()) %>%
   arrange(desc(numCountries))
-  
+
 #count how many apps had hosts references but weren't on our list of trackers - set these to 0 countries
 country_appsWithHostsButNoKnownCompanies <- appsWithHostsAndCompaniesLong %>%
   distinct(id) %>%
@@ -464,28 +468,34 @@ summaryCountryCount <- countCountryRefs %>%
             noRefs = sum(numCountries == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
-summaryCountryCount
+
 #write_csv(summaryCountryCount,"saveouts_RESULTS/country_num_summary.csv")
 
 countCountryRefs %>%
+  filter(numCountries < 6) %>%
   ggplot() +
   geom_histogram(aes(numCountries)) +
-  labs(x = "Number of countries referred to", y = "Number of apps") +
-  scale_y_continuous(labels = comma)
+  labs(x = "Number of countries", y = "Number of apps") +
+  scale_y_continuous(labels = comma) +
+  theme_minimal()
 #ggsave("plots/histNumCountriesReferred.png",width=5, height=4, dpi=600)
 
 #break this down by the proportion of apps that a country is in
 country_propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
   filter(company != "Unknown") %>%
   left_join(companyInfo, by = "company") %>%
+  select(-c(country, root_parent)) %>%
+  gather(key = subsidiary_level, value = company, -c(id, hosts)) %>%
+  left_join(companyInfo %>% select(-c(root_parent, leaf_parent)), by = "company") %>%
+  filter(!is.na(country), country != "", country != "N/A") %>% #exclude where we don't know what country is
   group_by(id) %>%
   distinct(country) %>% #exclude the distinct countries within each app
   ungroup() %>%
-  count(country) %>% #then count how many times a company occurs
+  count(country) %>% #then count how many times a country occurs
   mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
   arrange(desc(n))
 
-write_csv(country_propAppsWithTrackingCompanyRefs,"saveouts_RESULTS/prevalenceOfCountries.csv")
+write_csv(country_propAppsWithTrackingCompanyRefs,"saveouts_RESULTS/countries/prevalenceOfCountries.csv")
 
 #########BY SUPER GENRES
 summaryCountryCountBySuperGenre <- countCountryRefs %>%
@@ -533,12 +543,16 @@ for (curGenre in unique(genreGrouping$super_genre)) {
   countryPrev <- allAppsWithHostsAndGenre %>%
     filter(super_genre == curGenre) %>%
     filter(company != "Unknown") %>%
+    select(id, hosts, company, leaf_parent) %>%
+    gather(key = subsidiary_level, value = company, -c(id, hosts)) %>%
+    left_join(companyInfo %>% select(-c(root_parent, leaf_parent)), by = "company") %>%
+    filter(!is.na(country), country != "", country != "N/A") %>% #exclude where we don't know what country is 
     distinct(id, country) %>%
     group_by(country) %>%
     summarise(numAppsReferring = n()) %>%
     mutate(pctOfApps = round((numAppsReferring / numAppsBySuperGenre %>%
-             filter(super_genre == curGenre) %>%
-             pull(numApps))*100,2)
+                                filter(super_genre == curGenre) %>%
+                                pull(numApps))*100,2)
     ) %>%
     arrange(desc(pctOfApps)) %>%
     filter(country != "")
@@ -547,8 +561,9 @@ for (curGenre in unique(genreGrouping$super_genre)) {
     str_replace_all(" ", "") %>%
     str_replace_all("&", "And")
   
-  write_csv(countryPrev, str_c("saveouts_RESULTS/countries_by_genre/prevalence", saveName, ".csv"))
+  write_csv(countryPrev, str_c("saveouts_RESULTS/countries/by_genre/prevalence", saveName, ".csv"))
 }
+
 
 ########################END#######################
 
