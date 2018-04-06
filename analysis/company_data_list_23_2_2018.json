@@ -2479,19 +2479,6 @@
     "aliases": null
   },
   {
-    "owner_name": "Dyn",
-    "parent": null,
-    "country": "us",
-    "notes": null,
-    "privacy_policy_url": null,
-    "homepage_url": null,
-    "root_parent": "Dyn",
-    "doms": [
-      "go-mpulse.net"
-    ],
-    "aliases": null
-  },
-  {
     "owner_name": "Cauley",
     "parent": null,
     "country": "kr",
@@ -3180,7 +3167,8 @@
     "homepage_url": null,
     "root_parent": "Yieldex",
     "doms": [
-      "adnxs.com"
+      "adnxs.com",
+      "yieldoptimizer.com"
     ],
     "aliases": null
   },
@@ -4211,7 +4199,7 @@
     "aliases": null
   },
   {
-    "owner_name": "Amgdgt",
+    "owner_name": "Amobee",
     "parent": null,
     "country": "n/a",
     "notes": null,
@@ -5531,7 +5519,7 @@
   },
   {
     "owner_name": "Mologiq",
-    "parent": null,
+    "parent": "NinthDecimal",
     "country": "",
     "notes": null,
     "privacy_policy_url": null,
@@ -5780,7 +5768,7 @@
     "aliases": null
   },
   {
-    "owner_name": "Flksu",
+    "owner_name": "Fiksu",
     "parent": "Noosphere",
     "country": "us",
     "notes": null,
@@ -7970,7 +7958,7 @@
     "aliases": null
   },
   {
-    "owner_name": "Sociomantic\r\n",
+    "owner_name": "Sociomantic",
     "parent": "Dunnhumby",
     "country": "dk",
     "notes": null,
@@ -8322,13 +8310,13 @@
     "aliases": null
   },
   {
-    "owner_name": "Fout",
+    "owner_name": "Freakout Holdings",
     "parent": null,
     "country": "n/a",
     "notes": null,
     "privacy_policy_url": null,
     "homepage_url": null,
-    "root_parent": "Fout",
+    "root_parent": "Freakout Holdings",
     "doms": [
       "fout.jp"
     ],
@@ -8579,7 +8567,7 @@
     "aliases": null
   },
   {
-    "owner_name": "Netseer",
+    "owner_name": "Inuvo",
     "parent": null,
     "country": "us",
     "notes": null,
