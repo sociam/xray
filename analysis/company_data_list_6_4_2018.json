@@ -2757,7 +2757,7 @@
     "parent": null
   },
   {
-    "country": "?",
+    "country": "cr",
     "doms": [
       "popads.net"
     ],
@@ -3931,15 +3931,6 @@
     "parent": null
   },
   {
-    "country": "none",
-    "doms": [
-      "parrable.com"
-    ],
-    "owner_name": "Parrable.com",
-    "root_parent": null,
-    "parent": null
-  },
-  {
     "country": "uk",
     "doms": [
       "researchnow.com"
@@ -3949,20 +3940,11 @@
     "parent": "e-Rewards"
   },
   {
-    "country": "",
+    "country": "us",
     "doms": [
       "direct.ly"
     ],
     "owner_name": "Directly",
-    "root_parent": null,
-    "parent": null
-  },
-  {
-    "country": "",
-    "doms": [
-      "csdata1.com"
-    ],
-    "owner_name": "Csdata",
     "root_parent": null,
     "parent": null
   },
@@ -4106,7 +4088,7 @@
     "parent": null
   },
   {
-    "country": "",
+    "country": "us",
     "doms": [
       "cpgintelligence.com"
     ],
@@ -4126,7 +4108,8 @@
   {
     "country": "us",
     "doms": [
-      "firebaseio.com"
+      "firebaseio.com",
+      "app-measurement.com"
     ],
     "owner_name": "Firebase",
     "root_parent": "Alphabet",
@@ -4151,7 +4134,7 @@
     "parent": null
   },
   {
-    "country": "",
+    "country": "us",
     "doms": [
       "admaxim.com"
     ],
@@ -4252,7 +4235,7 @@
     "parent": null
   },
   {
-    "country": "",
+    "country": "us",
     "doms": [
       "jumptap.com"
     ],
@@ -4481,15 +4464,6 @@
     "parent": "WideOrbit"
   },
   {
-    "country": "",
-    "doms": [
-      "app-measurement.com"
-    ],
-    "owner_name": "App-Measurement",
-    "root_parent": null,
-    "parent": null
-  },
-  {
     "country": "kr",
     "doms": [
       "tnkfactory.com"
@@ -4508,7 +4482,7 @@
     "parent": null
   },
   {
-    "country": "",
+    "country": "cn",
     "doms": [
       "tinyhoneybee.com",
       "acekoala.com",
@@ -4528,7 +4502,7 @@
     "parent": "RNTS Media"
   },
   {
-    "country": "",
+    "country": "us",
     "doms": [
       "chartboost.com"
     ],
@@ -4542,15 +4516,6 @@
       "upsight-api.com"
     ],
     "owner_name": "Upsight",
-    "root_parent": null,
-    "parent": null
-  },
-  {
-    "country": "n/a",
-    "doms": [
-      "amgdgt.com"
-    ],
-    "owner_name": "Amobee",
     "root_parent": null,
     "parent": null
   },
@@ -4736,7 +4701,7 @@
     "parent": null
   },
   {
-    "country": "",
+    "country": "us",
     "doms": [
       "mologiq.net"
     ],
@@ -4965,14 +4930,14 @@
     "parent": null
   },
   {
-    "country": "",
+    "country": "us",
     "doms": [
       "millennialmedia.com",
       "mydas.mobi"
     ],
     "owner_name": "Millennialmedia",
-    "root_parent": null,
-    "parent": null
+    "root_parent": "Verizon",
+    "parent": "Aol"
   },
   {
     "country": "us",
@@ -5077,7 +5042,7 @@
     "parent": null
   },
   {
-    "country": "",
+    "country": "us",
     "doms": [
       "heyzap.com"
     ],
@@ -5104,7 +5069,7 @@
     "parent": "Adobe Systems"
   },
   {
-    "country": "",
+    "country": "uk",
     "doms": [
       "medialytics.com"
     ],
@@ -5196,20 +5161,11 @@
     "parent": "Specific Media"
   },
   {
-    "country": "",
+    "country": "ca",
     "doms": [
       "trafficjunky.net"
     ],
     "owner_name": "Trafficjunky",
-    "root_parent": null,
-    "parent": null
-  },
-  {
-    "country": "ca",
-    "doms": [
-      "polarmobile.com"
-    ],
-    "owner_name": "Polar Mobile Group",
     "root_parent": null,
     "parent": null
   },
@@ -5448,15 +5404,6 @@
     "parent": "Twitter"
   },
   {
-    "country": "",
-    "doms": [
-      "online-metrix.net"
-    ],
-    "owner_name": "Onlinemetrix",
-    "root_parent": null,
-    "parent": null
-  },
-  {
     "country": "n/a",
     "doms": [
       "liveperson.net"
@@ -5541,7 +5488,7 @@
     "parent": null
   },
   {
-    "country": "",
+    "country": "ca",
     "doms": [
       "taplytics.com"
     ],
@@ -5588,15 +5535,6 @@
   {
     "country": "us",
     "doms": [
-      "bounceexchange.com"
-    ],
-    "owner_name": "Bounce Exchange",
-    "root_parent": null,
-    "parent": null
-  },
-  {
-    "country": "us",
-    "doms": [
       "tapsense.com"
     ],
     "owner_name": "Tapsense",
@@ -5615,7 +5553,8 @@
   {
     "country": "ca",
     "doms": [
-      "mediavoice.com"
+      "mediavoice.com",
+      "polarmobile.com"
     ],
     "owner_name": "Polar",
     "root_parent": null,
@@ -5721,161 +5660,149 @@
     "parent": null
   },
   {
-    "country": null,
+    "country": "uk",
     "doms": [],
     "owner_name": "e-Rewards",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "Fenway Partners",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "uk",
     "doms": [],
     "owner_name": "The Property Software Group",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "no",
     "doms": [],
     "owner_name": "Opera",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "WideOrbit",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "RNTS Media",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
-    "doms": [],
+    "country": "us",
+    "doms": [
+      "csdata1.com"
+    ],
     "owner_name": "Impact Radius",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "jp",
     "doms": [],
     "owner_name": "Sony",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "cn",
     "doms": [],
     "owner_name": "Spearhead Integrated Marketing Communication ",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "NinthDecimal",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "uk",
     "doms": [],
     "owner_name": "7digital",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "Noosphere",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "Activision Blizzard",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "es",
     "doms": [],
     "owner_name": "Kato Capital Group",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
-    "doms": [],
-    "owner_name": "Facebook",
-    "root_parent": null,
-    "parent": null
-  },
-  {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "SolarWinds",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "jp",
     "doms": [],
     "owner_name": "Dentsu Aegis Network",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "jp",
     "doms": [],
     "owner_name": "Rakuten",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "Specific Media",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "RockYou",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
-    "doms": [],
-    "owner_name": "Opera",
-    "root_parent": null,
-    "parent": null
-  },
-  {
-    "country": null,
+    "country": "uk",
     "doms": [],
     "owner_name": "Dunnhumby",
     "root_parent": null,
     "parent": null
   },
   {
-    "country": null,
+    "country": "us",
     "doms": [],
     "owner_name": "eBay",
     "root_parent": null,

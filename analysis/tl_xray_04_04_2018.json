@@ -3870,7 +3870,7 @@
     "homepage_url": "https://www.popads.net/",
     "privacy_policy_url": "https://www.popads.net/privacy-policy.html",
     "notes": null,
-    "country": "?",
+    "country": "cr",
     "domains": [
       "popads.net"
     ]
@@ -5559,19 +5559,6 @@
     ]
   },
   {
-    "id": 368,
-    "parent_id": null,
-    "owner_name": "Parrable.com",
-    "aliases": [],
-    "homepage_url": null,
-    "privacy_policy_url": null,
-    "notes": null,
-    "country": "None",
-    "domains": [
-      "parrable.com"
-    ]
-  },
-  {
     "id": 369,
     "parent_id": 564,
     "owner_name": "Research Now",
@@ -5592,22 +5579,9 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "us",
     "domains": [
       "direct.ly"
-    ]
-  },
-  {
-    "id": 371,
-    "parent_id": null,
-    "owner_name": "Csdata",
-    "aliases": [],
-    "homepage_url": null,
-    "privacy_policy_url": null,
-    "notes": null,
-    "country": "",
-    "domains": [
-      "csdata1.com"
     ]
   },
   {
@@ -5817,7 +5791,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "us",
     "domains": [
       "cpgintelligence.com"
     ]
@@ -5845,7 +5819,8 @@
     "notes": null,
     "country": "us",
     "domains": [
-      "firebaseio.com"
+      "firebaseio.com",
+      "app-measurement.com"
     ]
   },
   {
@@ -5882,7 +5857,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "us",
     "domains": [
       "admaxim.com"
     ]
@@ -6027,7 +6002,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "us",
     "domains": [
       "jumptap.com"
     ]
@@ -6349,19 +6324,6 @@
     ]
   },
   {
-    "id": 428,
-    "parent_id": null,
-    "owner_name": "App-Measurement",
-    "aliases": [],
-    "homepage_url": null,
-    "privacy_policy_url": null,
-    "notes": null,
-    "country": "",
-    "domains": [
-      "app-measurement.com"
-    ]
-  },
-  {
     "id": 429,
     "parent_id": null,
     "owner_name": "Tnkfactory",
@@ -6395,7 +6357,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "cn",
     "domains": [
       "tinyhoneybee.com",
       "acekoala.com",
@@ -6423,7 +6385,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "us",
     "domains": [
       "chartboost.com"
     ]
@@ -6439,19 +6401,6 @@
     "country": "us",
     "domains": [
       "upsight-api.com"
-    ]
-  },
-  {
-    "id": 435,
-    "parent_id": null,
-    "owner_name": "Amobee",
-    "aliases": [],
-    "homepage_url": null,
-    "privacy_policy_url": null,
-    "notes": null,
-    "country": "n/a",
-    "domains": [
-      "amgdgt.com"
     ]
   },
   {
@@ -6723,7 +6672,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "us",
     "domains": [
       "mologiq.net"
     ]
@@ -7046,13 +6995,13 @@
   },
   {
     "id": 481,
-    "parent_id": null,
+    "parent_id": 46,
     "owner_name": "Millennialmedia",
     "aliases": [],
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "us",
     "domains": [
       "millennialmedia.com",
       "mydas.mobi"
@@ -7212,7 +7161,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "us",
     "domains": [
       "heyzap.com"
     ]
@@ -7251,7 +7200,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "uk",
     "domains": [
       "medialytics.com"
     ]
@@ -7383,22 +7332,9 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
-    "domains": [
-      "trafficjunky.net"
-    ]
-  },
-  {
-    "id": 507,
-    "parent_id": null,
-    "owner_name": "Polar Mobile Group",
-    "aliases": [],
-    "homepage_url": null,
-    "privacy_policy_url": null,
-    "notes": null,
     "country": "ca",
     "domains": [
-      "polarmobile.com"
+      "trafficjunky.net"
     ]
   },
   {
@@ -7459,7 +7395,7 @@
   },
   {
     "id": 512,
-    "parent_id": 595,
+    "parent_id": 573,
     "owner_name": "Adcolony",
     "aliases": [],
     "homepage_url": null,
@@ -7736,19 +7672,6 @@
     ]
   },
   {
-    "id": 533,
-    "parent_id": null,
-    "owner_name": "Onlinemetrix",
-    "aliases": [],
-    "homepage_url": null,
-    "privacy_policy_url": null,
-    "notes": null,
-    "country": "",
-    "domains": [
-      "online-metrix.net"
-    ]
-  },
-  {
     "id": 534,
     "parent_id": null,
     "owner_name": "Liveperson",
@@ -7876,7 +7799,7 @@
     "homepage_url": null,
     "privacy_policy_url": null,
     "notes": null,
-    "country": "",
+    "country": "ca",
     "domains": [
       "taplytics.com"
     ]
@@ -7934,19 +7857,6 @@
     ]
   },
   {
-    "id": 548,
-    "parent_id": null,
-    "owner_name": "Bounce Exchange",
-    "aliases": [],
-    "homepage_url": null,
-    "privacy_policy_url": null,
-    "notes": null,
-    "country": "us",
-    "domains": [
-      "bounceexchange.com"
-    ]
-  },
-  {
     "id": 549,
     "parent_id": null,
     "owner_name": "Tapsense",
@@ -7982,7 +7892,8 @@
     "notes": null,
     "country": "ca",
     "domains": [
-      "mediavoice.com"
+      "mediavoice.com",
+      "polarmobile.com"
     ]
   },
   {
@@ -8136,7 +8047,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "uk",
       "domains"      : []
   },
 {
@@ -8147,7 +8058,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8158,7 +8069,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "uk",
       "domains"      : []
   },
 {
@@ -8169,7 +8080,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "no",
       "domains"      : []
   },
 {
@@ -8180,7 +8091,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8191,7 +8102,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8202,8 +8113,10 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
-      "domains"      : []
+      "country"      : "us",
+      "domains"      : [
+        "csdata1.com"
+      ]
   },
 {
     "id"         : 577,
@@ -8213,7 +8126,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "jp",
       "domains"      : []
   },
 {
@@ -8224,7 +8137,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "cn",
       "domains"      : []
   },
 {
@@ -8235,7 +8148,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8246,7 +8159,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "uk",
       "domains"      : []
   },
 {
@@ -8257,7 +8170,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8268,7 +8181,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8279,18 +8192,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
-      "domains"      : []
-  },
-{
-    "id"         : 586,
-      "parent_id"      : null,
-      "owner_name"     : "Facebook",
-      "aliases"      : [],
-      "homepage_url"     : null,
-      "privacy_policy_url" : null,
-      "notes"        : null,
-      "country"      : null,
+      "country"      : "es",
       "domains"      : []
   },
 {
@@ -8301,7 +8203,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8312,7 +8214,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "jp",
       "domains"      : []
   },
 {
@@ -8323,7 +8225,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "jp",
       "domains"      : []
   },
 {
@@ -8334,7 +8236,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8345,18 +8247,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
-      "domains"      : []
-  },
-{
-    "id"         : 595,
-      "parent_id"      : null,
-      "owner_name"     : "Opera",
-      "aliases"      : [],
-      "homepage_url"     : null,
-      "privacy_policy_url" : null,
-      "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   },
 {
@@ -8367,7 +8258,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "uk",
       "domains"      : []
   },
 {
@@ -8378,7 +8269,7 @@
       "homepage_url"     : null,
       "privacy_policy_url" : null,
       "notes"        : null,
-      "country"      : null,
+      "country"      : "us",
       "domains"      : []
   }
 ]
