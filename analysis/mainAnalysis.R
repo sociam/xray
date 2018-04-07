@@ -114,7 +114,7 @@ ggsave("plots/histTrackerHostsPerApp.png",width=5, height=4, dpi=600)
 
 
 ####1.2 WHAT ARE THE MOST FREQUENT HOSTS?####
-#creat short mapping from hostsToCompany
+#create short mapping from hostsToCompany
 hostsToCompany <- appsWithHostsAndCompaniesLong %>%
   select(-id) %>%
   distinct(hosts, company)
@@ -130,8 +130,8 @@ knownTrackersInfo <- appsWithHostsAndCompaniesLong %>%
   arrange(desc(numApps))
 
 head(knownTrackersInfo,250) %>%
-select(-leaf_parent) %>%
-write_csv("results/hostAnalysis/top250TrackerHosts.csv")
+  select(-leaf_parent) %>%
+  write_csv("results/hostAnalysis/top250TrackerHosts.csv")
 
 #create summary of 'unknown' hosts (i.e. not on our tracker list) and save out top 250
 unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
@@ -142,7 +142,7 @@ unknownHostsInfo <- appsWithHostsAndCompaniesLong %>%
   arrange(desc(refCount))
 
 head(unknownHostsInfo, 250) %>%
-write_csv("results/hostAnalysis/top250UnknownHosts.csv")
+  write_csv("results/hostAnalysis/top250UnknownHosts.csv")
 
 
 
@@ -183,7 +183,7 @@ summaryCompanyCount <- countCompanyRefs %>%
             noRefs = sum(numCompanies == 0),
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs)
-summaryCompanyCount
+
 write_csv(summaryCompanyCount, "results/companyAnalysis/summaryCompanyCount.csv")
 
 #draw Lorenz curve and get Gini coefficient
@@ -273,7 +273,7 @@ fam_summaryCompanyCount <- fam_countCompanyRefs %>%
   mutate(super_genre = "Family")
 
 #then describe the number of tracker companies per app by super genre, and add a row with the description for family apps to the output
-genreGrouping <- read_csv("data/genreGrouping.csv") %>% select(-numApps)
+genreGrouping <- read_csv("otherAnalyses/genreGrouping.csv") %>% select(-numApps)
 
 summaryCompanyCountBySuperGenreAddFamily <- countCompanyRefs %>%
   left_join(appInfo, by = "id") %>%
@@ -460,7 +460,7 @@ propAppsWithCompaniesFromAGivenCountry <- appsWithHostsAndCompaniesLong %>%
   mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
   arrange(desc(n))
 
-write_csv(propAppsWithCompaniesFromAGivenCountry,"results/countryAnalysis/prevalenceOfCountriesAcrossAllApps.csv")
+write_csv(propAppsWithCompaniesFromAGivenCountry,"results/countryAnalysis/propAppsWithCompaniesFromAGivenCountry.csv")
 # get out for latex
 #print(xtable(propAppsWithCompaniesFromAGivenCountry),floating=FALSE,latex.environments=NULL, include.rownames = FALSE)
 

@@ -1,0 +1,251 @@
+hosts,numApps,pctOfApps,company,country,root_parent
+plus.google.com,662186,69.02,Google,US,Alphabet
+www.googleapis.com,636070,66.3,Google Apis,US,Alphabet
+www.google.com,615267,64.13,Google,US,Alphabet
+schemas.android.com,611950,63.78,Google,US,Alphabet
+googleads.g.doubleclick.net,581795,60.64,Doubleclick,US,Alphabet
+play.google.com,422068,43.99,Google,US,Alphabet
+csi.gstatic.com,421463,43.93,Google,US,Alphabet
+goo.gl,411176,42.86,Google,US,Alphabet
+ssl.google-analytics.com,373419,38.92,Google Analytics,US,Alphabet
+www.google-analytics.com,373141,38.89,Google Analytics,US,Alphabet
+www.googletagmanager.com,324898,33.86,Google Tag Manager,US,Alphabet
+www.facebook.com,318180,33.16,Facebook,US,NA
+pagead2.googlesyndication.com,279441,29.13,Adsense,US,Alphabet
+twitter.com,265043,27.63,Twitter,US,NA
+accounts.google.com,214333,22.34,Google,US,Alphabet
+www.linkedin.com,193198,20.14,Linkedin,US,NA
+login.yahoo.com,189660,19.77,Yahoo,US,Verizon
+login.live.com,189001,19.7,Microsoft,US,NA
+app-measurement.com,179655,18.73,Firebase,US,Alphabet
+graph.facebook.com,159704,16.65,Facebook,US,NA
+developers.facebook.com,140443,14.64,Facebook,US,NA
+facebook.com,136708,14.25,Facebook,US,NA
+.facebook.com,135955,14.17,Facebook,US,NA
+media.admob.com,135633,14.14,Admob,US,Alphabet
+market.android.com,119132,12.42,Google,US,Alphabet
+m.facebook.com,114266,11.91,Facebook,US,NA
+developer.android.com,90408,9.42,Google,US,Alphabet
+support.google.com,77633,8.09,Google,US,Alphabet
+maps.google.com,73731,7.68,Google,US,Alphabet
+www.youtube.com,73330,7.64,Youtube,US,Alphabet
+sb-ssl.google.com,70438,7.34,Google,US,Alphabet
+api.twitter.com,66469,6.93,Twitter,US,NA
+www.amazon.com,64361,6.71,Amazon,US,NA
+graph.%s.facebook.com,64218,6.69,Facebook,US,NA
+www.%s.facebook.com,63392,6.61,Facebook,US,NA
+maps.googleapis.com,60910,6.35,Google Apis,US,Alphabet
+ssl.gstatic.com,60394,6.29,Google,US,Alphabet
+api.facebook.com,58169,6.06,Facebook,US,NA
+data.flurry.com,57665,6.01,Flurry,US,Verizon
+docs.google.com,51476,5.37,Google,US,Alphabet
+live.chartboost.com,50597,5.27,Chartboost,US,NA
+code.google.com,50243,5.24,Google,US,Alphabet
+settings.crashlytics.com,48870,5.09,Crashlytics,US,Twitter
+d1byvlfiet2h9q.cloudfront.net,48453,5.05,Amazon Web Services,US,Amazon
+e.crashlytics.com,48396,5.04,Crashlytics,US,Twitter
+schemas.applovin.com,37174,3.87,Applovin,US,NA
+vid.applovin.com,37115,3.87,Applovin,US,NA
+d.applovin.com,37055,3.86,Applovin,US,NA
+img.applovin.com,36951,3.85,Applovin,US,NA
+pdn.applovin.com,36951,3.85,Applovin,US,NA
+cdnjs.cloudflare.com,36930,3.85,Cloudflare,US,NA
+assets.applovin.com,36819,3.84,Applovin,US,NA
+developers.google.com,36278,3.78,Google,US,Alphabet
+proton.flurry.com,36151,3.77,Flurry,US,Verizon
+support.twitter.com,36076,3.76,Twitter,US,NA
+a.applovin.com,35553,3.71,Applovin,US,NA
+s3.amazonaws.com,35235,3.67,Amazon Web Services,US,Amazon
+www.gstatic.com,35173,3.67,Google,US,Alphabet
+rt.applovin.com,31724,3.31,Applovin,US,NA
+impact.staging.applifier.com,31458,3.28,Unitytechnologies,US,NA
+mobilecrashreporting.googleapis.com,30812,3.21,Google Apis,US,Alphabet
+impact.applifier.com,30727,3.2,Unitytechnologies,US,NA
+google.com,29401,3.06,Google,US,Alphabet
+lh6.ggpht.com,27835,2.9,Google,US,Alphabet
+e.admob.com,27442,2.86,Admob,US,Alphabet
+stream.twitter.com,25207,2.63,Twitter,US,NA
+www.google.co.jp,24948,2.6,Google,US,Alphabet
+dev.twitter.com,24484,2.55,Twitter,US,NA
+userstream.twitter.com,24450,2.55,Twitter,US,NA
+sitestream.twitter.com,23453,2.44,Twitter,US,NA
+schemas.microsoft.com,23385,2.44,Microsoft,US,NA
+analytics.mopub.com,20683,2.16,Mopub,US,Twitter
+i.w.inmobi.com,18538,1.93,Inmobi,SG,NA
+console.firebase.google.com,18461,1.92,Google,US,Alphabet
+www.mopub.com,18050,1.88,Mopub,US,Twitter
+android.revmob.com,17533,1.83,Revmob,DE,NA
+m.google.com,17413,1.81,Google,US,Alphabet
+revmob.com,17400,1.81,Revmob,DE,NA
+config.unityads.unity3d.com,17312,1.8,Unitytechnologies,US,NA
+androidads23.adcolony.com,17025,1.77,Adcolony,US,Opera
+api.appsflyer.com,16454,1.71,Appsflyer,US,NA
+upload.twitter.com,16287,1.7,Twitter,US,NA
+amazon-adsystem.com,15960,1.66,Amazon Marketing Services,US,Amazon
+www.chartboost.com,15733,1.64,Chartboost,US,NA
+dock.inmobi.com,15664,1.63,Inmobi,SG,NA
+sdkm.w.inmobi.com,15622,1.63,Inmobi,SG,NA
+alipay.com,15145,1.58,Alibaba,CN,NA
+firebase.google.com,15115,1.58,Google,US,Alphabet
+api.vungle.com,14938,1.56,Vungle,US,NA
+api.map.baidu.com,14715,1.53,Baidu,CN,NA
+www.twitter.com,14660,1.53,Twitter,US,NA
+ads.flurry.com,14604,1.52,Flurry,US,Verizon
+adlog.flurry.com,14070,1.47,Flurry,US,Verizon
+ingest.vungle.com,13223,1.38,Vungle,US,NA
+ads.heyzap.com,13012,1.36,Heyzap,US,NA
+img.youtube.com,12984,1.35,Youtube,US,Alphabet
+events.appsflyer.com,12563,1.31,Appsflyer,US,NA
+www.inmobi.com,12481,1.3,Inmobi,SG,NA
+config.inmobi.com,12000,1.25,Inmobi,SG,NA
+gdata.youtube.com,11981,1.25,Youtube,US,Alphabet
+dwxjayoxbnyrr.cloudfront.net,11809,1.23,Amazon Web Services,US,Amazon
+inmobisdk-a.akamaihd.net,11776,1.23,Akamai,US,NA
+stats.appsflyer.com,11721,1.22,Appsflyer,US,NA
+t.appsflyer.com,11616,1.21,Appsflyer,US,NA
+www.adobe.com,11577,1.21,Adobe Systems,US,NA
+airdownload2.adobe.com,11464,1.19,Adobe Systems,US,NA
+s3-us-west-1.amazonaws.com,11399,1.19,Amazon Web Services,US,Amazon
+syndication.twitter.com,11360,1.18,Twitter,US,NA
+med.heyzap.com,11257,1.17,Heyzap,US,NA
+api.flickr.com,11242,1.17,Flickr,US,Verizon
+youtube.com,11169,1.16,Youtube,US,Alphabet
+www.tumblr.com,11003,1.15,Tumblr,US,Verizon
+dh8vjmvwgc27o.cloudfront.net,10966,1.14,Amazon Web Services,US,Amazon
+www.googleadservices.com,10842,1.13,Adsense,US,Alphabet
+mads.amazon-adsystem.com,10806,1.13,Amazon Marketing Services,US,Amazon
+cdn.flurry.com,10784,1.12,Flurry,US,Verizon
+www.vungle.com,10729,1.12,Vungle,US,NA
+gamespace.adobe.com,10691,1.11,Adobe Systems,US,NA
+register.appsflyer.com,10428,1.09,Appsflyer,US,NA
+pubads.g.doubleclick.net,10422,1.09,Doubleclick,US,Alphabet
+tech.yandex.com,10326,1.08,Yandex,RU,NA
+ad6.%s.liverail.com,9771,1.02,Liverail,US,Facebook
+ad6.liverail.com,9771,1.02,Liverail,US,Facebook
+api.tumblr.com,9714,1.01,Tumblr,US,Verizon
+admin.appnext.com,9704,1.01,Appnext,UK,NA
+picasaweb.google.com,9589,1,Google,US,Alphabet
+disqus.com,9472,0.99,Disqus,US,Zeta Global
+i.ytimg.com,9450,0.98,Youtube,US,Alphabet
+ns.adobe.com,9326,0.97,Adobe Systems,US,NA
+api.yandex.com,8989,0.94,Yandex,RU,NA
+www.supersonicads.com,8978,0.94,Ironsource,US,NA
+x.heyzap.com,8849,0.92,Heyzap,US,NA
+www.appnext.com,8767,0.91,Appnext,UK,NA
+alog.umeng.com,8473,0.88,Umeng,CN,Alibaba
+schemas.google.com,8458,0.88,Google,US,Alphabet
+init.supersonicads.com,8115,0.85,Ironsource,US,NA
+drive.google.com,8059,0.84,Google,US,Alphabet
+api.linkedin.com,8033,0.84,Linkedin,US,NA
+outcome.supersonicads.com,7964,0.83,Ironsource,US,NA
+www.startapp.com,7953,0.83,Startapp,US,NA
+api.pubnative.net,7894,0.82,Pubnative,DE,NA
+docs.oracle.com,7700,0.8,Oracle,US,NA
+mobile.twitter.com,7698,0.8,Twitter,US,NA
+lol.vungle.com,7552,0.79,Vungle,US,NA
+rri.appodeal.com,7490,0.78,Appodeal,US,NA
+support.newrelic.com,7384,0.77,New Relic,US,NA
+ua.supersonicads.com,7279,0.76,Ironsource,US,NA
+news.google.com,7186,0.75,Google,US,Alphabet
+cdn.unityads.unity3d.com,7116,0.74,Unitytechnologies,US,NA
+translate.google.com,7017,0.73,Google,US,Alphabet
+ach.appodeal.com,6825,0.71,Appodeal,US,NA
+api.mixpanel.com,6730,0.7,Mixpanel,US,NA
+tm.inmobi.com,6611,0.69,Inmobi,SG,NA
+ads.rubiconproject.com,6589,0.69,Rubicon Project,US,NA
+farm%s.static.flickr.com,6522,0.68,Flickr,US,Verizon
+adc3-launch.adcolony.com,6403,0.67,Adcolony,US,Opera
+api.amplitude.com,6387,0.67,Amplitude,US,NA
+ads.mp.mydas.mobi,6318,0.66,Millennialmedia,US,Verizon
+track.appsflyer.com,6234,0.65,Appsflyer,US,NA
+sdk-services.appsflyer.com,6226,0.65,Appsflyer,US,NA
+millennialmedia.com,6178,0.64,Millennialmedia,US,Verizon
+amazon-adsystem.amazon.com,6006,0.63,Amazon,US,NA
+androidsdk.ads.mp.mydas.mobi,5995,0.62,Millennialmedia,US,Verizon
+wd.adcolony.com,5899,0.61,Adcolony,US,Opera
+feeds.feedburner.com,5895,0.61,Google,US,Alphabet
+i.l.inmobicdn.net,5849,0.61,Inmobi,SG,NA
+m.youtube.com,5798,0.6,Youtube,US,Alphabet
+cvt.mydas.mobi,5736,0.6,Millennialmedia,US,Verizon
+images.millennialmedia.com,5670,0.59,Millennialmedia,US,Verizon
+combine.urbanairship.com,5608,0.58,Urbanairship,US,NA
+search.yahoo.com,5597,0.58,Yahoo,US,Verizon
+www.mapbox.com,5504,0.57,Mapbox,US,NA
+adwatch.appodeal.com,5484,0.57,Appodeal,US,NA
+decide.mixpanel.com,5470,0.57,Mixpanel,US,NA
+device-api.urbanairship.com,5467,0.57,Urbanairship,US,NA
+a.tiles.mapbox.com,5399,0.56,Mapbox,US,NA
+paypal.112.2o7.net,5359,0.56,Adobe Marketing Cloud,US,Adobe Systems
+androidads21.adcolony.com,5349,0.56,Adcolony,US,Opera
+itunes.apple.com,5328,0.56,Apple,US,NA
+caps.twitter.com,5282,0.55,Twitter,US,NA
+player.vimeo.com,5271,0.55,Vimeo,US,IAC
+z.moatads.com,5271,0.55,Moat,US,Oracle
+feedads.g.doubleclick.net,5158,0.54,Doubleclick,US,Alphabet
+unconf.mobad.ijinshan.com,5105,0.53,Cheetahmobile,CN,NA
+docs.disqus.com,4954,0.52,Disqus,US,Zeta Global
+ssdk.adkmob.com,4936,0.51,Cheetahmobile,CN,NA
+ad.cmcm.com,4916,0.51,Cheetahmobile,CN,NA
+vimeo.com,4909,0.51,Vimeo,US,IAC
+a.admob.com,4907,0.51,Admob,US,Alphabet
+unconf.adkmob.com,4893,0.51,Cheetahmobile,CN,NA
+ufs.adkmob.com,4892,0.51,Cheetahmobile,CN,NA
+soma.smaato.net,4842,0.5,Smaato,US,Spearhead Integrated Marketing Communication 
+foursquare.com,4811,0.5,Foursquare,US,NA
+oc.umeng.com,4795,0.5,Umeng,CN,Alibaba
+appnext.hs.llnwd.net,4751,0.5,Limelight Networks,US,NA
+ud.adkmob.com,4728,0.49,Cheetahmobile,CN,NA
+my.mobfox.com,4702,0.49,Mobfox,AT,NA
+www.android.com,4695,0.49,Google,US,Alphabet
+sites.google.com,4479,0.47,Google,US,Alphabet
+stage-vid.applovin.com,4479,0.47,Applovin,US,NA
+cp.pushwoosh.com,4315,0.45,Pushwoosh,US,NA
+a.ai.inmobi.com,4311,0.45,Inmobi,SG,NA
+acs.amazonaws.com,4246,0.44,Amazon Web Services,US,Amazon
+ads.mopub.com,4199,0.44,Mopub,US,Twitter
+developer.amazon.com,4125,0.43,Amazon,US,NA
+e-ltvp.inmobi.com,4000,0.42,Inmobi,SG,NA
+dl.urbanairship.com,3984,0.42,Urbanairship,US,NA
+api.login.yahoo.com,3956,0.41,Yahoo,US,Verizon
+mobile.smartadserver.com,3914,0.41,Smart Ad Server,US,NA
+go.urbanairship.com,3885,0.4,Urbanairship,US,NA
+www.apple.com,3882,0.4,Apple,US,NA
+rules-ltvp.inmobi.com,3831,0.4,Inmobi,SG,NA
+app.adjust.com,3673,0.38,Adjust,US,NA
+cml.ksmobile.com,3664,0.38,Cheetahmobile,CN,NA
+oauth.live.com,3637,0.38,Microsoft,US,NA
+www.flickr.com,3603,0.38,Flickr,US,Verizon
+crashlytics.com,3590,0.37,Crashlytics,US,Twitter
+search.twitter.com,3574,0.37,Twitter,US,NA
+fyc.heyzap.com,3571,0.37,Heyzap,US,NA
+login.salesforce.com,3493,0.36,Salesforce,US,NA
+b.scorecardresearch.com,3422,0.36,Scorecardresearch,US,comScore
+sb.scorecardresearch.com,3398,0.35,Scorecardresearch,US,comScore
+supersonic.ironbeast.io,3383,0.35,Ironsource,US,NA
+udm.scorecardresearch.com,3319,0.35,Scorecardresearch,US,comScore
+ad.flurry.com,3315,0.35,Flurry,US,Verizon
+unrcv.adkmob.com,3200,0.33,Cheetahmobile,CN,NA
+static.pushwoosh.com,3191,0.33,Pushwoosh,US,NA
+ms.cmcm.com,3185,0.33,Cheetahmobile,CN,NA
+*.urbanairship.com,3128,0.33,Urbanairship,US,NA
+cdn.millennialmedia.com,3055,0.32,Millennialmedia,US,Verizon
+iframe.sponsorpay.com,3038,0.32,Fyber,US,RNTS Media
+appnext-a.akamaihd.net,3034,0.32,Akamai,US,NA
+open.t.qq.com,3030,0.32,Tencent,CN,NA
+api.sponsorpay.com,3015,0.31,Fyber,US,RNTS Media
+service.sponsorpay.com,3011,0.31,Fyber,US,RNTS Media
+oauth.vk.com,2961,0.31,Vk,RU,NA
+api.t.sina.com.cn,2813,0.29,Sina,CN,NA
+global.appnext.com,2791,0.29,Appnext,UK,NA
+applab-sdk.amazon.com,2785,0.29,Amazon,US,NA
+p.adsymptotic.com,2770,0.29,Drawbridge,US,NA
+spreadsheets.google.com,2765,0.29,Google,US,Alphabet
+api.t.163.com,2690,0.28,Netease,CN,NA
+api.t.sohu.com,2682,0.28,Sohu,CN,NA
+ags-ext.amazon.com,2618,0.27,Amazon,US,NA
+cortana-gateway.amazon.com,2615,0.27,Amazon,US,NA
+analytics.query.yahoo.com,2600,0.27,Yahoo,US,Verizon
+api.weibo.com,2555,0.27,Weibo,CN,Sina
+engine.sponsorpay.com,2547,0.27,Fyber,US,RNTS Media
+youtu.be,2539,0.26,Youtube,US,Alphabet
+api.foursquare.com,2527,0.26,Foursquare,US,NA
