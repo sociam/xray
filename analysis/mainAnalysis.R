@@ -221,7 +221,7 @@ propAppsWithTrackingCompanyRefs <- appsWithHostsAndCompaniesLong %>%
   ungroup() %>%
   filter(company != "Unknown") %>%
   count(company) %>% #then count how many times a company occurs
-  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
+  mutate(pctOfApps = (n / numAnalysed)*100) %>%
   arrange(desc(n)) %>%
   left_join(companyInfo, by = "company")
 
@@ -231,7 +231,7 @@ prevalenceOfRootCompanies <- appsWithHostsAndCompaniesLong %>%
   left_join(companyInfo, by = "company") %>%
   distinct(id, leaf_parent) %>%
   count(leaf_parent) %>%
-  mutate(pctOfApps = round((n / numAnalysed)*100,2)) %>%
+  mutate(pctOfApps = (n / numAnalysed)*100) %>%
   arrange(desc(n))
 
 #then combine the two
