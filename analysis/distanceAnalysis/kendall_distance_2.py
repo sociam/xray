@@ -4,20 +4,19 @@ import pandas
 import json
 from itertools import combinations
 
-allapps = csv.reader((open("saveouts_RESULTS/prevalenceOwnersAndSubsidiaries.csv")), delimiter=',')
+allapps = csv.reader((open("../results/companyAnalysis/prevalenceRootParentsAndSubsidiaries.csv")), delimiter=',')
 
 genre_titles = ['Family','ArtAndPhotography', 'CommunicationAndSocial','Education','GamesAndEntertainment','HealthAndLifestyle','Music','News','ProductivityAndTools']
 
-ArtAndPhotography = csv.reader((open("saveouts_RESULTS/companies_by_genre/ArtAndPhotography.csv")), delimiter=',')
-CommunicationAndSocial = csv.reader((open("saveouts_RESULTS/companies_by_genre/CommunicationAndSocial.csv")), delimiter=',')
-Education = csv.reader((open("saveouts_RESULTS/companies_by_genre/Education.csv")), delimiter=',')
-GamesAndEntertainment = csv.reader((open("saveouts_RESULTS/companies_by_genre/GamesAndEntertainment.csv")), delimiter=',')
-HealthAndLifestyle = csv.reader((open("saveouts_RESULTS/companies_by_genre/HealthAndLifestyle.csv")), delimiter=',')
-Music = csv.reader((open("saveouts_RESULTS/companies_by_genre/Music.csv")), delimiter=',')
-News = csv.reader((open("saveouts_RESULTS/companies_by_genre/News.csv")), delimiter=',')
-ProductivityAndTools = csv.reader((open("saveouts_RESULTS/companies_by_genre/ProductivityAndTools.csv")), delimiter=',')
-Family = csv.reader((open("saveouts_RESULTS/companies_by_genre/Family.csv")), delimiter=',')
-
+ArtAndPhotography = csv.reader((open("../results/companyAnalysis//bySuperGenre/companyPrevalenceArtAndPhotography.csv")), delimiter=',')
+CommunicationAndSocial = csv.reader((open("../results/companyAnalysis/bySuperGenre/companyPrevalenceCommunicationAndSocial.csv")), delimiter=',')
+Education = csv.reader((open("../results/companyAnalysis//bySuperGenre/companyPrevalenceEducation.csv")), delimiter=',')
+GamesAndEntertainment = csv.reader((open("../results/companyAnalysis/bySuperGenre/companyPrevalenceGamesAndEntertainment.csv")), delimiter=',')
+HealthAndLifestyle = csv.reader((open("../results/companyAnalysis/bySuperGenre/companyPrevalenceHealthAndLifestyle.csv")), delimiter=',')
+Music = csv.reader((open("../results/companyAnalysis/bySuperGenre/companyPrevalenceMusic.csv")), delimiter=',')
+News = csv.reader((open("../results/companyAnalysis/bySuperGenre/companyPrevalenceNews.csv")), delimiter=',')
+ProductivityAndTools = csv.reader((open("../results/companyAnalysis/bySuperGenre/companyPrevalenceProductivityAndTools.csv")), delimiter=',')
+Family = csv.reader((open("../results/companyAnalysis/bySuperGenre/companyPrevalenceFamily.csv")), delimiter=',')
 genre_csvs = {"Family":Family,"ArtAndPhotography":ArtAndPhotography, "CommunicationAndSocial":CommunicationAndSocial, "Education":Education, "GamesAndEntertainment":GamesAndEntertainment, "HealthAndLifestyle":HealthAndLifestyle, "Music":Music, "News":News, "ProductivityAndTools":ProductivityAndTools}
 
 # order all apps (different csv format to genres)
@@ -27,7 +26,7 @@ allcos = {}
 allapps.next()
 
 for row in allapps:
-	company = row[2]
+	company = row[0]
 	prev = row[1]
 	allcos[company] = prev
 
@@ -108,3 +107,6 @@ for genre in genre_titles:
 	for pair in pairwise_distances:
 		if ((pair[0] == genre) or (pair[1] == genre)):
 			remoteness[genre] = remoteness[genre] + pairwise_distances[pair]
+
+print distance_all
+print remoteness

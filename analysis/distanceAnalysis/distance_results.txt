@@ -1,0 +1,5 @@
+distance from store-wide rankings
+{'HealthAndLifestyle': 0.10918227501142068, 'Family': 0.047920792079207936, 'CommunicationAndSocial': 0.098841172460804316, 'GamesAndEntertainment': 0.13590263691683577, 'ArtAndPhotography': 0.091685736079328728, 'ProductivityAndTools': 0.14786218347862176, 'Music': 0.02547413309392884, 'News': 0.036250775915580388, 'Education': 0.036436492405181271}
+
+sum of distance from all other genres
+{'HealthAndLifestyle': 5.5059899101368872, 'Family': 4.3329740403333235, 'CommunicationAndSocial': 5.2984297339561905, 'GamesAndEntertainment': 5.4070985047877924, 'ArtAndPhotography': 5.122967329449712, 'ProductivityAndTools': 5.5001104030678194, 'Music': 5.2471412051025892, 'News': 4.5018084143350485, 'Education': 5.4253659117701538}
