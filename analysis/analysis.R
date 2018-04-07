@@ -32,13 +32,14 @@ appInfo <- dbGetQuery(con,
   as.tibble()
 
 #read in company info
-companyInfo <- fromJSON("data-raw/company_data_list_23_2_2018_MAN_CHECKED.json") %>%
+companyInfo <- fromJSON("data-raw/company_data_list_23_2_2018_MAN_CHECKED.json")
   mutate(company = str_to_title(owner_name)) %>%
   select(company, country, root_parent) %>%
   mutate(country = str_to_upper(country)) %>%
   mutate(leaf_parent = ifelse(is.na(root_parent) | root_parent == "", company, root_parent)) %>% #a company is a leaf parent if it ain't got no root_parents
   as.tibble
 
+  
 #read in the list of apps with hosts, in long format
   #NOTE: IF YOU'RE NOT ULRIK THEN READ THIS IN FROM https://drive.google.com/open?id=1qaLgjwmOZ8NIjofIoDt2VDhClJRIhz6t
 appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv") %>%
@@ -361,8 +362,10 @@ companyRefsByGenreWithFamily <- companyRefsByGenre %>%
 
 ggplot(data = companyRefsByGenreWithFamily %>% filter(numCompanies < 21), mapping = aes(y = numCompanies, x = reorder(super_genre, numCompanies, FUN = quantile, prob = 0.75))) +
   geom_boxplot(varwidth = TRUE, outlier.shape = NA) + 
-  labs(x = "Super genre", y = "Number of companies behind hosts") +
-  coord_flip() + theme_minimal()
+  labs(x = "Super genre", y = "Number of distinct companies per app") +
+  coord_flip() + theme_minimal() +
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)),
+        axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
 
 #ggsave("plots/by_super_genre/boxNumCompaniesReferredWithFamily.png",width=5, height=4, dpi=600)
 

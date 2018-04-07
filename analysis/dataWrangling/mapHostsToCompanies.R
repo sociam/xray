@@ -4,14 +4,18 @@ library(jsonlite)
 library(scales)
 
 #read in company info
-companyInfo_vOld <- fromJSON("data-raw/combo_str_parents2.json") %>%
+companyInfo_old1 <- fromJSON("data-raw/combo_str_parents2.json") %>%
   as.tibble
 
-companyInfo_old <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
+companyInfo_old2 <- fromJSON("data-raw/company_data_list_14_2_2018.json") %>%
   as.tibble %>%
   rename(domains = doms)
 
-companyInfo <- fromJSON("data-raw/company_data_list_23_2_2018_MAN_CHECKED.json") %>%
+companyInfo_old3 <- fromJSON("data-raw/company_data_list_23_2_2018_MAN_CHECKED.json") %>%
+  as.tibble() %>%
+  rename(domains = doms)
+
+companyInfo <- fromJSON("company_data_list_6_4_2018.json") %>%
   as.tibble() %>%
   rename(domains = doms)
 
