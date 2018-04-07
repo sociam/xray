@@ -295,7 +295,7 @@ summaryCompanyCountBySuperGenreAddFamily <- countCompanyRefs %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs) %>%
   bind_rows(fam_summaryCompanyCount) %>%
-  arrange(desc(median))
+  arrange(desc(pctMoreThan10))
 
 write_csv(summaryCompanyCountBySuperGenreAddFamily, "results/companyAnalysis/bySuperGenre/summaryCompanyCountBySuperGenreAddFamily.csv")
 
