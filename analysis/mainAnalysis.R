@@ -295,7 +295,7 @@ summaryCompanyCountBySuperGenreAddFamily <- countCompanyRefs %>%
             pctNone = round((noRefs / numApps) * 100,2)) %>%
   select(-numMoreThan10, -noRefs) %>%
   bind_rows(fam_summaryCompanyCount) %>%
-  arrange(desc(pctMoreThan10))
+  arrange(desc(median), desc(Q3), desc(pctMoreThan10))
 
 write_csv(summaryCompanyCountBySuperGenreAddFamily, "results/companyAnalysis/bySuperGenre/summaryCompanyCountBySuperGenreAddFamily.csv")
 
@@ -315,15 +315,19 @@ countCompanyRefs %>%
   left_join(appInfo, by = "id") %>%
   left_join(genreGrouping, by = "genre") %>%
   bind_rows(fam_countCompanyRefs) %>%
-  filter(numCompanies < 22) %>%
-  ggplot(mapping = aes(y = numCompanies, x = reorder(super_genre, numCompanies, FUN = quantile, prob = 0.75))) +
+  mutate(super_genre = factor(super_genre,
+                              levels = c("Productivity & Tools","Communication & Social","Education","Health & Lifestyle","Music","Art & Photography","Games & Entertainment", "Family","News"), ordered = TRUE)) %>% 
+  ggplot(aes(y = numCompanies, x = super_genre)) +
   geom_boxplot(varwidth = TRUE, outlier.shape = NA) + 
   labs(x = "Super genre", y = "Number of distinct companies per app") +
-  coord_flip() + theme_minimal() +
+  scale_y_continuous(breaks = seq(0, 20, 4)) +
+  coord_flip(ylim = c(0,22)) +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)),
-        axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
-  
+        axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0))) +
+  theme_minimal()
+
 ggsave("plots/boxNumCompaniesPerAppBySuperGenre.png",width=5, height=4, dpi=600)
+
 
 ####1.5.2 PERCENTAGE PREVALENCE OF TRACKER COMPANIES IN APPS####
 #get all the apps we've analysed, including the ones with zero hosts

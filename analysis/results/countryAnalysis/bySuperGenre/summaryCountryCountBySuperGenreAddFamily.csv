@@ -1,10 +1,10 @@
 super_genre,numApps,median,Q1,Q3,mode,min,max,IQR,meanCountries,SD,pctMoreThan10,pctNone
 Family,8930,1,1,1,1,0,6,0,1.3,0.81,0,7.23
-Art and Photography,27593,1,1,1,1,0,5,0,1.2,0.52,0,3.58
+Art & Photography,27593,1,1,1,1,0,5,0,1.2,0.52,0,3.58
 Games & Entertainment,291952,1,1,1,1,0,6,0,1.2,0.7,0,7.31
 Music,65099,1,1,1,1,0,6,0,1.2,0.58,0,4.11
 Health & Lifestyle,163837,1,1,1,1,0,5,0,1.1,0.61,0,8.99
 News,26281,1,1,1,1,0,5,0,1.1,0.57,0,6.52
 Communication & Social,39637,1,1,1,1,0,6,0,1,0.62,0,13.38
 Education,79730,1,1,1,1,0,5,0,1,0.53,0,11.86
-Productivity and Tools,265297,1,1,1,1,0,8,0,1,0.54,0,13.54
+Productivity & Tools,265297,1,1,1,1,0,8,0,1,0.54,0,13.54

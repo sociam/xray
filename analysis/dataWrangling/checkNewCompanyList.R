@@ -2,7 +2,28 @@ library(tidyverse)
 library(jsonlite)
 
 #PREVIOUS VERSION
-companyInfo <- fromJSON("data-raw/company_data_list_23_2_2018_MAN_CHECKED.json")
+companyInfoOld <- fromJSON("companyData/deprecated/company_data_list_23_2_2018_MAN_CHECKED.json") %>%
+  as.tibble() %>%
+  mutate(country = str_to_upper(country)) %>%
+  mutate(company = str_to_title(company))
+
+companyInfoOld <- fromJSON("companyData/deprecated/company_data_list_23_2_2018_MAN_CHECKED.json") %>%
+  as.tibble() %>%
+  rename(company = owner_name) %>%
+  mutate(company = str_to_title(company))
+
+companyInfoNew <- fromJSON("companyData/company_data_list_6_4_2018.json") %>%
+  as.tibble() %>%
+  rename(company = owner_name) %>%
+  mutate(company = str_to_title(company))
+
+companyInfoOld %>%
+  anti_join(companyInfoNew, by = "company") %>%
+  arrange(company) %>%
+  select(company, parent, country, doms) %>%
+  unnest(doms) %>%
+  write_csv("oldMissingDomains.csv")
+
 # mutate(company = str_to_title(owner_name)) %>%
 #   select(company, country, root_parent) %>%
 #   mutate(country = str_to_upper(country)) %>%
