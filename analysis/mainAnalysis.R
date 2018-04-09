@@ -32,7 +32,7 @@ appInfo <- dbGetQuery(con,
   as.tibble()
 
 #read in company info
-companyInfo <- fromJSON("companyData/company_data_list_6_4_2018.json") %>%
+companyInfo <- fromJSON("companyData/company_data_list_9_4_2018.json") %>%
   as.tibble() %>%
   select(-doms) %>%
   rename(company = owner_name) %>%
@@ -41,14 +41,19 @@ companyInfo <- fromJSON("companyData/company_data_list_6_4_2018.json") %>%
   mutate(country = str_to_upper(country)) %>%
   mutate(leaf_parent = ifelse(is.na(root_parent) | root_parent == "", company, root_parent))
 
-
 #read in the list of hosts included in apps' bytecode, plus corresponding app ids, in long format
-#appsWithHostsAndCompaniesLong <- read_csv("data/sample_appsWithHostsAndCompaniesLong")
 appsWithHostsAndCompaniesLong <- read_csv("~/Desktop/data-processed/appsWithHostsAndCompanyLong.csv") %>%
   mutate(company = str_to_title(company))
 
+#TapJoy is missing
+appsWithHostsAndCompaniesLong <- appsWithHostsAndCompaniesLong %>%
+  mutate(company = ifelse(
+    str_detect(hosts, "tapjoyads.com"),
+    str_to_title("TapJoy"), 
+    company)
+    )
+
 #read in the list of apps that did not include any hosts in bytecode
-#appsWithNoHosts <- read_csv("data/sample_appsWithNoHosts.csv")
 appsWithNoHosts <- read_csv("~/Desktop/data-processed/appsWithoutHosts.csv")
 
 #count how many apps we've got
@@ -110,7 +115,6 @@ countKnownTrackers %>%
                           axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
 
 ggsave("plots/histTrackerHostsPerApp.png",width=5, height=4, dpi=600)
-
 
 
 ####1.2 WHAT ARE THE MOST FREQUENT HOSTS?####
@@ -241,10 +245,31 @@ prevalenceOwnersAndSubsidiaries <- prevalenceOfRootCompanies %>%
 
 write_csv(prevalenceOwnersAndSubsidiaries, "results/companyAnalysis/prevalenceRootParentsAndSubsidiaries.csv")
 
+
 #create a latex table from this
-# forLatex_prevalenceOwnersAndSubsidiaries <- prevalenceOwnersAndSubsidiaries %>%
-#   select(-n.x, -n.y)
-# print(xtable(forLatex_prevalenceOwnersAndSubsidiaries),floating=FALSE,latex.environments=NULL, include.rownames = FALSE)
+setBlankIfSameCellValueAsPrevRow <- function(dataframe, column){
+  refFrame <- dataframe[[1, column]]
+  for (i in 1:nrow(dataframe)){
+    if(i > 1 & i < nrow(dataframe)){
+      if(dataframe[[i, column]] == refFrame) {
+        dataframe[[i, column]] = ""
+      } else {
+        refFrame <- dataframe[[i, column]]
+      }
+    }
+  }
+  return(dataframe)
+}
+
+forLatex_prevalenceOwnersAndSubsidiaries <- prevalenceOwnersAndSubsidiaries %>%
+  setBlankIfSameCellValueAsPrevRow("leaf_parent") %>%
+  setBlankIfSameCellValueAsPrevRow("pctOfApps.x") %>%
+  select(-n.x, -n.y) %>%
+  mutate(pctOfApps.x = as.numeric(pctOfApps.x),
+         pctOfApps.y = as.numeric(pctOfApps.y)) %>%
+  xtable(digits = c(0,0,2,0,2,0))
+
+print.xtable(forLatex_prevalenceOwnersAndSubsidiaries, include.rownames = FALSE, floating=FALSE)
 
 ####1.5 ANALYSES BY 'SUPER GENRE'####
 ####1.5.1 NUMBER OF DISTINCT TRACKER COMPANIES PER APP####
